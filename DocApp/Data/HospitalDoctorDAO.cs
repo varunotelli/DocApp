@@ -28,7 +28,8 @@ namespace DocApp.Data
                                join r in roster
                                on d.ID equals r.doc_id
                                where hosp.Any(h=>h.Name.Equals(hospname) && h.ID == r.hosp_id)
-                               select new DoctorInHospitalDetails { Name=d.Name,
+                               select new DoctorInHospitalDetails {doc_id=d.ID,
+                                   Name =d.Name,
                                Designation=d.Designation,
                                Experience=d.Experience,
                                Start_Time=r.start_time,

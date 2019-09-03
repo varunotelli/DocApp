@@ -14,6 +14,7 @@
             <Image Width="200" Height="200"/>
             <StackPanel>
                 <StackPanel>
+                    
                     <TextBlock x:Name="DoctorName" Text="{x:Bind Doctor.Name}"/>
                     <TextBlock x:Name="DoctorDesignation" Text="{x:Bind Doctor.Designation}"/>
                     <TextBlock x:Name="DoctorExperience" Text="{x:Bind Doctor.Experience}"/>
