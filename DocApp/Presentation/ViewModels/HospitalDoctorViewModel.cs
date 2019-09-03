@@ -65,13 +65,13 @@ namespace DocApp.Presentation.ViewModels
 
        
 
-        public void onHospComboClicked(object source, EventArgs args)
+        public async Task onHospComboClicked(object source, EventArgs args)
         {
             getHospitalList = new GetHospitalListUseCase();
             getHospitalList.SetCallBack<HospitalViewCallback>(this);
-            getHospitalList.Execute();
+            await getHospitalList.Execute();
         }
-        public void ondocComboClicked(object source, EventArgs args)
+        public async Task ondocComboClicked(object source, EventArgs args)
         {
             if(locbox.Equals(""))
                 getDoctor = new GetDoctorByLocationUseCase(loc);
@@ -79,7 +79,7 @@ namespace DocApp.Presentation.ViewModels
                 getDoctor = new GetDoctorByLocationUseCase(locbox);
             getDoctor.SetCallBack<DoctorViewCallback>(this);
 
-            getDoctor.Execute();
+            await getDoctor.Execute();
         }
 
         public async Task<Geoposition> GetPosition()

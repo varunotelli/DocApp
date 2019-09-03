@@ -35,9 +35,9 @@ namespace DocApp.Presentation.Views
         ObservableCollection<string> hospitals;
         ObservableCollection<string> doctors;
         HospitalDoctorViewModel viewModel;
-        public delegate void HospComboClickedEventHandler(object source, EventArgs e);
+        public delegate Task HospComboClickedEventHandler(object source, EventArgs e);
         public event HospComboClickedEventHandler hospComboClicked;
-        public delegate void DocComboClickedEventHandler(object source, EventArgs e);
+        public delegate Task DocComboClickedEventHandler(object source, EventArgs e);
         public event DocComboClickedEventHandler docComboClicked;
         public delegate void HospComboSelectionChangedEventHandler(object source, sendDataArgs e);
         public event HospComboSelectionChangedEventHandler hospChanged;
@@ -62,15 +62,15 @@ namespace DocApp.Presentation.Views
         
         }
 
-        public void onHospComboClicked()
+        public async Task onHospComboClicked()
         {
             if (hospComboClicked != null)
-                hospComboClicked(this, EventArgs.Empty);
+                await hospComboClicked(this, EventArgs.Empty);
         }
-        public void ondocComboClicked()
+        public async Task ondocComboClicked()
         {
             if (docComboClicked != null)
-                docComboClicked(this, EventArgs.Empty);
+                await docComboClicked(this, EventArgs.Empty);
         }
         public void onHospChanged()
         {
@@ -115,9 +115,9 @@ namespace DocApp.Presentation.Views
             my_frame.Navigate(typeof(HospitalDetailView), DocCombo.SelectedItem);
         }
 
-        private void DocCombo_DropDownOpened(object sender, object e)
+        private async void DocCombo_DropDownOpened(object sender, object e)
         {
-            ondocComboClicked();
+            await ondocComboClicked();
             doctors.Clear();
             foreach (var h in viewModel.doctors)
                 doctors.Add(h.Name);
@@ -127,10 +127,10 @@ namespace DocApp.Presentation.Views
 
 
 
-        private void HospCombo_DropDownOpened(object sender, object e)
+        private async void HospCombo_DropDownOpened(object sender, object e)
         {
 
-            onHospComboClicked();
+            await onHospComboClicked();
             hospitals.Clear();
             foreach (var h in viewModel.hospitals)
                 hospitals.Add(h.Name);
@@ -149,10 +149,10 @@ namespace DocApp.Presentation.Views
             
         }
 
-        private void MyAutoSuggest_Loaded(object sender, RoutedEventArgs e)
+        private async void MyAutoSuggest_Loaded(object sender, RoutedEventArgs e)
         {
          
-            onHospComboClicked();
+            await onHospComboClicked();
             hospitals.Clear();
             foreach (var h in viewModel.hospitals)
                 hospitals.Add(h.Name);

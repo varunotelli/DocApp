@@ -156,10 +156,14 @@
     <Compile Include="Presentation\Callbacks\HospitalDetailCallBack.cs" />
     <Compile Include="Presentation\Callbacks\HospitalViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\PresenterBaseCallback.cs" />
+    <Compile Include="Presentation\ViewModels\DoctorDetailViewModel.cs" />
     <Compile Include="Presentation\ViewModels\DoctorListViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalDetailViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalDoctorViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalListViewModel.cs" />
+    <Compile Include="Presentation\Views\DoctorDetailView.xaml.cs">
+      <DependentUpon>DoctorDetailView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\DoctorTemplate.xaml.cs">
       <DependentUpon>DoctorTemplate.xaml</DependentUpon>
     </Compile>
@@ -196,6 +200,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Presentation\Views\DoctorDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\DoctorTemplate.xaml">
       <SubType>Designer</SubType>
