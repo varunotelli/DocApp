@@ -112,7 +112,7 @@ namespace DocApp.Presentation.Views
             Grid grid = mp.Content as Grid;
             Frame my_frame = grid.FindName("myFrame") as Frame;
             System.Diagnostics.Debug.WriteLine("Selected=" + DocCombo.SelectedItem);
-            my_frame.Navigate(typeof(HospitalDetailView), DocCombo.SelectedItem);
+            my_frame.Navigate(typeof(DoctorDetailView), DocCombo.SelectedItem);
         }
 
         private async void DocCombo_DropDownOpened(object sender, object e)

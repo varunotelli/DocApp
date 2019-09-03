@@ -33,19 +33,22 @@ namespace DocApp.Presentation.Views
         public HospitalDetailView()
         {
             this.InitializeComponent();
-            //HospitalControl = new HospitalDetailsTemplate();
-            this.DataContextChanged += (s, e) => Bindings.Update();
+            
+            
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
-            System.Diagnostics.Debug.WriteLine("Sent val="+(string)e.Parameter);
-            name = (string)e.Parameter;
+            System.Diagnostics.Debug.WriteLine("Sent val="+(string)e1.Parameter);
+            name = (string)e1.Parameter;
             //HospitalDetailsTemplate h = new HospitalDetailsTemplate();
             viewModel = new HospitalDetailViewModel(name);
             await viewModel.GetHospitals();
+            //this.DataContextChanged += (s, e) => Bindings.Update();
+            //myTemplate.DataContext = viewModel.Doctors.First();
 
-            //System.Diagnostics.Debug.WriteLine(viewModel.Doctors[0].Name);
+
+            //System.Diagnostics.Debug.WriteLine(viewModel.doc[0].Name);
             return;
             
             

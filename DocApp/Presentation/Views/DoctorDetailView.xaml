@@ -6,24 +6,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    RequestedTheme="Dark">
 
     <Grid>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Image Height="400" Width="400"/>
-            <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Height="400" Width="400"/>
+                    <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
 
-                <!--<TextBlock Text="{x:Bind viewModel.hospital.Name}"/>
-                <TextBlock Text="{x:Bind viewModel.hospital.Location}"/>
-                <TextBlock Text="{x:Bind viewModel.hospital.Rating.ToString()}"/>
-                <TextBlock Text="{x:Bind viewModel.hospital.Description}"/>-->
+                        <TextBlock Text="{x:Bind viewModel.doctor.Name}"/>
+                        <TextBlock Text="{x:Bind viewModel.doctor.Description}"/>
+                        <TextBlock Text="{x:Bind viewModel.doctor.Designation}"/>
+                        <TextBlock Text="{x:Bind viewModel.doctor.Experience}"/>
+                        <TextBlock Text="{x:Bind viewModel.doctor.Rating.ToString()}"/>
+
 
             </StackPanel>
 
-        </Grid>
+                </Grid>
     </Grid>
 </Page>

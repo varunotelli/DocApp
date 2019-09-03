@@ -137,6 +137,7 @@
     <Compile Include="Domain\UseCase\GetAddressUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDoctorByHospitalUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDoctorByLocationUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetDoctorDetailUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDoctorListUseCase.cs" />
     <Compile Include="Domain\UseCase\GetHospitalByLocationUseCase.cs" />
     <Compile Include="Domain\UseCase\GetHospitalDetail.cs" />
@@ -150,7 +151,8 @@
     <Compile Include="Models\NotifyChangeBase.cs" />
     <Compile Include="Models\RootObject.cs" />
     <Compile Include="Models\Roster.cs" />
-    <Compile Include="Presentation\Callbacks\DoctorDetailViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\DoctorDetailViewCallBack.cs" />
+    <Compile Include="Presentation\Callbacks\DoctorHospitalDetailViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\DoctorViewCallBack.cs" />
     <Compile Include="Presentation\Callbacks\GetAddressPresenterCallback.cs" />
     <Compile Include="Presentation\Callbacks\HospitalDetailCallBack.cs" />
@@ -161,6 +163,9 @@
     <Compile Include="Presentation\ViewModels\HospitalDetailViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalDoctorViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalListViewModel.cs" />
+    <Compile Include="Presentation\Views\DoctorDetailTemplate.xaml.cs">
+      <DependentUpon>DoctorDetailTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\DoctorDetailView.xaml.cs">
       <DependentUpon>DoctorDetailView.xaml</DependentUpon>
     </Compile>
@@ -200,6 +205,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Presentation\Views\DoctorDetailTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\DoctorDetailView.xaml">
       <SubType>Designer</SubType>

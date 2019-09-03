@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocApp.Presentation.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,26 @@ namespace DocApp.Presentation.Views
     /// </summary>
     public sealed partial class DoctorDetailView : Page
     {
+        DoctorDetailViewModel viewModel;
+        string name = "";
         public DoctorDetailView()
         {
             this.InitializeComponent();
+            
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e1)
+        {
+            System.Diagnostics.Debug.WriteLine("Sent val=" + (string)e1.Parameter);
+            name = (string)e1.Parameter;
+            //HospitalDetailsTemplate h = new HospitalDetailsTemplate();
+            viewModel = new DoctorDetailViewModel(name);
+            await viewModel.GetDoctor();
+            
+            return;
+
+
+
         }
     }
 }

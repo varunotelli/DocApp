@@ -1,5 +1,4 @@
-﻿using DocApp.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,16 +17,11 @@ using Windows.UI.Xaml.Navigation;
 
 namespace DocApp.Presentation.Views
 {
-    public sealed partial class DoctorTemplate : UserControl
+    public sealed partial class DoctorDetailTemplate : UserControl
     {
-        public Models.DoctorInHospitalDetails Doctor { get { return this.DataContext as Models.DoctorInHospitalDetails; } }
-
-        public DoctorTemplate()
+        public DoctorDetailTemplate()
         {
             this.InitializeComponent();
-           
-            System.Diagnostics.Debug.WriteLine("HELLO");
-            this.DataContextChanged += (s, e) => Bindings.Update();
         }
     }
 }

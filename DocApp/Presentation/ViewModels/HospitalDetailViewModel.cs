@@ -10,12 +10,13 @@ using System.Threading.Tasks;
 
 namespace DocApp.Presentation.ViewModels
 {
-    public class HospitalDetailViewModel: HospitalDetailCallBack, DoctorDetailViewCallback
+    public class HospitalDetailViewModel: HospitalDetailCallBack, DoctorHospitalDetailViewCallback
     {
         
         protected string name1 = "";
         public Hospital hospital;
         public ObservableCollection<DoctorInHospitalDetails> Doctors;
+        //public ObservableCollection<DoctorInHospitalDetails> doc= new ObservableCollection<DoctorInHospitalDetails>();
         public ObservableCollection<string> doctormain;
         
         public HospitalDetailViewModel(string n)
@@ -38,7 +39,7 @@ namespace DocApp.Presentation.ViewModels
             //getHospital = new GetHospitalListUseCase();
             //hospitals = new ObservableCollection<Hospital>();
             getHospital.SetCallBack<HospitalDetailCallBack>(this);
-            getDoctorByHospital.SetCallBack<DoctorDetailViewCallback>(this);
+            getDoctorByHospital.SetCallBack<DoctorHospitalDetailViewCallback>(this);
 
             try
             {
@@ -82,6 +83,8 @@ namespace DocApp.Presentation.ViewModels
             //System.Diagnostics.Debug.WriteLine("Doctor "+Doctors[0].Name);
             System.Diagnostics.Debug.WriteLine("Doctor SUCCESS!!!");
             System.Diagnostics.Debug.WriteLine("Doctors size="+Doctors.Count);
+            //doc.Add(Doctors[0]);
+           
             return true;
         }
 
