@@ -151,9 +151,7 @@ namespace DocApp.Presentation.Views
 
         private void MyAutoSuggest_Loaded(object sender, RoutedEventArgs e)
         {
-            //while (viewModel.location.Equals("")) ;
-
-            //MyAutoSuggest.PlaceholderText = viewModel.location;
+         
             onHospComboClicked();
             hospitals.Clear();
             foreach (var h in viewModel.hospitals)
