@@ -18,7 +18,10 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
+/**
+ * @todo Add SplitView for Doctor in Hospital
+ * @body Create a new split view for each doctor and display full profile in panel using doc_id of listview clicked item.
+ */ 
 namespace DocApp.Presentation.Views
 {
     /// <summary>
