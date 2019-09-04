@@ -21,6 +21,10 @@ namespace DocApp.Presentation.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /*
+     * @todo Complete Doctor Detail View
+     * @body Create new use case to get hospitals in which doctor works and fix UI
+     */
     public sealed partial class DoctorDetailView : Page
     {
         DoctorDetailViewModel viewModel;
