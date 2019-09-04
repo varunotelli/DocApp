@@ -77,6 +77,7 @@ namespace DocApp.Presentation.Views
                     await viewModel.GetDoctorDetails(((DoctorInHospitalDetails)e.ClickedItem).Name);
                     DoctorProfile.DataContext = viewModel.doc;
                     Bindings.Update();
+                    mySplitView.IsPaneOpen = true;
                     //mySplitView.IsPaneOpen = false;
 
                 }
@@ -86,6 +87,7 @@ namespace DocApp.Presentation.Views
                 await viewModel.GetDoctorDetails(((DoctorInHospitalDetails)e.ClickedItem).Name);
                 DoctorProfile.DataContext = viewModel.doc;
                 Bindings.Update();
+                mySplitView.IsPaneOpen = true;
             }
            
             //mySplitView.IsPaneOpen = true;

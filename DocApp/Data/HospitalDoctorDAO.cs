@@ -32,9 +32,9 @@ namespace DocApp.Data
                                Name =d.Name,
                                Designation=d.Designation,
                                Experience=d.Experience.ToLower(),
-                               Start_Time=r.start_time,
-                               End_Time=r.end_time,
-                               fees=r.fee,
+                               Start_Time=r.start_time.Split(':')[0]+":"+ r.start_time.Split(':')[1],
+                               End_Time = r.end_time.Split(':')[0] +":"+ r.end_time.Split(':')[1],
+                               fees =r.fee,
                                Rating=d.Rating,
                                Number_of_Rating=d.Number_of_Rating,
                                max_patients=r.max_patients
