@@ -4,13 +4,15 @@ using DocApp.Presentation.Callbacks;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DocApp.Presentation.ViewModels
 {
-    public class HospitalDetailViewModel: HospitalDetailCallBack, DoctorHospitalDetailViewCallback
+    public class HospitalDetailViewModel: HospitalDetailCallBack, DoctorHospitalDetailViewCallback,DoctorDetailViewCallBack,
+        INotifyPropertyChanged
     {
         
         protected string name1 = "";
@@ -18,7 +20,28 @@ namespace DocApp.Presentation.ViewModels
         public ObservableCollection<DoctorInHospitalDetails> Doctors;
         //public ObservableCollection<DoctorInHospitalDetails> doc= new ObservableCollection<DoctorInHospitalDetails>();
         public ObservableCollection<string> doctormain;
-        
+        private Doctor d;
+        public Doctor doc
+        {
+            get { return d; }
+            set
+            {
+                d = value;
+                RaisePropertyChanged("doc");
+
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void RaisePropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+
+
+            }
+        }
+
         public HospitalDetailViewModel(string n)
         {
             this.name1 = n;
@@ -28,6 +51,7 @@ namespace DocApp.Presentation.ViewModels
 
         UseCaseBase getHospital;
         UseCaseBase getDoctorByHospital;
+        UseCaseBase getDoctorProfile;
         public async Task GetHospitals()
         {
            
@@ -59,6 +83,15 @@ namespace DocApp.Presentation.ViewModels
 
 
         }
+
+        public async Task GetDoctorDetails(string docname)
+        {
+            //doc = new Doctor();
+            getDoctorProfile = new GetDoctorDetailUseCase(docname);
+            getDoctorProfile.SetCallBack<DoctorDetailViewCallBack>(this);
+            await getDoctorProfile.Execute();
+        }
+
         public bool DataReadSuccess(ref Hospital h)
         {
             //this.hospital = new Hospital();
@@ -91,6 +124,20 @@ namespace DocApp.Presentation.ViewModels
         public bool DataReadFail()
         {
             System.Diagnostics.Debug.WriteLine("Doctor FAILED!!!");
+            return false;
+        }
+
+        bool DoctorDetailViewCallBack.DataReadSuccess(Doctor d)
+        {
+            this.doc = d;
+            System.Diagnostics.Debug.WriteLine("Doctor info success");
+            
+            return true;
+        }
+
+        bool DoctorDetailViewCallBack.DataReadFail()
+        {
+            System.Diagnostics.Debug.WriteLine("Doctor info fail");
             return false;
         }
     }

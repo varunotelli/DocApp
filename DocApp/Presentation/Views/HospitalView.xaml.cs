@@ -52,8 +52,7 @@ namespace DocApp.Presentation.Views
             hospitals = new ObservableCollection<string>();
             doctors = new ObservableCollection<string>();
             viewModel = new HospitalDoctorViewModel();
-            parentFrame= Window.Current.Content as Frame;
-            mp= parentFrame.Content as MainPage;
+            
             this.hospComboClicked += viewModel.onHospComboClicked;
             this.docComboClicked += viewModel.ondocComboClicked;
 

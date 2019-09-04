@@ -17,11 +17,13 @@ using Windows.UI.Xaml.Navigation;
 
 namespace DocApp.Presentation.Views
 {
-    public sealed partial class DoctorDetailTemplate : UserControl
+    public sealed partial class DoctorProfileTemplate : UserControl
     {
-        public DoctorDetailTemplate()
+        public Models.Doctor doctor { get {return  this.DataContext as Models.Doctor; } }
+        public DoctorProfileTemplate()
         {
             this.InitializeComponent();
+            this.DataContextChanged += (s, e) => Bindings.Update();
         }
     }
 }

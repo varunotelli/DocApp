@@ -163,11 +163,11 @@
     <Compile Include="Presentation\ViewModels\HospitalDetailViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalDoctorViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalListViewModel.cs" />
-    <Compile Include="Presentation\Views\DoctorDetailTemplate.xaml.cs">
-      <DependentUpon>DoctorDetailTemplate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Presentation\Views\DoctorDetailView.xaml.cs">
       <DependentUpon>DoctorDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Views\DoctorProfileTemplate.xaml.cs">
+      <DependentUpon>DoctorProfileTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Views\DoctorTemplate.xaml.cs">
       <DependentUpon>DoctorTemplate.xaml</DependentUpon>
@@ -206,11 +206,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Presentation\Views\DoctorDetailTemplate.xaml">
+    <Page Include="Presentation\Views\DoctorDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\Views\DoctorDetailView.xaml">
+    <Page Include="Presentation\Views\DoctorProfileTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -23,7 +23,7 @@ namespace DocApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        HospitalView hospitalView;
+        
         public MainPage()
         {
             this.InitializeComponent();
@@ -32,10 +32,6 @@ namespace DocApp
             myFrame.Navigate(typeof(HospitalView));
         }
 
-        public void onHospChanged(object sender, sendDataArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("EVENT CAUGHT");
-            myFrame.Navigate(typeof(HospitalDetailView), e.name);
-        }
+        
     }
 }

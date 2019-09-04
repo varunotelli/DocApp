@@ -19,48 +19,60 @@
     </Page.Resources>
 
     
-        <ScrollViewer>
-            <StackPanel Margin="10,10,10,10">
+        
+        <SplitView x:Name="mySplitView" DisplayMode="Inline" IsPaneOpen="False" PanePlacement="Right">
+            <SplitView.Pane>
+                <local:DoctorProfileTemplate x:Name="DoctorProfile" DataContext="{x:Bind viewModel.doc}"/>
+            </SplitView.Pane>
+            <SplitView.Content>
+            <ScrollViewer x:Name="myScroll">
+                <StackPanel Margin="10,10,10,10">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Height="400" Width="400"/>
+                        <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
+
+                            <TextBlock Text="{x:Bind viewModel.hospital.Name}"/>
+                            <TextBlock Text="{x:Bind viewModel.hospital.Location}"/>
+                            <TextBlock Text="{x:Bind viewModel.hospital.Rating.ToString()}"/>
+                            <TextBlock Text="{x:Bind viewModel.hospital.Description}"/>
+
+                        </StackPanel>
+
+                    </Grid>
+
+
+
+
+                    <TextBlock Text="Doctors In This Hospital" Style="{StaticResource SubTitleStyle}"/>
+
+                    <ListView x:Name="myListView" ItemsSource="{x:Bind viewModel.Doctors}" Margin="10,10,10,10"
+                              IsItemClickEnabled='True'
+                          ItemClick="MyListView_ItemClick">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Height" Value="200"/>
+                                <Setter Property="Margin" Value="10,10,10,10"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="data:DoctorInHospitalDetails">
+                                <local:DoctorTemplate Margin="10,10"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+
+                </StackPanel>
+            </ScrollViewer>
+        </SplitView.Content>
             
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Image Height="400" Width="400"/>
-                    <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
-
-                        <TextBlock Text="{x:Bind viewModel.hospital.Name}"/>
-                        <TextBlock Text="{x:Bind viewModel.hospital.Location}"/>
-                        <TextBlock Text="{x:Bind viewModel.hospital.Rating.ToString()}"/>
-                        <TextBlock Text="{x:Bind viewModel.hospital.Description}"/>
-
-                    </StackPanel>
-
-                </Grid>
-
-
-
-
-                <TextBlock Text="Doctors In This Hospital" Style="{StaticResource SubTitleStyle}"/>
-
-                <ListView ItemsSource="{x:Bind viewModel.Doctors}" Margin="10,10,10,10"
-                          ScrollViewer.VerticalScrollBarVisibility="Visible">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Height" Value="200"/>
-                            <Setter Property="Margin" Value="10,10,10,10"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="data:DoctorInHospitalDetails">
-                            <local:DoctorTemplate Margin="10,10"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            
-            
-        </StackPanel>
-        </ScrollViewer>
+        </SplitView>
+        
+        
     
 </Page>

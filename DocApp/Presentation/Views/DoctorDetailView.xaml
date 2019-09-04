@@ -23,6 +23,7 @@
                         <TextBlock Text="{x:Bind viewModel.doctor.Designation}"/>
                         <TextBlock Text="{x:Bind viewModel.doctor.Experience}"/>
                         <TextBlock Text="{x:Bind viewModel.doctor.Rating.ToString()}"/>
+                        <TextBlock Text="{x:Bind viewModel.doctor.Number_of_Rating.ToString()}"/>
 
 
             </StackPanel>

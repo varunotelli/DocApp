@@ -47,17 +47,39 @@ namespace DocApp.Presentation.Views
             //HospitalDetailsTemplate h = new HospitalDetailsTemplate();
             viewModel = new HospitalDetailViewModel(name);
             await viewModel.GetHospitals();
-            //this.DataContextChanged += (s, e) => Bindings.Update();
-            //myTemplate.DataContext = viewModel.Doctors.First();
-
-
-            //System.Diagnostics.Debug.WriteLine(viewModel.doc[0].Name);
+            
             return;
             
             
 
         }
 
-       
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            
+            
+        }
+
+        private async void MyListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+           System.Diagnostics.Debug.WriteLine("Item clicked");
+           //mySplitView.IsPaneOpen =false;
+            System.Diagnostics.Debug.WriteLine(((DoctorInHospitalDetails)e.ClickedItem).Name);
+            await viewModel.GetDoctorDetails(((DoctorInHospitalDetails)e.ClickedItem).Name);
+           DoctorProfile.DataContext = viewModel.doc;
+            if (viewModel.doc.Name.Equals(((DoctorInHospitalDetails)e.ClickedItem).Name))
+                mySplitView.IsPaneOpen = true;
+            else
+            {
+                await viewModel.GetDoctorDetails(((DoctorInHospitalDetails)e.ClickedItem).Name);
+                DoctorProfile.DataContext = viewModel.doc;
+                Bindings.Update();
+                //mySplitView.IsPaneOpen = false;
+
+            }
+            //mySplitView.IsPaneOpen = true;
+            //myScroll.ChangeView(0.0f, 0.0f, 1.0f);
+
+        }
     }
 }
