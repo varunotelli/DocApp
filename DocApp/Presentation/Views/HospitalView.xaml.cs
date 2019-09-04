@@ -41,9 +41,7 @@ namespace DocApp.Presentation.Views
         public event DocComboClickedEventHandler docComboClicked;
         public delegate void HospComboSelectionChangedEventHandler(object source, sendDataArgs e);
         public event HospComboSelectionChangedEventHandler hospChanged;
-        Frame parentFrame; //= Window.Current.Content as Frame;
-
-        MainPage mp; //= parentFrame.Content as MainPage;
+        
 
         public HospitalView()
         {

@@ -16,34 +16,43 @@
             <Setter Property="FontSize" Value="36"/>
             <Setter Property="FontFamily" Value="ms-appx:///Assets/raleway-v14-latin-900.ttf#Raleway"/>
         </Style>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="10,10"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
     </Page.Resources>
 
     
         
-        <SplitView x:Name="mySplitView" DisplayMode="Inline" IsPaneOpen="False" PanePlacement="Right">
+        <SplitView x:Name="mySplitView" DisplayMode="Inline" IsPaneOpen="False" PanePlacement="Right" OpenPaneLength="400">
             <SplitView.Pane>
                 <local:DoctorProfileTemplate x:Name="DoctorProfile" DataContext="{x:Bind viewModel.doc}"/>
             </SplitView.Pane>
             <SplitView.Content>
             <ScrollViewer x:Name="myScroll">
-                <StackPanel Margin="10,10,10,10">
+                <StackPanel Margin="10,10,10,10" HorizontalAlignment="Stretch">
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        
+                        
                         <Image Height="400" Width="400"/>
-                        <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
+                        <StackPanel>
 
-                            <TextBlock Text="{x:Bind viewModel.hospital.Name}"/>
-                            <TextBlock Text="{x:Bind viewModel.hospital.Location}"/>
-                            <TextBlock Text="{x:Bind viewModel.hospital.Rating.ToString()}"/>
-                            <TextBlock Text="{x:Bind viewModel.hospital.Description}"/>
+                            <TextBlock Text="{x:Bind viewModel.hospital.Name}" FontSize="24" FontWeight="Bold" Margin="10,10"/>
+                            <TextBlock Text="{x:Bind viewModel.hospital.Location}" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock x:Name="HospitalRating" Style="{StaticResource TextBlockStyle}">
+                    
+                                <Run Text="{x:Bind viewModel.hospital.Rating.ToString()}"/>
+                                <Run FontFamily="Segoe MDL2 Assets" Text="&#xE00A;"/>
+                                <Run Text=" ("/>
+                                <Run Text="{x:Bind viewModel.hospital.Number_Of_Rating.ToString()}"/>
+                                <Run Text=" Ratings)"/> 
+                            </TextBlock>
+                            <TextBlock Text="{x:Bind viewModel.hospital.Description}" Style="{StaticResource TextBlockStyle}"/>
 
                         </StackPanel>
 
-                    </Grid>
+                    </StackPanel>
 
 
 
@@ -52,16 +61,16 @@
 
                     <ListView x:Name="myListView" ItemsSource="{x:Bind viewModel.Doctors}" Margin="10,10,10,10"
                               IsItemClickEnabled='True'
-                          ItemClick="MyListView_ItemClick">
+                          ItemClick="MyListView_ItemClick" HorizontalAlignment="Left">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
-                                <Setter Property="Height" Value="200"/>
+                                <!--<Setter Property="Height" Value="200"/>-->
                                 <Setter Property="Margin" Value="10,10,10,10"/>
                             </Style>
                         </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="data:DoctorInHospitalDetails">
-                                <local:DoctorTemplate Margin="10,10"/>
+                                <local:DoctorTemplate Margin="10,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>

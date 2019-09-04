@@ -48,6 +48,7 @@ namespace DocApp.Data
                 hospitalCallback.ReadSuccess(results);
             else
                 hospitalCallback.ReadFail();
+            System.Diagnostics.Debug.WriteLine("hosp dao val=" + results[0].Number_Of_Rating);
 
         }
 

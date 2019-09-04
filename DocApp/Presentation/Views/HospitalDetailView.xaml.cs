@@ -32,10 +32,12 @@ namespace DocApp.Presentation.Views
         
         string name = "";
         ObservableCollection<Doctor> docs = new ObservableCollection<Doctor>();
-        public HospitalDetailViewModel viewModel;// = new HospitalDetailViewModel()
+        public HospitalDetailViewModel viewModel;
+        
         public HospitalDetailView()
         {
             this.InitializeComponent();
+            DoctorProfile.BackButtonClicked += this.onBackButtonClicked;
             
             
         }
@@ -53,12 +55,11 @@ namespace DocApp.Presentation.Views
             
 
         }
-
-        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        public void onBackButtonClicked(object source, EventArgs e)
         {
-            
-            
+            mySplitView.IsPaneOpen = false;
         }
+       
 
         private async void MyListView_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -67,16 +68,26 @@ namespace DocApp.Presentation.Views
             System.Diagnostics.Debug.WriteLine(((DoctorInHospitalDetails)e.ClickedItem).Name);
             await viewModel.GetDoctorDetails(((DoctorInHospitalDetails)e.ClickedItem).Name);
            DoctorProfile.DataContext = viewModel.doc;
-            if (viewModel.doc.Name.Equals(((DoctorInHospitalDetails)e.ClickedItem).Name))
-                mySplitView.IsPaneOpen = true;
-            else
+            try
+            {
+                if (viewModel.doc != null && viewModel.doc.Name.Equals(((DoctorInHospitalDetails)e.ClickedItem).Name))
+                    mySplitView.IsPaneOpen = true;
+                else
+                {
+                    await viewModel.GetDoctorDetails(((DoctorInHospitalDetails)e.ClickedItem).Name);
+                    DoctorProfile.DataContext = viewModel.doc;
+                    Bindings.Update();
+                    //mySplitView.IsPaneOpen = false;
+
+                }
+            }
+            catch(Exception _)
             {
                 await viewModel.GetDoctorDetails(((DoctorInHospitalDetails)e.ClickedItem).Name);
                 DoctorProfile.DataContext = viewModel.doc;
                 Bindings.Update();
-                //mySplitView.IsPaneOpen = false;
-
             }
+           
             //mySplitView.IsPaneOpen = true;
             //myScroll.ChangeView(0.0f, 0.0f, 1.0f);
 

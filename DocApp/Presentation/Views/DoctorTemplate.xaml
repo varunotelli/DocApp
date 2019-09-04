@@ -5,28 +5,73 @@
     xmlns:local="using:DocApp.Presentation.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="using:System"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+    <UserControl.Resources>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="10,10"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </UserControl.Resources>
 
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <Image Width="200" Height="200"/>
+            <Image Width="200" Height="200" Margin="10,10"/>
             <StackPanel>
-                <StackPanel>
+                
                     
-                    <TextBlock x:Name="DoctorName" Text="{x:Bind Doctor.Name}"/>
-                    <TextBlock x:Name="DoctorDesignation" Text="{x:Bind Doctor.Designation}"/>
-                    <TextBlock x:Name="DoctorExperience" Text="{x:Bind Doctor.Experience}"/>
+                    <StackPanel Margin="10,10,10,10">
 
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock x:Name="DoctorFee" Text="{x:Bind Doctor.fees.ToString()}"/>
-                    <TextBlock x:Name="DoctorStartTiming" Text="{x:Bind Doctor.Start_Time}"/>
-                    <TextBlock x:Name="DoctorEndTiming" Text="{x:Bind Doctor.End_Time}"/>
-                    <Button Content="Book Appointment" Margin="0,10,10,0"/>
-                </StackPanel>
+                        <TextBlock x:Name="DoctorName" Text="{x:Bind sys:String.Format('Dr. {0}',Doctor.Name)}" FontSize="24" Margin="10,10"
+                                   FontWeight="Bold"/>
+                        <TextBlock x:Name="DoctorExperience" Text="{x:Bind sys:String.Format('{0} of experience overall'
+                            ,Doctor.Experience)}" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock x:Name="DoctorDesignation" Text="{x:Bind Doctor.Designation}"
+                                   Style="{StaticResource TextBlockStyle}"/>
+                        
+
+                    </StackPanel>
+                
             </StackPanel>
+            
+               
+                <StackPanel Margin="10,10,10,10" VerticalAlignment="Stretch">
+                <TextBlock x:Name="DoctorRating" Style="{StaticResource TextBlockStyle}">
+                    
+                    <Run Text="{x:Bind Doctor.Rating.ToString()}"/>
+                    <Run FontFamily="Segoe MDL2 Assets" Text="&#xE00A;"/>
+                    <Run Text=" ("/>
+                    <Run Text="{x:Bind Doctor.Number_of_Rating.ToString()}"/>
+                    <Run Text=" Ratings)"/>
+                </TextBlock>
+                <TextBlock x:Name="DoctorFee" Style="{StaticResource TextBlockStyle}">
+                        <Run FontFamily="Segoe UI Emoji" Text="&#x1f4b0;"/>
+                        <Run Text="{x:Bind sys:String.Format('Rs.{0}',Doctor.fees)}"/>
+                    </TextBlock>
+
+                <TextBlock x:Name="DoctorStartTiming" Style="{StaticResource TextBlockStyle}">
+                        <Run FontFamily="Segoe MDL2 Assets" Text="&#xE121;"/>
+                        <Run Text="{x:Bind sys:String.Format('{0}-',Doctor.Start_Time)}"/>
+                        <Run Text="{x:Bind Doctor.End_Time}"/>
+                    </TextBlock>
+                   
+                    <Button Content="Book Appointment" Margin="10,10,10,0" Background="Green" VerticalAlignment="Bottom">
+                        <Button.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.ThemeDictionaries>
+                                    <ResourceDictionary x:Key="Dark">
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="DarkGreen"/>
+                                        <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="DarkGreen"/>
+                                    </ResourceDictionary>
+
+                                </ResourceDictionary.ThemeDictionaries>
+                            </ResourceDictionary>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            
 
         </StackPanel>
     </Grid>

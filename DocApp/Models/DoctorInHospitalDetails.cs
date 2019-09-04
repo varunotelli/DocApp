@@ -13,8 +13,8 @@ namespace DocApp.Models
         protected string Image { get; set; }
         public string Experience { get; set; }
         public string Designation { get; set; }
-        public float Rating = 0;
-        public int Number_of_Rating = 0;
+        public float Rating { get; set; }
+        public int Number_of_Rating { get; set; }
         public int fees { get; set; }
         public string Start_Time { get; set; }
         public string End_Time { get; set; }

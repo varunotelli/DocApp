@@ -18,8 +18,8 @@ namespace DocApp.Models
         public string Experience { get; set; }
         public string Description { get; set; }
         public string Designation { get; set; }
-        public float Rating = 0;
-        public int Number_of_Rating = 0;
+        public float Rating { get; set; }
+        public int Number_of_Rating { get; set; }
     
     }
 }

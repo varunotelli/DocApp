@@ -16,6 +16,8 @@ namespace DocApp.Presentation.ViewModels
     {
         
         protected string name1 = "";
+        public string rating = "";
+        public string num_rating = "";
         public Hospital hospital;
         public ObservableCollection<DoctorInHospitalDetails> Doctors;
         //public ObservableCollection<DoctorInHospitalDetails> doc= new ObservableCollection<DoctorInHospitalDetails>();
@@ -45,6 +47,7 @@ namespace DocApp.Presentation.ViewModels
         public HospitalDetailViewModel(string n)
         {
             this.name1 = n;
+            doc = new Doctor();
             //this.Doctors = new ObservableCollection<Doctor>();
            
         }
@@ -130,6 +133,8 @@ namespace DocApp.Presentation.ViewModels
         bool DoctorDetailViewCallBack.DataReadSuccess(Doctor d)
         {
             this.doc = d;
+            rating = d.Rating.ToString();
+            num_rating = d.Number_of_Rating.ToString();
             System.Diagnostics.Debug.WriteLine("Doctor info success");
             
             return true;

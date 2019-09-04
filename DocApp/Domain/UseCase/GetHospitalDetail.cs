@@ -30,7 +30,7 @@ namespace DocApp.Domain.UseCase
             {
                 System.Diagnostics.Debug.WriteLine("In use case");
                 await HospitalList.GetHospitalByNameAsync(name1,this);
-                System.Diagnostics.Debug.WriteLine(hospital.Location);
+                System.Diagnostics.Debug.WriteLine("hosp val="+hospital.Number_Of_Rating);
             }
             catch (Exception e)
             {

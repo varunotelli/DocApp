@@ -29,13 +29,16 @@ namespace DocApp.Data
                                on d.ID equals r.doc_id
                                where hosp.Any(h=>h.Name.Equals(hospname) && h.ID == r.hosp_id)
                                select new DoctorInHospitalDetails {doc_id=d.ID,
-                                   Name =d.Name,
+                               Name =d.Name,
                                Designation=d.Designation,
-                               Experience=d.Experience,
+                               Experience=d.Experience.ToLower(),
                                Start_Time=r.start_time,
                                End_Time=r.end_time,
                                fees=r.fee,
+                               Rating=d.Rating,
+                               Number_of_Rating=d.Number_of_Rating,
                                max_patients=r.max_patients
+                               
                               
                                }
                     ) ;

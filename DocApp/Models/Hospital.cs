@@ -24,7 +24,7 @@ namespace DocApp.Models
         //}
         public string Location { get; set; }
         public float Rating { get; set; }
-        public int NumberOfRating { get; set; }
+        public int Number_Of_Rating { get; set; }
         public string Image { get; set; }
         public DateTime Start_Time { get; set; }
         public DateTime Close_Time { get; set; }
