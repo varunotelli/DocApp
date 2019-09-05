@@ -130,6 +130,7 @@
     <Compile Include="Domain\Callbacks\IAddressCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDoctorCallback.cs" />
     <Compile Include="Domain\Callbacks\IDoctorHospitalCallBack.cs" />
+    <Compile Include="Domain\Callbacks\IDoctorUpdateCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalDoctorCallback.cs" />
     <Compile Include="Domain\DataContracts\IDoctorInHospitalList.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Domain\UseCase\GetHospitalByDoctorUseCase.cs" />
     <Compile Include="Domain\UseCase\GetHospitalByLocationUseCase.cs" />
     <Compile Include="Domain\UseCase\GetHospitalDetail.cs" />
+    <Compile Include="Domain\UseCase\UpdateDoctorRatingUseCase.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

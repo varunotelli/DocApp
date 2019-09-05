@@ -24,15 +24,18 @@ namespace DocApp.Presentation.ViewModels
             //this.Doctors = new ObservableCollection<Doctor>();
 
         }
+        
 
 
         UseCaseBase getDoc;
         UseCaseBase getHosp;
+        UseCaseBase updateDoc;
         public async Task GetDoctor()
         {
             hospitals = new ObservableCollection<HospitalInDoctorDetails>();
             getDoc = new GetDoctorDetailUseCase(name1);
             getHosp = new GetHospitalByDoctorUseCase(name1);
+            
             getDoc.SetCallBack<DoctorDetailViewCallBack>(this);
             getHosp.SetCallBack<HospitalDoctorViewCallBack>(this);
             try
@@ -51,6 +54,20 @@ namespace DocApp.Presentation.ViewModels
 
 
 
+        }
+
+        public async Task UpdateDoctor(string name, double rating)
+        {
+            updateDoc = new UpdateDoctorRatingUseCase(name, rating);
+            updateDoc.SetCallBack(this);
+            try
+            {
+                await updateDoc.Execute();
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("UPDATE VIEWMODEL EXCEPTION=" + e.Message);
+            }
         }
         
         public bool DataReadSuccess(Doctor d)
@@ -82,6 +99,18 @@ namespace DocApp.Presentation.ViewModels
         bool HospitalDoctorViewCallBack.DataReadFail()
         {
             System.Diagnostics.Debug.WriteLine("Doctor Detail View Model fail!!");
+            return false;
+        }
+
+        public bool DoctorDetailViewSuccess(Doctor d)
+        {
+            this.doctor = d;
+            return true;
+        }
+
+        public bool DoctorDetailViewFail()
+        {
+            System.Diagnostics.Debug.WriteLine("Doctor Update FAILED!!!");
             return false;
         }
     }

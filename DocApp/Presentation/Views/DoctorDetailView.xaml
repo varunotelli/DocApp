@@ -26,20 +26,21 @@
                     </Grid.ColumnDefinitions>
                     <Image Height="400" Width="400"/>
                     <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
-
-                        <TextBlock Text="{x:Bind sys:String.Format('Dr.{0}', viewModel.doctor.Name)}" 
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{x:Bind sys:String.Format('Dr.{0}', viewModel.doctor.Name)}" 
                                    FontSize="24" FontWeight="Bold" Margin="10,10"/>
+                    <RatingControl x:Name="DocRating" Value="{x:Bind viewModel.doctor.Rating}" HorizontalAlignment="Left" Margin="10,10"
+                                       Caption="{x:Bind sys:String.Format('({0})',viewModel.doctor.Number_of_Rating)}" 
+                                       IsReadOnly="True"/>
+                </StackPanel>
+
+                        
                     <TextBlock Text="{x:Bind viewModel.doctor.Designation}" Style="{StaticResource TextBlockStyle}"/>
                 <TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', viewModel.doctor.Experience)}" 
                                 Style="{StaticResource TextBlockStyle}"/>
-                <TextBlock x:Name="HospitalRating" Style="{StaticResource TextBlockStyle}">
-                    
-                                <Run Text="{x:Bind viewModel.doctor.Rating.ToString()}"/>
-                                <Run FontFamily="Segoe MDL2 Assets" Text="&#xE00A;"/>
-                                <Run Text=" ("/>
-                                <Run Text="{x:Bind viewModel.doctor.Number_of_Rating.ToString()}"/>
-                                <Run Text=" Ratings)"/>
-                </TextBlock>
+                
+                <RatingControl x:Name="myRating" ValueChanged="MyRating_ValueChanged" HorizontalAlignment="Left" Margin="10,10"
+                               Caption="Your Rating"/>
                 <TextBlock Text="{x:Bind viewModel.doctor.Description}" Margin="10,0" TextWrapping="WrapWholeWords"/>
                         
                         

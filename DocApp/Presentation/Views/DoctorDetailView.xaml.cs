@@ -63,5 +63,16 @@ namespace DocApp.Presentation.Views
         {
             OnListViewItemSelected();
         }
+
+        private async void MyRating_ValueChanged(RatingControl sender, object args)
+        {
+            Bindings.Update();
+            if (myRating.Value > 0)
+            {
+                myRating.Caption = myRating.Value.ToString();
+                await viewModel.UpdateDoctor(name, myRating.Value);
+                Bindings.Update();
+            }
+        }
     }
 }

@@ -160,11 +160,11 @@ namespace DocApp.Presentation.Views
 
         private async void MyAutoSuggest_Loaded(object sender, RoutedEventArgs e)
         {
-         
-            //await onHospComboClicked();
-            //hospitals.Clear();
-            //foreach (var h in viewModel.hospitals)
-            //    hospitals.Add(h.Name);
+
+            await onHospComboClicked();
+            hospitals.Clear();
+            foreach (var h in viewModel.hospitals)
+                hospitals.Add(h.Name);
         }
 
         private async void MyAutoSuggest_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

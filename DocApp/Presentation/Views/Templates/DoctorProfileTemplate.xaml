@@ -24,14 +24,9 @@
         <TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', doctor.Experience)}" 
                    Style="{StaticResource TextBlockStyle}"/>
         <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}"/>
-        <TextBlock x:Name="DoctorRating" Style="{StaticResource TextBlockStyle}">
-                    
-            <Run Text="{x:Bind doctor.Rating.ToString()}" />
-            <Run FontFamily="Segoe MDL2 Assets" Text="&#xE00A;"/>
-            <Run Text=" ("/>
-            <Run Text="{x:Bind doctor.Number_of_Rating.ToString()}"/>
-            <Run Text=" Ratings)"/>
-        </TextBlock>
+        <RatingControl Value="{x:Bind doctor.Rating}" HorizontalAlignment="Left" Margin="10,10"
+                                       Caption="{x:Bind sys:String.Format('({0})',doctor.Number_of_Rating)}" 
+                                       IsReadOnly="True"/>
         <TextBlock Text="{x:Bind doctor.Description}" TextWrapping="Wrap" Style="{StaticResource TextBlockStyle}"/>
         <Button Content="Book Appointment" Margin="10,10,10,0" Background="Green" VerticalAlignment="Bottom">
             <Button.Resources>

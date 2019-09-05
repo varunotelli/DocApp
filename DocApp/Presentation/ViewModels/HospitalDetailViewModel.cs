@@ -144,5 +144,17 @@ namespace DocApp.Presentation.ViewModels
             System.Diagnostics.Debug.WriteLine("Doctor info fail");
             return false;
         }
+
+        public bool DoctorDetailViewSuccess(Doctor d)
+        {
+            this.doc = d;
+            return true;
+        }
+
+        public bool DoctorDetailViewFail()
+        {
+            System.Diagnostics.Debug.WriteLine("Doctor update fail");
+            return false;
+        }
     }
 }

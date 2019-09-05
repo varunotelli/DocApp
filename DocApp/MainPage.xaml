@@ -11,7 +11,7 @@
 
     <ScrollViewer x:Name="MainScroll">
         <StackPanel>
-            <Frame x:Name="TitleFrame" Height="300"/>
+            <Frame x:Name="TitleFrame" Height="400"/>
             <Frame x:Name="myFrame">
 
             </Frame>

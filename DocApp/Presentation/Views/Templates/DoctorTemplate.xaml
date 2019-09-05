@@ -39,14 +39,9 @@
             
                
                 <StackPanel Margin="10,65,10,10" VerticalAlignment="Stretch">
-                <TextBlock x:Name="DoctorRating" Style="{StaticResource TextBlockStyle}">
-                    
-                    <Run Text="{x:Bind Doctor.Rating.ToString()}"/>
-                    <Run FontFamily="Segoe MDL2 Assets" Text="&#xE00A;"/>
-                    <Run Text=" ("/>
-                    <Run Text="{x:Bind Doctor.Number_of_Rating.ToString()}"/>
-                    <Run Text=" Ratings)"/>
-                </TextBlock>
+                <RatingControl Value="{x:Bind Doctor.Rating}" 
+                                       Caption="{x:Bind sys:String.Format('({0})',Doctor.Number_of_Rating)}" 
+                                       IsReadOnly="True"/>
                 <TextBlock x:Name="DoctorFee" Style="{StaticResource TextBlockStyle}">
                         <Run FontFamily="Segoe UI Emoji" Text="&#x1f4b0;"/>
                         <Run Text="{x:Bind sys:String.Format('Rs.{0}',Doctor.fees)}"/>

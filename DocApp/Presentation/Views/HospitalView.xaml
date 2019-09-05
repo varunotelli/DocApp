@@ -22,11 +22,13 @@
         </Style>
         <Style x:Key="ComboStyle" TargetType="ComboBox">
             <Setter Property="FontFamily" Value="ms-appx:///Assets/podkova-v13-latin-regular.ttf#Podkova"/>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Height" Value="40"/>
         </Style>
-        <Style x:Key="AutoboxStyle" TargetType="AutoSuggestBox" >
+        <Style x:Key="AutoboxStyle" TargetType="TextBox" >
             <Setter Property="FontFamily" Value="ms-appx:///Assets/podkova-v13-latin-regular.ttf#Podkova"/>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Height" Value="40"/>
         </Style>
 
     </Page.Resources>
@@ -48,7 +50,7 @@
             </Grid.ColumnDefinitions>
             <AutoSuggestBox x:Name="MyAutoSuggest" QueryIcon="Map" PlaceholderText="{x:Bind viewModel.loc, Mode=TwoWay}"  VerticalAlignment="Top"
                             HorizontalAlignment="Stretch" TextChanged="MyAutoSuggest_TextChanged" 
-                     Margin="10,10,10,10" Loaded="MyAutoSuggest_Loaded" Style="{StaticResource AutoboxStyle}"
+                     Margin="10,10,10,10" Loaded="MyAutoSuggest_Loaded" TextBoxStyle="{StaticResource AutoboxStyle}"
                      />
             <ComboBox x:Name="DocCombo" Grid.Column="1" PlaceholderText="Doctors" HorizontalAlignment="Stretch" Margin="10,10,10,10"
                       ItemsSource="{x:Bind viewModel.doctormain}" Style="{StaticResource ComboStyle}"
