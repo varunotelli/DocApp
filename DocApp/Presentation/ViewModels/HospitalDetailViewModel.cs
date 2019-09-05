@@ -133,8 +133,7 @@ namespace DocApp.Presentation.ViewModels
         bool DoctorDetailViewCallBack.DataReadSuccess(Doctor d)
         {
             this.doc = d;
-            rating = d.Rating.ToString();
-            num_rating = d.Number_of_Rating.ToString();
+           
             System.Diagnostics.Debug.WriteLine("Doctor info success");
             
             return true;

@@ -1,0 +1,78 @@
+﻿<UserControl
+    x:Class="DocApp.Presentation.Views.Templates.HospitalTemplate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DocApp.Presentation.Views.Templates"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="using:System"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="10,10"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <Image Width="200" Height="200" Margin="10,10"/>
+            <StackPanel>
+
+
+                <StackPanel Margin="10,10,10,10">
+
+                    <TextBlock x:Name="hospitalName" Text="{x:Bind hospital.Name}" FontSize="24" Margin="10,10"
+                                   FontWeight="Bold"/>
+                    
+                    <TextBlock x:Name="hospitalLocation" Text="{x:Bind hospital.Location}"
+                                   Style="{StaticResource TextBlockStyle}"/>
+
+
+                </StackPanel>
+
+            </StackPanel>
+
+
+            <StackPanel Margin="10,10,10,10" VerticalAlignment="Stretch">
+                <TextBlock x:Name="hospitalRating" Style="{StaticResource TextBlockStyle}">
+                    
+                    <Run Text="{x:Bind hospital.Rating.ToString()}"/>
+                    <Run FontFamily="Segoe MDL2 Assets" Text="&#xE00A;"/>
+                    <Run Text=" ("/>
+                    <Run Text="{x:Bind hospital.Number_of_Rating.ToString()}"/>
+                    <Run Text=" Ratings)"/>
+                </TextBlock>
+                <TextBlock x:Name="hospitalFee" Style="{StaticResource TextBlockStyle}">
+                        <Run FontFamily="Segoe UI Emoji" Text="&#x1f4b0;"/>
+                        <Run Text="{x:Bind sys:String.Format('Rs.{0}',hospital.Fees)}"/>
+                </TextBlock>
+
+                <TextBlock x:Name="hospitalStartTiming" Style="{StaticResource TextBlockStyle}">
+                        <Run FontFamily="Segoe MDL2 Assets" Text="&#xE121;"/>
+                        <Run Text="{x:Bind sys:String.Format('{0}-',hospital.Start_Time)}"/>
+                        <Run Text="{x:Bind hospital.End_Time}"/>
+                </TextBlock>
+
+                <Button Content="Book Appointment" Margin="10,10,10,0" Background="Green" VerticalAlignment="Bottom">
+                    <Button.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.ThemeDictionaries>
+                                <ResourceDictionary x:Key="Dark">
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="DarkGreen"/>
+                                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="DarkGreen"/>
+                                </ResourceDictionary>
+
+                            </ResourceDictionary.ThemeDictionaries>
+                        </ResourceDictionary>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+
+
+        </StackPanel>
+
+    </Grid>
+</UserControl>

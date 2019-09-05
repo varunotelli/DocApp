@@ -5,6 +5,8 @@
     xmlns:local="using:DocApp.Presentation.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:DocApp.Presentation.Views.Templates"
+    xmlns:data="using:DocApp.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     RequestedTheme="Dark">
@@ -24,6 +26,15 @@
                         <TextBlock Text="{x:Bind viewModel.doctor.Experience}"/>
                         <TextBlock Text="{x:Bind viewModel.doctor.Rating.ToString()}"/>
                         <TextBlock Text="{x:Bind viewModel.doctor.Number_of_Rating.ToString()}"/>
+                        
+                        <ListView ItemsSource="{x:Bind viewModel.hospitals}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:HospitalInDoctorDetails">
+                            <uc:HospitalTemplate HorizontalAlignment="Stretch"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                        </ListView>
 
 
             </StackPanel>

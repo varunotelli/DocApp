@@ -25,7 +25,7 @@ namespace DocApp.Domain.UseCase
         {
             // = new IHospitalCallback();
             //hospitals = new List<Hospital>();
-            IDoctorInHospitalList DoctorList = new HospitalDoctorDAO();
+            IDoctorInHospitalList DoctorList = new DoctorHospitalDAO();
             try
             {
                 System.Diagnostics.Debug.WriteLine("In use case");

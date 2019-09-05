@@ -10,12 +10,13 @@ using System.Threading.Tasks;
 
 namespace DocApp.Presentation.ViewModels
 {
-    class DoctorDetailViewModel: DoctorDetailViewCallBack
+    class DoctorDetailViewModel: DoctorDetailViewCallBack, HospitalDoctorViewCallBack
     {
 
 
         protected string name1 = "";
         public Doctor doctor;
+        public ObservableCollection<HospitalInDoctorDetails> hospitals;
         
         public DoctorDetailViewModel(string n)
         {
@@ -25,17 +26,20 @@ namespace DocApp.Presentation.ViewModels
         }
 
 
-        UseCaseBase getDoc;// = new GetDoctorDetailUseCase();
+        UseCaseBase getDoc;
+        UseCaseBase getHosp;
         public async Task GetDoctor()
         {
-
+            hospitals = new ObservableCollection<HospitalInDoctorDetails>();
             getDoc = new GetDoctorDetailUseCase(name1);
+            getHosp = new GetHospitalByDoctorUseCase(name1);
             getDoc.SetCallBack<DoctorDetailViewCallBack>(this);
-
+            getHosp.SetCallBack<HospitalDoctorViewCallBack>(this);
             try
             {
 
                 await getDoc.Execute();
+                await getHosp.Execute();
                 
 
             }
@@ -60,6 +64,24 @@ namespace DocApp.Presentation.ViewModels
         public bool DataReadFail()
         {
             System.Diagnostics.Debug.WriteLine("Doctor FAILED!!!");
+            return false;
+        }
+
+        bool HospitalDoctorViewCallBack.DataReadSuccess(List<HospitalInDoctorDetails> h)
+        {
+            
+            foreach( var x in h)
+            {
+                hospitals.Add(x);
+            }
+            System.Diagnostics.Debug.WriteLine("Doc details viewmodel count=" + hospitals.Count());
+            System.Diagnostics.Debug.WriteLine("Doctor Detail View Model Success!!");
+            return true;
+        }
+
+        bool HospitalDoctorViewCallBack.DataReadFail()
+        {
+            System.Diagnostics.Debug.WriteLine("Doctor Detail View Model fail!!");
             return false;
         }
     }

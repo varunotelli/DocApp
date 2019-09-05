@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:DocApp.Models"
+    xmlns:uc="using:DocApp.Presentation.Views.Templates"
     mc:Ignorable="d"
     RequestedTheme="Dark"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -26,7 +27,7 @@
         
         <SplitView x:Name="mySplitView" DisplayMode="Inline" IsPaneOpen="False" PanePlacement="Right" OpenPaneLength="400">
             <SplitView.Pane>
-                <local:DoctorProfileTemplate x:Name="DoctorProfile" DataContext="{x:Bind viewModel.doc}"/>
+                <uc:DoctorProfileTemplate x:Name="DoctorProfile" DataContext="{x:Bind viewModel.doc}"/>
             </SplitView.Pane>
             <SplitView.Content>
             <ScrollViewer x:Name="myScroll">
@@ -70,7 +71,7 @@
                         </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="data:DoctorInHospitalDetails">
-                                <local:DoctorTemplate Margin="10,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                <uc:DoctorTemplate Margin="10,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
