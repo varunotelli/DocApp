@@ -32,6 +32,8 @@ namespace DocApp.Presentation.Views
         
         string name = "";
         ObservableCollection<Doctor> docs = new ObservableCollection<Doctor>();
+        public delegate void ListViewItemSelectedEventHandler(object source, EventArgs e);
+        public event ListViewItemSelectedEventHandler ListViewItemSelected;
         public HospitalDetailViewModel viewModel;
         
         public HospitalDetailView()
@@ -42,12 +44,21 @@ namespace DocApp.Presentation.Views
             
         }
 
+        public void OnListViewItemSelected()
+        {
+            if (ListViewItemSelected != null)
+                ListViewItemSelected(this, EventArgs.Empty);
+        }
+
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
             System.Diagnostics.Debug.WriteLine("Sent val="+(string)e1.Parameter);
             name = (string)e1.Parameter;
             //HospitalDetailsTemplate h = new HospitalDetailsTemplate();
             viewModel = new HospitalDetailViewModel(name);
+            var frame = (Frame)Window.Current.Content;
+            var page = (MainPage)frame.Content;
+            this.ListViewItemSelected += page.OnListViewItemSelected;
             await viewModel.GetHospitals();
             
             return;
@@ -63,7 +74,8 @@ namespace DocApp.Presentation.Views
 
         private async void MyListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-           System.Diagnostics.Debug.WriteLine("Item clicked");
+            OnListViewItemSelected();
+            System.Diagnostics.Debug.WriteLine("Item clicked");
            //mySplitView.IsPaneOpen =false;
             System.Diagnostics.Debug.WriteLine(((DoctorInHospitalDetails)e.ClickedItem).Name);
             await viewModel.GetDoctorDetails(((DoctorInHospitalDetails)e.ClickedItem).Name);
@@ -89,7 +101,7 @@ namespace DocApp.Presentation.Views
                 Bindings.Update();
                 mySplitView.IsPaneOpen = true;
             }
-           
+            
             //mySplitView.IsPaneOpen = true;
             //myScroll.ChangeView(0.0f, 0.0f, 1.0f);
 

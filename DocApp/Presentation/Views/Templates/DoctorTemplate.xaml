@@ -26,10 +26,11 @@
 
                         <TextBlock x:Name="DoctorName" Text="{x:Bind sys:String.Format('Dr. {0}',Doctor.Name)}" FontSize="24" Margin="10,10"
                                    FontWeight="Bold"/>
-                        <TextBlock x:Name="DoctorExperience" Text="{x:Bind sys:String.Format('{0} of experience overall'
-                            ,Doctor.Experience)}" Style="{StaticResource TextBlockStyle}"/>
-                        <TextBlock x:Name="DoctorDesignation" Text="{x:Bind Doctor.Designation}"
+                    <TextBlock x:Name="DoctorDesignation" Text="{x:Bind Doctor.Designation}"
                                    Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock x:Name="DoctorExperience" Text="{x:Bind sys:String.Format('{0} of experience overall'
+                            ,Doctor.Experience)}" Style="{StaticResource TextBlockStyle}"/>
+                        
                         
 
                     </StackPanel>
@@ -37,7 +38,7 @@
             </StackPanel>
             
                
-                <StackPanel Margin="10,10,10,10" VerticalAlignment="Stretch">
+                <StackPanel Margin="10,65,10,10" VerticalAlignment="Stretch">
                 <TextBlock x:Name="DoctorRating" Style="{StaticResource TextBlockStyle}">
                     
                     <Run Text="{x:Bind Doctor.Rating.ToString()}"/>

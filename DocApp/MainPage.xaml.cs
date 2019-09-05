@@ -27,11 +27,14 @@ namespace DocApp
         public MainPage()
         {
             this.InitializeComponent();
-            //hospitalView = new HospitalView();
-            //hospitalView.hospChanged += this.onHospChanged;
-            myFrame.Navigate(typeof(HospitalView));
+            
+            TitleFrame.Navigate(typeof(HospitalView));
         }
-
+        public void OnListViewItemSelected(object source, EventArgs eventArgs)
+        {
+            System.Diagnostics.Debug.WriteLine("FIRED!!!!!");
+            MainScroll.ChangeView(0.0f, 300.0f, 1.0f);
+        }
         
     }
 }

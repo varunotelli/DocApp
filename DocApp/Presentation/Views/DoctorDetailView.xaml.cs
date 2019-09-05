@@ -27,6 +27,8 @@ namespace DocApp.Presentation.Views
      */
     public sealed partial class DoctorDetailView : Page
     {
+        public delegate void ListViewItemSelectedEventHandler(object source, EventArgs e);
+        public event ListViewItemSelectedEventHandler ListViewItemSelected;
         DoctorDetailViewModel viewModel;
         string name = "";
         public DoctorDetailView()
@@ -41,12 +43,25 @@ namespace DocApp.Presentation.Views
             name = (string)e1.Parameter;
             //HospitalDetailsTemplate h = new HospitalDetailsTemplate();
             viewModel = new DoctorDetailViewModel(name);
+            var frame = (Frame)Window.Current.Content;
+            var page = (MainPage)frame.Content;
+            this.ListViewItemSelected += page.OnListViewItemSelected;
             await viewModel.GetDoctor();
             
             return;
 
 
 
+        }
+        public void OnListViewItemSelected()
+        {
+            if (ListViewItemSelected != null)
+                ListViewItemSelected(this, EventArgs.Empty);
+        }
+
+        private void HospList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            OnListViewItemSelected();
         }
     }
 }

@@ -6,12 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    RequestedTheme="Dark">
 
-    <Grid>
-        <Frame x:Name="myFrame">
-            
-        </Frame>
+    <ScrollViewer x:Name="MainScroll">
+        <StackPanel>
+            <Frame x:Name="TitleFrame" Height="300"/>
+            <Frame x:Name="myFrame">
 
-    </Grid>
+            </Frame>
+
+
+        </StackPanel>
+    </ScrollViewer>
+    
 </Page>

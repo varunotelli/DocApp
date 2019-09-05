@@ -21,7 +21,8 @@
                 HorizontalAlignment="Left" VerticalAlignment="Top" Click="BackButton_Click" />
         <Image Width="200" Height="200"/>
         <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,10" FontSize="24" FontWeight="Bold"/>
-        <TextBlock Text="{x:Bind doctor.Experience}" Style="{StaticResource TextBlockStyle}"/>
+        <TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', doctor.Experience)}" 
+                   Style="{StaticResource TextBlockStyle}"/>
         <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}"/>
         <TextBlock x:Name="DoctorRating" Style="{StaticResource TextBlockStyle}">
                     

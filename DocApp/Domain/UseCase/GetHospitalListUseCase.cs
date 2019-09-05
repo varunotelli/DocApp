@@ -22,6 +22,7 @@ namespace DocApp.Domain.Usecase
         {
             // = new IHospitalCallback();
             //hospitals = new List<Hospital>();
+            this.hospitals = new List<Hospital>();
             IHospitalList HospitalList = new HospitalListDAO();
             try
             {
@@ -53,7 +54,7 @@ namespace DocApp.Domain.Usecase
 
         public bool ReadSuccess(List<Hospital> hosp)
         {
-            this.hospitals = new List<Hospital>();
+           
             this.hospitals = hosp;
             System.Diagnostics.Debug.WriteLine("DAO READ SUCCESS!!!");
 

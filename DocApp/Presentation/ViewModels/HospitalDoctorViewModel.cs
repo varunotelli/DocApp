@@ -149,7 +149,7 @@ namespace DocApp.Presentation.ViewModels
             else temp = locbox;
             hospitalmain.Clear();
             System.Diagnostics.Debug.WriteLine("h size="+h.Count());
-            if (location.Equals("CURRENT LOCATION"))
+            if (temp.Equals("CURRENT LOCATION"))
             {
                 foreach(var x in h)
                 {
@@ -159,7 +159,8 @@ namespace DocApp.Presentation.ViewModels
             }
             else
             {
-                if(hospitals.Select(x=> x.Location).Contains(temp))
+                System.Diagnostics.Debug.WriteLine("IN else");
+                //if (h.Select(x=> x.Location).Contains(temp))
                 //System.Diagnostics.Debug.WriteLine("IN else");
                     foreach(var x in h)
                     {

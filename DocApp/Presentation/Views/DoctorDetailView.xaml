@@ -7,12 +7,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:DocApp.Presentation.Views.Templates"
     xmlns:data="using:DocApp.Models"
+    xmlns:sys="using:System"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     RequestedTheme="Dark">
+    <Page.Resources>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="10,10"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </Page.Resources>
 
     <Grid>
-        <Grid>
+        <Grid HorizontalAlignment="Left">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -20,19 +27,33 @@
                     <Image Height="400" Width="400"/>
                     <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
 
-                        <TextBlock Text="{x:Bind viewModel.doctor.Name}"/>
-                        <TextBlock Text="{x:Bind viewModel.doctor.Description}"/>
-                        <TextBlock Text="{x:Bind viewModel.doctor.Designation}"/>
-                        <TextBlock Text="{x:Bind viewModel.doctor.Experience}"/>
-                        <TextBlock Text="{x:Bind viewModel.doctor.Rating.ToString()}"/>
-                        <TextBlock Text="{x:Bind viewModel.doctor.Number_of_Rating.ToString()}"/>
+                        <TextBlock Text="{x:Bind sys:String.Format('Dr.{0}', viewModel.doctor.Name)}" 
+                                   FontSize="24" FontWeight="Bold" Margin="10,10"/>
+                    <TextBlock Text="{x:Bind viewModel.doctor.Designation}" Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', viewModel.doctor.Experience)}" 
+                                Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock x:Name="HospitalRating" Style="{StaticResource TextBlockStyle}">
+                    
+                                <Run Text="{x:Bind viewModel.doctor.Rating.ToString()}"/>
+                                <Run FontFamily="Segoe MDL2 Assets" Text="&#xE00A;"/>
+                                <Run Text=" ("/>
+                                <Run Text="{x:Bind viewModel.doctor.Number_of_Rating.ToString()}"/>
+                                <Run Text=" Ratings)"/>
+                </TextBlock>
+                <TextBlock Text="{x:Bind viewModel.doctor.Description}" Margin="10,0" TextWrapping="WrapWholeWords"/>
                         
-                        <ListView ItemsSource="{x:Bind viewModel.hospitals}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="data:HospitalInDoctorDetails">
-                            <uc:HospitalTemplate HorizontalAlignment="Stretch"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+                        
+
+                <TextBlock FontSize="24" FontWeight="Bold" Margin="10,10"
+                           Text="{x:Bind sys:String.Format('Places where Dr.{0} visits',viewModel.doctor.Name)}"/>
+
+                <ListView x:Name="HospList" ItemsSource="{x:Bind viewModel.hospitals}" IsItemClickEnabled="True"
+                                          ItemClick="HospList_ItemClick">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="data:HospitalInDoctorDetails">
+                                    <uc:HospitalTemplate HorizontalAlignment="Left"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
 
                         </ListView>
 

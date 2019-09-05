@@ -30,10 +30,10 @@
                 <uc:DoctorProfileTemplate x:Name="DoctorProfile" DataContext="{x:Bind viewModel.doc}"/>
             </SplitView.Pane>
             <SplitView.Content>
-            <ScrollViewer x:Name="myScroll">
+            
                 <StackPanel Margin="10,10,10,10" HorizontalAlignment="Stretch">
 
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         
                         
                         <Image Height="400" Width="400"/>
@@ -78,11 +78,11 @@
 
 
                 </StackPanel>
-            </ScrollViewer>
+            
         </SplitView.Content>
             
         </SplitView>
-        
-        
-    
+
+   
+
 </Page>

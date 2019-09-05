@@ -91,34 +91,45 @@ namespace DocApp.Presentation.Views
         {
 
             //onHospChanged();
-            Frame parentFrame = Window.Current.Content as Frame;
+            if(HospCombo.SelectedItem!=null)
+            {
+                Frame parentFrame = Window.Current.Content as Frame;
 
-            MainPage mp = parentFrame.Content as MainPage;
-            Grid grid = mp.Content as Grid;
-            Frame my_frame = grid.FindName("myFrame") as Frame;
-            System.Diagnostics.Debug.WriteLine("Selected=" + HospCombo.SelectedItem);
-            my_frame.Navigate(typeof(HospitalDetailView), HospCombo.SelectedItem);
+                MainPage mp = parentFrame.Content as MainPage;
+                ScrollViewer grid = mp.Content as ScrollViewer;
+                Frame my_frame = grid.FindName("myFrame") as Frame;
+                System.Diagnostics.Debug.WriteLine("Selected=" + HospCombo.SelectedItem);
+                my_frame.Navigate(typeof(HospitalDetailView), HospCombo.SelectedItem);
+                HospCombo.SelectedItem = null;
+            }
 
         }
 
         private void DocCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Frame parentFrame = Window.Current.Content as Frame;
+            if(DocCombo.SelectedItem!=null)
+            {
+                Frame parentFrame = Window.Current.Content as Frame;
 
-            MainPage mp = parentFrame.Content as MainPage;
-            Grid grid = mp.Content as Grid;
-            Frame my_frame = grid.FindName("myFrame") as Frame;
-            System.Diagnostics.Debug.WriteLine("Selected=" + DocCombo.SelectedItem);
-            my_frame.Navigate(typeof(DoctorDetailView), DocCombo.SelectedItem);
+                MainPage mp = parentFrame.Content as MainPage;
+                ScrollViewer grid = mp.Content as ScrollViewer;
+                Frame my_frame = grid.FindName("myFrame") as Frame;
+                System.Diagnostics.Debug.WriteLine("Selected=" + DocCombo.SelectedItem);
+                my_frame.Navigate(typeof(DoctorDetailView), DocCombo.SelectedItem);
+                DocCombo.SelectedItem = null;
+            }
         }
 
         private async void DocCombo_DropDownOpened(object sender, object e)
         {
             await ondocComboClicked();
-            doctors.Clear();
+            
+            //doctors.Clear();
             foreach (var h in viewModel.doctors)
                 doctors.Add(h.Name);
+            
             Bindings.Update();
+            
 
         }
 
@@ -126,13 +137,14 @@ namespace DocApp.Presentation.Views
 
         private async void HospCombo_DropDownOpened(object sender, object e)
         {
-
+            //hospitals.Clear();
             await onHospComboClicked();
-            hospitals.Clear();
+            
             foreach (var h in viewModel.hospitals)
                 hospitals.Add(h.Name);
+           
             Bindings.Update();
-
+            
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -149,10 +161,10 @@ namespace DocApp.Presentation.Views
         private async void MyAutoSuggest_Loaded(object sender, RoutedEventArgs e)
         {
          
-            await onHospComboClicked();
-            hospitals.Clear();
-            foreach (var h in viewModel.hospitals)
-                hospitals.Add(h.Name);
+            //await onHospComboClicked();
+            //hospitals.Clear();
+            //foreach (var h in viewModel.hospitals)
+            //    hospitals.Add(h.Name);
         }
 
         private async void MyAutoSuggest_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
