@@ -27,7 +27,10 @@ namespace DocApp.Data
                     "SELECT * FROM HOSPITAL ");
                 System.Diagnostics.Debug.WriteLine("results="+results.Count());
                 if (results != null && results.Count > 0)
+                {
                     hospitalCallback.ReadSuccess(results);
+                    await DoctorDBHandler.db.CloseAsync();
+                }
                 else
                     hospitalCallback.ReadFail();
 
@@ -45,7 +48,10 @@ namespace DocApp.Data
             var results = await DoctorDBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
                 "WHERE NAME='{0}'",name));
             if (results != null && results.Count > 0)
+            {
                 hospitalCallback.ReadSuccess(results);
+                await DoctorDBHandler.db.CloseAsync();
+            }
             else
                 hospitalCallback.ReadFail();
             System.Diagnostics.Debug.WriteLine("hosp dao val=" + results[0].Number_Of_Rating);
@@ -58,7 +64,10 @@ namespace DocApp.Data
             var results = await DoctorDBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
                 "WHERE LOCATION='{0}'", name));
             if (results != null && results.Count > 0)
+            {
                 hospitalCallback.ReadSuccess(results);
+                await DoctorDBHandler.db.CloseAsync();
+            }
             else
                 hospitalCallback.ReadFail();
 

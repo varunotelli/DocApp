@@ -46,9 +46,13 @@ namespace DocApp.Data
 
                 foreach (var x in details)
                     results.Add(x);
-                
+
                 if (results != null && results.Count() > 0)
+                {
                     HospitalDoctorCallBack.ReadSuccess(results);
+                    await DoctorDBHandler.db.CloseAsync();
+                }
+
                 else HospitalDoctorCallBack.ReadFail();
 
 

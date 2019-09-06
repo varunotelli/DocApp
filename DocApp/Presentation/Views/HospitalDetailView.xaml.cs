@@ -59,6 +59,7 @@ namespace DocApp.Presentation.Views
             var frame = (Frame)Window.Current.Content;
             var page = (MainPage)frame.Content;
             this.ListViewItemSelected += page.OnListViewItemSelected;
+            DoctorProfile.BackButtonClicked += page.OnBackButtonClicked;
             await viewModel.GetHospitals();
             
             return;

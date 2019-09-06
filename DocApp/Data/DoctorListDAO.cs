@@ -141,8 +141,9 @@ namespace DocApp.Data
                 if (results != null)
                 {
                     System.Diagnostics.Debug.WriteLine("Update Select dao Success");
+                    System.Diagnostics.Debug.WriteLine("Update Select rating="+results[0].Number_of_Rating);
                     doctorCallback.DoctorUpdateSuccess(results.First());
-                    //await DoctorDBHandler.db.CloseAsync();
+                    await DoctorDBHandler.db.CloseAsync();
                 }
                 else
                     doctorCallback.DoctorUpdateFail();

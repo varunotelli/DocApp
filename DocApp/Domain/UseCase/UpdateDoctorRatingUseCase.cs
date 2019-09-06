@@ -55,7 +55,7 @@ namespace DocApp.Domain.UseCase
         public bool DoctorUpdateSuccess(Doctor results)
         {
             this.doctor = results;
-            System.Diagnostics.Debug.WriteLine("Doctor Update DAO Success");
+            System.Diagnostics.Debug.WriteLine("Doctor Update DAO Success"+ results.Number_of_Rating);
             return true;
         }
     }

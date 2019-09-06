@@ -4,18 +4,39 @@ using DocApp.Presentation.Callbacks;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DocApp.Presentation.ViewModels
 {
-    class DoctorDetailViewModel: DoctorDetailViewCallBack, HospitalDoctorViewCallBack
+    class DoctorDetailViewModel: DoctorDetailViewCallBack, HospitalDoctorViewCallBack,INotifyPropertyChanged
     {
 
 
         protected string name1 = "";
-        public Doctor doctor;
+        private Doctor doc;
+        public Doctor doctor
+        {
+            get { return doc; }
+            set
+            {
+                doc = value;
+                RaisePropertyChanged("doctor");
+
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void RaisePropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+
+
+            }
+        }
         public ObservableCollection<HospitalInDoctorDetails> hospitals;
         
         public DoctorDetailViewModel(string n)
@@ -105,6 +126,7 @@ namespace DocApp.Presentation.ViewModels
         public bool DoctorDetailViewSuccess(Doctor d)
         {
             this.doctor = d;
+            System.Diagnostics.Debug.WriteLine("number value=" + d.Number_of_Rating);
             return true;
         }
 

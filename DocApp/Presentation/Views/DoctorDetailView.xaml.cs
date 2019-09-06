@@ -66,13 +66,19 @@ namespace DocApp.Presentation.Views
 
         private async void MyRating_ValueChanged(RatingControl sender, object args)
         {
-            Bindings.Update();
-            if (myRating.Value > 0)
+            
+            if (sender.Value!=null && sender.Value > 0)
             {
-                myRating.Caption = myRating.Value.ToString();
-                await viewModel.UpdateDoctor(name, myRating.Value);
                 Bindings.Update();
+                await viewModel.UpdateDoctor(name, (double)sender.Value);
+
+                Bindings.Update();
+                myRating.Caption = myRating.Value.ToString();
+                
+
+
             }
+            
         }
     }
 }

@@ -41,7 +41,12 @@
                 <StackPanel Margin="10,65,10,10" VerticalAlignment="Stretch">
                 <RatingControl Value="{x:Bind Doctor.Rating}" 
                                        Caption="{x:Bind sys:String.Format('({0})',Doctor.Number_of_Rating)}" 
-                                       IsReadOnly="True"/>
+                                       IsReadOnly="True">
+                    <RatingControl.Resources>
+                        <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
+                        
+                    </RatingControl.Resources>
+                </RatingControl>
                 <TextBlock x:Name="DoctorFee" Style="{StaticResource TextBlockStyle}">
                         <Run FontFamily="Segoe UI Emoji" Text="&#x1f4b0;"/>
                         <Run Text="{x:Bind sys:String.Format('Rs.{0}',Doctor.fees)}"/>

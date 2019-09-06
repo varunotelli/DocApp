@@ -49,7 +49,10 @@ namespace DocApp.Data
                     results.Add(x);
                 //System.Diagnostics.Debug.WriteLine("QUERY COUNT=" + results[0].fees);
                 if (results != null && results.Count() > 0)
+                {
                     doctorHospitalCallBack.ReadSuccess(results);
+                    await DoctorDBHandler.db.CloseAsync();
+                }
                 else doctorHospitalCallBack.ReadFail();
 
 

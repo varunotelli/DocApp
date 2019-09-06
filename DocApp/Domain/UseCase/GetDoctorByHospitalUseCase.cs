@@ -35,7 +35,7 @@ namespace DocApp.Domain.UseCase
             catch (Exception e)
             {
                 //System.Diagnostics.Debug.WriteLine(Windows.Storage.ApplicationData.Current.LocalFolder.Path);
-                System.Diagnostics.Debug.WriteLine("DB EXCEPTION" + e.Message);
+                System.Diagnostics.Debug.WriteLine("get doctor by hospital usecase DB EXCEPTION" + e.Message);
             }
 
 

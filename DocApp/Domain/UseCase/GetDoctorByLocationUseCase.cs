@@ -29,17 +29,17 @@ namespace DocApp.Domain.UseCase
             try
             {
                 System.Diagnostics.Debug.WriteLine("In use case");
-                if (location.Equals("CURRENT LOCATION"))
+                if (this.location.Equals("CURRENT LOCATION"))
                     await DoctorList.GetDoctorsAsync(this);
                 else
-                    await DoctorList.GetDoctorByHospitalLocationAsync(location, this);
+                    await DoctorList.GetDoctorByHospitalLocationAsync(this.location, this);
                 
-                System.Diagnostics.Debug.WriteLine(doctors.Count());
+                //System.Diagnostics.Debug.WriteLine(doctors.Count());
             }
             catch (Exception e)
             {
                 //System.Diagnostics.Debug.WriteLine(Windows.Storage.ApplicationData.Current.LocalFolder.Path);
-                System.Diagnostics.Debug.WriteLine("DB EXCEPTION" + e.Message);
+                System.Diagnostics.Debug.WriteLine("get doctor by location usecase DB EXCEPTION" + e.Message);
             }
 
 

@@ -15,7 +15,7 @@ namespace DocApp.Domain.UseCase
     {
         Doctor doc = new Doctor();
         DoctorDetailViewCallBack useCaseCallback;
-        public string name1;
+        public string name1="";
         public GetDoctorDetailUseCase(string name)
         {
             this.name1 = name;
@@ -35,7 +35,7 @@ namespace DocApp.Domain.UseCase
             catch (Exception e)
             {
                 //System.Diagnostics.Debug.WriteLine(Windows.Storage.ApplicationData.Current.LocalFolder.Path);
-                System.Diagnostics.Debug.WriteLine("DB EXCEPTION" + e.Message);
+                System.Diagnostics.Debug.WriteLine("get doctor detail use case DB EXCEPTION" + e.Message);
             }
 
 

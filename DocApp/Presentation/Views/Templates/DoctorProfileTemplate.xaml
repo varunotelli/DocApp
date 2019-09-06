@@ -26,7 +26,12 @@
         <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}"/>
         <RatingControl Value="{x:Bind doctor.Rating}" HorizontalAlignment="Left" Margin="10,10"
                                        Caption="{x:Bind sys:String.Format('({0})',doctor.Number_of_Rating)}" 
-                                       IsReadOnly="True"/>
+                                       IsReadOnly="True">
+            <RatingControl.Resources>
+                <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
+
+            </RatingControl.Resources>
+        </RatingControl>
         <TextBlock Text="{x:Bind doctor.Description}" TextWrapping="Wrap" Style="{StaticResource TextBlockStyle}"/>
         <Button Content="Book Appointment" Margin="10,10,10,0" Background="Green" VerticalAlignment="Bottom">
             <Button.Resources>
