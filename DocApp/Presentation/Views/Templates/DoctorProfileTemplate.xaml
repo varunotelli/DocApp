@@ -46,6 +46,7 @@
                 </ResourceDictionary>
             </Button.Resources>
         </Button>
+        <HyperlinkButton Content="Go to Full Profile" Click="HyperlinkButton_Click"/>
 
 
 

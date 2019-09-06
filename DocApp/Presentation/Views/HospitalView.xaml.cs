@@ -25,6 +25,16 @@ namespace DocApp.Presentation.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /*
+     * @todo Replace combobox with buttons
+     * @body make the button create a listview of all the docs
+     * 
+     * @todo Add name filter
+     * @body make filter doctor and hospital by names
+     * 
+     * @todo Remove unwanted spaces
+     * @body Adjust margins and remove spaces.
+     */
 
     public class sendDataArgs : EventArgs
     {

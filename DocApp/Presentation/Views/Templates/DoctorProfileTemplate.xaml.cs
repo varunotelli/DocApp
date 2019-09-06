@@ -21,6 +21,8 @@ namespace DocApp.Presentation.Views.Templates
     {
         public Models.Doctor doctor { get {return  this.DataContext as Models.Doctor; } }
         public delegate void BackButtonEventHandler(object source, EventArgs e);
+        public event ProfileButtonEventHandler ProfileButtonClicked;
+        public delegate void ProfileButtonEventHandler(object source, EventArgs e);
         public event BackButtonEventHandler BackButtonClicked;
         public DoctorProfileTemplate()
         {
@@ -37,6 +39,12 @@ namespace DocApp.Presentation.Views.Templates
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             onBackButtonClicked();
+        }
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProfileButtonClicked != null)
+                ProfileButtonClicked(this, EventArgs.Empty);
         }
     }
 }

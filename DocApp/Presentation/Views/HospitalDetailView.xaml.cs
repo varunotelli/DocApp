@@ -40,6 +40,7 @@ namespace DocApp.Presentation.Views
         {
             this.InitializeComponent();
             DoctorProfile.BackButtonClicked += this.onBackButtonClicked;
+            DoctorProfile.ProfileButtonClicked += this.onProfileButtonClicked;
             
             
         }
@@ -70,6 +71,17 @@ namespace DocApp.Presentation.Views
         public void onBackButtonClicked(object source, EventArgs e)
         {
             mySplitView.IsPaneOpen = false;
+        }
+        public void onProfileButtonClicked(object source, EventArgs e)
+        {
+            Frame parentFrame = Window.Current.Content as Frame;
+
+            MainPage mp = parentFrame.Content as MainPage;
+            ScrollViewer grid = mp.Content as ScrollViewer;
+            Frame my_frame = grid.FindName("myFrame") as Frame;
+           
+            my_frame.Navigate(typeof(DoctorDetailView), viewModel.doc.Name);
+           
         }
        
 
