@@ -43,7 +43,7 @@ namespace DocApp.Presentation.Views
             this.InitializeComponent();
             
             viewModel = new AutoSuggestViewModel();
-            viewModel.LocationChanged += this.onLocationChanged;
+            //viewModel.LocationChanged += this.onLocationChanged;
             myFrame.Navigate(typeof(MainPageBuffer));
             
 
@@ -63,7 +63,7 @@ namespace DocApp.Presentation.Views
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             
-            await viewModel.GetCurrentAddress();
+           await viewModel.GetCurrentAddress();
 
         }
 

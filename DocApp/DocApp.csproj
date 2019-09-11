@@ -214,6 +214,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\400_placeholder.png" />
+    <Content Include="Assets\doctor.jpg" />
+    <Content Include="Assets\hospital.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

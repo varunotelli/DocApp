@@ -8,9 +8,103 @@
     mc:Ignorable="d"
     RequestedTheme="Dark">
     <Page.Resources>
-        <Style TargetType="TextBlock" x:Key="TextBlockStyle">
-            <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
-        </Style>
+        <ResourceDictionary>
+            <Style x:Key="GridViewItemStyle1" TargetType="GridViewItem">
+                <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+                <Setter Property="Background" Value="{ThemeResource GridViewItemBackground}"/>
+                <Setter Property="Foreground" Value="{ThemeResource GridViewItemForeground}"/>
+                <Setter Property="TabNavigation" Value="Local"/>
+                <Setter Property="IsHoldingEnabled" Value="True"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="0,0,10,10"/>
+
+                <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}"/>
+                <Setter Property="MinHeight" Value="{ThemeResource GridViewItemMinHeight}"/>
+                <Setter Property="AllowDrop" Value="False"/>
+                <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
+                <Setter Property="FocusVisualMargin" Value="-2"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GridViewItem">
+                            <GridViewItemPresenter x:Name="Root" CheckBrush="{ThemeResource GridViewItemCheckBrush}" 
+                                                   ContentMargin="{TemplateBinding Padding}"
+                                                  
+                                                   ContentTransitions="{TemplateBinding ContentTransitions}" 
+                                                   
+                                                   DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
+                                                   DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
+                                                   DragBackground="{ThemeResource GridViewItemDragBackground}" 
+                                                   DragForeground="{ThemeResource GridViewItemDragForeground}" 
+                                                   FocusBorderBrush="{ThemeResource GridViewItemFocusBorderBrush}" 
+                                                   FocusVisualMargin="{TemplateBinding FocusVisualMargin}" 
+                                                    
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                   Control.IsTemplateFocusTarget="True" 
+                                                   
+                                                   PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}" 
+                                                   
+                                                   PointerOverBackground="#2e2e2e" 
+                                                   
+                                                   ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}" 
+                                                   
+                                                   SelectedForeground="{ThemeResource GridViewItemForegroundSelected}" 
+                                                   SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}" 
+                                                   SelectedBackground="#2e2e2e" 
+                                                   
+                                                   SelectedPointerOverBackground="#2e2e2e" 
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="Selected"/>
+                                        <VisualState x:Name="PointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="Root.(RevealBrush.State)" Value="PointerOver"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOverSelected">
+                                            <VisualState.Setters>
+                                                <Setter Target="Root.(RevealBrush.State)" Value="PointerOver"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOverPressed">
+                                            <VisualState.Setters>
+                                                <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="PressedSelected">
+                                            <VisualState.Setters>
+                                                <Setter Target="Root.(RevealBrush.State)" Value="Pressed"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="DisabledStates">
+                                        <VisualState x:Name="Enabled"/>
+                                        <VisualState x:Name="Disabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="Root.RevealBorderThickness" Value="0"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </GridViewItemPresenter>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="TextBlock" x:Key="TextBlockStyle">
+                <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+            </Style>
+        </ResourceDictionary>
+       
     </Page.Resources>
 
     <Page.Background>
@@ -19,14 +113,37 @@
             <GradientStop Color="#080808" Offset="0.548"/>
         </LinearGradientBrush>
     </Page.Background>
-    
-    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,200,0,300" Width="410">
-        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1A3;" FontSize="80" VerticalAlignment="Center"
+
+    <Grid Margin="0,200,0,300" HorizontalAlignment="Stretch">
+        <!--<TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1A3;" FontSize="80" VerticalAlignment="Center"
                    HorizontalAlignment="Center" Margin="0,0,0,40" Style="{StaticResource TextBlockStyle}"/>
         <TextBlock FontSize="48" FontWeight="ExtraBold" Text="Search DocApp" Style="{StaticResource TextBlockStyle}"/>
         <TextBlock FontSize="20" FontWeight="Bold" Text="Find Doctors and Hospitals based on your preference" Foreground="DimGray"
           TextAlignment="Center" Style="{StaticResource TextBlockStyle}" 
-                   HorizontalAlignment="Center" Margin="0,20" TextWrapping="WrapWholeWords"/>
+                   HorizontalAlignment="Center" Margin="0,20" TextWrapping="WrapWholeWords"/>-->
+        <GridView HorizontalAlignment="Center" VerticalAlignment="Center" ItemContainerStyle="{StaticResource GridViewItemStyle1}">
+            <GridViewItem Margin="0,10,20,10">
+                <Grid>
+                    <Image Source="ms-appx:///Assets/doctor.jpg" Height="400" Width="400" Opacity="0.3"
+                           Stretch="UniformToFill"/>
+                    <TextBlock HorizontalAlignment="Left" Text="Explore&#x0a;Doctors" VerticalAlignment="Bottom" Margin="30,0,0,30"
+                        FontSize="34"      FontFamily="ms-appx:///Assets/montserrat-v14-latin-600.ttf#Montserrat"/>
+                </Grid>
+            </GridViewItem>
+            <GridViewItem Margin="10,10,10,10">
+                <Grid>
+                    <Image Source="ms-appx:///Assets/hospital.jpg" Width="400" Height="400" Opacity="0.3" Stretch="Fill"/>
+                    <TextBlock HorizontalAlignment="Left" Text="Explore&#x0a;Hospitals" VerticalAlignment="Bottom" Margin="30,0,0,30"
+                        FontSize="34"      FontFamily="ms-appx:///Assets/montserrat-v14-latin-600.ttf#Montserrat"/>
+                </Grid>
+            </GridViewItem>
+        </GridView>
+        <!--<TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1A3;" FontSize="80" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Margin="0,0,0,40" Style="{StaticResource TextBlockStyle}"/>
+        <TextBlock FontSize="48" FontWeight="ExtraBold" Text="Search DocApp" Style="{StaticResource TextBlockStyle}"/>
+        <TextBlock FontSize="20" FontWeight="Bold" Text="Find Doctors and Hospitals based on your preference" Foreground="DimGray"
+          TextAlignment="Center" Style="{StaticResource TextBlockStyle}" 
+                   HorizontalAlignment="Center" Margin="0,20" TextWrapping="WrapWholeWords"/>-->
 
-    </StackPanel>
+    </Grid>
 </Page>
