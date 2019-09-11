@@ -8,26 +8,40 @@
     xmlns:uc="using:DocApp.Presentation.Views.Templates"
     xmlns:data="using:DocApp.Models"
     xmlns:sys="using:System"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    
     RequestedTheme="Dark">
     <Page.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="10,10"/>
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
+            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+            </Style>
     </Page.Resources>
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#2A2A2A" Offset="0.007"/>
+            <GradientStop Color="#080808" Offset="0.548"/>
+        </LinearGradientBrush>
+    </Page.Background>
 
-    <Grid>
+    <Grid Margin="0,0,0,400">
         <Grid HorizontalAlignment="Left">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Image Height="400" Width="400"/>
+            <controls:DropShadowPanel BlurRadius="4" ShadowOpacity="0.5" Margin="10,10,10,10"
+                          OffsetX="4" OffsetY="4" OffsetZ="0.2" Color="Black" VerticalAlignment="Top">
+                <Image Height="300" Width="300" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
+                       VerticalAlignment="Top"/>
+            </controls:DropShadowPanel>
+                    
                     <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{x:Bind sys:String.Format('Dr.{0}', viewModel.doctor.Name)}" 
+                    <TextBlock Text="{x:Bind sys:String.Format('Dr.{0}', viewModel.doctor.Name),Mode=OneWay}" 
                                    FontSize="24" FontWeight="Bold" Margin="10,10"/>
                     <RatingControl x:Name="DocRating" Value="{x:Bind viewModel.doctor.Rating,Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10"
                                        Caption="{x:Bind sys:String.Format('({0})',viewModel.doctor.Number_of_Rating),Mode=OneWay}" 
@@ -39,9 +53,9 @@
                     </RatingControl>
                 </StackPanel>
 
-                        
-                    <TextBlock Text="{x:Bind viewModel.doctor.Designation}" Style="{StaticResource TextBlockStyle}"/>
-                <TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', viewModel.doctor.Experience)}" 
+
+                <TextBlock Text="{x:Bind viewModel.doctor.Designation,Mode=OneWay}" Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', viewModel.doctor.Experience),Mode=OneWay}" 
                                 Style="{StaticResource TextBlockStyle}"/>
                 
                 <RatingControl x:Name="myRating" ValueChanged="MyRating_ValueChanged" HorizontalAlignment="Left" Margin="10,10"
@@ -51,24 +65,29 @@
 
                     </RatingControl.Resources>
                 </RatingControl>
-                <TextBlock Text="{x:Bind viewModel.doctor.Description}" Margin="10,0" TextWrapping="WrapWholeWords"/>
-                        
-                        
+                <TextBlock Text="{x:Bind viewModel.doctor.Description}" Margin="10,0" TextWrapping="WrapWholeWords"
+                           FontFamily="ms-appx:///Assets/montserrat-v14-latin-500.ttf#Montserrat"/>
 
-                <TextBlock FontSize="24" FontWeight="Bold" Margin="10,10"
+
+
+                <TextBlock FontSize="24" FontWeight="Bold" Margin="10,10" 
+                           FontFamily="ms-appx:///Assets/montserrat-v14-latin-800.ttf#Montserrat"
                            Text="{x:Bind sys:String.Format('Places where Dr.{0} visits',viewModel.doctor.Name)}"/>
 
-                <ListView x:Name="HospList" ItemsSource="{x:Bind viewModel.hospitals}" IsItemClickEnabled="True"
+                <GridView x:Name="HospList" ItemsSource="{x:Bind viewModel.hospitals}" IsItemClickEnabled="True"
                                           ItemClick="HospList_ItemClick">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="data:HospitalInDoctorDetails">
-                                    <uc:HospitalTemplate HorizontalAlignment="Left"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-
-                        </ListView>
-
-
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <Setter Property="Margin" Value="10,10"/>
+                            <Setter Property="Padding" Value="10"/>
+                        </Style>
+                    </GridView.ItemContainerStyle>
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="data:HospitalInDoctorDetails">
+                            <uc:HospitalsInDoctorsTemplate/>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
             </StackPanel>
 
                 </Grid>

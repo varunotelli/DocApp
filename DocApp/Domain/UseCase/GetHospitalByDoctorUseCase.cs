@@ -16,10 +16,10 @@ namespace DocApp.Domain.UseCase
 
         HospitalDoctorViewCallBack useCaseCallback;
         List<HospitalInDoctorDetails> hospitals;
-        string docname = "";
-        public GetHospitalByDoctorUseCase(string name1)
+        int id;
+        public GetHospitalByDoctorUseCase(int n)
         {
-            this.docname = name1;
+            this.id = n;
         }
         public override void SetCallBack<P>(P p)
         {
@@ -32,7 +32,7 @@ namespace DocApp.Domain.UseCase
             try
             {
                 System.Diagnostics.Debug.WriteLine("In use case");
-                await HospitalList.GetHospitalByDoctor(docname, this);
+                await HospitalList.GetHospitalByDoctor(id, this);
                 System.Diagnostics.Debug.WriteLine(hospitals.Count());
             }
             catch (Exception e)

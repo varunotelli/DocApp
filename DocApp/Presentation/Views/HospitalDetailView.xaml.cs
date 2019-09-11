@@ -39,8 +39,8 @@ namespace DocApp.Presentation.Views
         public HospitalDetailView()
         {
             this.InitializeComponent();
-            DoctorProfile.BackButtonClicked += this.onBackButtonClicked;
-            DoctorProfile.ProfileButtonClicked += this.onProfileButtonClicked;
+            //DoctorProfile.BackButtonClicked += this.onBackButtonClicked;
+            //DoctorProfile.ProfileButtonClicked += this.onProfileButtonClicked;
             
             
         }
@@ -53,71 +53,14 @@ namespace DocApp.Presentation.Views
 
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
-            System.Diagnostics.Debug.WriteLine("Sent val="+(string)e1.Parameter);
-            name = (string)e1.Parameter;
-            //HospitalDetailsTemplate h = new HospitalDetailsTemplate();
-            viewModel = new HospitalDetailViewModel(name);
-            var frame = (Frame)Window.Current.Content;
-            var page = (MainPage)frame.Content;
-            this.ListViewItemSelected += page.OnListViewItemSelected;
-            DoctorProfile.BackButtonClicked += page.OnBackButtonClicked;
-            await viewModel.GetHospitals();
-            
+            var hosp = e1.Parameter as Hospital;
+            viewModel = new HospitalDetailViewModel(hosp.ID);
+            //await viewModel.
             return;
-            
-            
-
+          
         }
-        public void onBackButtonClicked(object source, EventArgs e)
-        {
-            mySplitView.IsPaneOpen = false;
-        }
-        public void onProfileButtonClicked(object source, EventArgs e)
-        {
-            Frame parentFrame = Window.Current.Content as Frame;
+        
 
-            MainPage mp = parentFrame.Content as MainPage;
-            ScrollViewer grid = mp.Content as ScrollViewer;
-            Frame my_frame = grid.FindName("myFrame") as Frame;
-           
-            my_frame.Navigate(typeof(DoctorDetailView), viewModel.doc.Name);
-           
-        }
-       
-
-        private async void MyListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            OnListViewItemSelected();
-            System.Diagnostics.Debug.WriteLine("Item clicked");
-           //mySplitView.IsPaneOpen =false;
-            System.Diagnostics.Debug.WriteLine(((DoctorInHospitalDetails)e.ClickedItem).Name);
-            await viewModel.GetDoctorDetails(((DoctorInHospitalDetails)e.ClickedItem).Name);
-           DoctorProfile.DataContext = viewModel.doc;
-            try
-            {
-                if (viewModel.doc != null && viewModel.doc.Name.Equals(((DoctorInHospitalDetails)e.ClickedItem).Name))
-                    mySplitView.IsPaneOpen = true;
-                else
-                {
-                    await viewModel.GetDoctorDetails(((DoctorInHospitalDetails)e.ClickedItem).Name);
-                    DoctorProfile.DataContext = viewModel.doc;
-                    Bindings.Update();
-                    mySplitView.IsPaneOpen = true;
-                    //mySplitView.IsPaneOpen = false;
-
-                }
-            }
-            catch(Exception _)
-            {
-                await viewModel.GetDoctorDetails(((DoctorInHospitalDetails)e.ClickedItem).Name);
-                DoctorProfile.DataContext = viewModel.doc;
-                Bindings.Update();
-                mySplitView.IsPaneOpen = true;
-            }
-            
-            //mySplitView.IsPaneOpen = true;
-            //myScroll.ChangeView(0.0f, 0.0f, 1.0f);
-
-        }
+        
     }
 }

@@ -9,7 +9,7 @@ namespace DocApp.Presentation.Callbacks
 {
     public interface HospitalViewCallback
     {
-        bool DataReadSuccess(ref List<Hospital> h);
+        bool DataReadSuccess(List<Hospital> h);
         bool DataReadFail();
        
     }

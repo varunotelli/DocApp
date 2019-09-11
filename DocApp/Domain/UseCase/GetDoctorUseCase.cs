@@ -12,12 +12,18 @@ using DocApp.Domain.Callbacks;
 
 namespace DocApp.Domain.UseCase
 {
-    public class GetDoctorListUseCase: UseCaseBase, IDoctorCallback
+    public class GetDoctorUseCase: UseCaseBase, IDoctorCallback
     {
-        List<Doctor> doctors = new List<Doctor>();
+        Doctor doc = new Doctor();
+        int id;
         //HospitalViewCallback hospitalUseCaseCallback;
-        DoctorViewCallback doctorUseCaseCallback;
+        DoctorDetailViewCallBack doctorUseCaseCallback;
         //IDoctorCallback dcall;
+        public GetDoctorUseCase(int n)
+        {
+            this.id = n;
+        }
+
         internal override async Task Action()
         {
             // = new IHospitalCallback();
@@ -28,8 +34,8 @@ namespace DocApp.Domain.UseCase
             try
             {
                 System.Diagnostics.Debug.WriteLine("In use case");
-                await DoctorList.GetDoctorsAsync(this);
-                System.Diagnostics.Debug.WriteLine(doctors.Count());
+                await DoctorList.GetDoctorByIdAsync(id,this);
+                System.Diagnostics.Debug.WriteLine("doc val="+doc.ID);
             }
             catch (Exception e)
             {
@@ -38,8 +44,8 @@ namespace DocApp.Domain.UseCase
             }
 
 
-            if (doctors != null && doctors.Count > 0)
-                doctorUseCaseCallback.DataReadSuccess(doctors);
+            if (doc!=null)
+                doctorUseCaseCallback.DataReadSuccess(doc);
             else doctorUseCaseCallback.DataReadFail();
             // + hospitals.Count());
 
@@ -48,14 +54,13 @@ namespace DocApp.Domain.UseCase
 
         public override void SetCallBack<P>(P p)
         {
-            this.doctorUseCaseCallback = (DoctorViewCallback)p;
+            this.doctorUseCaseCallback = (DoctorDetailViewCallBack)p;
         }
 
 
         public bool ReadSuccess(List<Doctor> docs)
         {
-            this.doctors = new List<Doctor>();
-            this.doctors = docs;
+            this.doc = docs.First();
             System.Diagnostics.Debug.WriteLine("DAO READ SUCCESS!!!");
               
             return true;

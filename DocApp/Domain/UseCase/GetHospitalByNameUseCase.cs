@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace DocApp.Domain.UseCase
 {
-    public class GetHospitalDetail : UseCaseBase,IHospitalCallback
+    public class GetHospitalByNameUseCase : UseCaseBase,IHospitalCallback
     {
-        Hospital hospital = new Hospital();
-        HospitalDetailCallBack useCaseCallback;
+        List<Hospital> hospital = new List<Hospital>();
+        HospitalViewCallback useCaseCallback;
         public string name1="";
-        public GetHospitalDetail(string name)
+        public GetHospitalByNameUseCase(string name)
         {
             this.name1 = name;
         }
@@ -30,19 +30,19 @@ namespace DocApp.Domain.UseCase
             {
                 System.Diagnostics.Debug.WriteLine("In use case");
                 await HospitalList.GetHospitalByNameAsync(name1,this);
-                System.Diagnostics.Debug.WriteLine("hosp val="+hospital.Number_Of_Rating);
+                //System.Diagnostics.Debug.WriteLine("hosp val="+hospital.Number_Of_Rating);
             }
             catch (Exception e)
             {
                 //System.Diagnostics.Debug.WriteLine(Windows.Storage.ApplicationData.Current.LocalFolder.Path);
-                System.Diagnostics.Debug.WriteLine("Get Hospital Detail DB EXCEPTION" + e.Message);
+                System.Diagnostics.Debug.WriteLine("Get Hospital by name use case DB EXCEPTION" + e.Message);
             }
 
 
             if (hospital != null)
             {
-                useCaseCallback.DataReadSuccess(ref hospital);
-                System.Diagnostics.Debug.WriteLine(hospital.Location);
+                useCaseCallback.DataReadSuccess(hospital);
+                //System.Diagnostics.Debug.WriteLine(hospital.Location);
             }
             else useCaseCallback.DataReadFail();
             // + hospitals.Count());
@@ -52,14 +52,14 @@ namespace DocApp.Domain.UseCase
 
         public override void SetCallBack<P>(P p)
         {
-            this.useCaseCallback = (HospitalDetailCallBack)p;
+            this.useCaseCallback = (HospitalViewCallback)p;
         }
 
 
         public bool ReadSuccess(List<Hospital> hosp)
         {
             
-            this.hospital = hosp[0];
+            this.hospital = hosp;
             System.Diagnostics.Debug.WriteLine("DAO READ SUCCESS!!!");
 
             return true;

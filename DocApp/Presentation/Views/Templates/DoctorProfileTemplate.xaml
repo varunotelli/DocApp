@@ -8,45 +8,38 @@
     xmlns:sys="using:System"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignWidth="400"
+    RequestedTheme="Dark">
     <UserControl.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="10,10"/>
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
         </Style>
     </UserControl.Resources>
 
-    <StackPanel>
-        <Button x:Name="BackButton" FontFamily="Segoe MDL2 Assets" Content="&#xE0A6;" 
-                HorizontalAlignment="Left" VerticalAlignment="Top" Click="BackButton_Click" />
-        <Image Width="200" Height="200"/>
-        <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,10" FontSize="24" FontWeight="Bold"/>
-        <TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', doctor.Experience)}" 
-                   Style="{StaticResource TextBlockStyle}"/>
-        <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}"/>
-        <RatingControl Value="{x:Bind doctor.Rating}" HorizontalAlignment="Left" Margin="10,10"
+    <StackPanel Orientation="Horizontal" Padding="0">
+        <Image Height="100" Width="100" Source="ms-appx:///Assets/400_placeholder.png" />
+        <StackPanel>
+            <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,5" FontSize="18" FontWeight="Bold"
+                   Foreground="White" FontFamily="ms-appx:///Assets/montserrat-v14-latin-700.ttf#Montserrat"/>
+            <!--<TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', doctor.Experience)}" 
+                   Style="{StaticResource TextBlockStyle}"/>-->
+            <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"
+                       TextTrimming="CharacterEllipsis"/>
+            <RatingControl Value="{x:Bind doctor.Rating}" HorizontalAlignment="Left" Margin="10,3"
                                        Caption="{x:Bind sys:String.Format('({0})',doctor.Number_of_Rating)}" 
-                                       IsReadOnly="True">
-            <RatingControl.Resources>
-                <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
+                                       IsReadOnly="True" >
+                <RatingControl.Resources>
+                    <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
 
-            </RatingControl.Resources>
-        </RatingControl>
-        <TextBlock Text="{x:Bind doctor.Description}" TextWrapping="Wrap" Style="{StaticResource TextBlockStyle}"/>
-        <Button Content="Book Appointment" Margin="10,10,10,0" Background="Green" VerticalAlignment="Bottom">
-            <Button.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.ThemeDictionaries>
-                        <ResourceDictionary x:Key="Dark">
-                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="DarkGreen"/>
-                            <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="DarkGreen"/>
-                        </ResourceDictionary>
+                </RatingControl.Resources>
+            </RatingControl>
 
-                    </ResourceDictionary.ThemeDictionaries>
-                </ResourceDictionary>
-            </Button.Resources>
-        </Button>
-        <HyperlinkButton Content="Go to Full Profile" Click="HyperlinkButton_Click"/>
+        </StackPanel>
+        
+        
 
 
 

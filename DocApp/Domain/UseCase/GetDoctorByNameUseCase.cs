@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace DocApp.Domain.UseCase
 {
-    class GetDoctorDetailUseCase : UseCaseBase, IDoctorCallback
+    class GetDoctorByNameUseCase : UseCaseBase, IDoctorCallback
     {
-        Doctor doc = new Doctor();
-        DoctorDetailViewCallBack useCaseCallback;
+        List<Doctor> doc = new List<Doctor>();
+        DoctorViewCallback useCaseCallback;
         public string name1="";
-        public GetDoctorDetailUseCase(string name)
+        public GetDoctorByNameUseCase(string name)
         {
             this.name1 = name;
         }
@@ -35,30 +35,38 @@ namespace DocApp.Domain.UseCase
             catch (Exception e)
             {
                 //System.Diagnostics.Debug.WriteLine(Windows.Storage.ApplicationData.Current.LocalFolder.Path);
-                System.Diagnostics.Debug.WriteLine("get doctor detail use case DB EXCEPTION" + e.Message);
+                System.Diagnostics.Debug.WriteLine("get doctor by name use case DB EXCEPTION" + e.Message);
             }
 
 
-            if (doc != null)
+            if (doc != null && doc.Count > 0)
             {
+                System.Diagnostics.Debug.WriteLine("get doctor by name use case success");
+
                 useCaseCallback.DataReadSuccess(doc);
             }
-            else useCaseCallback.DataReadFail();
-            // + hospitals.Count());
+            else
+            {
+                useCaseCallback.DataReadFail();
+                System.Diagnostics.Debug.WriteLine("get doctor by name use case fail");
+            }
 
 
-        }
+                // + hospitals.Count());
+
+
+            }
 
         public override void SetCallBack<P>(P p)
         {
-            this.useCaseCallback = (DoctorDetailViewCallBack)p;
+            this.useCaseCallback = (DoctorViewCallback)p;
         }
 
 
         public bool ReadSuccess(List<Doctor> docs)
         {
 
-            this.doc = docs[0];
+            this.doc = docs;
             System.Diagnostics.Debug.WriteLine("DOC DETAIL DAO READ SUCCESS!!!");
 
             return true;

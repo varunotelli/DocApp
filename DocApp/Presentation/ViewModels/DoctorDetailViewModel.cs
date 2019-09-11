@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace DocApp.Presentation.ViewModels
 {
-    class DoctorDetailViewModel: DoctorDetailViewCallBack, HospitalDoctorViewCallBack,INotifyPropertyChanged
+    class DoctorDetailViewModel: DoctorDetailViewCallBack, HospitalDoctorViewCallBack, INotifyPropertyChanged
     {
 
 
-        protected string name1 = "";
+        
         private Doctor doc;
         public Doctor doctor
         {
@@ -39,23 +39,20 @@ namespace DocApp.Presentation.ViewModels
         }
         public ObservableCollection<HospitalInDoctorDetails> hospitals;
         
-        public DoctorDetailViewModel(string n)
-        {
-            this.name1 = n;
-            //this.Doctors = new ObservableCollection<Doctor>();
-
-        }
-        
-
-
         UseCaseBase getDoc;
         UseCaseBase getHosp;
         UseCaseBase updateDoc;
-        public async Task GetDoctor()
+
+        public DoctorDetailViewModel()
+        {
+            doctor = new Doctor();
+        }
+
+        public async Task GetDoctor(int id)
         {
             hospitals = new ObservableCollection<HospitalInDoctorDetails>();
-            getDoc = new GetDoctorDetailUseCase(name1);
-            getHosp = new GetHospitalByDoctorUseCase(name1);
+            getDoc = new GetDoctorUseCase(id);
+            getHosp = new GetHospitalByDoctorUseCase(id);
             
             getDoc.SetCallBack<DoctorDetailViewCallBack>(this);
             getHosp.SetCallBack<HospitalDoctorViewCallBack>(this);
@@ -107,8 +104,8 @@ namespace DocApp.Presentation.ViewModels
 
         bool HospitalDoctorViewCallBack.DataReadSuccess(List<HospitalInDoctorDetails> h)
         {
-            
-            foreach( var x in h)
+
+            foreach (var x in h)
             {
                 hospitals.Add(x);
             }
@@ -135,6 +132,8 @@ namespace DocApp.Presentation.ViewModels
             System.Diagnostics.Debug.WriteLine("Doctor Update FAILED!!!");
             return false;
         }
+
+       
     }
 }
 

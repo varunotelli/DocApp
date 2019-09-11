@@ -12,7 +12,8 @@ namespace DocApp.Domain.DataContracts
 {
     public interface IHospitalList
     {
-        Task GetHospitalsAsync(IHospitalCallback hospitalCallback); //Get List of Hospitals from Database
+        Task GetHospitalsAsync(IHospitalCallback hospitalCallback);
+        Task GetHospitalbyIdAsync(int id,IHospitalCallback hospitalCallback);//Get List of Hospitals from Database
         Task GetHospitalByNameAsync(string name, IHospitalCallback hospitalCallback); // Get Selected Hospital
         Task GetHospitalByLocationAsync(string location, IHospitalCallback hospitalCallback);
 

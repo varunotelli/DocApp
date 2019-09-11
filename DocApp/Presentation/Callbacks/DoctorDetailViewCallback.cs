@@ -11,7 +11,7 @@ namespace DocApp.Presentation.Callbacks
     {
         bool DataReadSuccess(Doctor d);
         bool DataReadFail();
-        bool DoctorDetailViewSuccess(Doctor d);
-        bool DoctorDetailViewFail();
+        //bool DoctorDetailViewSuccess(Doctor d);
+        //bool DoctorDetailViewFail();
     }
 }

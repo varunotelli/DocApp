@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DocApp.Presentation.Callbacks
 {
-    public interface HospitalDetailCallBack
+    public interface GetLocationPresenterCallback
     {
-        bool DataReadSuccess(List<Hospital> h);
-        bool DataReadFail();
+        bool DataFromPractoSuccess(RootLocationObject r);
+        bool DataFromPractoFail();
     }
 }

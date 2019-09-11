@@ -15,7 +15,7 @@ namespace DocApp.Domain.UseCase
     {
         List<Hospital> hospitals = new List<Hospital>();
         string location = "";
-        HospitalViewCallback useCaseCallback;
+        HospitalLocationPresenterCallBack useCaseCallback;
         public GetHospitalByLocationUseCase(string x)
         {
             this.location = x;
@@ -29,10 +29,7 @@ namespace DocApp.Domain.UseCase
             try
             {
                 System.Diagnostics.Debug.WriteLine("In use case");
-                if(location.Equals("CURRENT LOCATION"))
-                    await HospitalList.GetHospitalsAsync(this);
-                else
-                    await HospitalList.GetHospitalByLocationAsync(location,this);
+                await HospitalList.GetHospitalByLocationAsync(location,this);
                 System.Diagnostics.Debug.WriteLine(hospitals.Count());
 
             }
@@ -45,8 +42,8 @@ namespace DocApp.Domain.UseCase
 
 
             if (hospitals != null && hospitals.Count > 0)
-                useCaseCallback.DataReadSuccess(ref hospitals);
-            else useCaseCallback.DataReadFail();
+                useCaseCallback.HospitalLocationReadSuccess(hospitals);
+            else useCaseCallback.HospitalLocationReadFail();
             // + hospitals.Count());
 
 
@@ -54,7 +51,7 @@ namespace DocApp.Domain.UseCase
 
         public override void SetCallBack<P>(P p)
         {
-            this.useCaseCallback = (HospitalViewCallback)p;
+            this.useCaseCallback = (HospitalLocationPresenterCallBack)p;
         }
 
         public bool ReadSuccess(List<Hospital> hosp)

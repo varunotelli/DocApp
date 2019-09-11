@@ -13,125 +13,81 @@ using Windows.Devices.Geolocation;
 
 namespace DocApp.Presentation.ViewModels
 {
+    
 
 
-
-    class HospitalDoctorViewModel: HospitalViewCallback, DoctorViewCallback, GetAddressPresenterCallback,INotifyPropertyChanged
+    class HospitalDoctorViewModel: HospitalViewCallback, DoctorViewCallback, HospitalLocationPresenterCallBack
+        , DoctorLocationPresenterCallBack
     {
         public double latitude;
         public double longitude;
-        private string location = "CURRENT LOCATION";
-        public string loc
-        {
-            get
-            {
-                return location;
-            }
-            set
-            {
-                location = value;
-                RaisePropertyChanged("loc");
-            }
-        }
-        public string locbox = "";
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void RaisePropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-                
-                
-            }
-        }
+        
+
 
         public ObservableCollection<Doctor> doctors;// = new ObservableCollection<Doctor>();
         public ObservableCollection<Hospital> hospitals;// = new ObservableCollection<Hospital>();
-        public ObservableCollection<string> doctormain = new ObservableCollection<string>();
-        public ObservableCollection<string> hospitalmain = new ObservableCollection<string>();
-        public ObservableCollection<string> addresses = new ObservableCollection<string>();
+
         public UseCaseBase getDoctor;// = new GetDoctorListUseCase();
         public UseCaseBase getHospital;// = new GetHospitalByLocationUseCase();
-        public UseCaseBase getAddress;
-        public UseCaseBase getHospitalList;
+        public UseCaseBase getHosps;
+        public UseCaseBase getDocs;
+        
         public HospitalDoctorViewModel()
         {
             doctors = new ObservableCollection<Doctor>();
             hospitals = new ObservableCollection<Hospital>();
-            //addresses.Clear();
-            //foreach (var x in hospitals.Select(x => x.Location).Distinct())
-            //    addresses.Add(x);
+            
         }
 
        
-
-        public async Task onHospComboClicked(object source, EventArgs args)
+       
+        public async Task GetHospitals(string s)
         {
-            getHospitalList = new GetHospitalListUseCase();
-            getHospitalList.SetCallBack<HospitalViewCallback>(this);
-            await getHospitalList.Execute();
+            getHospital = new GetHospitalByNameUseCase(s);
+            getHospital.SetCallBack<HospitalViewCallback>(this);
+            await getHospital.Execute();
         }
-        public async Task ondocComboClicked(object source, EventArgs args)
-        {
-            if(locbox.Equals(""))
-                getDoctor = new GetDoctorByLocationUseCase(loc);
-            else
-                getDoctor = new GetDoctorByLocationUseCase(locbox);
-            getDoctor.SetCallBack<DoctorViewCallback>(this);
 
+        public async Task GetDoctors(string s)
+        {
+            getDoctor = new GetDoctorByNameUseCase(s);
+            getDoctor.SetCallBack<DoctorViewCallback>(this);
             await getDoctor.Execute();
         }
 
-        public async Task<Geoposition> GetPosition()
+        public async Task GetHospitalByLocation(string loc)
         {
-            var accessStatus = await Geolocator.RequestAccessAsync();
-            if (accessStatus != GeolocationAccessStatus.Allowed) throw new Exception();
-            var geolocator = new Geolocator { DesiredAccuracyInMeters = 0 };
-            var pos = await geolocator.GetGeopositionAsync();
-            return pos;
+            getHosps = new GetHospitalByLocationUseCase(loc.ToUpper());
+            getHosps.SetCallBack<HospitalLocationPresenterCallBack>(this);
+            await getHosps.Execute();
+        }
+        public async Task GetDoctorByLocation(string loc)
+        {
+            getDocs = new GetDoctorByLocationUseCase(loc.ToUpper());
+            getDocs.SetCallBack<DoctorLocationPresenterCallBack>(this);
+            await getDocs.Execute();
         }
 
-        public async Task GetHospitalsDoctors()
+        public bool DataReadSuccess(List<Hospital> h)
         {
-            var temp =await GetPosition();
-            latitude = temp.Coordinate.Latitude;
-            longitude = temp.Coordinate.Longitude;
+            if(!hospitals.SequenceEqual(h))
+            foreach (var x in h)
+                this.hospitals.Add(x);
             
-            getAddress = new GetAddressUseCase(latitude, longitude);
-            doctormain = new ObservableCollection<string>();
-            hospitalmain = new ObservableCollection<string>();
-            
-            //getDoctor.SetCallBack<DoctorViewCallback>(this);
-            
-            getAddress.SetCallBack<GetAddressPresenterCallback>(this);
-
-            try
-            {
-
-                
-                await getAddress.Execute();
-
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine("EXCEPTION=" + e.Message);
-            }
-            
-
-
-        }
-
-
-        public bool DataReadSuccess(List<Doctor> d)
-        {
-
-            this.doctors = new ObservableCollection<Doctor>(d);
-            doctormain.Clear();
-            foreach (var x in this.doctors)
-                this.doctormain.Add(x.Name);
 
             System.Diagnostics.Debug.WriteLine("SUCCESS!!!");
-            System.Diagnostics.Debug.WriteLine("success" + doctormain.Count());
+            
+            return true;
+        }
+        public bool DataReadSuccess(List<Doctor> d)
+        {
+            if (!doctors.SequenceEqual(new ObservableCollection<Doctor>(d)))
+            {
+                
+                foreach (var x in d)
+                    doctors.Add(x);
+            }
+            else System.Diagnostics.Debug.WriteLine("EQUAL");
             return true;
         }
 
@@ -141,57 +97,32 @@ namespace DocApp.Presentation.ViewModels
             return false;
         }
 
-        public bool DataReadSuccess(ref List<Hospital> h)
+        public bool HospitalLocationReadSuccess(List<Hospital> h)
         {
-            string temp = "";
-            if (locbox.Equals(""))
-                temp = loc;
-            else temp = locbox;
-            hospitalmain.Clear();
-            System.Diagnostics.Debug.WriteLine("h size="+h.Count());
-            if (temp.Equals("CURRENT LOCATION"))
-            {
-                foreach(var x in h)
-                {
-                    hospitals.Add(x);
-                    hospitalmain.Add(x.Name);
-                }
-            }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine("IN else");
-                //if (h.Select(x=> x.Location).Contains(temp))
-                //System.Diagnostics.Debug.WriteLine("IN else");
-                    foreach(var x in h)
-                    {
-                        if (x.Location.Equals(temp))
-                        {
-                            this.hospitals.Add(x);
-                            hospitalmain.Add(x.Name);
-                        }
-
-                    }
-                
-                
-            }
-            //hospitalmain.Clear();
-            //foreach (var x in this.hospitals)
-            //    this.hospitalmain.Add(x.Name);
-
-            System.Diagnostics.Debug.WriteLine("SUCCESS!!!");
-            System.Diagnostics.Debug.WriteLine("success" + hospitalmain.Count());
-            return true;
-        }
-        public bool DataReadFromAPISuccess(RootObject r)
-        {
-
-            loc = r.address.neighbourhood.ToUpper();
-            System.Diagnostics.Debug.WriteLine("location="+location);
-            
+            System.Diagnostics.Debug.WriteLine("Hosp Location viewmodel success");
+            foreach (var x in h)
+                this.hospitals.Add(x);
             return true;
         }
 
+        public bool HospitalLocationReadFail()
+        {
+            System.Diagnostics.Debug.WriteLine(" Hosp Location viewmodel fail");
+            return false;
+        }
 
+        public bool DoctorLocationReadSuccess(List<Doctor> d)
+        {
+            System.Diagnostics.Debug.WriteLine(" Doc Location viewmodel success");
+            foreach (var x in d)
+                this.doctors.Add(x);
+            return true;
+        }
 
+        public bool DoctorLocationReadFail()
+        {
+            System.Diagnostics.Debug.WriteLine(" Doc Location viewmodel fail");
+            return false;
+        }
     }
 }

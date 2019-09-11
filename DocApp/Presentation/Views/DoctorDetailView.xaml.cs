@@ -1,4 +1,5 @@
-﻿using DocApp.Presentation.ViewModels;
+﻿using DocApp.Models;
+using DocApp.Presentation.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,7 +31,7 @@ namespace DocApp.Presentation.Views
         public delegate void ListViewItemSelectedEventHandler(object source, EventArgs e);
         public event ListViewItemSelectedEventHandler ListViewItemSelected;
         DoctorDetailViewModel viewModel;
-        string name = "";
+        int id;
         public DoctorDetailView()
         {
             this.InitializeComponent();
@@ -39,15 +40,11 @@ namespace DocApp.Presentation.Views
 
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
-            System.Diagnostics.Debug.WriteLine("Sent val=" + (string)e1.Parameter);
-            name = (string)e1.Parameter;
-            //HospitalDetailsTemplate h = new HospitalDetailsTemplate();
-            viewModel = new DoctorDetailViewModel(name);
-            var frame = (Frame)Window.Current.Content;
-            var page = (MainPage)frame.Content;
-            this.ListViewItemSelected += page.OnListViewItemSelected;
-            await viewModel.GetDoctor();
-            
+
+            var doc = e1.Parameter as Doctor;
+            viewModel = new DoctorDetailViewModel();
+            await viewModel.GetDoctor(doc.ID);
+            System.Diagnostics.Debug.WriteLine(viewModel.doctor.Name);
             return;
 
 
@@ -70,7 +67,7 @@ namespace DocApp.Presentation.Views
             if (sender.Value!=null && sender.Value > 0)
             {
                 Bindings.Update();
-                await viewModel.UpdateDoctor(name, (double)sender.Value);
+                //await viewModel.UpdateDoctor(name, (double)sender.Value);
 
                 Bindings.Update();
                 myRating.Caption = myRating.Value.ToString();

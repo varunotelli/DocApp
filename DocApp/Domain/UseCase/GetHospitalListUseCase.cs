@@ -40,7 +40,7 @@ namespace DocApp.Domain.Usecase
             
             
             if (hospitals != null && hospitals.Count > 0)
-                useCaseCallback.DataReadSuccess(ref hospitals);
+                useCaseCallback.DataReadSuccess(hospitals);
             else useCaseCallback.DataReadFail();
             // + hospitals.Count());
 

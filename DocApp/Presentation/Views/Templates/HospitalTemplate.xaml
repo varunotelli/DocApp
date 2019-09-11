@@ -11,73 +11,35 @@
     d:DesignWidth="400">
     <UserControl.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="10,10"/>
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
         </Style>
     </UserControl.Resources>
 
-    <Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="250"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Image Width="200" Height="200" Margin="10,10"/>
-            <StackPanel Grid.Column="1">
+    <StackPanel Orientation="Horizontal" Padding="0">
+        <Image Height="100" Width="100" Source="ms-appx:///Assets/400_placeholder.png" />
+        <StackPanel>
+            <TextBlock Text="{x:Bind hospital.Name}" Margin="10,5" FontSize="18" FontWeight="Bold" TextTrimming="CharacterEllipsis"
+               TextWrapping="NoWrap" Foreground="White" FontFamily="ms-appx:///Assets/montserrat-v14-latin-800.ttf#Montserrat"/>
+            <!--<TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', doctor.Experience)}" 
+                   Style="{StaticResource TextBlockStyle}"/>-->
+            <TextBlock Text="{x:Bind hospital.Location}" Style="{StaticResource TextBlockStyle}"/>
+            <RatingControl Value="{x:Bind hospital.Rating}" HorizontalAlignment="Left" Margin="10,3"
+                                       Caption="{x:Bind sys:String.Format('({0})',hospital.Number_Of_Rating)}" 
+                                       IsReadOnly="True" >
+                <RatingControl.Resources>
+                    <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
+
+                </RatingControl.Resources>
+            </RatingControl>
+
+        </StackPanel>
 
 
-                <StackPanel Margin="10,10,10,10">
-
-                    <TextBlock x:Name="hospitalName" Text="{x:Bind hospital.Name}" FontSize="24" Margin="10,10"
-                                   FontWeight="Bold"/>
-                    
-                    <TextBlock x:Name="hospitalLocation" Text="{x:Bind hospital.Location}"
-                                   Style="{StaticResource TextBlockStyle}"/>
 
 
-                </StackPanel>
 
-            </StackPanel>
-
-
-            <StackPanel Margin="10,65,10,10" VerticalAlignment="Stretch" Grid.Column="2" >
-                <TextBlock x:Name="hospitalRating" Style="{StaticResource TextBlockStyle}">
-                    
-                    <Run Text="{x:Bind hospital.Rating.ToString()}"/>
-                    <Run FontFamily="Segoe MDL2 Assets" Text="&#xE00A;"/>
-                    <Run Text=" ("/>
-                    <Run Text="{x:Bind hospital.Number_of_Rating.ToString()}"/>
-                    <Run Text=" Ratings)"/>
-                </TextBlock>
-                <TextBlock x:Name="hospitalFee" Style="{StaticResource TextBlockStyle}">
-                        <Run FontFamily="Segoe UI Emoji" Text="&#x1f4b0;"/>
-                        <Run Text="{x:Bind sys:String.Format('Rs.{0}',hospital.Fees)}"/>
-                </TextBlock>
-
-                <TextBlock x:Name="hospitalStartTiming" Style="{StaticResource TextBlockStyle}">
-                        <Run FontFamily="Segoe MDL2 Assets" Text="&#xE121;"/>
-                        <Run Text="{x:Bind sys:String.Format('{0}-',hospital.Start_Time)}"/>
-                        <Run Text="{x:Bind hospital.End_Time}"/>
-                </TextBlock>
-
-                <Button Content="Book Appointment" Margin="10,10,10,0" Background="Green" VerticalAlignment="Bottom">
-                    <Button.Resources>
-                        <ResourceDictionary>
-                            <ResourceDictionary.ThemeDictionaries>
-                                <ResourceDictionary x:Key="Dark">
-                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="DarkGreen"/>
-                                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="DarkGreen"/>
-                                </ResourceDictionary>
-
-                            </ResourceDictionary.ThemeDictionaries>
-                        </ResourceDictionary>
-                    </Button.Resources>
-                </Button>
-            </StackPanel>
-
-
-        </Grid>
-
-    </Grid>
+    </StackPanel>
 </UserControl>

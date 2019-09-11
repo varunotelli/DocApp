@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace DocApp.Domain.DataContracts
 {
-    public interface IHospitalInDoctorList
+    public interface ILocationList
     {
-         Task GetHospitalByDoctor(int id, IHospitalDoctorCallback doctorHospitalCallBack);
-        
+        Task GetLocationsAsync(string val, ILocationCallBack addressCallBack);
     }
 }

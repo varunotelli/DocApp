@@ -1,0 +1,32 @@
+﻿<Page
+    x:Class="DocApp.Presentation.Views.MainPageBuffer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DocApp.Presentation.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    RequestedTheme="Dark">
+    <Page.Resources>
+        <Style TargetType="TextBlock" x:Key="TextBlockStyle">
+            <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+        </Style>
+    </Page.Resources>
+
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#2B2B2A" Offset="0.007"/>
+            <GradientStop Color="#080808" Offset="0.548"/>
+        </LinearGradientBrush>
+    </Page.Background>
+    
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,200,0,300" Width="410">
+        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1A3;" FontSize="80" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Margin="0,0,0,40" Style="{StaticResource TextBlockStyle}"/>
+        <TextBlock FontSize="48" FontWeight="ExtraBold" Text="Search DocApp" Style="{StaticResource TextBlockStyle}"/>
+        <TextBlock FontSize="20" FontWeight="Bold" Text="Find Doctors and Hospitals based on your preference" Foreground="DimGray"
+          TextAlignment="Center" Style="{StaticResource TextBlockStyle}" 
+                   HorizontalAlignment="Center" Margin="0,20" TextWrapping="WrapWholeWords"/>
+
+    </StackPanel>
+</Page>

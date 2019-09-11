@@ -46,11 +46,11 @@ namespace DocApp.Data
         {
             DoctorDBHandler.DBConnection();
             var results = await DoctorDBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
-                "WHERE NAME='{0}'",name));
+                "WHERE NAME LIKE'{0}%'",name));
             if (results != null && results.Count > 0)
             {
                 hospitalCallback.ReadSuccess(results);
-                await DoctorDBHandler.db.CloseAsync();
+                //await DoctorDBHandler.db.CloseAsync();
             }
             else
                 hospitalCallback.ReadFail();
@@ -66,10 +66,38 @@ namespace DocApp.Data
             if (results != null && results.Count > 0)
             {
                 hospitalCallback.ReadSuccess(results);
-                await DoctorDBHandler.db.CloseAsync();
+                //await DoctorDBHandler.db.CloseAsync();
             }
             else
                 hospitalCallback.ReadFail();
+
+        }
+
+        public async Task GetHospitalbyIdAsync(int id, IHospitalCallback hospitalCallback)
+        {
+            List<Hospital> results = new List<Hospital>();
+
+            try
+            {
+
+                //var db = await dbHandler.DBConnection();
+                DoctorDBHandler.DBConnection();
+                results = await DoctorDBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL {0}",id)
+                    );
+                System.Diagnostics.Debug.WriteLine("results=" + results.Count());
+                if (results != null && results.Count > 0)
+                {
+                    hospitalCallback.ReadSuccess(results);
+                    //await DoctorDBHandler.db.CloseAsync();
+                }
+                else
+                    hospitalCallback.ReadFail();
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("SELECT EXCEPTION" + e.Message);
+            }
 
         }
     }

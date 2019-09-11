@@ -13,6 +13,7 @@ namespace DocApp.Domain.DataContracts
     public interface IDoctorList
     {
         Task GetDoctorsAsync(IDoctorCallback dcall); //Get List of Hospitals from Database
+        Task GetDoctorByIdAsync(int id, IDoctorCallback callback);
         Task GetDoctorByNameAsync(string name, IDoctorCallback doctorCallback);
         Task GetDoctorByHospitalNameAsync(string name, IDoctorCallback doctorCallback);
         Task GetDoctorByHospitalLocationAsync(string name, IDoctorCallback doctorCallback);

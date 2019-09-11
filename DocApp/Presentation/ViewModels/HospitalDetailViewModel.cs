@@ -14,8 +14,8 @@ namespace DocApp.Presentation.ViewModels
     public class HospitalDetailViewModel: HospitalDetailCallBack, DoctorHospitalDetailViewCallback,DoctorDetailViewCallBack,
         INotifyPropertyChanged
     {
-        
-        protected string name1 = "";
+
+        int id;
         public string rating = "";
         public string num_rating = "";
         public Hospital hospital;
@@ -44,24 +44,20 @@ namespace DocApp.Presentation.ViewModels
             }
         }
 
-        public HospitalDetailViewModel(string n)
+        public HospitalDetailViewModel(int n)
         {
-            this.name1 = n;
-            doc = new Doctor();
-            //this.Doctors = new ObservableCollection<Doctor>();
+            this.id = n;
            
         }
 
         UseCaseBase getHospital;
         UseCaseBase getDoctorByHospital;
         UseCaseBase getDoctorProfile;
-        public async Task GetHospitals()
+        public async Task GetHospital()
         {
            
-            getHospital = new GetHospitalDetail(name1);
-            getDoctorByHospital = new GetDoctorByHospitalUseCase(name1);
-            doctormain = new ObservableCollection<string>();
-            Doctors = new ObservableCollection<DoctorInHospitalDetails>();
+            //getHospital = new GetHospitalUseCase(id,this);
+            
            
             //getHospital = new GetHospitalListUseCase();
             //hospitals = new ObservableCollection<Hospital>();
@@ -90,7 +86,7 @@ namespace DocApp.Presentation.ViewModels
         public async Task GetDoctorDetails(string docname)
         {
             //doc = new Doctor();
-            getDoctorProfile = new GetDoctorDetailUseCase(docname);
+            getDoctorProfile = new GetDoctorByNameUseCase(docname);
             getDoctorProfile.SetCallBack<DoctorDetailViewCallBack>(this);
             await getDoctorProfile.Execute();
         }
@@ -155,6 +151,11 @@ namespace DocApp.Presentation.ViewModels
         {
             System.Diagnostics.Debug.WriteLine("Doctor update fail");
             return false;
+        }
+
+        public bool DataReadSuccess(List<Hospital> h)
+        {
+            throw new NotImplementedException();
         }
     }
 }

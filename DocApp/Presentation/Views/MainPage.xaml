@@ -1,0 +1,87 @@
+﻿<Page
+    x:Class="DocApp.Presentation.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DocApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded"
+    RequestedTheme="Light"
+    >
+    <Page.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="White"/>
+            <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="White"/>
+            <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="White"/>
+        
+        
+        <Style x:Key="AutoboxStyle" TargetType="TextBox" >
+            <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Height" Value="40"/>
+            <!--<Setter Property="CornerRadius" Value="30"/>-->
+            <Setter Property="Padding" Value="20,10,0,0"/>
+            <Setter Property="PlaceholderForeground" Value="Black"/>
+            <!--<Setter Property="FontWeight" Value=""/>-->
+            <!--<Setter Property="Margin" Value="20,0,20,0"/>-->
+            <Setter Property="BorderThickness" Value="0,0,0,0"/>
+
+
+        </Style>
+        <Style x:Key="AutoListStyle" TargetType="ListViewItem">
+            <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            
+
+        </Style>
+        </ResourceDictionary>
+
+    </Page.Resources>
+    
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF080808" Offset="0.688"/>
+            <GradientStop Color="#FF313131" Offset="0.007"/>
+        </LinearGradientBrush>
+    </Page.Background>
+
+    
+        <StackPanel x:Name="MainStack" Margin="0,35,0,0">
+
+        <RelativePanel>
+            <HyperlinkButton x:Name="BackButton" RelativePanel.AlignLeftWithPanel="True" Margin="10,10" Click="BackButton_Click">
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE016;" FontSize="24"/>
+            </HyperlinkButton>
+            <!--<HyperlinkButton x:Name="ForwardButton" RelativePanel.RightOf="BackButton" Margin="5,10" Click="ForwardButton_Click">
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE017;" FontSize="24"/>
+            </HyperlinkButton>-->
+
+            <AutoSuggestBox x:Name="MyAutoSuggest" PlaceholderText="{x:Bind viewModel.loc, Mode=TwoWay}" TextChanged="MyAutoSuggest_TextChanged" 
+                    TextBoxStyle="{StaticResource AutoboxStyle}" QuerySubmitted="MyAutoSuggest_QuerySubmitted" UpdateTextOnSelect="True"
+                    QueryIcon="Map" ItemContainerStyle="{StaticResource AutoListStyle}" RelativePanel.RightOf="BackButton" Width="467"
+                            Margin="35,5"/>
+
+            
+            <AutoSuggestBox x:Name="HospDocSuggest" PlaceholderText="Search for Doctor or Hospital" TextChanged="HospDocSuggest_TextChanged" 
+                    TextBoxStyle="{StaticResource AutoboxStyle}" RelativePanel.AlignRightWithPanel="True"
+                QueryIcon="Find" ItemContainerStyle="{StaticResource AutoListStyle}" Width="467" Margin="0,5,135,0"/>
+            <ComboBox x:Name="Comboboxitem" PlaceholderText="Departments" RelativePanel.LeftOf="HospDocSuggest" Margin="0,5"
+                      Height="40" BorderThickness="0,0,1.5,0" FontFamily="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"
+                      FontSize="14"/>
+
+
+
+
+
+
+
+        </RelativePanel>
+        <Frame x:Name="myFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,10">
+
+        </Frame>
+    </StackPanel>
+    
+
+</Page>

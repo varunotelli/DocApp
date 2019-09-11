@@ -41,10 +41,10 @@ namespace DocApp.Domain.UseCase
             {
                 System.Diagnostics.Debug.WriteLine("DB UPDATE EXCEPTION" + e.Message);
             }
-            if (doctor != null)
-                doctorDetailViewCallBack.DoctorDetailViewSuccess(doctor);
-            else
-                doctorDetailViewCallBack.DoctorDetailViewFail()
+            //if (doctor != null)
+            //    doctorDetailViewCallBack.DoctorDetailViewSuccess(doctor);
+            //else
+            //    doctorDetailViewCallBack.DoctorDetailViewFail()
 ;        }
         public bool DoctorUpdateFail()
         {

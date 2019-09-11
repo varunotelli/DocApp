@@ -46,12 +46,12 @@ namespace DocApp.Data
         {
             DoctorDBHandler.DBConnection();
             var results = await DoctorDBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR " +
-                "WHERE NAME='{0}'", name));
+                "WHERE NAME LIKE '{0}%' AND NAME NOT NULL", name));
            //await DoctorDBHandler.db.CloseAsync();
-            if (results != null)
+            if (results != null && results.Count>0)
             {
                 doctorCallback.ReadSuccess(results);
-                await DoctorDBHandler.db.CloseAsync();
+                //await DoctorDBHandler.db.CloseAsync();
             }
             else
                 doctorCallback.ReadFail();
@@ -89,7 +89,7 @@ namespace DocApp.Data
             if (results != null)
             {
                 doctorCallback.ReadSuccess(results);
-                await DoctorDBHandler.db.CloseAsync();
+                //await DoctorDBHandler.db.CloseAsync();
             }
             else
                 doctorCallback.ReadFail();
@@ -136,7 +136,7 @@ namespace DocApp.Data
             {
                 DoctorDBHandler.DBConnection();
                 var results = await DoctorDBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR " +
-                "WHERE NAME='{0}'", name));
+                "WHERE NAME LIKE '{0}%'", name));
                 
                 if (results != null)
                 {
@@ -155,10 +155,33 @@ namespace DocApp.Data
             }
             //await DoctorDBHandler.db.CloseAsync();
         }
+
+        public async Task GetDoctorByIdAsync(int id, IDoctorCallback doctorCallback)
+        {
+            //Doctor d = new Doctor();
+            try
+            {
+
+                //var db = await dbHandler.DBConnection();
+                DoctorDBHandler.DBConnection();
+                List<Doctor> results = await DoctorDBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR WHERE ID={0}",id));
                 
-            
-            
-            
-        
+                
+                if (results != null)
+                {
+                    doctorCallback.ReadSuccess(results);
+                    //await DoctorDBHandler.db.CloseAsync();
+                }
+                else
+                    doctorCallback.ReadFail();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("SELECT EXCEPTION" + e.Message);
+            }
+
+
+
+        }
     }
 }

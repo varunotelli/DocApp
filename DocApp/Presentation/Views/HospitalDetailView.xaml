@@ -11,86 +11,9 @@
     mc:Ignorable="d"
     
     RequestedTheme="Dark"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    >
-    <Page.Resources>
-        <Style x:Key="SubTitleStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="10,10,10,0"/>
-            <Setter Property="FontSize" Value="36"/>
-            <Setter Property="FontFamily" Value="ms-appx:///Assets/raleway-v14-latin-900.ttf#Raleway"/>
-        </Style>
-        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="10,10"/>
-            <Setter Property="FontSize" Value="16"/>
-        </Style>
-    </Page.Resources>
-
     
-        
-        <SplitView x:Name="mySplitView" DisplayMode="Overlay" IsPaneOpen="False" PanePlacement="Right" OpenPaneLength="500">
-            <SplitView.Pane>
-                <uc:DoctorProfileTemplate x:Name="DoctorProfile" DataContext="{x:Bind viewModel.doc}"/>
-            </SplitView.Pane>
-            <SplitView.Content>
-            <Grid>
-                <ScrollViewer>
-                    <StackPanel Margin="10,10,10,0" HorizontalAlignment="Center">
+    >
+    <TextBlock Text="{x:Bind viewModel.doc.Name}"/>
 
-                        <StackPanel Orientation="Horizontal">
-
-
-                            <Image Height="250" Width="250"/>
-                            <StackPanel>
-
-                                <TextBlock Text="{x:Bind viewModel.hospital.Name}" FontSize="24" FontWeight="Bold" Margin="10,10"/>
-                                <TextBlock Text="{x:Bind viewModel.hospital.Location}" Style="{StaticResource TextBlockStyle}"/>
-
-                                <RatingControl Value="{x:Bind viewModel.hospital.Rating}" 
-                                       Caption="{x:Bind sys:String.Format('({0})',viewModel.hospital.Number_Of_Rating)}" 
-                                       IsReadOnly="True">
-                                    <RatingControl.Resources>
-                                        <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
-
-                                    </RatingControl.Resources>
-                                </RatingControl>
-                                <TextBlock Text="{x:Bind viewModel.hospital.Description}" Style="{StaticResource TextBlockStyle}"/>
-
-                            </StackPanel>
-
-                        </StackPanel>
-
-
-
-
-                        <TextBlock Text="Doctors In This Hospital" Style="{StaticResource SubTitleStyle}"/>
-
-                        <ListView x:Name="myListView" ItemsSource="{x:Bind viewModel.Doctors}" Margin="10,10,10,10"
-                              IsItemClickEnabled='True'
-                          ItemClick="MyListView_ItemClick" HorizontalAlignment="Left">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <!--<Setter Property="Height" Value="200"/>-->
-                                    <Setter Property="Margin" Value="10,10,10,10"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="data:DoctorInHospitalDetails">
-                                    <uc:DoctorTemplate Margin="10,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-
-
-                    </StackPanel>
-                </ScrollViewer>
-            </Grid>
-            
-                
-            
-        </SplitView.Content>
-            
-        </SplitView>
-
-   
 
 </Page>
