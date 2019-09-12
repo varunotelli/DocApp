@@ -10,7 +10,7 @@ using Windows.Storage;
 
 namespace DocApp.Data
 {
-    public class DoctorDBHandler
+    public class DBHandler
     {
         public static SQLiteAsyncConnection db;
         public static SQLiteAsyncConnection DBConnection()

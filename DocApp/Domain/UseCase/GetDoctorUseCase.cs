@@ -17,7 +17,7 @@ namespace DocApp.Domain.UseCase
         Doctor doc = new Doctor();
         int id;
         //HospitalViewCallback hospitalUseCaseCallback;
-        DoctorDetailViewCallBack doctorUseCaseCallback;
+        IDoctorDetailViewCallBack doctorUseCaseCallback;
         //IDoctorCallback dcall;
         public GetDoctorUseCase(int n)
         {
@@ -54,7 +54,7 @@ namespace DocApp.Domain.UseCase
 
         public override void SetCallBack<P>(P p)
         {
-            this.doctorUseCaseCallback = (DoctorDetailViewCallBack)p;
+            this.doctorUseCaseCallback = (IDoctorDetailViewCallBack)p;
         }
 
 

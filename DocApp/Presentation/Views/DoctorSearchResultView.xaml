@@ -1,0 +1,57 @@
+﻿<Page
+    x:Class="DocApp.Presentation.Views.DoctorSearchResultView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DocApp.Presentation.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+   RequestedTheme="Dark">
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#2A2A2A" Offset="0.007"/>
+            <GradientStop Color="#080808" Offset="0.548"/>
+        </LinearGradientBrush>
+    </Page.Background>
+    <Page.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="DimGray"/>
+            <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="White"/>
+            <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="White"/>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Margin="0,0,0,400">
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Background="#FF121212" Padding="15" Margin="0,0,0,0">
+                <StackPanel VerticalAlignment="Stretch" Margin="0,0,0,400">
+                    <TextBlock FontSize="20" Text="DEPARTMENTS" Margin="10,10,10,10" Foreground="DimGray"
+                    FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
+                    <ItemsControl ItemsSource="{x:Bind viewModel.deptnames}" VerticalAlignment="Stretch">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <HyperlinkButton FontSize="16" Margin="10,5"
+                                             FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova">
+                                    <TextBlock Text="{x:Bind}"/>
+                                </HyperlinkButton>
+                            </DataTemplate>
+
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                
+            </Grid>
+            <GridView Grid.Column="1" HorizontalAlignment="Stretch">
+                
+            </GridView>
+
+        </Grid>
+
+
+    </Grid>
+
+</Page>

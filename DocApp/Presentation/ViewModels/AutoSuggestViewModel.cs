@@ -16,12 +16,15 @@ namespace DocApp.Presentation.ViewModels
     {
         public string address { get; set; }
     }
-    public class AutoSuggestViewModel: GetLocationPresenterCallback, GetAddressPresenterCallback, INotifyPropertyChanged
+    public class AutoSuggestViewModel: IGetLocationPresenterCallback, IGetAddressPresenterCallback, IDepartmentViewCallback,
+        INotifyPropertyChanged
     {
         public double latitude;
         public double longitude;
         public ObservableCollection<string> localities;
+        public ObservableCollection<string> depts;
         public UseCaseBase getLocalityList;
+        public UseCaseBase getDepts;
         private string location = "Current Location";
         public UseCaseBase getAddress;
         public delegate void LocationChangedEventHandler(object source, LocationEventArgs e);
@@ -50,6 +53,11 @@ namespace DocApp.Presentation.ViewModels
             }
         }
 
+        public AutoSuggestViewModel()
+        {
+            depts = new ObservableCollection<string>();
+        }
+
         public void onLocationChanged()
         {
             if (LocationChanged != null)
@@ -60,7 +68,7 @@ namespace DocApp.Presentation.ViewModels
         {
             localities = new ObservableCollection<string>();
             getLocalityList = new GetLocationsUseCase(s);
-            getLocalityList.SetCallBack<GetLocationPresenterCallback>(this);
+            getLocalityList.SetCallBack<IGetLocationPresenterCallback>(this);
             await getLocalityList.Execute();
         }
 
@@ -84,7 +92,7 @@ namespace DocApp.Presentation.ViewModels
 
             //getDoctor.SetCallBack<DoctorViewCallback>(this);
 
-            getAddress.SetCallBack<GetAddressPresenterCallback>(this);
+            getAddress.SetCallBack<IGetAddressPresenterCallback>(this);
 
             try
             {
@@ -98,6 +106,13 @@ namespace DocApp.Presentation.ViewModels
                 System.Diagnostics.Debug.WriteLine("EXCEPTION=" + e.Message);
             }
 
+        }
+
+        public async Task GetDepartments()
+        {
+            getDepts = new GetDeptsUseCase();
+            getDepts.SetCallBack<IDepartmentViewCallback>(this);
+            await getDepts.Execute();
         }
 
 
@@ -130,6 +145,20 @@ namespace DocApp.Presentation.ViewModels
         public bool DataReadFail()
         {
             System.Diagnostics.Debug.WriteLine("API Viewmodel fail");
+            return false;
+        }
+
+        public bool DepartmentDataReadSuccess(List<Department> d)
+        {
+            
+            foreach (var x in d)
+                depts.Add(x.name);
+            return true;
+        }
+
+        public bool DepartmentDataReadFail()
+        {
+            System.Diagnostics.Debug.WriteLine("Main page depts fail");
             return false;
         }
     }

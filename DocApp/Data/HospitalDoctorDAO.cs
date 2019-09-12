@@ -20,10 +20,10 @@ namespace DocApp.Data
             {
 
                 //var db = await dbHandler.DBConnection();
-                DoctorDBHandler.DBConnection();
-                var docs = await DoctorDBHandler.db.Table<Doctor>().ToListAsync();
-                var roster = await DoctorDBHandler.db.Table<Roster>().ToListAsync();
-                var hosp = await DoctorDBHandler.db.Table<Hospital>().ToListAsync();
+                DBHandler.DBConnection();
+                var docs = await DBHandler.db.Table<Doctor>().ToListAsync();
+                var roster = await DBHandler.db.Table<Roster>().ToListAsync();
+                var hosp = await DBHandler.db.Table<Hospital>().ToListAsync();
                 var details = (from h in hosp
                                join r in roster
                                on h.ID equals r.hosp_id
@@ -50,7 +50,7 @@ namespace DocApp.Data
                 if (results != null && results.Count() > 0)
                 {
                     HospitalDoctorCallBack.ReadSuccess(results);
-                    await DoctorDBHandler.db.CloseAsync();
+                    await DBHandler.db.CloseAsync();
                 }
 
                 else HospitalDoctorCallBack.ReadFail();

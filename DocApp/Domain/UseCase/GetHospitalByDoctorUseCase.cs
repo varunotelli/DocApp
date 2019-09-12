@@ -14,7 +14,7 @@ namespace DocApp.Domain.UseCase
     public class GetHospitalByDoctorUseCase : UseCaseBase, IHospitalDoctorCallback
     {
 
-        HospitalDoctorViewCallBack useCaseCallback;
+        IHospitalDoctorViewCallBack useCaseCallback;
         List<HospitalInDoctorDetails> hospitals;
         int id;
         public GetHospitalByDoctorUseCase(int n)
@@ -23,7 +23,7 @@ namespace DocApp.Domain.UseCase
         }
         public override void SetCallBack<P>(P p)
         {
-            this.useCaseCallback = (HospitalDoctorViewCallBack)p;
+            this.useCaseCallback = (IHospitalDoctorViewCallBack)p;
         }
 
         internal override async Task Action()

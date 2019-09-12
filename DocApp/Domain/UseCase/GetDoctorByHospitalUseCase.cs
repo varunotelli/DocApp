@@ -16,7 +16,7 @@ namespace DocApp.Domain.UseCase
         string hospitalName = "";
         List<DoctorInHospitalDetails> doctors = new List<DoctorInHospitalDetails>();
         //HospitalViewCallback hospitalUseCaseCallback;
-        DoctorHospitalDetailViewCallback doctorUseCaseCallback;
+        IDoctorHospitalDetailViewCallback doctorUseCaseCallback;
         public GetDoctorByHospitalUseCase(string name)
         {
             this.hospitalName = name;
@@ -49,7 +49,7 @@ namespace DocApp.Domain.UseCase
 
         public override void SetCallBack<P>(P p)
         {
-            this.doctorUseCaseCallback = (DoctorHospitalDetailViewCallback)p;
+            this.doctorUseCaseCallback = (IDoctorHospitalDetailViewCallback)p;
         }
 
         public bool ReadSuccess(List<DoctorInHospitalDetails> doc)

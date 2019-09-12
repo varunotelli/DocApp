@@ -14,7 +14,7 @@ namespace DocApp.Domain.UseCase
     public class GetHospitalByNameUseCase : UseCaseBase,IHospitalCallback
     {
         List<Hospital> hospital = new List<Hospital>();
-        HospitalViewCallback useCaseCallback;
+        IHospitalViewCallback useCaseCallback;
         public string name1="";
         public GetHospitalByNameUseCase(string name)
         {
@@ -52,7 +52,7 @@ namespace DocApp.Domain.UseCase
 
         public override void SetCallBack<P>(P p)
         {
-            this.useCaseCallback = (HospitalViewCallback)p;
+            this.useCaseCallback = (IHospitalViewCallback)p;
         }
 
 

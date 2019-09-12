@@ -8,7 +8,9 @@
     mc:Ignorable="d"
     RequestedTheme="Dark">
     <Page.Resources>
+        
         <ResourceDictionary>
+            
             <Style x:Key="GridViewItemStyle1" TargetType="GridViewItem">
                 <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
                 <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
@@ -101,7 +103,7 @@
                 </Setter>
             </Style>
             <Style TargetType="TextBlock" x:Key="TextBlockStyle">
-                <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+                <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
             </Style>
         </ResourceDictionary>
        
@@ -121,20 +123,21 @@
         <TextBlock FontSize="20" FontWeight="Bold" Text="Find Doctors and Hospitals based on your preference" Foreground="DimGray"
           TextAlignment="Center" Style="{StaticResource TextBlockStyle}" 
                    HorizontalAlignment="Center" Margin="0,20" TextWrapping="WrapWholeWords"/>-->
-        <GridView HorizontalAlignment="Center" VerticalAlignment="Center" ItemContainerStyle="{StaticResource GridViewItemStyle1}">
+        <GridView HorizontalAlignment="Center" VerticalAlignment="Stretch" IsItemClickEnabled="True" ItemClick="GridView_ItemClick"
+                  ItemContainerStyle="{StaticResource GridViewItemStyle1}" SelectionMode="Single" SelectionChanged="GridView_SelectionChanged">
             <GridViewItem Margin="0,10,20,10">
                 <Grid>
-                    <Image Source="ms-appx:///Assets/doctor.jpg" Height="400" Width="400" Opacity="0.3"
+                    <Image Source="ms-appx:///Assets/doctor.jpg" Height="400" Width="400" Opacity="0.4"
                            Stretch="UniformToFill"/>
                     <TextBlock HorizontalAlignment="Left" Text="Explore&#x0a;Doctors" VerticalAlignment="Bottom" Margin="30,0,0,30"
-                        FontSize="34"      FontFamily="ms-appx:///Assets/montserrat-v14-latin-600.ttf#Montserrat"/>
+                        FontSize="38" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova"/>
                 </Grid>
             </GridViewItem>
             <GridViewItem Margin="10,10,10,10">
                 <Grid>
-                    <Image Source="ms-appx:///Assets/hospital.jpg" Width="400" Height="400" Opacity="0.3" Stretch="Fill"/>
+                    <Image Source="ms-appx:///Assets/hospital.jpg" Width="400" Height="400" Opacity="0.4" Stretch="Fill"/>
                     <TextBlock HorizontalAlignment="Left" Text="Explore&#x0a;Hospitals" VerticalAlignment="Bottom" Margin="30,0,0,30"
-                        FontSize="34"      FontFamily="ms-appx:///Assets/montserrat-v14-latin-600.ttf#Montserrat"/>
+                        FontSize="38" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova"/>
                 </Grid>
             </GridViewItem>
         </GridView>

@@ -22,14 +22,14 @@ namespace DocApp.Data
             {
                 
                 //var db = await dbHandler.DBConnection();
-                DoctorDBHandler.DBConnection();
-                results = await DoctorDBHandler.db.QueryAsync<Hospital>(
+                DBHandler.DBConnection();
+                results = await DBHandler.db.QueryAsync<Hospital>(
                     "SELECT * FROM HOSPITAL ");
                 System.Diagnostics.Debug.WriteLine("results="+results.Count());
                 if (results != null && results.Count > 0)
                 {
                     hospitalCallback.ReadSuccess(results);
-                    await DoctorDBHandler.db.CloseAsync();
+                    await DBHandler.db.CloseAsync();
                 }
                 else
                     hospitalCallback.ReadFail();
@@ -44,8 +44,8 @@ namespace DocApp.Data
         }
         public async Task GetHospitalByNameAsync(string name, IHospitalCallback hospitalCallback)
         {
-            DoctorDBHandler.DBConnection();
-            var results = await DoctorDBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
+            DBHandler.DBConnection();
+            var results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
                 "WHERE NAME LIKE'{0}%'",name));
             if (results != null && results.Count > 0)
             {
@@ -60,8 +60,8 @@ namespace DocApp.Data
 
         public async Task GetHospitalByLocationAsync(string name, IHospitalCallback hospitalCallback)
         {
-            DoctorDBHandler.DBConnection();
-            var results = await DoctorDBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
+            DBHandler.DBConnection();
+            var results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
                 "WHERE LOCATION='{0}'", name));
             if (results != null && results.Count > 0)
             {
@@ -81,8 +81,8 @@ namespace DocApp.Data
             {
 
                 //var db = await dbHandler.DBConnection();
-                DoctorDBHandler.DBConnection();
-                results = await DoctorDBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL {0}",id)
+                DBHandler.DBConnection();
+                results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL {0}",id)
                     );
                 System.Diagnostics.Debug.WriteLine("results=" + results.Count());
                 if (results != null && results.Count > 0)

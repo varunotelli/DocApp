@@ -26,5 +26,27 @@ namespace DocApp.Presentation.Views
         {
             this.InitializeComponent();
         }
+
+        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            
+
+        }
+
+        private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var griditem = sender as GridView;
+            Frame parentFrame = Window.Current.Content as Frame;
+
+            MainPage mp = parentFrame.Content as MainPage;
+            StackPanel grid = mp.Content as StackPanel;
+            Frame my_frame = grid.FindName("myFrame") as Frame;
+            if (griditem.SelectedIndex == 0)
+            {
+                my_frame.Navigate(typeof(DoctorSearchResultView));
+            }
+
+            
+        }
     }
 }

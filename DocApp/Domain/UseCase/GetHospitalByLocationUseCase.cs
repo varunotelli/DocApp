@@ -15,7 +15,7 @@ namespace DocApp.Domain.UseCase
     {
         List<Hospital> hospitals = new List<Hospital>();
         string location = "";
-        HospitalLocationPresenterCallBack useCaseCallback;
+        IHospitalLocationPresenterCallBack useCaseCallback;
         public GetHospitalByLocationUseCase(string x)
         {
             this.location = x;
@@ -51,7 +51,7 @@ namespace DocApp.Domain.UseCase
 
         public override void SetCallBack<P>(P p)
         {
-            this.useCaseCallback = (HospitalLocationPresenterCallBack)p;
+            this.useCaseCallback = (IHospitalLocationPresenterCallBack)p;
         }
 
         public bool ReadSuccess(List<Hospital> hosp)

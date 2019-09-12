@@ -15,7 +15,7 @@ namespace DocApp.Domain.UseCase
     {
         string name = "";
         double rating = 0;
-        DoctorDetailViewCallBack doctorDetailViewCallBack;
+        IDoctorDetailViewCallBack doctorDetailViewCallBack;
         Doctor doctor = new Doctor();
         public UpdateDoctorRatingUseCase(string name1,double r)
         {
@@ -27,7 +27,7 @@ namespace DocApp.Domain.UseCase
 
         public override void SetCallBack<P>(P p)
         {
-            this.doctorDetailViewCallBack = (DoctorDetailViewCallBack)p;
+            this.doctorDetailViewCallBack = (IDoctorDetailViewCallBack)p;
         }
 
         internal override async Task Action()

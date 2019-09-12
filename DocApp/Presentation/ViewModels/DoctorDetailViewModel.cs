@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DocApp.Presentation.ViewModels
 {
-    class DoctorDetailViewModel: DoctorDetailViewCallBack, HospitalDoctorViewCallBack, INotifyPropertyChanged
+    class DoctorDetailViewModel: IDoctorDetailViewCallBack, IHospitalDoctorViewCallBack, INotifyPropertyChanged
     {
 
 
@@ -54,8 +54,8 @@ namespace DocApp.Presentation.ViewModels
             getDoc = new GetDoctorUseCase(id);
             getHosp = new GetHospitalByDoctorUseCase(id);
             
-            getDoc.SetCallBack<DoctorDetailViewCallBack>(this);
-            getHosp.SetCallBack<HospitalDoctorViewCallBack>(this);
+            getDoc.SetCallBack<IDoctorDetailViewCallBack>(this);
+            getHosp.SetCallBack<IHospitalDoctorViewCallBack>(this);
             try
             {
 
@@ -102,7 +102,7 @@ namespace DocApp.Presentation.ViewModels
             return false;
         }
 
-        bool HospitalDoctorViewCallBack.DataReadSuccess(List<HospitalInDoctorDetails> h)
+        bool IHospitalDoctorViewCallBack.DataReadSuccess(List<HospitalInDoctorDetails> h)
         {
 
             foreach (var x in h)
@@ -114,7 +114,7 @@ namespace DocApp.Presentation.ViewModels
             return true;
         }
 
-        bool HospitalDoctorViewCallBack.DataReadFail()
+        bool IHospitalDoctorViewCallBack.DataReadFail()
         {
             System.Diagnostics.Debug.WriteLine("Doctor Detail View Model fail!!");
             return false;

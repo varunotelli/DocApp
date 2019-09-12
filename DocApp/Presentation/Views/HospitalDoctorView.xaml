@@ -129,18 +129,20 @@
             </Grid.ColumnDefinitions>
             <StackPanel HorizontalAlignment="Stretch" Padding="5">
                 <TextBlock x:Name="DocNearYouBlock" Text="Doctors Near You" FontSize="28" FontWeight="Bold" Margin="10,10,10,30"
-                           FontFamily="ms-appx:///Assets/montserrat-v14-latin-900.ttf#Montserrat" HorizontalAlignment="Left"/>
+                           FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova" HorizontalAlignment="Left"/>
 
                 <Grid BorderThickness="0,0,0,0.5" BorderBrush="DimGray" HorizontalAlignment="Stretch" Padding="5" Margin="10,0">
-                    <HyperlinkButton BorderThickness="0,0,0,1" Padding="0">
-                        <TextBlock Text="Doctors" FontWeight="Bold" FontSize="20" FontFamily="ms-appx:///Assets/montserrat-v14-latin-800.ttf#Montserrat" />
+                    <HyperlinkButton BorderThickness="0,0,0,1" Padding="0" >
+                        <TextBlock Text="Doctors" FontWeight="ExtraBold" FontSize="24" 
+                                   FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova" />
                     </HyperlinkButton>
                     <HyperlinkButton BorderThickness="0,0,0,1" Padding="0" HorizontalAlignment="Right" >
-                        <TextBlock Text="See All" FontFamily="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+                        <TextBlock Text="SEE ALL" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"
+                               Margin="0,0,0,-3"/>
                     </HyperlinkButton>
                 </Grid>
                 <ComboBox PlaceholderText="Order By" HorizontalAlignment="Right" BorderThickness="0" Margin="0,0,10,0"
-                          FontFamily="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+                          FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
                 <GridView x:Name="DoctorGrid" ItemsSource="{x:Bind viewModel.doctors}" ItemContainerStyle="{StaticResource GridViewItemStyle1}" 
                           Margin="0,10,0,5"  Padding="5,0,5,0" IsItemClickEnabled="True" ItemClick="DoctorGrid_ItemClick">
                     <GridView.ItemTemplate>
@@ -158,14 +160,15 @@
 
                 <Grid BorderThickness="0,0,0,0.5" BorderBrush="DimGray" HorizontalAlignment="Stretch" Padding="5" Margin="10,0">
                     <HyperlinkButton BorderThickness="0,0,0,1" Padding="0">
-                        <TextBlock Text="Hospitals" FontWeight="Bold" FontSize="20" FontFamily="ms-appx:///Assets/montserrat-v14-latin-800.ttf#Montserrat"/>
+                        <TextBlock Text="Hospitals" FontWeight="Bold" FontSize="24"
+                                   FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
                     </HyperlinkButton>
-                    <HyperlinkButton BorderThickness="0,0,0,1" Padding="0" HorizontalAlignment="Right" >
-                        <TextBlock Text="See All" FontFamily="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+                    <HyperlinkButton BorderThickness="0,0,0,1" Padding="0" HorizontalAlignment="Right" Margin="0,0,0,-5">
+                        <TextBlock Text="SEE ALL" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
                     </HyperlinkButton>
                 </Grid>
                 <ComboBox PlaceholderText="Order By" HorizontalAlignment="Right" BorderThickness="0" Margin="0,0,10,0"
-                          FontFamily="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+                          FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
                 <GridView x:Name="HospitalGrid" ItemsSource="{x:Bind viewModel.hospitals}" IsItemClickEnabled="True"
                           ItemContainerStyle="{StaticResource GridViewItemStyle1}" ItemClick="HospitalGrid_ItemClick"
                           Margin="0,10" Padding="5,0,0,0">

@@ -15,7 +15,7 @@ namespace DocApp.Domain.UseCase
     {
         string val = "";
         RootLocationObject locs;
-        GetLocationPresenterCallback callback;
+        IGetLocationPresenterCallback callback;
 
         public GetLocationsUseCase(string s)
         {
@@ -25,7 +25,7 @@ namespace DocApp.Domain.UseCase
 
         public override void SetCallBack<P>(P p)
         {
-            this.callback = (GetLocationPresenterCallback)p;
+            this.callback = (IGetLocationPresenterCallback)p;
         }
 
         internal override async Task Action()

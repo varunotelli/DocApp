@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DocApp.Presentation.Callbacks
 {
-    public interface HospitalDoctorViewCallBack
+    public interface IDoctorHospitalDetailViewCallback
     {
-        bool DataReadSuccess(List<HospitalInDoctorDetails> d);
+        bool DataReadSuccess(List<DoctorInHospitalDetails> d);
         bool DataReadFail();
     }
 }

@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace DocApp.Presentation.Callbacks
 {
-    public interface DoctorDetailViewCallBack
+    public interface IGetAddressPresenterCallback
     {
-        bool DataReadSuccess(Doctor d);
+        bool DataReadFromAPISuccess(RootObject r);
         bool DataReadFail();
-        //bool DoctorDetailViewSuccess(Doctor d);
-        //bool DoctorDetailViewFail();
     }
 }

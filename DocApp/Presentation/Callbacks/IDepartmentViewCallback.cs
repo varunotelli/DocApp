@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DocApp.Presentation.Callbacks
 {
-    public interface GetAddressPresenterCallback
+    public interface IDepartmentViewCallback
     {
-        bool DataReadFromAPISuccess(RootObject r);
-        bool DataReadFail();
+        bool DepartmentDataReadSuccess(List<Department> d);
+        bool DepartmentDataReadFail();
     }
 }

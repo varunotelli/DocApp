@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DocApp.Presentation.ViewModels
 {
-    public class HospitalDetailViewModel: HospitalDetailCallBack, DoctorHospitalDetailViewCallback,DoctorDetailViewCallBack,
+    public class HospitalDetailViewModel: IHospitalDetailCallBack, IDoctorHospitalDetailViewCallback,IDoctorDetailViewCallBack,
         INotifyPropertyChanged
     {
 
@@ -61,8 +61,8 @@ namespace DocApp.Presentation.ViewModels
            
             //getHospital = new GetHospitalListUseCase();
             //hospitals = new ObservableCollection<Hospital>();
-            getHospital.SetCallBack<HospitalDetailCallBack>(this);
-            getDoctorByHospital.SetCallBack<DoctorHospitalDetailViewCallback>(this);
+            getHospital.SetCallBack<IHospitalDetailCallBack>(this);
+            getDoctorByHospital.SetCallBack<IDoctorHospitalDetailViewCallback>(this);
 
             try
             {
@@ -87,7 +87,7 @@ namespace DocApp.Presentation.ViewModels
         {
             //doc = new Doctor();
             getDoctorProfile = new GetDoctorByNameUseCase(docname);
-            getDoctorProfile.SetCallBack<DoctorDetailViewCallBack>(this);
+            getDoctorProfile.SetCallBack<IDoctorDetailViewCallBack>(this);
             await getDoctorProfile.Execute();
         }
 
@@ -126,7 +126,7 @@ namespace DocApp.Presentation.ViewModels
             return false;
         }
 
-        bool DoctorDetailViewCallBack.DataReadSuccess(Doctor d)
+        bool IDoctorDetailViewCallBack.DataReadSuccess(Doctor d)
         {
             this.doc = d;
            
@@ -135,7 +135,7 @@ namespace DocApp.Presentation.ViewModels
             return true;
         }
 
-        bool DoctorDetailViewCallBack.DataReadFail()
+        bool IDoctorDetailViewCallBack.DataReadFail()
         {
             System.Diagnostics.Debug.WriteLine("Doctor info fail");
             return false;

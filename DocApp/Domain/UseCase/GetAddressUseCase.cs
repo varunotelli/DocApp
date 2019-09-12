@@ -14,7 +14,7 @@ namespace DocApp.Domain.UseCase
     public class GetAddressUseCase: UseCaseBase,IAddressCallBack
     {
        
-        GetAddressPresenterCallback useCaseCallback;
+        IGetAddressPresenterCallback useCaseCallback;
         double latitude;
         double longitude;
         RootObject myAddress = null;
@@ -53,7 +53,7 @@ namespace DocApp.Domain.UseCase
 
         public override void SetCallBack<P>(P p)
         {
-            this.useCaseCallback = (GetAddressPresenterCallback)p;
+            this.useCaseCallback = (IGetAddressPresenterCallback)p;
         }
 
         public bool ReadFromAPISuccess(RootObject root)

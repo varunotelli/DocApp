@@ -64,6 +64,7 @@ namespace DocApp.Presentation.Views
         {
             
            await viewModel.GetCurrentAddress();
+           
 
         }
 
@@ -83,10 +84,10 @@ namespace DocApp.Presentation.Views
             
             
             viewModel.locbox = autosuggestBox.Text;
-            if (!sender.Text.Equals(""))
-                myFrame.Navigate(typeof(HospitalDoctorView), new navargs { name = sender.Text, location = true });
-            else
-                myFrame.Navigate(typeof(HospitalDoctorView), new navargs { name = address, location = true });
+            //if (!sender.Text.Equals(""))
+            //    myFrame.Navigate(typeof(HospitalDoctorView), new navargs { name = sender.Text, location = true });
+            //else
+            //    myFrame.Navigate(typeof(HospitalDoctorView), new navargs { name = address, location = true });
             Bindings.Update();
             
 
@@ -134,6 +135,11 @@ namespace DocApp.Presentation.Views
         {
             if (myFrame.CanGoForward)
                 myFrame.GoForward();
+        }
+
+        private async void Comboboxitem_DropDownOpened(object sender, object e)
+        {
+            await viewModel.GetDepartments();
         }
     }
 }

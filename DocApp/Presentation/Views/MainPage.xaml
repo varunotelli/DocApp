@@ -17,7 +17,7 @@
         
         
         <Style x:Key="AutoboxStyle" TargetType="TextBox" >
-            <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+                <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Height" Value="40"/>
             <!--<Setter Property="CornerRadius" Value="30"/>-->
@@ -30,7 +30,7 @@
 
         </Style>
         <Style x:Key="AutoListStyle" TargetType="ListViewItem">
-            <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+                <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             
@@ -67,9 +67,10 @@
             <AutoSuggestBox x:Name="HospDocSuggest" PlaceholderText="Search for Doctor or Hospital" TextChanged="HospDocSuggest_TextChanged" 
                     TextBoxStyle="{StaticResource AutoboxStyle}" RelativePanel.AlignRightWithPanel="True"
                 QueryIcon="Find" ItemContainerStyle="{StaticResource AutoListStyle}" Width="467" Margin="0,5,135,0"/>
-            <ComboBox x:Name="Comboboxitem" PlaceholderText="Departments" RelativePanel.LeftOf="HospDocSuggest" Margin="0,5"
-                      Height="40" BorderThickness="0,0,1.5,0" FontFamily="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"
-                      FontSize="14"/>
+            <ComboBox x:Name="Comboboxitem" PlaceholderText="All Departments" RelativePanel.LeftOf="HospDocSuggest" Margin="0,5"
+                      Height="40" BorderThickness="0,0,1.5,0" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"
+                 AllowDrop="True" FontSize="14" ItemsSource="{x:Bind viewModel.depts}" 
+                      DropDownOpened="Comboboxitem_DropDownOpened"/>
 
 
 

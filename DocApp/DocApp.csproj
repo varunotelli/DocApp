@@ -121,7 +121,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\DoctorDBHandler.cs" />
+    <Compile Include="Data\DepartmentDAO.cs" />
+    <Compile Include="Data\DBHandler.cs" />
     <Compile Include="Data\DoctorHospitalDAO.cs" />
     <Compile Include="Data\HospitalDoctorDAO.cs" />
     <Compile Include="Data\DoctorListDAO.cs" />
@@ -129,12 +130,14 @@
     <Compile Include="Data\LocationProxy.cs" />
     <Compile Include="Data\OpenAddressProxy.cs" />
     <Compile Include="Domain\Callbacks\IAddressCallBack.cs" />
+    <Compile Include="Domain\Callbacks\IDepartmentListCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDoctorCallback.cs" />
     <Compile Include="Domain\Callbacks\IDoctorHospitalCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDoctorUpdateCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalDoctorCallback.cs" />
     <Compile Include="Domain\Callbacks\ILocationCallBack.cs" />
+    <Compile Include="Domain\DataContracts\IDepartmentList.cs" />
     <Compile Include="Domain\DataContracts\IDoctorInHospitalList.cs" />
     <Compile Include="Domain\DataContracts\IDoctorList.cs" />
     <Compile Include="Domain\DataContracts\IGetAddress.cs" />
@@ -142,6 +145,7 @@
     <Compile Include="Domain\DataContracts\IHospitalList.cs" />
     <Compile Include="Domain\DataContracts\ILocationList.cs" />
     <Compile Include="Domain\UseCase\GetAddressUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetDeptsUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDoctorByHospitalUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDoctorByLocationUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDoctorByNameUseCase.cs" />
@@ -154,10 +158,15 @@
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\RootLocationObject.cs" />
-    <Compile Include="Presentation\Callbacks\DoctorLocationPresenterCallBack.cs" />
-    <Compile Include="Presentation\Callbacks\GetLocationPresenterCallback.cs" />
-    <Compile Include="Presentation\Callbacks\HospitalLocationPresenterCallBack.cs" />
+    <Compile Include="Presentation\Callbacks\IDepartmentViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IDoctorLocationPresenterCallBack.cs" />
+    <Compile Include="Presentation\Callbacks\IGetLocationPresenterCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IHospitalLocationPresenterCallBack.cs" />
     <Compile Include="Presentation\ViewModels\AutoSuggestViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\DoctorSearchViewModel.cs" />
+    <Compile Include="Presentation\Views\DoctorSearchResultView.xaml.cs">
+      <DependentUpon>DoctorSearchResultView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\HospitalDoctorView.xaml.cs">
       <DependentUpon>HospitalDoctorView.xaml</DependentUpon>
     </Compile>
@@ -172,13 +181,13 @@
     <Compile Include="Models\NotifyChangeBase.cs" />
     <Compile Include="Models\RootObject.cs" />
     <Compile Include="Models\Roster.cs" />
-    <Compile Include="Presentation\Callbacks\DoctorDetailViewCallBack.cs" />
-    <Compile Include="Presentation\Callbacks\DoctorHospitalDetailViewCallback.cs" />
-    <Compile Include="Presentation\Callbacks\DoctorViewCallBack.cs" />
-    <Compile Include="Presentation\Callbacks\GetAddressPresenterCallback.cs" />
-    <Compile Include="Presentation\Callbacks\HospitalDetailCallBack.cs" />
-    <Compile Include="Presentation\Callbacks\HospitalDoctorViewCallBack.cs" />
-    <Compile Include="Presentation\Callbacks\HospitalViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IDoctorDetailViewCallBack.cs" />
+    <Compile Include="Presentation\Callbacks\IDoctorHospitalDetailViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IDoctorViewCallBack.cs" />
+    <Compile Include="Presentation\Callbacks\IGetAddressPresenterCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IHospitalDetailCallBack.cs" />
+    <Compile Include="Presentation\Callbacks\IHospitalDoctorViewCallBack.cs" />
+    <Compile Include="Presentation\Callbacks\IHospitalViewCallback.cs" />
     <Compile Include="Presentation\ViewModels\DoctorDetailViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalDetailViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalDoctorViewModel.cs" />
@@ -187,6 +196,9 @@
     </Compile>
     <Compile Include="Presentation\Views\MainPageBuffer.xaml.cs">
       <DependentUpon>MainPageBuffer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Views\Templates\DoctorProfileLargeTemplate.xaml.cs">
+      <DependentUpon>DoctorProfileLargeTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Views\Templates\DoctorProfileTemplate.xaml.cs">
       <DependentUpon>DoctorProfileTemplate.xaml</DependentUpon>
@@ -230,6 +242,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Presentation\Views\DoctorSearchResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Presentation\Views\HospitalDoctorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -243,6 +259,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\MainPageBuffer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\Templates\DoctorProfileLargeTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -298,6 +318,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\montserrat-v14-latin-500.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\ProximaNova-Semibold.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\ProximaNova-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\ProximaNova-Bold.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\ProximaNova-Black.ttf" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
