@@ -20,18 +20,18 @@ namespace DocApp.Presentation.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
+   
     public sealed partial class MainPageBuffer : Page
     {
+        //public delegate void GridViewItemSelectedEventHandler(object source, GridViewSelectedArgs e);
+        //public event GridViewItemSelectedEventHandler GridViewItemSelected;
         public MainPageBuffer()
         {
             this.InitializeComponent();
         }
+       
 
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            
-
-        }
 
         private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -40,10 +40,13 @@ namespace DocApp.Presentation.Views
 
             MainPage mp = parentFrame.Content as MainPage;
             StackPanel grid = mp.Content as StackPanel;
+            AutoSuggestBox autoSuggestBox = grid.FindName("MyAutoSuggest") as AutoSuggestBox;
             Frame my_frame = grid.FindName("myFrame") as Frame;
+            
             if (griditem.SelectedIndex == 0)
             {
-                my_frame.Navigate(typeof(DoctorSearchResultView));
+                my_frame.Navigate(typeof(DoctorSearchResultView),autoSuggestBox.PlaceholderText);
+                
             }
 
             

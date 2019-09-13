@@ -23,17 +23,17 @@ namespace DocApp.Data
                 results = await DBHandler.db.QueryAsync<Department>(
                     "SELECT * FROM DEPARTMENT ");
                 System.Diagnostics.Debug.WriteLine("results=" + results.Count());
-                if (results != null)
+                if (results != null && results.Count>0)
                 {
                     callback.DepartmentDataReadSuccess(results);
-                    await DBHandler.db.CloseAsync();
+                    //await DBHandler.db.CloseAsync();
                 }
                 else
                     callback.DepartmentDataReadFail();
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("SELECT EXCEPTION" + e.Message);
+                System.Diagnostics.Debug.WriteLine("DEPARTMENT SELECT EXCEPTION " + e.Message);
             }
 
         }

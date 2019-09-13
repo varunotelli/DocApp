@@ -29,17 +29,36 @@ namespace DocApp.Presentation.Views
     {
 
         public DoctorSearchViewModel viewModel;
+        string address = "";
         public DoctorSearchResultView()
         {
-            
+            this.DataContext = viewModel;
             this.InitializeComponent();
-            //DeptFrame.Navigate(typeof(DepartmentFrame));
+            
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
             viewModel = new DoctorSearchViewModel();
+            address = e1.Parameter as string;
+            await viewModel.GetDoctors(address);
+            
+           
             await viewModel.GetDepartments();
+            
+            //Bindings.Update();
 
+        }
+
+        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Bindings.Update();
+
+            var temp = sender as HyperlinkButton;
+            System.Diagnostics.Debug.WriteLine("Content="+(temp.Content as TextBlock).Text);
+            await viewModel.GetDoctorsByDept(address, (temp.Content as TextBlock).Text);
+            //await viewModel.GetDoctorsByDept(address, (temp.Content as TextBlock).Text);
+            System.Diagnostics.Debug.WriteLine("Doc dept val=" + viewModel.docs.Count);
+            Bindings.Update();
         }
     }
 }

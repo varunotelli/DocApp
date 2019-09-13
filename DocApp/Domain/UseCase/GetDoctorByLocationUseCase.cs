@@ -29,7 +29,7 @@ namespace DocApp.Domain.UseCase
             try
             {
                 System.Diagnostics.Debug.WriteLine("In use case");
-                await DoctorList.GetDoctorByHospitalLocationAsync(this.location, this);
+                await DoctorList.GetDoctorByHospitalLocationAsync(this.location.ToUpper(), this);
                 
                 //System.Diagnostics.Debug.WriteLine(doctors.Count());
             }

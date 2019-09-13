@@ -35,7 +35,7 @@ namespace DocApp.Presentation.Views
         
         AutoSuggestViewModel viewModel;
         bool locflag = false;
-        string address = "";
+        public string address = "";
 
         public MainPage()
         {

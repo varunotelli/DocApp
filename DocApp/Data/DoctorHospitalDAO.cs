@@ -59,7 +59,7 @@ namespace DocApp.Data
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("SELECT EXCEPTION" + e.Message);
+                System.Diagnostics.Debug.WriteLine("DOCTOR HOSPITAL SELECT EXCEPTION" + e.Message);
             }
         }
     }

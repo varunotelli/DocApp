@@ -5,6 +5,8 @@
     xmlns:local="using:DocApp.Presentation.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:DocApp.Presentation.Views.Templates"
+    xmlns:data="using:DocApp.Models"
     mc:Ignorable="d"
    RequestedTheme="Dark">
     <Page.Background>
@@ -21,8 +23,11 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Margin="0,0,0,400">
+    <Grid Margin="0,0,0,0">
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
@@ -34,7 +39,7 @@
                     <ItemsControl ItemsSource="{x:Bind viewModel.deptnames}" VerticalAlignment="Stretch">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
-                                <HyperlinkButton FontSize="16" Margin="10,5"
+                                <HyperlinkButton FontSize="16" Margin="10,5" Click="HyperlinkButton_Click"
                                              FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova">
                                     <TextBlock Text="{x:Bind}"/>
                                 </HyperlinkButton>
@@ -45,7 +50,13 @@
                 </StackPanel>
                 
             </Grid>
-            <GridView Grid.Column="1" HorizontalAlignment="Stretch">
+            <GridView Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind viewModel.docs}"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="data:Doctor">
+                        <uc:DoctorProfileLargeTemplate/>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
                 
             </GridView>
 

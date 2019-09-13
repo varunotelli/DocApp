@@ -29,6 +29,7 @@ namespace DocApp.Presentation.Views
         public HospitalDoctorView()
         {
             this.InitializeComponent();
+            this.DataContext = viewModel;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e1)

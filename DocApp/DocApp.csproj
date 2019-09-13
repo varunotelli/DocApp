@@ -132,6 +132,7 @@
     <Compile Include="Domain\Callbacks\IAddressCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDepartmentListCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDoctorCallback.cs" />
+    <Compile Include="Domain\Callbacks\IDoctorDeptLocCallback.cs" />
     <Compile Include="Domain\Callbacks\IDoctorHospitalCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDoctorUpdateCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalCallback.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Domain\DataContracts\ILocationList.cs" />
     <Compile Include="Domain\UseCase\GetAddressUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDeptsUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetDoctorByDeptLocationUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDoctorByHospitalUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDoctorByLocationUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDoctorByNameUseCase.cs" />
@@ -159,6 +161,7 @@
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\RootLocationObject.cs" />
     <Compile Include="Presentation\Callbacks\IDepartmentViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IDoctorDeptLocationViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IDoctorLocationPresenterCallBack.cs" />
     <Compile Include="Presentation\Callbacks\IGetLocationPresenterCallback.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalLocationPresenterCallBack.cs" />

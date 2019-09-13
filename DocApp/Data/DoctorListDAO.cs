@@ -37,7 +37,7 @@ namespace DocApp.Data
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("SELECT EXCEPTION" + e.Message);
+                System.Diagnostics.Debug.WriteLine("DOCTOR ASYNC SELECT EXCEPTION" + e.Message);
             }
             
 
@@ -137,7 +137,7 @@ namespace DocApp.Data
                 DBHandler.DBConnection();
                 var results = await DBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR " +
                 "WHERE NAME LIKE '{0}%'", name));
-                
+
                 if (results != null)
                 {
                     System.Diagnostics.Debug.WriteLine("Update Select dao Success");
@@ -177,11 +177,37 @@ namespace DocApp.Data
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("SELECT EXCEPTION" + e.Message);
+                System.Diagnostics.Debug.WriteLine("DOC BY ID SELECT EXCEPTION" + e.Message);
             }
 
 
 
+        }
+
+        public async Task GetDoctorByDeptLocationAsync(string location,string dept,IDoctorCallback doctorCallback)
+        {
+            DBHandler.DBConnection();
+            List<Doctor> results = new List<Doctor>();
+            try
+            {
+                results = await DBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR " +
+                "WHERE ID IN (" +
+                "SELECT DOC_ID FROM ROSTER WHERE HOSP_ID IN(" +
+                "SELECT ID FROM HOSPITAL WHERE LOCATION='{0}')" +
+                ")" +
+                "AND DEPT_ID IN (" +
+                " SELECT ID FROM DEPARTMENT WHERE NAME='{1}')", location, dept));
+                System.Diagnostics.Debug.WriteLine("Results val=" + results.Count);
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Dept loc select exception " + e.Message);
+            }
+            if (results != null && results.Count > 0)
+                doctorCallback.ReadSuccess(results);
+            else
+                doctorCallback.ReadFail();
+            
         }
     }
 }
