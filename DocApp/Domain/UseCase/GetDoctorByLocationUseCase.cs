@@ -29,7 +29,7 @@ namespace DocApp.Domain.UseCase
             try
             {
                 System.Diagnostics.Debug.WriteLine("In use case");
-                await DoctorList.GetDoctorByHospitalLocationAsync(this.location.ToUpper(), this);
+                await DoctorList.GetDoctorByHospitalLocationAsync(this.location, this);
                 
                 //System.Diagnostics.Debug.WriteLine(doctors.Count());
             }
@@ -40,7 +40,7 @@ namespace DocApp.Domain.UseCase
             }
 
 
-            if (doctors != null && doctors.Count > 0)
+            if (doctors != null)
                 doctorUseCaseCallback.DoctorLocationReadSuccess(doctors);
             else doctorUseCaseCallback.DoctorLocationReadFail();
             // + hospitals.Count());

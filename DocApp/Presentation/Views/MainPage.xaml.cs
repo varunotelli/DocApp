@@ -27,6 +27,13 @@ namespace DocApp.Presentation.Views
     {
         public string name { get; set; }
         public bool location { get; set; }
+        public MainPage mp { get; set; }
+    }
+
+    public class navargs2:EventArgs
+    {
+        public string location { get; set; }
+        public MainPage mp { get; set; }
     }
    
 
@@ -36,15 +43,16 @@ namespace DocApp.Presentation.Views
         AutoSuggestViewModel viewModel;
         bool locflag = false;
         public string address = "";
-
+        public delegate void AutoSuggestChangedEventHandler(object source, navargs2 e);
+        public event AutoSuggestChangedEventHandler AutoSuggestChanged;
         public MainPage()
         {
 
             this.InitializeComponent();
             
             viewModel = new AutoSuggestViewModel();
-            //viewModel.LocationChanged += this.onLocationChanged;
-            myFrame.Navigate(typeof(MainPageBuffer));
+            viewModel.LocationChanged += this.onLocationChanged;
+            //myFrame.Navigate(typeof(MainPageBuffer));
             
 
 
@@ -52,12 +60,18 @@ namespace DocApp.Presentation.Views
 
         }
 
+        public void onAutoSuggestChanged(string add)
+        {
+            if (AutoSuggestChanged != null)
+                AutoSuggestChanged(this, new navargs2 { location = add, mp = this });
+        }
+
         public void onLocationChanged(object source, LocationEventArgs e)
         {
             address = e.address;
             locflag = true;
             if(HospDocSuggest.Text.Equals(""))
-                myFrame.Navigate(typeof(HospitalDoctorView), new navargs {name=address,location=true });
+                myFrame.Navigate(typeof(MainPageBuffer), new navargs {name=address,location=true,mp=this });
         }
        
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -84,10 +98,10 @@ namespace DocApp.Presentation.Views
             
             
             viewModel.locbox = autosuggestBox.Text;
-            //if (!sender.Text.Equals(""))
-            //    myFrame.Navigate(typeof(HospitalDoctorView), new navargs { name = sender.Text, location = true });
-            //else
-            //    myFrame.Navigate(typeof(HospitalDoctorView), new navargs { name = address, location = true });
+            if(autosuggestBox.Text.Equals(""))
+                onAutoSuggestChanged(viewModel.loc);
+            else
+                onAutoSuggestChanged(autosuggestBox.Text);
             Bindings.Update();
             
 
@@ -140,6 +154,11 @@ namespace DocApp.Presentation.Views
         private async void Comboboxitem_DropDownOpened(object sender, object e)
         {
             await viewModel.GetDepartments();
+        }
+
+        private void MyAutoSuggest_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            onAutoSuggestChanged(args.SelectedItem as string);
         }
     }
 }

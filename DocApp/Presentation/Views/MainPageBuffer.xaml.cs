@@ -22,30 +22,45 @@ namespace DocApp.Presentation.Views
     /// </summary>
     /// 
    
+
+
     public sealed partial class MainPageBuffer : Page
     {
-        //public delegate void GridViewItemSelectedEventHandler(object source, GridViewSelectedArgs e);
-        //public event GridViewItemSelectedEventHandler GridViewItemSelected;
+        string addr;
+        MainPage mainPage;
         public MainPageBuffer()
         {
             this.InitializeComponent();
         }
-       
 
+        protected override void OnNavigatedTo(NavigationEventArgs e1)
+        {
+            var temp = e1.Parameter as navargs;
+            addr = temp.name;
+            mainPage = temp.mp;
+            mainPage.AutoSuggestChanged += this.onAutoSuggestChanged;
+            
+
+        }
+
+        public void onAutoSuggestChanged(object sender, navargs2 args)
+        {
+            addr = args.location;
+        }
 
         private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var griditem = sender as GridView;
             Frame parentFrame = Window.Current.Content as Frame;
 
-            MainPage mp = parentFrame.Content as MainPage;
-            StackPanel grid = mp.Content as StackPanel;
+            MainPage mp1 = parentFrame.Content as MainPage;
+            StackPanel grid = mp1.Content as StackPanel;
             AutoSuggestBox autoSuggestBox = grid.FindName("MyAutoSuggest") as AutoSuggestBox;
             Frame my_frame = grid.FindName("myFrame") as Frame;
             
             if (griditem.SelectedIndex == 0)
             {
-                my_frame.Navigate(typeof(DoctorSearchResultView),autoSuggestBox.PlaceholderText);
+                my_frame.Navigate(typeof(DoctorSearchResultView),new navargs { name=addr, mp=mainPage});
                 
             }
 

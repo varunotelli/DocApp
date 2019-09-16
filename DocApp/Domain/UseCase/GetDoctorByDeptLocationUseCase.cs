@@ -44,7 +44,7 @@ namespace DocApp.Domain.UseCase
             {
                 System.Diagnostics.Debug.WriteLine("doc dept usercase exception " + e.Message);
             }
-            if (docs != null && docs.Count > 0)
+            if (docs != null)
                 viewCallback.DeptLocationViewSuccess(docs);
             else
                 viewCallback.DeptLocationViewFail();

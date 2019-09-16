@@ -25,7 +25,7 @@ namespace DocApp.Presentation.ViewModels
         public ObservableCollection<string> depts;
         public UseCaseBase getLocalityList;
         public UseCaseBase getDepts;
-        private string location = "Current Location";
+        private string location = "Chennai";
         public UseCaseBase getAddress;
         public delegate void LocationChangedEventHandler(object source, LocationEventArgs e);
         public event LocationChangedEventHandler LocationChanged;

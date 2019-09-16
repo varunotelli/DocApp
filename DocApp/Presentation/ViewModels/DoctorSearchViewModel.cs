@@ -68,6 +68,7 @@ namespace DocApp.Presentation.ViewModels
 
         public bool DepartmentDataReadSuccess(List<Department> d)
         {
+            
             foreach (var x in d)
                 deptnames.Add(x.name);
             return true;
@@ -91,7 +92,7 @@ namespace DocApp.Presentation.ViewModels
         {
             //docs = new ObservableCollection<Doctor>();
 
-            //docs.Clear();
+            docs.Clear();
             foreach (var x in doctors)
                 docs.Add(x);
             return true;

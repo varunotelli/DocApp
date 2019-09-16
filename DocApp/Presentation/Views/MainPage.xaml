@@ -61,7 +61,7 @@
             <AutoSuggestBox x:Name="MyAutoSuggest" PlaceholderText="{x:Bind viewModel.loc, Mode=TwoWay}" TextChanged="MyAutoSuggest_TextChanged" 
                     TextBoxStyle="{StaticResource AutoboxStyle}" QuerySubmitted="MyAutoSuggest_QuerySubmitted" UpdateTextOnSelect="True"
                     QueryIcon="Map" ItemContainerStyle="{StaticResource AutoListStyle}" RelativePanel.RightOf="BackButton" Width="467"
-                            Margin="35,5"/>
+                            Margin="35,5" SuggestionChosen="MyAutoSuggest_SuggestionChosen"/>
 
             
             <AutoSuggestBox x:Name="HospDocSuggest" PlaceholderText="Search for Doctor or Hospital" TextChanged="HospDocSuggest_TextChanged" 

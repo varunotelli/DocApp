@@ -19,7 +19,125 @@
         <ResourceDictionary>
             <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="DimGray"/>
             <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="White"/>
-            <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="White"/>
+            <Style x:Key="ListBoxItemStyle1" TargetType="ListBoxItem">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="DimGray"/>
+                <Setter Property="TabNavigation" Value="Local"/>
+                <Setter Property="Padding" Value="{StaticResource ListBoxItemPadding}"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Grid x:Name="LayoutRoot" Background="#FF121212" BorderThickness="{TemplateBinding BorderThickness}">
+                                <Grid.Resources>
+                                    <Style x:Key="BaseContentPresenterStyle" TargetType="ContentPresenter">
+                                        <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="TextWrapping" Value="Wrap"/>
+                                        <Setter Property="LineStackingStrategy" Value="MaxHeight"/>
+                                        <Setter Property="TextLineBounds" Value="Full"/>
+                                        <Setter Property="OpticalMarginAlignment" Value="TrimSideBearings"/>
+                                        
+                                    </Style>
+                                    <Style x:Key="BodyContentPresenterStyle" BasedOn="{StaticResource BaseContentPresenterStyle}" TargetType="ContentPresenter">
+                                        <Setter Property="FontWeight" Value="Normal"/>
+                                    </Style>
+                                </Grid.Resources>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Selected">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBorderThickness" 
+                                                                               Storyboard.TargetProperty="BorderThickness">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="2,0,0,0"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBorderBrush" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Green"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="SelectedUnfocused">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="SelectedPointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="SelectedPressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Fill">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Rectangle x:Name="PressedBackground" Fill="Transparent" Control.IsTemplateFocusTarget="True"/>
+                                <ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  Content="{TemplateBinding Content}" 
+                                                  ContentTransitions="{TemplateBinding ContentTransitions}" 
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                  Margin="{TemplateBinding Padding}" 
+                                                  Style="{StaticResource BodyContentPresenterStyle}" 
+                                                  TextWrapping="NoWrap" 
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
         </ResourceDictionary>
     </Page.Resources>
 
@@ -29,24 +147,19 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Background="#FF121212" Padding="15" Margin="0,0,0,0">
                 <StackPanel VerticalAlignment="Stretch" Margin="0,0,0,400">
                     <TextBlock FontSize="20" Text="DEPARTMENTS" Margin="10,10,10,10" Foreground="DimGray"
                     FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
-                    <ItemsControl ItemsSource="{x:Bind viewModel.deptnames}" VerticalAlignment="Stretch">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="x:String">
-                                <HyperlinkButton FontSize="16" Margin="10,5" Click="HyperlinkButton_Click"
-                                             FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova">
-                                    <TextBlock Text="{x:Bind}"/>
-                                </HyperlinkButton>
-                            </DataTemplate>
+                    <ListBox x:Name="DeptListbox" ItemsSource="{x:Bind viewModel.deptnames}" VerticalAlignment="Stretch" 
+                             ItemContainerStyle="{StaticResource ListBoxItemStyle1}" SelectionChanged="ListBox_SelectionChanged">
+                        
 
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                        
+                    </ListBox>
                 </StackPanel>
                 
             </Grid>

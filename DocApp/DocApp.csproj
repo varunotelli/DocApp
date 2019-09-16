@@ -132,6 +132,7 @@
     <Compile Include="Domain\Callbacks\IAddressCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDepartmentListCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDoctorCallback.cs" />
+    <Compile Include="Domain\Callbacks\IDoctorCountByDeptCallback.cs" />
     <Compile Include="Domain\Callbacks\IDoctorDeptLocCallback.cs" />
     <Compile Include="Domain\Callbacks\IDoctorHospitalCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDoctorUpdateCallback.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Domain\UseCase\GetDoctorByLocationUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDoctorByNameUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDoctorUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetHospitalByDeptUseCase.cs" />
     <Compile Include="Domain\UseCase\GetHospitalByDoctorUseCase.cs" />
     <Compile Include="Domain\UseCase\GetHospitalByLocationUseCase.cs" />
     <Compile Include="Domain\UseCase\GetHospitalByNameUseCase.cs" />
@@ -164,6 +166,7 @@
     <Compile Include="Presentation\Callbacks\IDoctorDeptLocationViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IDoctorLocationPresenterCallBack.cs" />
     <Compile Include="Presentation\Callbacks\IGetLocationPresenterCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IHospitalByDeptViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalLocationPresenterCallBack.cs" />
     <Compile Include="Presentation\ViewModels\AutoSuggestViewModel.cs" />
     <Compile Include="Presentation\ViewModels\DoctorSearchViewModel.cs" />

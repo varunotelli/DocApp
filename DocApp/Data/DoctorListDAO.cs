@@ -83,7 +83,7 @@ namespace DocApp.Data
             List<Doctor> results = await DBHandler.
                 db.QueryAsync<Doctor>(String.Format("SELECT DISTINCT * FROM DOCTOR WHERE ID IN (" +
                 "SELECT DOC_ID FROM ROSTER WHERE HOSP_ID IN (" +
-                "SELECT ID FROM HOSPITAL WHERE LOCATION='{0}'))", name));
+                "SELECT ID FROM HOSPITAL WHERE LOCATION='{0}'))", name.ToUpper()));
             System.Diagnostics.Debug.WriteLine("Hosp name " + results.Count());
 
             if (results != null)
@@ -203,11 +203,28 @@ namespace DocApp.Data
             {
                 System.Diagnostics.Debug.WriteLine("Dept loc select exception " + e.Message);
             }
-            if (results != null && results.Count > 0)
+            if (results != null)
                 doctorCallback.ReadSuccess(results);
             else
                 doctorCallback.ReadFail();
             
+        }
+
+        public async Task GetDoctorsByDeptCount(int dept,int hosp_id, IDoctorCountByDeptCallback callback)
+        {
+            DBHandler.DBConnection();
+            var count = await DBHandler.db.ExecuteScalarAsync<int>(String.Format("select count(*) from roster group by DOC_ID " +
+                "having DOC_ID in " +
+                "(select id from DOCTOR where DEPT_ID={0}) " +
+                "and HOSP_ID={1}",dept,hosp_id)
+                );
+            if (count > 0)
+                callback.ReadCountSuccess(count);
+            else callback.ReadCountFail();        }
+
+        public Task GetDoctorCountAsync(int dept, int hosp_id, IDoctorCountByDeptCallback callback)
+        {
+            throw new NotImplementedException();
         }
     }
 }
