@@ -170,6 +170,7 @@
     <Compile Include="Presentation\Callbacks\IHospitalLocationPresenterCallBack.cs" />
     <Compile Include="Presentation\ViewModels\AutoSuggestViewModel.cs" />
     <Compile Include="Presentation\ViewModels\DoctorSearchViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\HospitalSearchViewModel.cs" />
     <Compile Include="Presentation\Views\DoctorSearchResultView.xaml.cs">
       <DependentUpon>DoctorSearchResultView.xaml</DependentUpon>
     </Compile>

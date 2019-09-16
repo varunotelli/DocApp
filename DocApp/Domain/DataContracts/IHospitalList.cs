@@ -16,6 +16,7 @@ namespace DocApp.Domain.DataContracts
         Task GetHospitalbyIdAsync(int id,IHospitalCallback hospitalCallback);//Get List of Hospitals from Database
         Task GetHospitalByNameAsync(string name, IHospitalCallback hospitalCallback); // Get Selected Hospital
         Task GetHospitalByLocationAsync(string location, IHospitalCallback hospitalCallback);
+        Task GetHospitalByDept(string location,int dept_id, IHospitalCallback hospitalCallback);
 
     }
 }

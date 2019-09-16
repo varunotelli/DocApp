@@ -101,6 +101,38 @@ namespace DocApp.Data
 
         }
 
+        public async Task GetHospitalByDept(string location,int dept_id, IHospitalCallback hospitalCallback)
+        {
+            DBHandler.DBConnection();
+            List<Hospital> results = new List<Hospital>();
+
+            try
+            {
+
+                //var db = await dbHandler.DBConnection();
+                DBHandler.DBConnection();
+                results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL WHERE ID IN(" +
+                    "SELECT HOSP_ID FROM ROSTER GROUP BY DOC_ID HAVING DOC_ID IN(" +
+                    "SELECT ID FROM DOCTOR WHERE DEPT_ID={0})" +
+                    "AND COUNT(*)>0) AND LOCATION='{1}'", dept_id,location)
+                    );
+                System.Diagnostics.Debug.WriteLine("results=" + results.Count());
+                if (results != null && results.Count > 0)
+                {
+                    hospitalCallback.ReadSuccess(results);
+                    //await DoctorDBHandler.db.CloseAsync();
+                }
+                else
+                    hospitalCallback.ReadFail();
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("SELECT EXCEPTION" + e.Message);
+            }
+
+        }
+
 
     }
 }

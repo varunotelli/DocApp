@@ -1,6 +1,7 @@
 ﻿using DocApp.Data;
 using DocApp.Domain.Callbacks;
 using DocApp.Domain.DataContracts;
+using DocApp.Models;
 using DocApp.Presentation.Callbacks;
 using System;
 using System.Collections.Generic;
@@ -10,27 +11,30 @@ using System.Threading.Tasks;
 
 namespace DocApp.Domain.UseCase
 {
-    public class GetHospitalByDeptUseCase : UseCaseBase, IDoctorCountByDeptCallback
+    public class GetHospitalByDeptUseCase : UseCaseBase, IHospitalCallback
     {
-        int ct;
+        List<Hospital> hosps;
         int dept_id;
-        int hosp_id;
+        string location;
+        
         IHospitalByDeptViewCallback viewCallback;
 
-        public GetHospitalByDeptUseCase(int d,int h)
+        public GetHospitalByDeptUseCase(string loc,int d)
         {
+            hosps = new List<Hospital>();
             this.dept_id = d;
-            this.hosp_id = h;
+            this.location = loc;
+            
         }
-        
-        public bool ReadCountFail()
+
+        public bool ReadFail()
         {
             return false;
         }
 
-        public bool ReadCountSuccess(int count)
+        public bool ReadSuccess(List<Hospital> hospitals)
         {
-            this.ct = count;
+            this.hosps = hospitals;
             return true;
         }
 
@@ -41,13 +45,13 @@ namespace DocApp.Domain.UseCase
 
         internal override async Task Action()
         {
-            IDoctorList doctors = new DoctorListDAO();
-            await doctors.GetDoctorCountAsync(dept_id, hosp_id, this);
-            if (ct > 0)
-                viewCallback.ReadCountViewSuccess(ct);
-            else viewCallback.ReadCountViewFail();
 
+            IHospitalList hospitalList = new HospitalListDAO();
+            await hospitalList.GetHospitalByDept(location,dept_id, this);
+            if (hosps != null)
+                viewCallback.ReadViewSuccess(hosps);
+            else viewCallback.ReadViewFail();
 
-;        }
+;       }
     }
 }

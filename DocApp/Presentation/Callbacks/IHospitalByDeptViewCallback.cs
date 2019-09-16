@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace DocApp.Presentation.Callbacks
 {
     public interface IHospitalByDeptViewCallback
     {
-        bool ReadCountViewSuccess(int count);
-        bool ReadCountViewFail();
+        bool ReadViewSuccess(List<Hospital> h);
+        bool ReadViewFail();
     }
 }
