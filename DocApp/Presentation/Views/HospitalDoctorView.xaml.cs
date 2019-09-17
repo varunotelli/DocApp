@@ -22,6 +22,10 @@ namespace DocApp.Presentation.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
+    /*
+     * @todo  Create new use case to get docs and hospital by name and dept
+     */
     public sealed partial class HospitalDoctorView : Page
     {
         string address;

@@ -53,15 +53,15 @@ namespace DocApp.Presentation.Views
                 await viewModel.GetHospitalByDept(address.ToUpper(), DeptListbox.SelectedIndex);
             else
                 await viewModel.GetHospitals(address.ToUpper());
-            Bindings.Update();
+            //Bindings.Update();
         }
 
         private async void DeptListbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listbox = sender as ListBox;
             int index = listbox.SelectedIndex;
-            await viewModel.GetHospitalByDept(address, index+1);
-            Bindings.Update();
+            await viewModel.GetHospitalByDept(address.ToUpper(), index);
+            //Bindings.Update();
             
         }
     }
