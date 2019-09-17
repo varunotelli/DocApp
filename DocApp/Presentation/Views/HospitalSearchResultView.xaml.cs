@@ -50,9 +50,10 @@ namespace DocApp.Presentation.Views
         {
             address = n.location;
             if (DeptListbox.SelectedItem != null)
-                await viewModel.GetHospitalByDept(address, DeptListbox.SelectedIndex);
+                await viewModel.GetHospitalByDept(address.ToUpper(), DeptListbox.SelectedIndex);
             else
-                await viewModel.GetHospitals(address);
+                await viewModel.GetHospitals(address.ToUpper());
+            Bindings.Update();
         }
 
         private async void DeptListbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -60,6 +61,7 @@ namespace DocApp.Presentation.Views
             var listbox = sender as ListBox;
             int index = listbox.SelectedIndex;
             await viewModel.GetHospitalByDept(address, index+1);
+            Bindings.Update();
             
         }
     }

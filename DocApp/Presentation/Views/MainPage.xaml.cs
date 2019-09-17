@@ -23,6 +23,15 @@ using Windows.UI.Xaml.Navigation;
 
 namespace DocApp.Presentation.Views
 {
+    public class navargs1
+    {
+        public string name { get; set; }
+        public string location { get; set; }
+        public int dept_id { get; set; }
+        public MainPage mp { get; set; }
+    }
+
+
    public class navargs
     {
         public string name { get; set; }
@@ -53,11 +62,7 @@ namespace DocApp.Presentation.Views
             viewModel = new AutoSuggestViewModel();
             viewModel.LocationChanged += this.onLocationChanged;
             //myFrame.Navigate(typeof(MainPageBuffer));
-            
-
-
-
-
+        
         }
 
         public void onAutoSuggestChanged(string add)
@@ -76,10 +81,7 @@ namespace DocApp.Presentation.Views
        
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            
-           await viewModel.GetCurrentAddress();
-           
-
+            await viewModel.GetCurrentAddress();      
         }
 
         
@@ -112,17 +114,8 @@ namespace DocApp.Presentation.Views
         {
             if(sender.Text!=null)
             {
-                if(sender.Text.Equals(""))
-                {
-                    if(!locflag)
-                        myFrame.Navigate(typeof(MainPageBuffer));
-                    else
-                        myFrame.Navigate(typeof(HospitalDoctorView), new navargs { name = address, location = true });
-                }
-                else
-                    myFrame.Navigate(typeof(HospitalDoctorView), new navargs { name = sender.Text, location = false }, 
-                        new SuppressNavigationTransitionInfo());
-               
+                myFrame.Navigate(typeof(HospitalDoctorView), new navargs1 { name=sender.Text, location = viewModel.loc, dept_id=DeptComboBox.SelectedIndex,
+                       mp =this });
 
             }
                 

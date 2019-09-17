@@ -207,6 +207,9 @@
     <Compile Include="Presentation\Views\MainPageBuffer.xaml.cs">
       <DependentUpon>MainPageBuffer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Views\Templates\ComboBoxControl.xaml.cs">
+      <DependentUpon>ComboBoxControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\Templates\DoctorProfileLargeTemplate.xaml.cs">
       <DependentUpon>DoctorProfileLargeTemplate.xaml</DependentUpon>
     </Compile>
@@ -276,6 +279,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\MainPageBuffer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\Templates\ComboBoxControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

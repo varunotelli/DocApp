@@ -16,8 +16,8 @@ namespace DocApp.Presentation.ViewModels
     
 
 
-    class HospitalDoctorViewModel: IHospitalViewCallback, DoctorViewCallback, IHospitalLocationPresenterCallBack
-        , IDoctorLocationPresenterCallBack
+    class HospitalDoctorViewModel: IHospitalLocationPresenterCallBack
+        , IDoctorLocationPresenterCallBack, IHospitalByDeptViewCallback, IDoctorDeptLocationViewCallback
     {
         public double latitude;
         public double longitude;
@@ -39,21 +39,6 @@ namespace DocApp.Presentation.ViewModels
             
         }
 
-       
-       
-        public async Task GetHospitals(string s)
-        {
-            getHospital = new GetHospitalByNameUseCase(s);
-            getHospital.SetCallBack<IHospitalViewCallback>(this);
-            await getHospital.Execute();
-        }
-
-        public async Task GetDoctors(string s)
-        {
-            getDoctor = new GetDoctorByNameUseCase(s);
-            getDoctor.SetCallBack<DoctorViewCallback>(this);
-            await getDoctor.Execute();
-        }
 
         public async Task GetHospitalByLocation(string loc)
         {
@@ -68,8 +53,22 @@ namespace DocApp.Presentation.ViewModels
             await getDocs.Execute();
         }
 
+        public async Task GetDoctorsByDept(string location, int dept)
+        {
+            getDocs = new GetDoctorByDeptLocationUseCase(location, dept);
+            getDocs.SetCallBack<IDoctorDeptLocationViewCallback>(this);
+            await getDocs.Execute();
+        }
+        public async Task GetHospitalByDept(string location, int dept)
+        {
+            getHosps = new GetHospitalByDeptUseCase(location.ToUpper(), dept);
+            getHosps.SetCallBack<IHospitalByDeptViewCallback>(this);
+            await getHosps.Execute();
+        }
+
         public bool DataReadSuccess(List<Hospital> h)
         {
+            this.hospitals.Clear();
             if(!hospitals.SequenceEqual(h))
             foreach (var x in h)
                 this.hospitals.Add(x);
@@ -79,27 +78,12 @@ namespace DocApp.Presentation.ViewModels
             
             return true;
         }
-        public bool DataReadSuccess(List<Doctor> d)
-        {
-            if (!doctors.SequenceEqual(new ObservableCollection<Doctor>(d)))
-            {
-                
-                foreach (var x in d)
-                    doctors.Add(x);
-            }
-            else System.Diagnostics.Debug.WriteLine("EQUAL");
-            return true;
-        }
-
-        public bool DataReadFail()
-        {
-            System.Diagnostics.Debug.WriteLine("FAILED!!!");
-            return false;
-        }
+       
 
         public bool HospitalLocationReadSuccess(List<Hospital> h)
         {
             System.Diagnostics.Debug.WriteLine("Hosp Location viewmodel success");
+            this.hospitals.Clear();
             foreach (var x in h)
                 this.hospitals.Add(x);
             return true;
@@ -114,6 +98,7 @@ namespace DocApp.Presentation.ViewModels
         public bool DoctorLocationReadSuccess(List<Doctor> d)
         {
             System.Diagnostics.Debug.WriteLine(" Doc Location viewmodel success");
+            this.doctors.Clear();
             foreach (var x in d)
                 this.doctors.Add(x);
             return true;
@@ -122,6 +107,34 @@ namespace DocApp.Presentation.ViewModels
         public bool DoctorLocationReadFail()
         {
             System.Diagnostics.Debug.WriteLine(" Doc Location viewmodel fail");
+            return false;
+        }
+
+        public bool ReadViewSuccess(List<Hospital> h)
+        {
+            this.hospitals.Clear();
+            foreach (var x in h)
+                this.hospitals.Add(x);
+            return true;
+        }
+
+        public bool ReadViewFail()
+        {
+            System.Diagnostics.Debug.WriteLine("Hosp Dept fail");
+            return false;
+        }
+
+        public bool DeptLocationViewSuccess(List<Doctor> d)
+        {
+            this.doctors.Clear();
+            foreach (var x in d)
+                this.doctors.Add(x);
+            return true;
+        }
+
+        public bool DeptLocationViewFail()
+        {
+            System.Diagnostics.Debug.WriteLine("Doc Dept fail");
             return false;
         }
     }

@@ -16,12 +16,12 @@ namespace DocApp.Domain.UseCase
         IDoctorDeptLocationViewCallback viewCallback;
         List<Doctor> docs;
         string location = "";
-        string dept;
+        int dept;
 
         
     
 
-        public GetDoctorByDeptLocationUseCase(string loc,string d)
+        public GetDoctorByDeptLocationUseCase(string loc,int d)
         {
             docs = new List<Doctor>();
             location = loc;

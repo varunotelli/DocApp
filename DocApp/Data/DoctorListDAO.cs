@@ -184,7 +184,7 @@ namespace DocApp.Data
 
         }
 
-        public async Task GetDoctorByDeptLocationAsync(string location,string dept,IDoctorCallback doctorCallback)
+        public async Task GetDoctorByDeptLocationAsync(string location,int dept,IDoctorCallback doctorCallback)
         {
             DBHandler.DBConnection();
             List<Doctor> results = new List<Doctor>();
@@ -195,8 +195,7 @@ namespace DocApp.Data
                 "SELECT DOC_ID FROM ROSTER WHERE HOSP_ID IN(" +
                 "SELECT ID FROM HOSPITAL WHERE LOCATION='{0}')" +
                 ")" +
-                "AND DEPT_ID IN (" +
-                " SELECT ID FROM DEPARTMENT WHERE NAME='{1}')", location, dept));
+                "AND DEPT_ID ={1}", location, dept));
                 System.Diagnostics.Debug.WriteLine("Results val=" + results.Count);
             }
             catch(Exception e)

@@ -51,9 +51,9 @@ namespace DocApp.Presentation.ViewModels
             await getDocs.Execute();
         }
 
-        public async Task GetDoctorsByDept(string location, string dept)
+        public async Task GetDoctorsByDept(string location, int dept)
         {
-            getDocs = new GetDoctorByDeptLocationUseCase(location, dept);
+            getDocs = new GetDoctorByDeptLocationUseCase(location, dept+1);
             getDocs.SetCallBack<IDoctorDeptLocationViewCallback>(this);
             await getDocs.Execute();
         }

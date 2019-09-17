@@ -57,27 +57,27 @@ namespace DocApp.Presentation.Views
         {
             address = n.location;
             if (DeptListbox.SelectedItem != null)
-                await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedItem as string);
+                await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
             else
                 await viewModel.GetDoctors(address);
         }
 
-        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            //Bindings.Update();
+        //private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //Bindings.Update();
 
-            var temp = sender as HyperlinkButton;
-            System.Diagnostics.Debug.WriteLine("Content="+(temp.Content as TextBlock).Text);
-            await viewModel.GetDoctorsByDept(address, (temp.Content as TextBlock).Text);
-            //await viewModel.GetDoctorsByDept(address, (temp.Content as TextBlock).Text);
-            System.Diagnostics.Debug.WriteLine("Doc dept val=" + viewModel.docs.Count);
-            Bindings.Update();
-        }
+        //    var temp = sender as HyperlinkButton;
+        //    System.Diagnostics.Debug.WriteLine("Content="+(temp.Content as TextBlock).Text);
+        //    await viewModel.GetDoctorsByDept(address, (temp.Content as TextBlock).Text);
+        //    //await viewModel.GetDoctorsByDept(address, (temp.Content as TextBlock).Text);
+        //    System.Diagnostics.Debug.WriteLine("Doc dept val=" + viewModel.docs.Count);
+        //    Bindings.Update();
+        //}
 
         private async void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listbox = sender as ListBox;
-            var select = listbox.SelectedItem as string;
+            var select = listbox.SelectedIndex;
             await viewModel.GetDoctorsByDept(address, select);
             Bindings.Update();
         }

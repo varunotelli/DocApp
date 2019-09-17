@@ -24,7 +24,9 @@ namespace DocApp.Presentation.Views
     /// </summary>
     public sealed partial class HospitalDoctorView : Page
     {
-        string name = "";
+        string address;
+        int dept;
+        MainPage mp;
         HospitalDoctorViewModel viewModel = new HospitalDoctorViewModel();
         public HospitalDoctorView()
         {
@@ -34,30 +36,42 @@ namespace DocApp.Presentation.Views
 
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
-            navargs args = e1.Parameter as navargs;
-            //System.Diagnostics.Debug.WriteLine("Sent val=" + (string)e1.Parameter);
-            name = args.name;
-            if(!args.location)
+            navargs1 args = e1.Parameter as navargs1;
+            if(args.dept_id==-1)
             {
-                DocNearYouBlock.Visibility = Visibility.Collapsed;
-                HospNearYouBlock.Visibility = Visibility.Collapsed;
-                await viewModel.GetHospitals(name);
-                await viewModel.GetDoctors(name);
+                await viewModel.GetDoctorByLocation(args.location);
+                await viewModel.GetHospitalByLocation(args.location);
             }
             else
             {
-                DocNearYouBlock.Visibility = Visibility.Visible;
-                HospNearYouBlock.Visibility = Visibility.Visible;
-                await viewModel.GetDoctorByLocation(name);
-                await viewModel.GetHospitalByLocation(name);
+                dept = args.dept_id;
+                await viewModel.GetDoctorsByDept(args.location, args.dept_id+1);
+                await viewModel.GetHospitalByDept(args.location, args.dept_id+1);
             }
-            
-            //System.Diagnostics.Debug.WriteLine("Doc size=" + (string)e1.Parameter);
+            mp = args.mp;
+            mp.AutoSuggestChanged += this.onAutoSuggestChanged;
             return;
 
 
 
         }
+
+        public async void onAutoSuggestChanged(object sender, navargs2 n)
+        {
+            address = n.location;
+            if (dept != -1)
+            {
+                await viewModel.GetDoctorsByDept(address, dept);
+                await viewModel.GetHospitalByDept(address, dept);
+            }
+            else
+            {
+                await viewModel.GetDoctorByLocation(address);
+                await viewModel.GetHospitalByLocation(address);
+            }
+            
+        }
+
 
         private void DoctorGrid_ItemClick(object sender, ItemClickEventArgs e)
         {

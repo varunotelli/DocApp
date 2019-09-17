@@ -5,6 +5,7 @@
     xmlns:local="using:DocApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+   
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     RequestedTheme="Light"
@@ -67,7 +68,7 @@
             <AutoSuggestBox x:Name="HospDocSuggest" PlaceholderText="Search for Doctor or Hospital" TextChanged="HospDocSuggest_TextChanged" 
                     TextBoxStyle="{StaticResource AutoboxStyle}" RelativePanel.AlignRightWithPanel="True"
                 QueryIcon="Find" ItemContainerStyle="{StaticResource AutoListStyle}" Width="467" Margin="0,5,135,0"/>
-            <ComboBox x:Name="Comboboxitem" PlaceholderText="All Departments" RelativePanel.LeftOf="HospDocSuggest" Margin="0,5"
+            <ComboBox x:Name="DeptComboBox" PlaceholderText="All Departments" RelativePanel.LeftOf="HospDocSuggest" Margin="0,5"
                       Height="40" BorderThickness="0,0,1.5,0" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"
                  AllowDrop="True" FontSize="14" ItemsSource="{x:Bind viewModel.depts}" 
                       DropDownOpened="Comboboxitem_DropDownOpened"/>
