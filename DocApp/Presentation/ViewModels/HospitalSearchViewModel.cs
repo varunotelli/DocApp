@@ -16,13 +16,13 @@ namespace DocApp.Presentation.ViewModels
     public class HospitalSearchViewModel: IHospitalByDeptViewCallback, IHospitalLocationPresenterCallBack,
         IDepartmentViewCallback
     {
-        public ObservableCollection<string> depts;
+        public ObservableCollection<string> deptnames;
         public ObservableCollection<Hospital> hospitals;
         UseCaseBase getHosp;
         public UseCaseBase getDepts;
         public HospitalSearchViewModel()
         {
-            depts = new ObservableCollection<string>();
+            deptnames = new ObservableCollection<string>();
             hospitals = new ObservableCollection<Hospital>();
         }
         public async Task GetDepartments()
@@ -38,9 +38,9 @@ namespace DocApp.Presentation.ViewModels
             await getHosp.Execute();
         }
 
-        public async Task GetHospByDept(string location, int dept)
+        public async Task GetHospitalByDept(string location, int dept)
         {
-            getHosp = new GetHospitalByDeptUseCase(location, dept);
+            getHosp = new GetHospitalByDeptUseCase(location.ToUpper(), dept);
             getHosp.SetCallBack<IHospitalByDeptViewCallback>(this);
             await getHosp.Execute();
         }
@@ -52,6 +52,7 @@ namespace DocApp.Presentation.ViewModels
 
         public bool HospitalLocationReadSuccess(List<Hospital> h)
         {
+            hospitals.Clear();
             foreach (var x in h)
                 hospitals.Add(x);
             return true;
@@ -64,6 +65,7 @@ namespace DocApp.Presentation.ViewModels
 
         public bool ReadViewSuccess(List<Hospital> h)
         {
+            hospitals.Clear();
             foreach (var x in h)
                 hospitals.Add(x);
             return true;
@@ -72,7 +74,7 @@ namespace DocApp.Presentation.ViewModels
         public bool DepartmentDataReadSuccess(List<Department> d)
         {
             foreach (var x in d)
-                depts.Add(x.name);
+                deptnames.Add(x.name);
             return true;
         }
 

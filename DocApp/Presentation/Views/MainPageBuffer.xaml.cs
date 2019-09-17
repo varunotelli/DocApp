@@ -57,12 +57,14 @@ namespace DocApp.Presentation.Views
             StackPanel grid = mp1.Content as StackPanel;
             AutoSuggestBox autoSuggestBox = grid.FindName("MyAutoSuggest") as AutoSuggestBox;
             Frame my_frame = grid.FindName("myFrame") as Frame;
-            
+
             if (griditem.SelectedIndex == 0)
             {
-                my_frame.Navigate(typeof(DoctorSearchResultView),new navargs { name=addr, mp=mainPage});
-                
+                my_frame.Navigate(typeof(DoctorSearchResultView), new navargs { name = addr, mp = mainPage });
+
             }
+            else if (griditem.SelectedIndex == 1)
+                my_frame.Navigate(typeof(HospitalSearchResultView), new navargs { name = addr, mp = mainPage });
 
             
         }
