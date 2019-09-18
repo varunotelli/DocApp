@@ -11,12 +11,16 @@ using DocApp.Models;
 using DocApp.Presentation.Callbacks;
 using Windows.Devices.Geolocation;
 
+/*
+ * @todo Complete search by name for hospital
+ */
+
 namespace DocApp.Presentation.ViewModels
 {
     
 
 
-    class HospitalDoctorViewModel: IHospitalLocationPresenterCallBack
+    class HospitalDoctorViewModel: IHospitalLocationPresenterCallBack, IDoctorViewCallBack
         , IDoctorLocationPresenterCallBack, IHospitalByDeptViewCallback, IDoctorDeptLocationViewCallback
     {
         public double latitude;
@@ -36,7 +40,7 @@ namespace DocApp.Presentation.ViewModels
         {
             doctors = new ObservableCollection<Doctor>();
             hospitals = new ObservableCollection<Hospital>();
-            
+     
         }
 
 
@@ -65,6 +69,13 @@ namespace DocApp.Presentation.ViewModels
             getHosps.SetCallBack<IHospitalByDeptViewCallback>(this);
             await getHosps.Execute();
         }
+        public async Task GetDoctorsByName(string name, string location)
+        {
+            getDocs = new GetDoctorByNameUseCase(name.ToUpper(), location);
+            getDocs.SetCallBack<IDoctorViewCallBack>(this);
+            await getDocs.Execute();
+        }
+
 
         public bool DataReadSuccess(List<Hospital> h)
         {
@@ -135,6 +146,20 @@ namespace DocApp.Presentation.ViewModels
         public bool DeptLocationViewFail()
         {
             System.Diagnostics.Debug.WriteLine("Doc Dept fail");
+            return false;
+        }
+
+        public bool DataReadSuccess(List<Doctor> d)
+        {
+            this.doctors.Clear();
+            foreach (var x in d)
+                this.doctors.Add(x);
+            return true;
+        }
+
+        public bool DataReadFail()
+        {
+            System.Diagnostics.Debug.WriteLine("Doc Search fail");
             return false;
         }
     }

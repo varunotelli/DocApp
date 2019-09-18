@@ -24,13 +24,14 @@ namespace DocApp.Presentation.Views
     /// </summary>
     /// 
     /*
-     * @todo  Create new use case to get docs and hospital by name and dept
+     * @todo  Create new use case to get do
      */
     public sealed partial class HospitalDoctorView : Page
     {
         string address;
         int dept;
         MainPage mp;
+        string name;
         HospitalDoctorViewModel viewModel = new HospitalDoctorViewModel();
         public HospitalDoctorView()
         {
@@ -41,6 +42,7 @@ namespace DocApp.Presentation.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
             navargs1 args = e1.Parameter as navargs1;
+            name = args.name;
             if(args.dept_id==-1)
             {
                 await viewModel.GetDoctorByLocation(args.location);
@@ -49,8 +51,8 @@ namespace DocApp.Presentation.Views
             else
             {
                 dept = args.dept_id;
-                await viewModel.GetDoctorsByDept(args.location, args.dept_id+1);
-                await viewModel.GetHospitalByDept(args.location, args.dept_id+1);
+                await viewModel.GetDoctorsByName(args.name,args.location);
+                //await viewModel.GetHospitalByDept(args.name,args.location, args.dept_id+1);
             }
             mp = args.mp;
             mp.AutoSuggestChanged += this.onAutoSuggestChanged;

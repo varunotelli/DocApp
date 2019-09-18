@@ -86,7 +86,7 @@ namespace DocApp.Presentation.ViewModels
         public async Task GetDoctorDetails(string docname)
         {
             //doc = new Doctor();
-            getDoctorProfile = new GetDoctorByNameUseCase(docname);
+            //getDoctorProfile = new GetDoctorByNameUseCase(docname);
             getDoctorProfile.SetCallBack<IDoctorDetailViewCallBack>(this);
             await getDoctorProfile.Execute();
         }

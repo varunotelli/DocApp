@@ -17,14 +17,16 @@ namespace DocApp.Presentation.ViewModels
         public string address { get; set; }
     }
     public class AutoSuggestViewModel: IGetLocationPresenterCallback, IGetAddressPresenterCallback, IDepartmentViewCallback,
-        INotifyPropertyChanged
+        INotifyPropertyChanged, IKeywordViewCallback
     {
         public double latitude;
         public double longitude;
         public ObservableCollection<string> localities;
         public ObservableCollection<string> depts;
+        public ObservableCollection<string> keywords;
         public UseCaseBase getLocalityList;
         public UseCaseBase getDepts;
+        public UseCaseBase getKeyWords;
         private string location = "Chennai";
         public UseCaseBase getAddress;
         public delegate void LocationChangedEventHandler(object source, LocationEventArgs e);
@@ -56,6 +58,7 @@ namespace DocApp.Presentation.ViewModels
         public AutoSuggestViewModel()
         {
             depts = new ObservableCollection<string>();
+            keywords = new ObservableCollection<string>();
         }
 
         public void onLocationChanged()
@@ -115,6 +118,13 @@ namespace DocApp.Presentation.ViewModels
             await getDepts.Execute();
         }
 
+        public async Task GetKeyWords()
+        {
+            getKeyWords = new GetKeyWordUseCase();
+            getKeyWords.SetCallBack<IKeywordViewCallback>(this);
+            await getKeyWords.Execute();
+        }
+
 
         public bool DataFromPractoSuccess(RootLocationObject r)
         {
@@ -159,6 +169,20 @@ namespace DocApp.Presentation.ViewModels
         public bool DepartmentDataReadFail()
         {
             System.Diagnostics.Debug.WriteLine("Main page depts fail");
+            return false;
+        }
+
+        public bool KeywordReadViewSuccess(List<KeyWord> k)
+        {
+            keywords.Clear();
+            foreach (var x in k)
+                keywords.Add(x.common_name);
+            return true;
+        }
+
+        public bool KeywordReadViewFail()
+        {
+            System.Diagnostics.Debug.WriteLine("Keyword view fail");
             return false;
         }
     }

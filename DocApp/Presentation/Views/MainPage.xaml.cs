@@ -112,11 +112,22 @@ namespace DocApp.Presentation.Views
 
         private void HospDocSuggest_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
+            KeyWordBox.IsOpen = false;
             if(sender.Text!=null)
             {
-                myFrame.Navigate(typeof(HospitalDoctorView), new navargs1 { name=sender.Text, location = viewModel.loc, dept_id=DeptComboBox.SelectedIndex,
-                       mp =this });
+                if(!MyAutoSuggest.Text.Equals(""))
+                    myFrame.Navigate(typeof(HospitalDoctorView), new navargs1 { name=sender.Text,
+                        location = MyAutoSuggest.Text.ToUpper(),
+                   
+                        mp =this });
+                else
+                    myFrame.Navigate(typeof(HospitalDoctorView), new navargs1
+                    {
+                        name = sender.Text,
+                        location = viewModel.loc.ToUpper(),
 
+                        mp = this
+                    });
             }
                 
         }
@@ -152,6 +163,19 @@ namespace DocApp.Presentation.Views
         private void MyAutoSuggest_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             onAutoSuggestChanged(args.SelectedItem as string);
+        }
+
+        private async void HospDocSuggest_GotFocus(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("GOT FOCUS");
+            KeyWordBox.IsOpen = true;
+            await viewModel.GetKeyWords();
+           
+        }
+
+        private void HospDocSuggest_LostFocus(object sender, RoutedEventArgs e)
+        {
+            KeyWordBox.IsOpen = false;
         }
     }
 }

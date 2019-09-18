@@ -127,6 +127,7 @@
     <Compile Include="Data\HospitalDoctorDAO.cs" />
     <Compile Include="Data\DoctorListDAO.cs" />
     <Compile Include="Data\HospitalListDAO.cs" />
+    <Compile Include="Data\KeywordDAO.cs" />
     <Compile Include="Data\LocationProxy.cs" />
     <Compile Include="Data\OpenAddressProxy.cs" />
     <Compile Include="Domain\Callbacks\IAddressCallBack.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Domain\Callbacks\IDoctorUpdateCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalDoctorCallback.cs" />
+    <Compile Include="Domain\Callbacks\IKeyWordCallback.cs" />
     <Compile Include="Domain\Callbacks\ILocationCallBack.cs" />
     <Compile Include="Domain\DataContracts\IDepartmentList.cs" />
     <Compile Include="Domain\DataContracts\IDoctorInHospitalList.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="Domain\DataContracts\IGetAddress.cs" />
     <Compile Include="Domain\DataContracts\IHospitalInDoctorList.cs" />
     <Compile Include="Domain\DataContracts\IHospitalList.cs" />
+    <Compile Include="Domain\DataContracts\IKeywordList.cs" />
     <Compile Include="Domain\DataContracts\ILocationList.cs" />
     <Compile Include="Domain\UseCase\GetAddressUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDeptsUseCase.cs" />
@@ -157,9 +160,11 @@
     <Compile Include="Domain\UseCase\GetHospitalByDoctorUseCase.cs" />
     <Compile Include="Domain\UseCase\GetHospitalByLocationUseCase.cs" />
     <Compile Include="Domain\UseCase\GetHospitalByNameUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetKeyWordUseCase.cs" />
     <Compile Include="Domain\UseCase\GetLocationsUseCase.cs" />
     <Compile Include="Domain\UseCase\UpdateDoctorRatingUseCase.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\KeyWord.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\RootLocationObject.cs" />
     <Compile Include="Presentation\Callbacks\IDepartmentViewCallback.cs" />
@@ -168,6 +173,7 @@
     <Compile Include="Presentation\Callbacks\IGetLocationPresenterCallback.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalByDeptViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalLocationPresenterCallBack.cs" />
+    <Compile Include="Presentation\Callbacks\IKeywordViewCallback.cs" />
     <Compile Include="Presentation\ViewModels\AutoSuggestViewModel.cs" />
     <Compile Include="Presentation\ViewModels\DoctorSearchViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalSearchViewModel.cs" />

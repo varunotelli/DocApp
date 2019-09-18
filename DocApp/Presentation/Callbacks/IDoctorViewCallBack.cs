@@ -7,7 +7,7 @@ using DocApp.Models;
 
 namespace DocApp.Presentation.Callbacks
 {
-    public interface DoctorViewCallback
+    public interface IDoctorViewCallBack
     {
         bool DataReadSuccess(List<Doctor> d);
         bool DataReadFail();

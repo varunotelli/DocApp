@@ -42,21 +42,29 @@ namespace DocApp.Data
             
 
         }
-        public async Task GetDoctorByNameAsync( string name, IDoctorCallback doctorCallback)
+        public async Task GetDoctorByNameAsync( string name, string location,  IDoctorCallback callback)
         {
             DBHandler.DBConnection();
-            var results = await DBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR " +
-                "WHERE NAME LIKE '{0}%' AND NAME NOT NULL", name));
-           //await DoctorDBHandler.db.CloseAsync();
-            if (results != null && results.Count>0)
+            List<Doctor> results = new List<Doctor>();
+            try
             {
-                doctorCallback.ReadSuccess(results);
-                //await DoctorDBHandler.db.CloseAsync();
+                results = await DBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR " +
+                "WHERE NAME LIKE '{1}%' AND ID IN (" +
+                "SELECT DOC_ID FROM ROSTER WHERE HOSP_ID IN(" +
+                "SELECT ID FROM HOSPITAL WHERE LOCATION='{0}')" +
+                ")" , location,  name));
+                System.Diagnostics.Debug.WriteLine("Results val=" + results.Count);
             }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Dept loc select exception " + e.Message);
+            }
+            if (results != null)
+                callback.ReadSuccess(results);
             else
-                doctorCallback.ReadFail();
-            
-            
+                callback.ReadFail();
+
+
         }
 
         public async Task GetDoctorByHospitalNameAsync(string name, IDoctorCallback doctorCallback)
@@ -225,5 +233,30 @@ namespace DocApp.Data
         {
             throw new NotImplementedException();
         }
+
+        //public async Task SearchDoctor(string name, string location, int dept, IDoctorCallback callback)
+        //{
+        //    DBHandler.DBConnection();
+        //    List<Doctor> results = new List<Doctor>();
+        //    try
+        //    {
+        //        results = await DBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR " +
+        //        "WHERE NAME LIKE '{2}%' AND ID IN (" +
+        //        "SELECT DOC_ID FROM ROSTER WHERE HOSP_ID IN(" +
+        //        "SELECT ID FROM HOSPITAL WHERE LOCATION='{0}')" +
+        //        ")" +
+        //        "AND DEPT_ID ={1}", location, dept, name));
+        //        System.Diagnostics.Debug.WriteLine("Results val=" + results.Count);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        System.Diagnostics.Debug.WriteLine("Dept loc select exception " + e.Message);
+        //    }
+        //    if (results != null)
+        //        callback.ReadSuccess(results);
+        //    else
+        //        callback.ReadFail();
+
+        //}
     }
 }

@@ -14,11 +14,15 @@ namespace DocApp.Domain.UseCase
     class GetDoctorByNameUseCase : UseCaseBase, IDoctorCallback
     {
         List<Doctor> doc = new List<Doctor>();
-        DoctorViewCallback useCaseCallback;
-        public string name1="";
-        public GetDoctorByNameUseCase(string name)
+        IDoctorViewCallBack useCaseCallback;
+        public string name="";
+        string location = "";
+        int dept;
+        public GetDoctorByNameUseCase(string n, string l)
         {
-            this.name1 = name;
+            this.name = n;
+            this.location = l;
+            
         }
         internal override async Task Action()
         {
@@ -29,7 +33,7 @@ namespace DocApp.Domain.UseCase
             try
             {
                 System.Diagnostics.Debug.WriteLine("In use case");
-                await DoctorList.GetDoctorByNameAsync(name1, this);
+                await DoctorList.GetDoctorByNameAsync(name,location, this);
                 
             }
             catch (Exception e)
@@ -39,7 +43,7 @@ namespace DocApp.Domain.UseCase
             }
 
 
-            if (doc != null && doc.Count > 0)
+            if (doc != null)
             {
                 System.Diagnostics.Debug.WriteLine("get doctor by name use case success");
 
@@ -59,7 +63,7 @@ namespace DocApp.Domain.UseCase
 
         public override void SetCallBack<P>(P p)
         {
-            this.useCaseCallback = (DoctorViewCallback)p;
+            this.useCaseCallback = (IDoctorViewCallBack)p;
         }
 
 

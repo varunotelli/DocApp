@@ -25,6 +25,13 @@ namespace DocApp.Presentation.Views
      * @todo Make new query to get doctors by location,department
      * 
      */
+
+     public class DocSearchNavArgs
+     {
+
+
+     }
+
     public sealed partial class DoctorSearchResultView : Page
     {
 
