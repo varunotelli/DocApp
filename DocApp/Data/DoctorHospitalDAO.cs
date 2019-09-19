@@ -11,7 +11,7 @@ namespace DocApp.Data
 {
     public class DoctorHospitalDAO : IDoctorInHospitalList
     {
-        public async Task GetDoctorDetailByHospital(string hospname, IDoctorHospitalCallBack doctorHospitalCallBack)
+        public async Task GetDoctorDetailByHospital(int hospid, IDoctorHospitalCallBack doctorHospitalCallBack)
         {
             List<DoctorInHospitalDetails> results = new
                 List<DoctorInHospitalDetails>();
@@ -27,7 +27,7 @@ namespace DocApp.Data
                 var details = (from d in docs
                                join r in roster
                                on d.ID equals r.doc_id
-                               where hosp.Any(h => h.Name.Equals(hospname) && h.ID == r.hosp_id)
+                               where hosp.Any(h => h.ID.Equals(hospid) && h.ID == r.hosp_id)
                                select new DoctorInHospitalDetails
                                {
                                    doc_id = d.ID,

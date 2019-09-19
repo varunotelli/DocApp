@@ -8,9 +8,9 @@ using DocApp.Presentation.Callbacks;
 
 namespace DocApp.Domain.Callbacks
 {
-    public interface IHospitalCallback
+    public interface IHospitalListCallback
     {
-        bool ReadSuccess(List<Hospital> hospitals);
+        bool ReadSuccess(List<Hospital> h);
         bool ReadFail();
     }
 }

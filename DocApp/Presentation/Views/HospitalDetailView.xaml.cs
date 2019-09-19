@@ -54,8 +54,9 @@ namespace DocApp.Presentation.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
             var hosp = e1.Parameter as Hospital;
-            viewModel = new HospitalDetailViewModel(hosp.ID);
-            //await viewModel.
+            viewModel = new HospitalDetailViewModel();
+            await viewModel.GetHospital(hosp.ID);
+            //Bindings.Update();
             return;
           
         }

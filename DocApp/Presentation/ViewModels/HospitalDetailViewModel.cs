@@ -11,25 +11,25 @@ using System.Threading.Tasks;
 
 namespace DocApp.Presentation.ViewModels
 {
-    public class HospitalDetailViewModel: IHospitalDetailCallBack, IDoctorHospitalDetailViewCallback,IDoctorDetailViewCallBack,
+    public class HospitalDetailViewModel: IHospitalDetailViewCallBack, IDoctorHospitalDetailViewCallback,
         INotifyPropertyChanged
     {
 
-        int id;
+        //int id;
         public string rating = "";
         public string num_rating = "";
-        public Hospital hospital;
+        
         public ObservableCollection<DoctorInHospitalDetails> Doctors;
         //public ObservableCollection<DoctorInHospitalDetails> doc= new ObservableCollection<DoctorInHospitalDetails>();
         public ObservableCollection<string> doctormain;
-        private Doctor d;
-        public Doctor doc
+        private Hospital h;
+        public Hospital hospital
         {
-            get { return d; }
+            get { return h; }
             set
             {
-                d = value;
-                RaisePropertyChanged("doc");
+                h = value;
+                RaisePropertyChanged("hospital");
 
             }
         }
@@ -44,118 +44,52 @@ namespace DocApp.Presentation.ViewModels
             }
         }
 
-        public HospitalDetailViewModel(int n)
+        public HospitalDetailViewModel()
         {
-            this.id = n;
+            //this.id = n;
            
+            hospital = new Hospital();
         }
 
         UseCaseBase getHospital;
         UseCaseBase getDoctorByHospital;
-        UseCaseBase getDoctorProfile;
-        public async Task GetHospital()
-        {
-           
-            //getHospital = new GetHospitalUseCase(id,this);
-            
-           
-            //getHospital = new GetHospitalListUseCase();
-            //hospitals = new ObservableCollection<Hospital>();
-            getHospital.SetCallBack<IHospitalDetailCallBack>(this);
-            getDoctorByHospital.SetCallBack<IDoctorHospitalDetailViewCallback>(this);
 
+        public async Task GetHospital(int id)
+        {
+            Doctors = new ObservableCollection<DoctorInHospitalDetails>();
+            getHospital = new GetHospitalUseCase(id);
+            getDoctorByHospital = new GetDoctorByHospitalUseCase(id);
+            getHospital.SetCallBack<IHospitalDetailViewCallBack>(this);
+            getDoctorByHospital.SetCallBack<IDoctorHospitalDetailViewCallback>(this);
             try
             {
-
                 await getHospital.Execute();
-                await getDoctorByHospital.Execute();
-                //System.Diagnostics.Debug.WriteLine("view model count=" + hospital.Location);
-                //SetHospital();
-
+                await getDoctorByHospital.Execute();               
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("EXCEPTION=" + e.Message);
             }
-
-
-
-
         }
 
-        public async Task GetDoctorDetails(string docname)
+        public bool DataReadSuccess(Hospital h)
         {
-            //doc = new Doctor();
-            //getDoctorProfile = new GetDoctorByNameUseCase(docname);
-            getDoctorProfile.SetCallBack<IDoctorDetailViewCallBack>(this);
-            await getDoctorProfile.Execute();
-        }
-
-        public bool DataReadSuccess(ref Hospital h)
-        {
-            //this.hospital = new Hospital();
             this.hospital = h;
-
-
-            System.Diagnostics.Debug.WriteLine("SUCCESS!!!");
-            System.Diagnostics.Debug.WriteLine("location=" + this.hospital);
-            return true;
-        }
-
-        public bool DataReadSuccess(List<DoctorInHospitalDetails> d)
-        {
-            //Doctors = new ObservableCollection<Doctor>(d);
-            //this.Doctors = d;
-            foreach (var x in d)
-            {
-                Doctors.Add(x);
-                doctormain.Add(x.Name);
-
-            }
-            //System.Diagnostics.Debug.WriteLine("Doctor "+Doctors[0].Name);
-            System.Diagnostics.Debug.WriteLine("Doctor SUCCESS!!!");
-            System.Diagnostics.Debug.WriteLine("Doctors size="+Doctors.Count);
-            //doc.Add(Doctors[0]);
-           
             return true;
         }
 
         public bool DataReadFail()
         {
-            System.Diagnostics.Debug.WriteLine("Doctor FAILED!!!");
+            System.Diagnostics.Debug.WriteLine("HospitalDetailview fail");
             return false;
         }
 
-        bool IDoctorDetailViewCallBack.DataReadSuccess(Doctor d)
+        public bool DataReadSuccess(List<DoctorInHospitalDetails> d)
         {
-            this.doc = d;
-           
-            System.Diagnostics.Debug.WriteLine("Doctor info success");
-            
+            //Doctors.Clear();
+            foreach (var x in d)
+                Doctors.Add(x);
             return true;
-        }
-
-        bool IDoctorDetailViewCallBack.DataReadFail()
-        {
-            System.Diagnostics.Debug.WriteLine("Doctor info fail");
-            return false;
-        }
-
-        public bool DoctorDetailViewSuccess(Doctor d)
-        {
-            this.doc = d;
-            return true;
-        }
-
-        public bool DoctorDetailViewFail()
-        {
-            System.Diagnostics.Debug.WriteLine("Doctor update fail");
-            return false;
-        }
-
-        public bool DataReadSuccess(List<Hospital> h)
-        {
-            throw new NotImplementedException();
         }
     }
 }

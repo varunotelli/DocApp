@@ -14,12 +14,13 @@ namespace DocApp.Domain.UseCase
     class GetDoctorByHospitalUseCase: UseCaseBase, IDoctorHospitalCallBack
     {
         string hospitalName = "";
+        int id;
         List<DoctorInHospitalDetails> doctors = new List<DoctorInHospitalDetails>();
         //HospitalViewCallback hospitalUseCaseCallback;
         IDoctorHospitalDetailViewCallback doctorUseCaseCallback;
-        public GetDoctorByHospitalUseCase(string name)
+        public GetDoctorByHospitalUseCase(int x)
         {
-            this.hospitalName = name;
+            this.id = x;
         }
         internal override async Task Action()
         {
@@ -29,7 +30,7 @@ namespace DocApp.Domain.UseCase
             try
             {
                 System.Diagnostics.Debug.WriteLine("In use case");
-                await DoctorList.GetDoctorDetailByHospital(hospitalName,this);
+                await DoctorList.GetDoctorDetailByHospital(id,this);
                 System.Diagnostics.Debug.WriteLine(doctors.Count());
             }
             catch (Exception e)
@@ -39,7 +40,7 @@ namespace DocApp.Domain.UseCase
             }
 
 
-            if (doctors != null && doctors.Count >0)
+            if (doctors != null)
                 doctorUseCaseCallback.DataReadSuccess(doctors);
             else doctorUseCaseCallback.DataReadFail();
             // + hospitals.Count());

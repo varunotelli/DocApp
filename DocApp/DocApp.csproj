@@ -138,7 +138,8 @@
     <Compile Include="Domain\Callbacks\IDoctorDetailCallback.cs" />
     <Compile Include="Domain\Callbacks\IDoctorHospitalCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDoctorUpdateCallback.cs" />
-    <Compile Include="Domain\Callbacks\IHospitalCallback.cs" />
+    <Compile Include="Domain\Callbacks\IHospitalDetailCallback.cs" />
+    <Compile Include="Domain\Callbacks\IHospitalListCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalDoctorCallback.cs" />
     <Compile Include="Domain\Callbacks\IKeyWordCallback.cs" />
     <Compile Include="Domain\Callbacks\ILocationCallBack.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Domain\UseCase\GetHospitalByDoctorUseCase.cs" />
     <Compile Include="Domain\UseCase\GetHospitalByLocationUseCase.cs" />
     <Compile Include="Domain\UseCase\GetHospitalByNameUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetHospitalUseCase.cs" />
     <Compile Include="Domain\UseCase\GetKeyWordUseCase.cs" />
     <Compile Include="Domain\UseCase\GetLocationsUseCase.cs" />
     <Compile Include="Domain\UseCase\UpdateDoctorRatingUseCase.cs" />
@@ -202,7 +204,7 @@
     <Compile Include="Presentation\Callbacks\IDoctorHospitalDetailViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IDoctorViewCallBack.cs" />
     <Compile Include="Presentation\Callbacks\IGetAddressPresenterCallback.cs" />
-    <Compile Include="Presentation\Callbacks\IHospitalDetailCallBack.cs" />
+    <Compile Include="Presentation\Callbacks\IHospitalDetailViewCallBack.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalDoctorViewCallBack.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalViewCallback.cs" />
     <Compile Include="Presentation\ViewModels\DoctorDetailViewModel.cs" />
@@ -222,6 +224,9 @@
     </Compile>
     <Compile Include="Presentation\Views\Templates\DoctorProfileTemplate.xaml.cs">
       <DependentUpon>DoctorProfileTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Views\Templates\DoctorsInHospitalTemplate.xaml.cs">
+      <DependentUpon>DoctorsInHospitalTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Views\Templates\DoctorTemplate.xaml.cs">
       <DependentUpon>DoctorTemplate.xaml</DependentUpon>
@@ -298,6 +303,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\Templates\DoctorProfileTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\Templates\DoctorsInHospitalTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

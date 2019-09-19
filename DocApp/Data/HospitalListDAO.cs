@@ -14,7 +14,7 @@ namespace DocApp.Data
 {
     class HospitalListDAO: IHospitalList
     {
-        public async Task GetHospitalsAsync(IHospitalCallback hospitalCallback)
+        public async Task GetHospitalsAsync(IHospitalListCallback hospitalCallback)
         {
             List<Hospital> results= new List<Hospital>();
             
@@ -42,7 +42,7 @@ namespace DocApp.Data
             
             
         }
-        public async Task GetHospitalByNameAsync(string name, string location, IHospitalCallback hospitalCallback)
+        public async Task GetHospitalByNameAsync(string name, string location, IHospitalListCallback hospitalCallback)
         {
             DBHandler.DBConnection();
             var results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
@@ -58,7 +58,7 @@ namespace DocApp.Data
 
         }
 
-        public async Task GetHospitalByLocationAsync(string name, IHospitalCallback hospitalCallback)
+        public async Task GetHospitalByLocationAsync(string name, IHospitalListCallback hospitalCallback)
         {
             DBHandler.DBConnection();
             var results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
@@ -73,7 +73,7 @@ namespace DocApp.Data
 
         }
 
-        public async Task GetHospitalbyIdAsync(int id, IHospitalCallback hospitalCallback)
+        public async Task GetHospitalbyIdAsync(int id, IHospitalDetailCallback hospitalCallback)
         {
             List<Hospital> results = new List<Hospital>();
 
@@ -82,16 +82,16 @@ namespace DocApp.Data
 
                 //var db = await dbHandler.DBConnection();
                 DBHandler.DBConnection();
-                results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL {0}",id)
+                results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL where ID ={0}",id)
                     );
                 System.Diagnostics.Debug.WriteLine("results=" + results.Count());
-                if (results != null && results.Count > 0)
+                if (results != null)
                 {
-                    hospitalCallback.ReadSuccess(results);
+                    hospitalCallback.HospitalDetailReadSuccess(results.First());
                     //await DoctorDBHandler.db.CloseAsync();
                 }
                 else
-                    hospitalCallback.ReadFail();
+                    hospitalCallback.HospitalDetailReadFail();
 
             }
             catch (Exception e)
@@ -101,7 +101,7 @@ namespace DocApp.Data
 
         }
 
-        public async Task GetHospitalByDept(string location,int dept_id, IHospitalCallback hospitalCallback)
+        public async Task GetHospitalByDept(string location,int dept_id, IHospitalListCallback hospitalCallback)
         {
             DBHandler.DBConnection();
             List<Hospital> results = new List<Hospital>();
@@ -117,7 +117,7 @@ namespace DocApp.Data
                     "AND COUNT(*)>0) AND LOCATION='{1}'", dept_id,location)
                     );
                 System.Diagnostics.Debug.WriteLine("results=" + results.Count());
-                if (results != null && results.Count > 0)
+                if (results != null)
                 {
                     hospitalCallback.ReadSuccess(results);
                     //await DoctorDBHandler.db.CloseAsync();

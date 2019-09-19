@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DocApp.Domain.UseCase
 {
-    public class GetHospitalByLocationUseCase : UseCaseBase, IHospitalCallback
+    public class GetHospitalByLocationUseCase : UseCaseBase, IHospitalListCallback
     {
         List<Hospital> hospitals = new List<Hospital>();
         string location = "";

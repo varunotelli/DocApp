@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DocApp.Domain.UseCase
 {
-    public class GetHospitalByDeptUseCase : UseCaseBase, IHospitalCallback
+    public class GetHospitalByDeptUseCase : UseCaseBase, IHospitalListCallback
     {
         List<Hospital> hosps;
         int dept_id;

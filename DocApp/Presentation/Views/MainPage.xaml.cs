@@ -20,6 +20,8 @@ using Windows.UI.Xaml.Navigation;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+/*@todo Add click for listbox and redirect
+ */
 
 namespace DocApp.Presentation.Views
 {

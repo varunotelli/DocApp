@@ -13,7 +13,7 @@ using DocApp.Domain.Callbacks;
 
 namespace DocApp.Domain.Usecase
 {
-    public class GetHospitalListUseCase : UseCaseBase, IHospitalCallback
+    public class GetHospitalListUseCase : UseCaseBase, IHospitalListCallback
     {    
         List<Hospital> hospitals = new List<Hospital>();
         IHospitalViewCallback useCaseCallback;
