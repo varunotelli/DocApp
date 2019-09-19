@@ -20,7 +20,7 @@ namespace DocApp.Presentation.ViewModels
     
 
 
-    class HospitalDoctorViewModel: IHospitalLocationPresenterCallBack, IDoctorViewCallBack
+    class HospitalDoctorViewModel: IHospitalLocationPresenterCallBack, IDoctorViewCallBack, IHospitalViewCallback
         , IDoctorLocationPresenterCallBack, IHospitalByDeptViewCallback, IDoctorDeptLocationViewCallback
     {
         public double latitude;
@@ -74,6 +74,13 @@ namespace DocApp.Presentation.ViewModels
             getDocs = new GetDoctorByNameUseCase(name.ToUpper(), location);
             getDocs.SetCallBack<IDoctorViewCallBack>(this);
             await getDocs.Execute();
+        }
+
+        public async Task GetHospitalByName(string name, string location)
+        {
+            getHosps = new GetHospitalByNameUseCase(name.ToUpper(), location);
+            getHosps.SetCallBack<IHospitalViewCallback>(this);
+            await getHosps.Execute();
         }
 
 

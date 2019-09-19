@@ -50,9 +50,9 @@ namespace DocApp.Presentation.Views
             }
             else
             {
-                dept = args.dept_id;
+               
                 await viewModel.GetDoctorsByName(args.name,args.location);
-                //await viewModel.GetHospitalByDept(args.name,args.location, args.dept_id+1);
+                await viewModel.GetHospitalByName(args.name,args.location);
             }
             mp = args.mp;
             mp.AutoSuggestChanged += this.onAutoSuggestChanged;

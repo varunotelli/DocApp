@@ -42,11 +42,11 @@ namespace DocApp.Data
             
             
         }
-        public async Task GetHospitalByNameAsync(string name, IHospitalCallback hospitalCallback)
+        public async Task GetHospitalByNameAsync(string name, string location, IHospitalCallback hospitalCallback)
         {
             DBHandler.DBConnection();
             var results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
-                "WHERE NAME LIKE'{0}%'",name));
+                "WHERE NAME LIKE'{0}%' AND LOCATION='{1}'",name,location));
             if (results != null && results.Count > 0)
             {
                 hospitalCallback.ReadSuccess(results);

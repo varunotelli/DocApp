@@ -15,10 +15,12 @@ namespace DocApp.Domain.UseCase
     {
         List<Hospital> hospital = new List<Hospital>();
         IHospitalViewCallback useCaseCallback;
-        public string name1="";
-        public GetHospitalByNameUseCase(string name)
+        public string name="";
+        public string location;
+        public GetHospitalByNameUseCase(string n,string loc)
         {
-            this.name1 = name;
+            this.name = n;
+            this.location = loc;
         }
         internal override async Task Action()
         {
@@ -29,7 +31,7 @@ namespace DocApp.Domain.UseCase
             try
             {
                 System.Diagnostics.Debug.WriteLine("In use case");
-                await HospitalList.GetHospitalByNameAsync(name1,this);
+                await HospitalList.GetHospitalByNameAsync(name,location,this);
                 //System.Diagnostics.Debug.WriteLine("hosp val="+hospital.Number_Of_Rating);
             }
             catch (Exception e)
