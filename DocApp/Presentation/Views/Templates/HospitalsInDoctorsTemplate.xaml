@@ -11,12 +11,13 @@
     d:DesignWidth="400">
 
     <StackPanel>
-        <Image Height="250" Width="250" Source="ms-appx:///Assets/400_placeholder.png" Stretch="Uniform" />
-        <TextBlock FontFamily="ms-appx:///Assets/montserrat-v14-latin-800.ttf#Montserrat" FontSize="18" TextWrapping="WrapWholeWords">
+        <Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" />
+        <TextBlock FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova" FontSize="14" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis">
             <Run Text="{x:Bind hospital.Name}"/>
             <Run Text="-"/>
             <Run Text="{x:Bind hospital.Location}"/>
         </TextBlock>
+        
         <RatingControl Value="{x:Bind hospital.Rating}" HorizontalAlignment="Left" Margin="10,3"
                                        Caption="{x:Bind sys:String.Format('({0})',hospital.Number_of_Rating)}" 
                                        IsReadOnly="True" >
@@ -24,7 +25,7 @@
                 <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
             </RatingControl.Resources>
         </RatingControl>
-        <TextBlock Text="{x:Bind sys:String.Format('Rs.{0}',hospital.Fees),Mode=OneWay}" FontSize="14"
-                   FontFamily="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+        <TextBlock Text="{x:Bind sys:String.Format('Rs.{0}',hospital.Fees)}" FontSize="12" Foreground="White"
+                   FontFamily="ms-appx:///Assets/ProximaNova-Regular#Proxima Nova"/>
     </StackPanel>
 </UserControl>

@@ -12,7 +12,7 @@ using DocApp.Domain.Callbacks;
 
 namespace DocApp.Domain.UseCase
 {
-    public class GetDoctorUseCase: UseCaseBase, IDoctorCallback
+    public class GetDoctorUseCase: UseCaseBase, IDoctorDetailCallback
     {
         Doctor doc = new Doctor();
         int id;
@@ -58,14 +58,14 @@ namespace DocApp.Domain.UseCase
         }
 
 
-        public bool ReadSuccess(List<Doctor> docs)
+        public bool DoctorDetailReadSuccess(Doctor d)
         {
-            this.doc = docs.First();
+            this.doc = d;
             System.Diagnostics.Debug.WriteLine("DAO READ SUCCESS!!!");
               
             return true;
         }
-        public bool ReadFail()
+        public bool DoctorDetailReadFail()
         {
             System.Diagnostics.Debug.WriteLine("DAO READ FAIL!!!");
             return false;

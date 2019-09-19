@@ -164,7 +164,7 @@ namespace DocApp.Data
             //await DoctorDBHandler.db.CloseAsync();
         }
 
-        public async Task GetDoctorByIdAsync(int id, IDoctorCallback doctorCallback)
+        public async Task GetDoctorByIdAsync(int id, IDoctorDetailCallback doctorCallback)
         {
             //Doctor d = new Doctor();
             try
@@ -177,11 +177,11 @@ namespace DocApp.Data
                 
                 if (results != null)
                 {
-                    doctorCallback.ReadSuccess(results);
+                    doctorCallback.DoctorDetailReadSuccess(results.First());
                     //await DoctorDBHandler.db.CloseAsync();
                 }
                 else
-                    doctorCallback.ReadFail();
+                    doctorCallback.DoctorDetailReadFail();
             }
             catch (Exception e)
             {

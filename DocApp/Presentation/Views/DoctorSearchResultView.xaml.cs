@@ -1,4 +1,5 @@
-﻿using DocApp.Presentation.ViewModels;
+﻿using DocApp.Models;
+using DocApp.Presentation.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,14 +27,17 @@ namespace DocApp.Presentation.Views
      * 
      */
 
-     public class DocSearchNavArgs
+     public class DocSendEventArgs: EventArgs
      {
-
+        public Doctor doc { get; set; }
+        public DoctorSearchResultView view { get; set; }
 
      }
 
     public sealed partial class DoctorSearchResultView : Page
     {
+        //public delegate void GridItemClickedEventHandler(object sender, DocSendEventArgs args);
+        //public event GridItemClickedEventHandler GridItemClicked;
 
         public DoctorSearchViewModel viewModel;
         string address = "";
@@ -59,6 +63,12 @@ namespace DocApp.Presentation.Views
             //Bindings.Update();
 
         }
+
+        //public void onGridItemClicked(Doctor d)
+        //{
+        //    if (GridItemClicked != null)
+        //        GridItemClicked(this, new DocSendEventArgs { doc = d, view = this });
+        //}
 
         public async void onAutoSuggestChanged(object sender, navargs2 n)
         {
@@ -87,6 +97,19 @@ namespace DocApp.Presentation.Views
             var select = listbox.SelectedIndex;
             await viewModel.GetDoctorsByDept(address, select);
             Bindings.Update();
+        }
+
+        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Doctor d = e.ClickedItem as Doctor;
+            
+            Frame parentFrame = Window.Current.Content as Frame;
+
+            MainPage mp1 = parentFrame.Content as MainPage;
+            StackPanel grid = mp1.Content as StackPanel;
+           
+            Frame my_frame = grid.FindName("myFrame") as Frame;
+            my_frame.Navigate(typeof(DoctorDetailView), e.ClickedItem as Doctor);
         }
     }
 }

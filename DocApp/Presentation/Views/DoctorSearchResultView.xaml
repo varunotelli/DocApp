@@ -163,8 +163,8 @@
                 </StackPanel>
                 
             </Grid>
-            <GridView Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind viewModel.docs}"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <GridView Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind viewModel.docs}" IsItemClickEnabled="True"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="GridView_ItemClick">
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="data:Doctor">
                         <uc:DoctorProfileLargeTemplate/>

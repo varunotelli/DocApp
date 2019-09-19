@@ -135,6 +135,7 @@
     <Compile Include="Domain\Callbacks\IDoctorCallback.cs" />
     <Compile Include="Domain\Callbacks\IDoctorCountByDeptCallback.cs" />
     <Compile Include="Domain\Callbacks\IDoctorDeptLocCallback.cs" />
+    <Compile Include="Domain\Callbacks\IDoctorDetailCallback.cs" />
     <Compile Include="Domain\Callbacks\IDoctorHospitalCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDoctorUpdateCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalCallback.cs" />

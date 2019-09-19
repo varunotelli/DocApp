@@ -17,7 +17,7 @@
             <Setter Property="Margin" Value="10,5"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
+            <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
             </Style>
     </Page.Resources>
     <Page.Background>
@@ -66,12 +66,12 @@
                     </RatingControl.Resources>
                 </RatingControl>
                 <TextBlock Text="{x:Bind viewModel.doctor.Description}" Margin="10,0" TextWrapping="WrapWholeWords"
-                           FontFamily="ms-appx:///Assets/montserrat-v14-latin-500.ttf#Montserrat"/>
+                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
 
 
 
                 <TextBlock FontSize="24" FontWeight="Bold" Margin="10,10" 
-                           FontFamily="ms-appx:///Assets/montserrat-v14-latin-800.ttf#Montserrat"
+                           FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
                            Text="{x:Bind sys:String.Format('Places where Dr.{0} visits',viewModel.doctor.Name)}"/>
 
                 <GridView x:Name="HospList" ItemsSource="{x:Bind viewModel.hospitals}" IsItemClickEnabled="True"
@@ -80,6 +80,7 @@
                         <Style TargetType="GridViewItem">
                             <Setter Property="Margin" Value="10,10"/>
                             <Setter Property="Padding" Value="10"/>
+                            <Setter Property="Height" Value="Auto"/>
                         </Style>
                     </GridView.ItemContainerStyle>
                     <GridView.ItemTemplate>

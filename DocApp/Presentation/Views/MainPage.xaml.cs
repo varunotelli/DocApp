@@ -78,7 +78,8 @@ namespace DocApp.Presentation.Views
             if(HospDocSuggest.Text.Equals(""))
                 myFrame.Navigate(typeof(MainPageBuffer), new navargs {name=address,location=true,mp=this });
         }
-       
+
+        
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             await viewModel.GetCurrentAddress();      

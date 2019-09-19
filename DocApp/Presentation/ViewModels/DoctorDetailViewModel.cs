@@ -109,7 +109,7 @@ namespace DocApp.Presentation.ViewModels
             {
                 hospitals.Add(x);
             }
-            System.Diagnostics.Debug.WriteLine("Doc details viewmodel count=" + hospitals.Count());
+            //System.Diagnostics.Debug.WriteLine("Doc details viewmodel count=" + hospitals[0].Fees);
             System.Diagnostics.Debug.WriteLine("Doctor Detail View Model Success!!");
             return true;
         }
