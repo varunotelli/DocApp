@@ -61,7 +61,7 @@ namespace DocApp.Presentation.Views
                 GridViewItemSelected(this, new GridViewClickedEventArgs {ID=id});
         }
 
-        private async void HospList_ItemClick(object sender, ItemClickEventArgs e)
+        private void HospList_ItemClick(object sender, ItemClickEventArgs e)
         {
             var x = e.ClickedItem as HospitalInDoctorDetails;
             Frame parentFrame = Window.Current.Content as Frame;

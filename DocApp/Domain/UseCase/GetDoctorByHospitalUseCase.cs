@@ -13,7 +13,7 @@ namespace DocApp.Domain.UseCase
 {
     class GetDoctorByHospitalUseCase: UseCaseBase, IDoctorHospitalCallBack
     {
-        string hospitalName = "";
+       
         int id;
         List<DoctorInHospitalDetails> doctors = new List<DoctorInHospitalDetails>();
         //HospitalViewCallback hospitalUseCaseCallback;

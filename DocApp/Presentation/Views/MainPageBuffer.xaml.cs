@@ -60,11 +60,11 @@ namespace DocApp.Presentation.Views
 
             if (griditem.SelectedIndex == 0)
             {
-                my_frame.Navigate(typeof(DoctorSearchResultView), new navargs { name = addr, mp = mainPage });
+                my_frame.Navigate(typeof(DoctorSearchResultView), new navargs { name = addr, index = 0, mp = mainPage });
 
             }
             else if (griditem.SelectedIndex == 1)
-                my_frame.Navigate(typeof(HospitalSearchResultView), new navargs { name = addr, mp = mainPage });
+                my_frame.Navigate(typeof(HospitalSearchResultView), new navargs { name = addr, index = 0, mp = mainPage }); ;
 
             
         }

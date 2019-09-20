@@ -17,7 +17,7 @@ namespace DocApp.Domain.UseCase
         IDoctorViewCallBack useCaseCallback;
         public string name="";
         string location = "";
-        int dept;
+        
         public GetDoctorByNameUseCase(string n, string l)
         {
             this.name = n;

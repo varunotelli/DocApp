@@ -18,7 +18,7 @@ namespace DocApp.Presentation.ViewModels
         public UseCaseBase getDocs;
         
         public ObservableCollection<string> deptnames;
-        ObservableCollection<Doctor> d;
+        
         public ObservableCollection<Doctor> docs;
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string name)

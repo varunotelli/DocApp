@@ -38,6 +38,7 @@ namespace DocApp.Presentation.Views
     {
         public string name { get; set; }
         public bool location { get; set; }
+        public int index { get; set; }
         public MainPage mp { get; set; }
     }
 
@@ -116,13 +117,13 @@ namespace DocApp.Presentation.Views
         private void HospDocSuggest_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             KeyWordBox.IsOpen = false;
-            if(sender.Text!=null)
+            if(!sender.Text.Equals(""))
             {
                 if(!MyAutoSuggest.Text.Equals(""))
                     myFrame.Navigate(typeof(HospitalDoctorView), new navargs1 { name=sender.Text,
                         location = MyAutoSuggest.Text.ToUpper(),
                    
-                        mp =this });
+                        mp =this }, new SuppressNavigationTransitionInfo());
                 else
                     myFrame.Navigate(typeof(HospitalDoctorView), new navargs1
                     {
@@ -130,7 +131,17 @@ namespace DocApp.Presentation.Views
                         location = viewModel.loc.ToUpper(),
 
                         mp = this
-                    });
+                    }, new SuppressNavigationTransitionInfo());
+            }
+            else
+            {
+                myFrame.Navigate(typeof(MainPageBuffer), new navargs
+                {
+                    
+                    name = viewModel.loc.ToUpper(),
+
+                    mp = this
+                });
             }
                 
         }
@@ -183,7 +194,15 @@ namespace DocApp.Presentation.Views
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if((sender as ListBox).SelectedIndex!=-1)
+            {
+                myFrame.Navigate(typeof(DoctorSearchResultView), new navargs
+                {
+                    name = address,
+                    mp = this,
+                    index = (sender as ListBox).SelectedIndex
+                });
+            }
         }
     }
 }

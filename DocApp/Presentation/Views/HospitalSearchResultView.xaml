@@ -155,7 +155,7 @@
                 <StackPanel VerticalAlignment="Stretch" Margin="0,0,0,400">
                     <TextBlock FontSize="20" Text="DEPARTMENTS" Margin="10,10,10,10" Foreground="DimGray"
                     FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
-                    <ListBox x:Name="DeptListbox" ItemsSource="{x:Bind viewModel.deptnames}" VerticalAlignment="Stretch" SelectedIndex="0"
+                    <ListBox x:Name="DeptListbox" ItemsSource="{x:Bind viewModel.deptnames}" VerticalAlignment="Stretch" 
                              ItemContainerStyle="{StaticResource ListBoxItemStyle1}" SelectionChanged="DeptListbox_SelectionChanged">
 
 
@@ -166,6 +166,7 @@
             </Grid>
             <GridView Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind viewModel.hospitals}" IsItemClickEnabled="True"
                       ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="GridView_ItemClick">
+                
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="data:Hospital">
                         <uc:HospitalProfileLargeTemplate/>

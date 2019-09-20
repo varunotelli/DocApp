@@ -20,7 +20,7 @@ namespace DocApp.Presentation.ViewModels
         public ObservableCollection<string> deptnames;
         public ObservableCollection<Hospital> hospitals;
         UseCaseBase getHosp;
-        UseCaseBase getDoc;
+        
         public UseCaseBase getDepts;
         public HospitalSearchViewModel()
         {
@@ -28,15 +28,7 @@ namespace DocApp.Presentation.ViewModels
             hospitals = new ObservableCollection<Hospital>();
         }
 
-        public async void onGridViewItemClicked(object sender, GridViewClickedEventArgs args)
-        {
-
-        }
-
-        public async Task GetDoctor(int id)
-        {
-            
-        }
+        
 
         public async Task GetDepartments()
         {

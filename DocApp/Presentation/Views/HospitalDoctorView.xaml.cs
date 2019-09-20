@@ -87,7 +87,7 @@ namespace DocApp.Presentation.Views
             StackPanel grid = mp.Content as StackPanel;
             Frame my_frame = grid.FindName("myFrame") as Frame;
 
-            my_frame.Navigate(typeof(DoctorDetailView), (e.ClickedItem as Doctor).ID);
+            my_frame.Navigate(typeof(DoctorDetailView), e.ClickedItem as Doctor);
         }
 
         private void HospitalGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -98,7 +98,7 @@ namespace DocApp.Presentation.Views
             StackPanel grid = mp.Content as StackPanel;
             Frame my_frame = grid.FindName("myFrame") as Frame;
 
-            my_frame.Navigate(typeof(HospitalDetailView), (e.ClickedItem as Hospital).ID);
+            my_frame.Navigate(typeof(HospitalDetailView), (e.ClickedItem as Hospital));
         }
     }
 }

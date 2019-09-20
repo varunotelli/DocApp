@@ -23,16 +23,15 @@ namespace DocApp.Presentation.ViewModels
     class HospitalDoctorViewModel: IHospitalLocationPresenterCallBack, IDoctorViewCallBack, IHospitalViewCallback
         , IDoctorLocationPresenterCallBack, IHospitalByDeptViewCallback, IDoctorDeptLocationViewCallback
     {
-        public double latitude;
-        public double longitude;
+        //public double latitude;
+        //public double longitude;
         
 
 
         public ObservableCollection<Doctor> doctors;// = new ObservableCollection<Doctor>();
         public ObservableCollection<Hospital> hospitals;// = new ObservableCollection<Hospital>();
 
-        public UseCaseBase getDoctor;// = new GetDoctorListUseCase();
-        public UseCaseBase getHospital;// = new GetHospitalByLocationUseCase();
+        
         public UseCaseBase getHosps;
         public UseCaseBase getDocs;
         
@@ -90,8 +89,6 @@ namespace DocApp.Presentation.ViewModels
             if(!hospitals.SequenceEqual(h))
             foreach (var x in h)
                 this.hospitals.Add(x);
-            
-
             System.Diagnostics.Debug.WriteLine("SUCCESS!!!");
             
             return true;

@@ -30,7 +30,7 @@ namespace DocApp.Presentation.Views
     public sealed partial class HospitalDetailView : Page
     {
         
-        string name = "";
+        
         ObservableCollection<Doctor> docs = new ObservableCollection<Doctor>();
         public delegate void ListViewItemSelectedEventHandler(object source, EventArgs e);
         public event ListViewItemSelectedEventHandler ListViewItemSelected;
@@ -69,7 +69,8 @@ namespace DocApp.Presentation.Views
             StackPanel grid = mp.Content as StackPanel;
             Frame my_frame = grid.FindName("myFrame") as Frame;
 
-            my_frame.Navigate(typeof(DoctorDetailView), (e.ClickedItem as DoctorInHospitalDetails).doc_id);
+            my_frame.Navigate(typeof(DoctorDetailView), 
+                (e.ClickedItem as DoctorInHospitalDetails).doc_id);
         }
     }
 }

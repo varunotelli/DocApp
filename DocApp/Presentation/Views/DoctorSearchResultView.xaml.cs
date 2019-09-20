@@ -54,6 +54,7 @@ namespace DocApp.Presentation.Views
             var args = e1.Parameter as navargs;
             address = args.name;
             mainPage = args.mp;
+            DeptListbox.SelectedIndex = args.index;
             mainPage.AutoSuggestChanged += this.onAutoSuggestChanged;
             await viewModel.GetDoctors(address);
             
