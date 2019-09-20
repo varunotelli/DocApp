@@ -105,7 +105,7 @@ namespace DocApp.Data
 
         }
 
-        public async Task UpdateDoctorRating(string name, double rating, IDoctorUpdateCallback doctorCallback)
+        public async Task UpdateDoctorRating(int id, double rating, IDoctorUpdateCallback doctorCallback)
         {
             
             DBHandler.DBConnection();
@@ -113,7 +113,7 @@ namespace DocApp.Data
             {
 
                 await DBHandler.db.ExecuteAsync(String.Format("UPDATE DOCTOR SET RATING=(((RATING*NUMBER_OF_RATING)+{0})/(NUMBER_OF_RATING+1))" +
-                "WHERE NAME='{1}'", rating, name)
+                "WHERE ID={1}", rating, id)
                 );
                 System.Diagnostics.Debug.WriteLine("Update rating dao Success");
                 await DBHandler.db.CloseAsync();
@@ -129,7 +129,7 @@ namespace DocApp.Data
             {
                 DBHandler.DBConnection();
                 await DBHandler.db.ExecuteAsync(String.Format("UPDATE DOCTOR SET NUMBER_OF_RATING=NUMBER_OF_RATING+1 " +
-                    "WHERE NAME='{0}'", name)
+                    "WHERE ID={0}", id)
                 );
                 System.Diagnostics.Debug.WriteLine("Update number of rating dao Success");
                 await DBHandler.db.CloseAsync();
@@ -144,7 +144,7 @@ namespace DocApp.Data
             {
                 DBHandler.DBConnection();
                 var results = await DBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR " +
-                "WHERE NAME LIKE '{0}%'", name));
+                "WHERE ID={0}", id));
 
                 if (results != null)
                 {

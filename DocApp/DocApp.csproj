@@ -216,6 +216,9 @@
     <Compile Include="Presentation\Views\MainPageBuffer.xaml.cs">
       <DependentUpon>MainPageBuffer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Views\MainPageLoadingScreenView.xaml.cs">
+      <DependentUpon>MainPageLoadingScreenView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\Templates\ComboBoxControl.xaml.cs">
       <DependentUpon>ComboBoxControl.xaml</DependentUpon>
     </Compile>
@@ -291,6 +294,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\MainPageBuffer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\MainPageLoadingScreenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

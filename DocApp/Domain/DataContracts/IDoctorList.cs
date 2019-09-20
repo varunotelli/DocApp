@@ -19,7 +19,7 @@ namespace DocApp.Domain.DataContracts
         Task GetDoctorByHospitalNameAsync(string name, IDoctorCallback doctorCallback);
         Task GetDoctorByHospitalLocationAsync(string name, IDoctorCallback doctorCallback);
         Task GetDoctorByDeptLocationAsync(string location, int dept, IDoctorCallback doctorCallback);
-        Task UpdateDoctorRating(string name, double rating, IDoctorUpdateCallback doctorCallback);
+        Task UpdateDoctorRating(int id, double rating, IDoctorUpdateCallback doctorCallback);
 
 
 

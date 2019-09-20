@@ -13,13 +13,13 @@ namespace DocApp.Domain.UseCase
 {
     public class UpdateDoctorRatingUseCase : UseCaseBase, IDoctorUpdateCallback
     {
-        string name = "";
+        int id;
         double rating = 0;
         IDoctorDetailViewCallBack doctorDetailViewCallBack;
         Doctor doctor = new Doctor();
-        public UpdateDoctorRatingUseCase(string name1,double r)
+        public UpdateDoctorRatingUseCase(int x,double r)
         {
-            this.name = name1;
+            this.id = x;
             this.rating = r;
             
         }
@@ -35,16 +35,16 @@ namespace DocApp.Domain.UseCase
             IDoctorList doctorList = new DoctorListDAO();
             try
             {   
-                await doctorList.UpdateDoctorRating(name, rating, this);
+                await doctorList.UpdateDoctorRating(id, rating, this);
             }
             catch(Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("DB UPDATE EXCEPTION" + e.Message);
             }
-            //if (doctor != null)
-            //    doctorDetailViewCallBack.DoctorDetailViewSuccess(doctor);
-            //else
-            //    doctorDetailViewCallBack.DoctorDetailViewFail()
+            if (doctor != null)
+                doctorDetailViewCallBack.DataReadSuccess(doctor);
+            else
+                doctorDetailViewCallBack.DataReadFail();
 ;        }
         public bool DoctorUpdateFail()
         {

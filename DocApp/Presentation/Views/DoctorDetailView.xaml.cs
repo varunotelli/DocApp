@@ -36,6 +36,7 @@ namespace DocApp.Presentation.Views
         public delegate void GridViewItemSelectedEventHandler(object source, EventArgs e);
         public event GridViewItemSelectedEventHandler GridViewItemSelected;
         DoctorDetailViewModel viewModel;
+        int id;
         
         public DoctorDetailView()
         {
@@ -47,6 +48,7 @@ namespace DocApp.Presentation.Views
         {
 
             var doc =(int) e1.Parameter;
+            id = doc;
             viewModel = new DoctorDetailViewModel();
             await viewModel.GetDoctor(doc);
             System.Diagnostics.Debug.WriteLine(viewModel.doctor.Name);
@@ -76,10 +78,10 @@ namespace DocApp.Presentation.Views
         private async void MyRating_ValueChanged(RatingControl sender, object args)
         {
             
-            if (sender.Value!=null && sender.Value > 0)
+            if (sender.Value > 0)
             {
                 Bindings.Update();
-                //await viewModel.UpdateDoctor(name, (double)sender.Value);
+                await viewModel.UpdateDoctor(id, (double)sender.Value);
 
                 Bindings.Update();
                 myRating.Caption = myRating.Value.ToString();

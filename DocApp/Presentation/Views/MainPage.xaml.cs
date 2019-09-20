@@ -64,7 +64,8 @@ namespace DocApp.Presentation.Views
             
             viewModel = new AutoSuggestViewModel();
             viewModel.LocationChanged += this.onLocationChanged;
-            //myFrame.Navigate(typeof(MainPageBuffer));
+            progring.IsActive = true;
+            //myFrame.Navigate(typeof(MainPageLoadingScreenView));
         
         }
 
@@ -74,10 +75,22 @@ namespace DocApp.Presentation.Views
                 AutoSuggestChanged(this, new navargs2 { location = add, mp = this });
         }
 
-        public void onLocationChanged(object source, LocationEventArgs e)
+        public async void onLocationChanged(object source, LocationEventArgs e)
         {
             address = e.address;
             locflag = true;
+            if(locflag)
+            {
+                StatusText.Text = "READY";
+                await Task.Delay(1000);
+                progring.IsActive = false;
+                progring.Visibility = Visibility.Collapsed;
+                LoadText.Visibility = Visibility.Collapsed;
+                
+                
+                StatusText.Visibility = Visibility.Collapsed;
+                
+            }
             if(HospDocSuggest.Text.Equals(""))
                 myFrame.Navigate(typeof(MainPageBuffer), new navargs {name=address,location=true,mp=this });
         }

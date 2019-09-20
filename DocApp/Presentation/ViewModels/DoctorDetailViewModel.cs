@@ -74,9 +74,9 @@ namespace DocApp.Presentation.ViewModels
 
         }
 
-        public async Task UpdateDoctor(string name, double rating)
+        public async Task UpdateDoctor(int id, double rating)
         {
-            updateDoc = new UpdateDoctorRatingUseCase(name, rating);
+            updateDoc = new UpdateDoctorRatingUseCase(id, rating);
             updateDoc.SetCallBack(this);
             try
             {

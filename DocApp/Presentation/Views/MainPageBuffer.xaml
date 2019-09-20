@@ -116,7 +116,7 @@
         </LinearGradientBrush>
     </Page.Background>
 
-    <Grid Margin="0,200,0,300" HorizontalAlignment="Stretch">
+    <Grid Margin="0,150,0,300" HorizontalAlignment="Stretch">
         <!--<TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1A3;" FontSize="80" VerticalAlignment="Center"
                    HorizontalAlignment="Center" Margin="0,0,0,40" Style="{StaticResource TextBlockStyle}"/>
         <TextBlock FontSize="48" FontWeight="ExtraBold" Text="Search DocApp" Style="{StaticResource TextBlockStyle}"/>
