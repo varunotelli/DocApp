@@ -109,7 +109,7 @@ namespace DocApp.Presentation.Views
             StackPanel grid = mp1.Content as StackPanel;
            
             Frame my_frame = grid.FindName("myFrame") as Frame;
-            my_frame.Navigate(typeof(DoctorDetailView), e.ClickedItem as Doctor);
+            my_frame.Navigate(typeof(DoctorDetailView), (e.ClickedItem as Doctor).ID);
         }
     }
 }

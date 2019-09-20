@@ -26,12 +26,17 @@ namespace DocApp.Presentation.Views
      * @todo Complete Doctor Detail View
      * @body Create new use case to get hospitals in which doctor works and fix UI
      */
+
+    public class GridViewClickedEventArgs:EventArgs
+    {
+        public int ID { get; set; }
+    }
     public sealed partial class DoctorDetailView : Page
     {
-        public delegate void ListViewItemSelectedEventHandler(object source, EventArgs e);
-        public event ListViewItemSelectedEventHandler ListViewItemSelected;
+        public delegate void GridViewItemSelectedEventHandler(object source, EventArgs e);
+        public event GridViewItemSelectedEventHandler GridViewItemSelected;
         DoctorDetailViewModel viewModel;
-        int id;
+        
         public DoctorDetailView()
         {
             this.InitializeComponent();
@@ -41,24 +46,31 @@ namespace DocApp.Presentation.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
 
-            var doc = e1.Parameter as Doctor;
+            var doc =(int) e1.Parameter;
             viewModel = new DoctorDetailViewModel();
-            await viewModel.GetDoctor(doc.ID);
+            await viewModel.GetDoctor(doc);
             System.Diagnostics.Debug.WriteLine(viewModel.doctor.Name);
             return;
 
 
 
         }
-        public void OnListViewItemSelected()
+        public void OnGridViewItemSelected(int id)
         {
-            if (ListViewItemSelected != null)
-                ListViewItemSelected(this, EventArgs.Empty);
+            if (GridViewItemSelected != null)
+                GridViewItemSelected(this, new GridViewClickedEventArgs {ID=id});
         }
 
-        private void HospList_ItemClick(object sender, ItemClickEventArgs e)
+        private async void HospList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            OnListViewItemSelected();
+            var x = e.ClickedItem as HospitalInDoctorDetails;
+            Frame parentFrame = Window.Current.Content as Frame;
+
+            MainPage mp = parentFrame.Content as MainPage;
+            StackPanel grid = mp.Content as StackPanel;
+            Frame my_frame = grid.FindName("myFrame") as Frame;
+
+            my_frame.Navigate(typeof(HospitalDetailView), (e.ClickedItem as HospitalInDoctorDetails).Hosp_ID);
         }
 
         private async void MyRating_ValueChanged(RatingControl sender, object args)

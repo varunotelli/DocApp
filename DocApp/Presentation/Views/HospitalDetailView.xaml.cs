@@ -53,15 +53,23 @@ namespace DocApp.Presentation.Views
 
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
-            var hosp = e1.Parameter as Hospital;
+            int hosp =(int) e1.Parameter;
             viewModel = new HospitalDetailViewModel();
-            await viewModel.GetHospital(hosp.ID);
+            await viewModel.GetHospital(hosp);
             //Bindings.Update();
             return;
           
         }
-        
 
-        
+        private void HospList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame parentFrame = Window.Current.Content as Frame;
+
+            MainPage mp = parentFrame.Content as MainPage;
+            StackPanel grid = mp.Content as StackPanel;
+            Frame my_frame = grid.FindName("myFrame") as Frame;
+
+            my_frame.Navigate(typeof(DoctorDetailView), (e.ClickedItem as DoctorInHospitalDetails).doc_id);
+        }
     }
 }

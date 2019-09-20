@@ -78,7 +78,7 @@
 
                 <GridView x:Name="HospList" ItemsSource="{x:Bind viewModel.Doctors, Mode=TwoWay}" IsItemClickEnabled="True"
                                     HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Enabled" 
-                          ScrollViewer.VerticalScrollBarVisibility="Visible"  >
+                          ScrollViewer.VerticalScrollBarVisibility="Visible"  ItemClick="HospList_ItemClick">
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
                             <Setter Property="Margin" Value="10,10"/>

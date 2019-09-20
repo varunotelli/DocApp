@@ -1,6 +1,7 @@
 ﻿using DocApp.Domain.UseCase;
 using DocApp.Models;
 using DocApp.Presentation.Callbacks;
+using DocApp.Presentation.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,12 +20,24 @@ namespace DocApp.Presentation.ViewModels
         public ObservableCollection<string> deptnames;
         public ObservableCollection<Hospital> hospitals;
         UseCaseBase getHosp;
+        UseCaseBase getDoc;
         public UseCaseBase getDepts;
         public HospitalSearchViewModel()
         {
             deptnames = new ObservableCollection<string>();
             hospitals = new ObservableCollection<Hospital>();
         }
+
+        public async void onGridViewItemClicked(object sender, GridViewClickedEventArgs args)
+        {
+
+        }
+
+        public async Task GetDoctor(int id)
+        {
+            
+        }
+
         public async Task GetDepartments()
         {
             getDepts = new GetDeptsUseCase();

@@ -8,6 +8,7 @@ namespace DocApp.Models
 {
     public class HospitalInDoctorDetails
     {
+        public int Hosp_ID { get; set; }
         public string Name { get; set; }
         protected string Image { get; set; }
         public string Location { get; set; }

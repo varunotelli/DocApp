@@ -30,7 +30,7 @@ namespace DocApp.Data
                                where docs.Any(d => d.ID.Equals(id) && d.ID == r.doc_id)
                                select new HospitalInDoctorDetails
                                {
-                                   
+                                   Hosp_ID=h.ID,
                                    Name = h.Name,
                                    Location=h.Location,
                                    Start_Time = r.start_time.Split(':')[0] + ":" + r.start_time.Split(':')[1],

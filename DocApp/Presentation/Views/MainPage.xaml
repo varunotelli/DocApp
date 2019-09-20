@@ -75,7 +75,7 @@
             <Popup x:Name="KeyWordBox" IsOpen="False" RelativePanel.Below="HospDocSuggest" Margin="0,0,135,0"
                    RelativePanel.AlignRightWithPanel="True" Width="467">
                 <ListBox Width="467" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" FontSize="14"
-                  ItemsSource="{x:Bind viewModel.keywords}"/>
+                  ItemsSource="{x:Bind viewModel.keywords}" SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged"/>
             </Popup>
             
 

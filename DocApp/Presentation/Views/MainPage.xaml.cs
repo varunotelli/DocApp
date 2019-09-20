@@ -180,5 +180,10 @@ namespace DocApp.Presentation.Views
         {
             KeyWordBox.IsOpen = false;
         }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

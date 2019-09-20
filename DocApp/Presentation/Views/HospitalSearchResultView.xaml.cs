@@ -1,4 +1,5 @@
-﻿using DocApp.Presentation.ViewModels;
+﻿using DocApp.Models;
+using DocApp.Presentation.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -66,6 +67,17 @@ namespace DocApp.Presentation.Views
             await viewModel.GetHospitalByDept(address.ToUpper(), index);
             //Bindings.Update();
             
+        }
+
+        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame parentFrame = Window.Current.Content as Frame;
+
+            MainPage mp = parentFrame.Content as MainPage;
+            StackPanel grid = mp.Content as StackPanel;
+            Frame my_frame = grid.FindName("myFrame") as Frame;
+
+            my_frame.Navigate(typeof(HospitalDetailView), (e.ClickedItem as Hospital).ID);
         }
     }
 }
