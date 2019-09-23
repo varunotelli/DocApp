@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -87,7 +88,7 @@ namespace DocApp.Presentation.Views
             StackPanel grid = mp.Content as StackPanel;
             Frame my_frame = grid.FindName("myFrame") as Frame;
 
-            my_frame.Navigate(typeof(DoctorDetailView), (e.ClickedItem as Doctor).ID);
+            my_frame.Navigate(typeof(DoctorDetailView), (e.ClickedItem as Doctor).ID, new SuppressNavigationTransitionInfo());
         }
 
         private void HospitalGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -98,7 +99,7 @@ namespace DocApp.Presentation.Views
             StackPanel grid = mp.Content as StackPanel;
             Frame my_frame = grid.FindName("myFrame") as Frame;
 
-            my_frame.Navigate(typeof(HospitalDetailView), (e.ClickedItem as Hospital).ID);
+            my_frame.Navigate(typeof(HospitalDetailView), (e.ClickedItem as Hospital).ID, new SuppressNavigationTransitionInfo());
         }
     }
 }

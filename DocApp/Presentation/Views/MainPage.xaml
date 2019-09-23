@@ -80,8 +80,8 @@
             
 
         </RelativePanel>
-        <ProgressRing x:Name="progring" VerticalAlignment="Center" HorizontalAlignment="Center" Height="70" Width="70" Foreground="White" 
-                      Margin="0,200,0,70"></ProgressRing>
+        <ProgressRing x:Name="progring" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100" Foreground="White" 
+                      Margin="0,200,0,100"></ProgressRing>
         <TextBlock x:Name="LoadText" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"
                    Foreground="White" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova">
             LOADING HEALTH AND WELLNESS JUST FOR YOU</TextBlock>

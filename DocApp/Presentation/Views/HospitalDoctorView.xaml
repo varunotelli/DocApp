@@ -8,7 +8,7 @@
     xmlns:uc="using:DocApp.Presentation.Views.Templates"
     xmlns:data="using:DocApp.Models"
     mc:Ignorable="d"
-    RequestedTheme="Dark"
+    RequestedTheme="Dark "
     >
     <Page.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

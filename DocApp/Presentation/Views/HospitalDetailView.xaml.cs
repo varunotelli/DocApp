@@ -16,12 +16,13 @@ using DocApp.Models;
 using DocApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Animation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 /**
  * @todo Add rating for hospital
  * @body Create a new usecase for updationg of ratings for hospital.
- */ 
+ */
 namespace DocApp.Presentation.Views
 {
     /// <summary>
@@ -70,7 +71,7 @@ namespace DocApp.Presentation.Views
             Frame my_frame = grid.FindName("myFrame") as Frame;
 
             my_frame.Navigate(typeof(DoctorDetailView), 
-                (e.ClickedItem as DoctorInHospitalDetails).doc_id);
+                (e.ClickedItem as DoctorInHospitalDetails).doc_id, new SuppressNavigationTransitionInfo());
         }
 
         private async void MyRating_ValueChanged(RatingControl sender, object args)

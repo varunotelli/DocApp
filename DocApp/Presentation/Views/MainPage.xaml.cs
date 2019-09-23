@@ -20,7 +20,8 @@ using Windows.UI.Xaml.Navigation;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-/*@todo Add click for listbox and redirect
+/*@todo Create profile page to track appointments
+ *@todo Add reschedule and cancel functionality
  */
 
 namespace DocApp.Presentation.Views
@@ -65,6 +66,8 @@ namespace DocApp.Presentation.Views
             viewModel = new AutoSuggestViewModel();
             viewModel.LocationChanged += this.onLocationChanged;
             progring.IsActive = true;
+            MyAutoSuggest.IsEnabled = false;
+            HospDocSuggest.IsEnabled = false;
             //myFrame.Navigate(typeof(MainPageLoadingScreenView));
         
         }
@@ -86,8 +89,9 @@ namespace DocApp.Presentation.Views
                 progring.IsActive = false;
                 progring.Visibility = Visibility.Collapsed;
                 LoadText.Visibility = Visibility.Collapsed;
-                
-                
+                MyAutoSuggest.IsEnabled = true;
+                HospDocSuggest.IsEnabled = true;
+
                 StatusText.Visibility = Visibility.Collapsed;
                 
             }
@@ -171,7 +175,7 @@ namespace DocApp.Presentation.Views
             {
                 MyAutoSuggest.Text = "";
                 HospDocSuggest.Text = "";
-                myFrame.GoBack();
+                myFrame.GoBack(new SuppressNavigationTransitionInfo());
             }
 
         }

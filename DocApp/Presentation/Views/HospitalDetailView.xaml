@@ -29,71 +29,73 @@
         </LinearGradientBrush>
     </Page.Background>
 
-    <Grid Margin="0,0,0,400">
-        <Grid HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <controls:DropShadowPanel BlurRadius="4" ShadowOpacity="0.5" Margin="10,10,10,10"
+    <Grid Margin="0,0,0,0">
+        <ScrollViewer Height="1000">
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <controls:DropShadowPanel BlurRadius="4" ShadowOpacity="0.5" Margin="10,10,10,10"
                           OffsetX="4" OffsetY="4" OffsetZ="0.2" Color="Black" VerticalAlignment="Top">
-                <Image Height="300" Width="300" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
+                    <Image Height="300" Width="300" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
                        VerticalAlignment="Top"/>
-            </controls:DropShadowPanel>
+                </controls:DropShadowPanel>
 
-            <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{x:Bind viewModel.hospital.Name,Mode=TwoWay}" 
+                <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{x:Bind viewModel.hospital.Name,Mode=TwoWay}" 
                                    FontSize="24" FontWeight="Bold" Margin="10,10"/>
-                    <RatingControl x:Name="DocRating" Value="{x:Bind viewModel.hospital.Rating,Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10"
+                        <RatingControl x:Name="DocRating" Value="{x:Bind viewModel.hospital.Rating,Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10"
                                        Caption="{x:Bind sys:String.Format('({0})',viewModel.hospital.Number_Of_Rating),Mode=OneWay}" 
                                        IsReadOnly="True">
+                            <RatingControl.Resources>
+                                <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
+
+                            </RatingControl.Resources>
+                        </RatingControl>
+                    </StackPanel>
+
+
+                    <TextBlock Text="{x:Bind viewModel.hospital.Location,Mode=TwoWay}" Style="{StaticResource TextBlockStyle}"/>
+                    <!--<TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', viewModel.doctor.Experience),Mode=OneWay}" 
+                                Style="{StaticResource TextBlockStyle}"/>-->
+
+                    <RatingControl x:Name="myRating"  HorizontalAlignment="Left" Margin="10,10"
+                               Caption="Your Rating" ValueChanged="MyRating_ValueChanged">
                         <RatingControl.Resources>
                             <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
 
                         </RatingControl.Resources>
                     </RatingControl>
-                </StackPanel>
-
-
-                <TextBlock Text="{x:Bind viewModel.hospital.Location,Mode=TwoWay}" Style="{StaticResource TextBlockStyle}"/>
-                <!--<TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', viewModel.doctor.Experience),Mode=OneWay}" 
-                                Style="{StaticResource TextBlockStyle}"/>-->
-
-                <RatingControl x:Name="myRating"  HorizontalAlignment="Left" Margin="10,10"
-                               Caption="Your Rating" ValueChanged="MyRating_ValueChanged">
-                    <RatingControl.Resources>
-                        <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
-
-                    </RatingControl.Resources>
-                </RatingControl>
-                <!--<TextBlock Text="{x:Bind viewModel.doctor.Description}" Margin="10,0" TextWrapping="WrapWholeWords"
+                    <!--<TextBlock Text="{x:Bind viewModel.doctor.Description}" Margin="10,0" TextWrapping="WrapWholeWords"
                            FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>-->
 
 
 
-                <TextBlock FontSize="24" FontWeight="Bold" Margin="10,10" 
+                    <TextBlock FontSize="24" FontWeight="Bold" Margin="10,10" 
                            FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
                            Text="{x:Bind sys:String.Format('Doctors in {0}',viewModel.hospital.Name),Mode=OneWay}"/>
 
-                <GridView x:Name="HospList" ItemsSource="{x:Bind viewModel.Doctors, Mode=TwoWay}" IsItemClickEnabled="True"
+                    <GridView x:Name="HospList" ItemsSource="{x:Bind viewModel.Doctors, Mode=TwoWay}" IsItemClickEnabled="True"
                                     HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Enabled" 
                           ScrollViewer.VerticalScrollBarVisibility="Visible"  ItemClick="HospList_ItemClick">
-                    <GridView.ItemContainerStyle>
-                        <Style TargetType="GridViewItem">
-                            <Setter Property="Margin" Value="10,10"/>
-                            <Setter Property="Padding" Value="10"/>
-                            <Setter Property="Height" Value="Auto"/>
-                        </Style>
-                    </GridView.ItemContainerStyle>
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="data:DoctorInHospitalDetails">
-                            <uc:DoctorsInHospitalTemplate/>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
-            </StackPanel>
+                        <GridView.ItemContainerStyle>
+                            <Style TargetType="GridViewItem">
+                                <Setter Property="Margin" Value="10,10"/>
+                                <Setter Property="Padding" Value="10"/>
+                                <Setter Property="Height" Value="Auto"/>
+                            </Style>
+                        </GridView.ItemContainerStyle>
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="data:DoctorInHospitalDetails">
+                                <uc:DoctorsInHospitalTemplate/>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </StackPanel>
 
-        </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>
