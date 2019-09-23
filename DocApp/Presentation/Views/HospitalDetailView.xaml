@@ -61,7 +61,7 @@
                                 Style="{StaticResource TextBlockStyle}"/>-->
 
                 <RatingControl x:Name="myRating"  HorizontalAlignment="Left" Margin="10,10"
-                               Caption="Your Rating">
+                               Caption="Your Rating" ValueChanged="MyRating_ValueChanged">
                     <RatingControl.Resources>
                         <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
 

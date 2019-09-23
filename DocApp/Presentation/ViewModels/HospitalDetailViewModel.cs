@@ -53,7 +53,7 @@ namespace DocApp.Presentation.ViewModels
 
         UseCaseBase getHospital;
         UseCaseBase getDoctorByHospital;
-
+        UseCaseBase updateHospital;
         public async Task GetHospital(int id)
         {
             Doctors = new ObservableCollection<DoctorInHospitalDetails>();
@@ -70,6 +70,13 @@ namespace DocApp.Presentation.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine("EXCEPTION=" + e.Message);
             }
+        }
+
+        public async Task UpdateHospitalRating(int id, double rating)
+        {
+            updateHospital = new UpdateHospitalRatingUseCase(id, rating);
+            updateHospital.SetCallBack(this);
+            await updateHospital.Execute();
         }
 
         public bool DataReadSuccess(Hospital h)

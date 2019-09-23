@@ -35,7 +35,7 @@ namespace DocApp.Presentation.Views
         public delegate void ListViewItemSelectedEventHandler(object source, EventArgs e);
         public event ListViewItemSelectedEventHandler ListViewItemSelected;
         public HospitalDetailViewModel viewModel;
-        
+        int hosp;
         public HospitalDetailView()
         {
             this.InitializeComponent();
@@ -53,7 +53,7 @@ namespace DocApp.Presentation.Views
 
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
-            int hosp =(int) e1.Parameter;
+            hosp =(int) e1.Parameter;
             viewModel = new HospitalDetailViewModel();
             await viewModel.GetHospital(hosp);
             //Bindings.Update();
@@ -71,6 +71,21 @@ namespace DocApp.Presentation.Views
 
             my_frame.Navigate(typeof(DoctorDetailView), 
                 (e.ClickedItem as DoctorInHospitalDetails).doc_id);
+        }
+
+        private async void MyRating_ValueChanged(RatingControl sender, object args)
+        {
+            if (sender.Value > 0)
+            {
+                Bindings.Update();
+                await viewModel.UpdateHospitalRating(hosp, (double)sender.Value);
+
+                Bindings.Update();
+                myRating.Caption = myRating.Value.ToString();
+
+
+
+            }
         }
     }
 }

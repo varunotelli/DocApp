@@ -141,6 +141,7 @@
     <Compile Include="Domain\Callbacks\IHospitalDetailCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalListCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalDoctorCallback.cs" />
+    <Compile Include="Domain\Callbacks\IHospitalUpdateCallback.cs" />
     <Compile Include="Domain\Callbacks\IKeyWordCallback.cs" />
     <Compile Include="Domain\Callbacks\ILocationCallBack.cs" />
     <Compile Include="Domain\DataContracts\IDepartmentList.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Domain\UseCase\GetKeyWordUseCase.cs" />
     <Compile Include="Domain\UseCase\GetLocationsUseCase.cs" />
     <Compile Include="Domain\UseCase\UpdateDoctorRatingUseCase.cs" />
+    <Compile Include="Domain\UseCase\UpdateHospitalRatingUseCase.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\KeyWord.cs" />
     <Compile Include="Models\Match.cs" />

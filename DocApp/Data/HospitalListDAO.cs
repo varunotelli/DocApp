@@ -133,6 +133,65 @@ namespace DocApp.Data
 
         }
 
+        public async Task UpdateHospitalRating(int id, double rating, IHospitalUpdateCallback hospitalCallback)
+        {
+
+            DBHandler.DBConnection();
+            try
+            {
+
+                await DBHandler.db.ExecuteAsync(String.Format("UPDATE HOSPITAL SET RATING=(((RATING*NUMBER_OF_RATING)+{0})/(NUMBER_OF_RATING+1))" +
+                "WHERE ID={1}", rating, id)
+                );
+                System.Diagnostics.Debug.WriteLine("Update rating dao Success");
+                await DBHandler.db.CloseAsync();
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Update rating dao exception=" + e.Message);
+                hospitalCallback.HospitalUpdateFail();
+
+            }
+            try
+            {
+                DBHandler.DBConnection();
+                await DBHandler.db.ExecuteAsync(String.Format("UPDATE HOSPITAL SET NUMBER_OF_RATING=NUMBER_OF_RATING+1 " +
+                    "WHERE ID={0}", id)
+                );
+                System.Diagnostics.Debug.WriteLine("Update number of rating dao Success");
+                await DBHandler.db.CloseAsync();
+            }
+            catch (Exception e)
+
+            {
+                System.Diagnostics.Debug.WriteLine("Update number of rating dao exception=" + e.Message);
+                hospitalCallback.HospitalUpdateFail();
+            }
+            try
+            {
+                DBHandler.DBConnection();
+                var results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
+                "WHERE ID={0}", id));
+
+                if (results != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Update Select dao Success");
+                    System.Diagnostics.Debug.WriteLine("Update Select rating=" + results[0].Number_Of_Rating);
+                    hospitalCallback.HospitalUpdateSuccess(results.First());
+                    await DBHandler.db.CloseAsync();
+                }
+                else
+                    hospitalCallback.HospitalUpdateFail();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Update Select dao exception=" + e.Message);
+                hospitalCallback.HospitalUpdateFail();
+            }
+            //await DoctorDBHandler.db.CloseAsync();
+        }
+
 
     }
 }
