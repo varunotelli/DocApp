@@ -13,7 +13,8 @@ namespace DocApp.Data
     {
         public async Task GetKeywordsAsync(IKeyWordCallback callback)
         {
-            DBHandler.DBConnection();
+            if (DBHandler.db == null)
+                DBHandler.DBConnection();
             List<KeyWord> results = new List<KeyWord>();
             try
             {

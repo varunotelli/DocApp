@@ -20,9 +20,10 @@ namespace DocApp.Data
             
             try
             {
-                
+
                 //var db = await dbHandler.DBConnection();
-                DBHandler.DBConnection();
+                if (DBHandler.db == null)
+                    DBHandler.DBConnection();
                 results = await DBHandler.db.QueryAsync<Hospital>(
                     "SELECT * FROM HOSPITAL ");
                 System.Diagnostics.Debug.WriteLine("results="+results.Count());
@@ -44,7 +45,8 @@ namespace DocApp.Data
         }
         public async Task GetHospitalByNameAsync(string name, string location, IHospitalListCallback hospitalCallback)
         {
-            DBHandler.DBConnection();
+            if (DBHandler.db == null)
+                DBHandler.DBConnection();
             var results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
                 "WHERE NAME LIKE'{0}%' AND LOCATION='{1}'",name,location));
             if (results != null && results.Count > 0)
@@ -60,7 +62,8 @@ namespace DocApp.Data
 
         public async Task GetHospitalByLocationAsync(string name, IHospitalListCallback hospitalCallback)
         {
-            DBHandler.DBConnection();
+            if (DBHandler.db == null)
+                DBHandler.DBConnection();
             var results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
                 "WHERE LOCATION='{0}'", name));
             if (results != null && results.Count > 0)
@@ -81,7 +84,8 @@ namespace DocApp.Data
             {
 
                 //var db = await dbHandler.DBConnection();
-                DBHandler.DBConnection();
+                if (DBHandler.db == null)
+                    DBHandler.DBConnection();
                 results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL where ID ={0}",id)
                     );
                 System.Diagnostics.Debug.WriteLine("results=" + results.Count());
@@ -103,7 +107,8 @@ namespace DocApp.Data
 
         public async Task GetHospitalByDept(string location,int dept_id, IHospitalListCallback hospitalCallback)
         {
-            DBHandler.DBConnection();
+            if (DBHandler.db == null)
+                DBHandler.DBConnection();
             List<Hospital> results = new List<Hospital>();
 
             try
@@ -136,7 +141,8 @@ namespace DocApp.Data
         public async Task UpdateHospitalRating(int id, double rating, IHospitalUpdateCallback hospitalCallback)
         {
 
-            DBHandler.DBConnection();
+            if (DBHandler.db == null)
+                DBHandler.DBConnection();
             try
             {
 
@@ -170,7 +176,8 @@ namespace DocApp.Data
             }
             try
             {
-                DBHandler.DBConnection();
+                if (DBHandler.db == null)
+                    DBHandler.DBConnection();
                 var results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
                 "WHERE ID={0}", id));
 

@@ -20,7 +20,8 @@ namespace DocApp.Data
             {
 
                 //var db = await dbHandler.DBConnection();
-                DBHandler.DBConnection();
+                if (DBHandler.db == null)
+                    DBHandler.DBConnection();
                 var docs = await DBHandler.db.Table<Doctor>().ToListAsync();
                 var roster = await DBHandler.db.Table<Roster>().ToListAsync();
                 var hosp = await DBHandler.db.Table<Hospital>().ToListAsync();

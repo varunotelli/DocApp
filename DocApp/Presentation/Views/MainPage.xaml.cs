@@ -102,7 +102,15 @@ namespace DocApp.Presentation.Views
         
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await viewModel.GetCurrentAddress();      
+            try
+            {
+                await viewModel.GetCurrentAddress();
+            }
+            catch(Exception _)
+            {
+                CoreApplication.Exit();
+            }
+              
         }
 
         

@@ -121,6 +121,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\AppointmentDAO.cs" />
     <Compile Include="Data\DepartmentDAO.cs" />
     <Compile Include="Data\DBHandler.cs" />
     <Compile Include="Data\DoctorHospitalDAO.cs" />
@@ -130,7 +131,9 @@
     <Compile Include="Data\KeywordDAO.cs" />
     <Compile Include="Data\LocationProxy.cs" />
     <Compile Include="Data\OpenAddressProxy.cs" />
+    <Compile Include="Data\RosterDAO.cs" />
     <Compile Include="Domain\Callbacks\IAddressCallBack.cs" />
+    <Compile Include="Domain\Callbacks\IAppointmentCallback.cs" />
     <Compile Include="Domain\Callbacks\IDepartmentListCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDoctorCallback.cs" />
     <Compile Include="Domain\Callbacks\IDoctorCountByDeptCallback.cs" />
@@ -144,6 +147,8 @@
     <Compile Include="Domain\Callbacks\IHospitalUpdateCallback.cs" />
     <Compile Include="Domain\Callbacks\IKeyWordCallback.cs" />
     <Compile Include="Domain\Callbacks\ILocationCallBack.cs" />
+    <Compile Include="Domain\Callbacks\IRosterCallback.cs" />
+    <Compile Include="Domain\DataContracts\IAppointment.cs" />
     <Compile Include="Domain\DataContracts\IDepartmentList.cs" />
     <Compile Include="Domain\DataContracts\IDoctorInHospitalList.cs" />
     <Compile Include="Domain\DataContracts\IDoctorList.cs" />
@@ -152,6 +157,8 @@
     <Compile Include="Domain\DataContracts\IHospitalList.cs" />
     <Compile Include="Domain\DataContracts\IKeywordList.cs" />
     <Compile Include="Domain\DataContracts\ILocationList.cs" />
+    <Compile Include="Domain\DataContracts\IRoster.cs" />
+    <Compile Include="Domain\UseCase\BookAppointmentUseCase.cs" />
     <Compile Include="Domain\UseCase\GetAddressUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDeptsUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDoctorByDeptLocationUseCase.cs" />
@@ -166,12 +173,15 @@
     <Compile Include="Domain\UseCase\GetHospitalUseCase.cs" />
     <Compile Include="Domain\UseCase\GetKeyWordUseCase.cs" />
     <Compile Include="Domain\UseCase\GetLocationsUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetRosterUseCase.cs" />
     <Compile Include="Domain\UseCase\UpdateDoctorRatingUseCase.cs" />
     <Compile Include="Domain\UseCase\UpdateHospitalRatingUseCase.cs" />
+    <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\KeyWord.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\RootLocationObject.cs" />
+    <Compile Include="Presentation\Callbacks\IAppBookingViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IDepartmentViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IDoctorDeptLocationViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IDoctorLocationPresenterCallBack.cs" />
@@ -179,9 +189,14 @@
     <Compile Include="Presentation\Callbacks\IHospitalByDeptViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalLocationPresenterCallBack.cs" />
     <Compile Include="Presentation\Callbacks\IKeywordViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IRosterViewCallback.cs" />
+    <Compile Include="Presentation\ViewModels\AppointmentBookingViewModel.cs" />
     <Compile Include="Presentation\ViewModels\AutoSuggestViewModel.cs" />
     <Compile Include="Presentation\ViewModels\DoctorSearchViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalSearchViewModel.cs" />
+    <Compile Include="Presentation\Views\AppointmentBookingView.xaml.cs">
+      <DependentUpon>AppointmentBookingView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\DoctorSearchResultView.xaml.cs">
       <DependentUpon>DoctorSearchResultView.xaml</DependentUpon>
     </Compile>
@@ -259,6 +274,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\400_placeholder.png" />
+    <Content Include="Assets\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\BadgeLogo.scale-125.png" />
+    <Content Include="Assets\BadgeLogo.scale-150.png" />
+    <Content Include="Assets\BadgeLogo.scale-200.png" />
+    <Content Include="Assets\BadgeLogo.scale-400.png" />
+    <Content Include="Assets\Docapp2.scale-100.png" />
+    <Content Include="Assets\Docapp2.scale-200.png" />
     <Content Include="Assets\doctor.jpg" />
     <Content Include="Assets\hospital.jpg" />
     <Content Include="Properties\Default.rd.xml" />
@@ -275,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Presentation\Views\AppointmentBookingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Presentation\Views\DoctorSearchResultView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -19,7 +19,8 @@ namespace DocApp.Data
             {
 
                 //var db = await dbHandler.DBConnection();
-                DBHandler.DBConnection();
+                if (DBHandler.db == null)
+                    DBHandler.DBConnection();
                 results = await DBHandler.db.QueryAsync<Department>(
                     "SELECT * FROM DEPARTMENT ");
                 System.Diagnostics.Debug.WriteLine("results=" + results.Count());

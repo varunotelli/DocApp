@@ -92,5 +92,17 @@ namespace DocApp.Presentation.Views
             }
             
         }
+
+        private void BookButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            Frame parentFrame = Window.Current.Content as Frame;
+
+            MainPage mp = parentFrame.Content as MainPage;
+            StackPanel grid = mp.Content as StackPanel;
+            Frame my_frame = grid.FindName("myFrame") as Frame;
+
+            my_frame.Navigate(typeof(AppointmentBookingView), id, new SuppressNavigationTransitionInfo());
+        }
     }
 }

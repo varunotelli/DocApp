@@ -149,7 +149,7 @@
                            FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
 
                     <Button Style="{StaticResource ButtonStyle1}" x:Name="BookButton"  Content="BOOK" Margin="10,10" 
-                           FontStretch="ExtraExpanded" 
+                           FontStretch="ExtraExpanded"  Click="BookButton_Click"
                             FontSize="12"/>
 
 

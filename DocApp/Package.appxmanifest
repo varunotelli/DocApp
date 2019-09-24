@@ -16,7 +16,7 @@
   <Properties>
     <DisplayName>DocApp</DisplayName>
     <PublisherDisplayName>varun-9056</PublisherDisplayName>
-    <Logo>Assets\StoreLogo.png</Logo>
+    <Logo>Assets\Docapp2.png</Logo>
   </Properties>
 
   <Dependencies>
@@ -38,7 +38,7 @@
         Description="DocApp"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\DocApp2.png"  BackgroundColor="#121212"/>
       </uap:VisualElements>
     </Application>
   </Applications>
