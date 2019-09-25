@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -122,6 +123,13 @@ namespace DocApp.Presentation.Views
             
             
             await viewModel.BookAppointment(1, doc_id, hosp_id, app_date, time);
+            Frame parentFrame = Window.Current.Content as Frame;
+
+            MainPage mp1 = parentFrame.Content as MainPage;
+            StackPanel grid = mp1.Content as StackPanel;
+
+            Frame my_frame = grid.FindName("myFrame") as Frame;
+            my_frame.Navigate(typeof(AppointmentsDisplayView), new SuppressNavigationTransitionInfo());
 
         }
 

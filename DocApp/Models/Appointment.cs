@@ -13,8 +13,9 @@ namespace DocApp.Models
         public int ID { get; set; }
         public int DOC_ID { get; set; }
         public int HOS_ID { get; set; }
-        public DateTime APP_DATE { get; set; }
-        public DateTime start_time { get; set; }
+        public int PATIENT_ID { get; set; }
+        public string APP_DATE { get; set; }
+        public string start_time { get; set; }
         
     }
 }

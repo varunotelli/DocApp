@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DocApp.Domain.Callbacks
 {
-    public interface IAppointmentCallback
+    public interface IAppointmentListCallback
     {
-        bool AppReadSuccess(Appointment appointment);
-        bool AppReadFail();
+        bool GetAppSuccess(List<AppointmentDetails> appointments);
+        bool GetAppFail();
     }
 }

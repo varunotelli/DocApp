@@ -13,7 +13,7 @@ namespace DocApp.Data
     {
         
         public async Task AddAppointment(int p_id, int doc_id, int hosp_id, string app_date, string start, 
-            IAppointmentCallback callback)
+            IBookAppointmentCallback callback)
         {
             if (DBHandler.db == null)
                 DBHandler.DBConnection();
@@ -57,5 +57,7 @@ namespace DocApp.Data
                 callback.AppReadFail();
             }
         }
+
+       
     }
 }

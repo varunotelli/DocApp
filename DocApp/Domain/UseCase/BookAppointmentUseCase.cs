@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DocApp.Domain.UseCase
 {
-    public class BookAppointmentUseCase : UseCaseBase, IAppointmentCallback
+    public class BookAppointmentUseCase : UseCaseBase, IBookAppointmentCallback
     {
         IAppBookingViewCallback viewCallback;
         Appointment appointment;
