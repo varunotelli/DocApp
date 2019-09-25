@@ -44,13 +44,14 @@ namespace DocApp.Data
 
 
                                }
-                    );
+                    ).Distinct();
 
                 foreach (var x in details)
                     results.Add(x);
                 //System.Diagnostics.Debug.WriteLine("QUERY COUNT=" + results[0].fees);
                 if (results != null && results.Count() > 0)
                 {
+                    results = results.GroupBy(d => d.doc_id).Select(g => g.FirstOrDefault()).ToList();
                     doctorHospitalCallBack.ReadSuccess(results);
                     await DBHandler.db.CloseAsync();
                 }

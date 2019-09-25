@@ -283,6 +283,7 @@
     <Content Include="Assets\Docapp2.scale-200.png" />
     <Content Include="Assets\doctor.jpg" />
     <Content Include="Assets\hospital.jpg" />
+    <Content Include="Assets\ProximaNova-Extrabld.ttf" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

@@ -22,7 +22,7 @@
         <StackPanel>
             <Image Source="ms-appx:///Assets/400_placeholder.png" Width="200" Height="200" Stretch="UniformToFill"/>
             <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,5" FontSize="14" FontWeight="ExtraBold"
-                   Foreground="White" FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
+                   Foreground="White" FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
             
             <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"
                        TextTrimming="CharacterEllipsis"/>

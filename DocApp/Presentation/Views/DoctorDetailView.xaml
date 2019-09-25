@@ -106,8 +106,8 @@
         </LinearGradientBrush>
     </Page.Background>
 
-    <Grid Margin="0,0,0,0">
-        <ScrollViewer Height="1000">
+    <Grid Margin="0,0,0,100">
+        <ScrollViewer Height="750">
             <Grid HorizontalAlignment="Left">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -122,7 +122,7 @@
                     <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}', viewModel.doctor.Name),Mode=OneWay}" 
-                                   FontSize="24" FontWeight="Bold" Margin="10,10"/>
+                                   FontSize="24" FontWeight="Bold" Margin="10,10" FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
                     <RatingControl x:Name="DocRating" Value="{x:Bind viewModel.doctor.Rating,Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10"
                                        Caption="{x:Bind sys:String.Format('({0})',viewModel.doctor.Number_of_Rating),Mode=OneWay}" 
                                        IsReadOnly="True">
@@ -134,7 +134,8 @@
                 </StackPanel>
 
 
-                <TextBlock Text="{x:Bind viewModel.doctor.Designation,Mode=OneWay}" Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Text="{x:Bind viewModel.doctor.Designation,Mode=OneWay}" Style="{StaticResource TextBlockStyle}"
+                           />
                 <TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', viewModel.doctor.Experience),Mode=OneWay}" 
                                 Style="{StaticResource TextBlockStyle}"/>
                 
@@ -145,19 +146,19 @@
 
                     </RatingControl.Resources>
                 </RatingControl>
-                <TextBlock Text="{x:Bind viewModel.doctor.Description}" Margin="10,0" TextWrapping="WrapWholeWords"
+                <TextBlock Text="{x:Bind viewModel.doctor.Description,Mode=OneWay}" Margin="10,0" TextWrapping="WrapWholeWords"
                            FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
 
                     <Button Style="{StaticResource ButtonStyle1}" x:Name="BookButton"  Content="BOOK" Margin="10,10" 
-                           FontStretch="ExtraExpanded"  Click="BookButton_Click"
+                           FontStretch="ExtraExpanded"  Click="BookButton_Click" FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
                             FontSize="12"/>
 
 
                     <TextBlock FontSize="24" FontWeight="Bold" Margin="10,10" 
                            FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
-                           Text="{x:Bind sys:String.Format('Places where Dr. {0} visits',viewModel.doctor.Name)}"/>
+                           Text="{x:Bind sys:String.Format('Places where Dr. {0} visits',viewModel.doctor.Name),Mode=OneWay}"/>
 
-                <GridView x:Name="HospList" ItemsSource="{x:Bind viewModel.hospitals}" IsItemClickEnabled="True"
+                <GridView x:Name="HospList" ItemsSource="{x:Bind viewModel.hospitals,Mode=OneWay}" IsItemClickEnabled="True"
                                           ItemClick="HospList_ItemClick">
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">

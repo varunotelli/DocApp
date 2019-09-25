@@ -43,13 +43,15 @@ namespace DocApp.Data
 
 
                                }
-                    );
+                    ).Distinct();
 
                 foreach (var x in details)
                     results.Add(x);
 
+
                 if (results != null)
                 {
+                    results = results.GroupBy(h => h.Hosp_ID).Select(g => g.FirstOrDefault()).ToList();
                     HospitalDoctorCallBack.ReadSuccess(results);
                     await DBHandler.db.CloseAsync();
                 }

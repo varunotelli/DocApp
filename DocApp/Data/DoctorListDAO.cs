@@ -126,7 +126,7 @@ namespace DocApp.Data
             }
             catch (Exception e)
             {
-               // System.Diagnostics.Debug.WriteLine("Update rating dao exception=" + e.Message);
+                System.Diagnostics.Debug.WriteLine("Update rating dao exception=" + e.Message);
                 doctorCallback.DoctorUpdateFail();
 
             }
@@ -143,7 +143,7 @@ namespace DocApp.Data
             catch(Exception e)
 
             {
-                //System.Diagnostics.Debug.WriteLine("Update number of rating dao exception=" + e.Message);
+                System.Diagnostics.Debug.WriteLine("Update number of rating dao exception=" + e.Message);
                 doctorCallback.DoctorUpdateFail();
             }
             try
@@ -165,7 +165,7 @@ namespace DocApp.Data
             }
             catch(Exception e)
             {
-                //System.Diagnostics.Debug.WriteLine("Update Select dao exception=" + e.Message);
+                System.Diagnostics.Debug.WriteLine("Update Select dao exception=" + e.Message);
                 doctorCallback.DoctorUpdateFail();
             }
             //await DoctorDBHandler.db.CloseAsync();

@@ -4,6 +4,7 @@ using DocApp.Presentation.Callbacks;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace DocApp.Presentation.ViewModels
 {
     public class AppointmentBookingViewModel: IAppBookingViewCallback, IDoctorDetailViewCallBack, IHospitalDoctorViewCallBack,
-        IRosterViewCallback
+        IRosterViewCallback, INotifyPropertyChanged
     {
         UseCaseBase bookApp;
         UseCaseBase getDoctor;
@@ -21,7 +22,31 @@ namespace DocApp.Presentation.ViewModels
         public ObservableCollection<Roster> timeslots;
         public bool flag = false;
         int doc;
-        public string doc_name;
+        string d;
+        public string doc_name
+        {
+            get
+            {
+                return this.d;
+            }
+            set
+            {
+                this.d = value;
+                RaisePropertyChanged("doc_name");
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+
+
+            }
+        }
+
+
         public AppointmentBookingViewModel(int n)
         {
             this.timeslots = new ObservableCollection<Roster>();

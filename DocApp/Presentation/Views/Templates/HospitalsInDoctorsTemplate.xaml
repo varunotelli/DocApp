@@ -12,7 +12,7 @@
 
     <StackPanel>
         <Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" />
-        <TextBlock FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova" FontSize="14" TextWrapping="NoWrap" Margin="10,10"
+        <TextBlock FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova" FontSize="14" TextWrapping="NoWrap" Margin="10,10"
                    TextTrimming="CharacterEllipsis">
             <Run Text="{x:Bind hospital.Name}"/>
             <Run Text="-"/>

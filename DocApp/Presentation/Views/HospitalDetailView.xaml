@@ -44,7 +44,7 @@
 
                 <StackPanel HorizontalAlignment="Stretch" Grid.Column="1">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{x:Bind viewModel.hospital.Name,Mode=TwoWay}" 
+                        <TextBlock Text="{x:Bind viewModel.hospital.Name,Mode=TwoWay}" FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"
                                    FontSize="24" FontWeight="Bold" Margin="10,10"/>
                         <RatingControl x:Name="DocRating" Value="{x:Bind viewModel.hospital.Rating,Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10"
                                        Caption="{x:Bind sys:String.Format('({0})',viewModel.hospital.Number_Of_Rating),Mode=OneWay}" 
