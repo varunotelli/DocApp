@@ -34,6 +34,11 @@
 
                 </RatingControl.Resources>
             </RatingControl>
+            <TextBlock Style="{StaticResource TextBlockStyle}">
+                <Run Text="{x:Bind doctor.Start_Time}"/>
+                <Run Text="-"/>
+                <Run Text="{x:Bind doctor.End_Time}"/>
+            </TextBlock>
             <TextBlock Text="{x:Bind sys:String.Format('Rs.{0}', doctor.fees)}" 
                    Style="{StaticResource TextBlockStyle}"/>
         </StackPanel>

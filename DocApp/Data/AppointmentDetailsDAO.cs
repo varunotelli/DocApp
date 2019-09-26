@@ -39,7 +39,10 @@ namespace DocApp.Data
                                }
                     ).OrderBy(x=>x.app_date);
                 foreach (var x in details)
+                {
+                    x.app_date = DateTime.ParseExact(x.app_date, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
                     results.Add(x);
+                }
                 if (results != null)
                     callback.GetAppSuccess(results);
                 else

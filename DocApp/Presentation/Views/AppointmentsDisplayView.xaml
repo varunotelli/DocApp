@@ -6,29 +6,60 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:DocApp.Models"
+    xmlns:uc="using:DocApp.Presentation.Views.Templates"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    RequestedTheme="Dark">
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#2A2A2A" Offset="0.007"/>
+            <GradientStop Color="#080808" Offset="0.548"/>
+        </LinearGradientBrush>
+    </Page.Background>
+    <Page.Resources>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
+        </Style>
+    </Page.Resources>
+    
     <Grid>
-        <StackPanel>
-            <!--<Grid>
+        
+            <Grid Margin="10,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
+                <TextBlock Text="DOCTOR NAME"/>
+                <TextBlock Text="PLACE" Grid.Column="1"/>
+                <TextBlock Text="LOCATION" Grid.Column="2"/>
+                <TextBlock Text="DATE" Grid.Column="3"/>
+                <TextBlock Text="TIME" Grid.Column="4"/>
+                <ListView ItemsSource="{x:Bind viewModel.apps, Mode=OneWay}" Height="650" 
+                          ScrollViewer.VerticalScrollBarVisibility="Visible"
+                          HorizontalAlignment="Stretch" Grid.ColumnSpan="5" Margin="0,30" ScrollViewer.VerticalScrollMode="Enabled">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,0.5"/>
+                        <Setter Property="BorderBrush" Value="#303030"/>
 
-            </Grid>-->
-            <ListView ItemsSource="{x:Bind viewModel.apps}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="data:AppointmentDetails">
-                        <TextBlock Text="{x:Bind app_date}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+
+                    </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:AppointmentDetails">
+                            <uc:AppointmentTemplate HorizontalAlignment="Stretch" Width="1460"/>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+            </Grid>
+        
+        
     </Grid>
+
 </Page>

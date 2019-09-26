@@ -246,6 +246,9 @@
     <Compile Include="Presentation\Views\MainPageLoadingScreenView.xaml.cs">
       <DependentUpon>MainPageLoadingScreenView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Views\Templates\AppointmentTemplate.xaml.cs">
+      <DependentUpon>AppointmentTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\Templates\ComboBoxControl.xaml.cs">
       <DependentUpon>ComboBoxControl.xaml</DependentUpon>
     </Compile>
@@ -341,6 +344,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\MainPageLoadingScreenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\Templates\AppointmentTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -26,6 +26,12 @@
                 <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
             </RatingControl.Resources>
         </RatingControl>
+        <TextBlock FontSize="12" Margin="10,0"
+                   FontFamily="ms-appx:///Assets/ProximaNova-Regular#Proxima Nova">
+                <Run Text="{x:Bind hospital.Start_Time}"/>
+                <Run Text="-"/>
+                <Run Text="{x:Bind hospital.End_Time}"/>
+        </TextBlock>
         <TextBlock Text="{x:Bind sys:String.Format('Rs.{0}',hospital.Fees)}" FontSize="12" Margin="10,0"
                    FontFamily="ms-appx:///Assets/ProximaNova-Regular#Proxima Nova"/>
     </StackPanel>
