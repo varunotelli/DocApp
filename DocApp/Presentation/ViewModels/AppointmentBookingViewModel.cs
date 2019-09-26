@@ -18,6 +18,10 @@ namespace DocApp.Presentation.ViewModels
         UseCaseBase getDoctor;
         UseCaseBase getHosps;
         UseCaseBase getTimeSlots;
+        public delegate void InsertSuccessEventHandler(object source, EventArgs e);
+        public event InsertSuccessEventHandler InsertSuccess;
+        public delegate void InsertFailEventHandler(object source, EventArgs e);
+        public event InsertFailEventHandler InsertFail;
         public ObservableCollection<HospitalInDoctorDetails> hosps;
         public ObservableCollection<Roster> timeslots;
         public bool flag = false;
@@ -46,6 +50,16 @@ namespace DocApp.Presentation.ViewModels
             }
         }
 
+        public void onInsertSuccess()
+        {
+            if (InsertSuccess != null)
+                InsertSuccess(this, EventArgs.Empty);
+        }
+        public void onInsertFail()
+        {
+            if (InsertFail != null)
+                InsertFail(this, EventArgs.Empty);
+        }
 
         public AppointmentBookingViewModel(int n)
         {
@@ -97,6 +111,7 @@ namespace DocApp.Presentation.ViewModels
 
         public bool AppViewReadFail()
         {
+            onInsertFail();
             flag = false;
             System.Diagnostics.Debug.WriteLine("Appointment insert view fail");
             return false;
@@ -104,6 +119,7 @@ namespace DocApp.Presentation.ViewModels
 
         public bool AppViewReadSuccess(Appointment appointment)
         {
+            onInsertSuccess();
             flag = true;
             System.Diagnostics.Debug.WriteLine("Appointment insert view success");
             return true;

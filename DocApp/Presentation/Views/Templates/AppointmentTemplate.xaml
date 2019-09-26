@@ -26,9 +26,9 @@
         </Grid.ColumnDefinitions>
         <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',app.doc_name)}" Grid.Column="0"/>
         <TextBlock Text="{x:Bind app.hosp_name}" Grid.Column="1"/>
-        <TextBlock Text="{x:Bind app.location}" Grid.Column="2" Margin="10,0"/>
-        <TextBlock Text="{x:Bind app.app_date}" Margin="10,0" Grid.Column="3"/>
-        <TextBlock Text="{x:Bind app.Timeslot}" Grid.Column="4" Margin="20,0"/>
+        <TextBlock Text="{x:Bind app.location}" Grid.Column="2"/>
+        <TextBlock Text="{x:Bind app.app_date}" Grid.Column="3"/>
+        <TextBlock Text="{x:Bind app.Timeslot}" Grid.Column="4"/>
 
     </Grid>
 </UserControl>

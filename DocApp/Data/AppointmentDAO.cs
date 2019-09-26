@@ -23,7 +23,7 @@ namespace DocApp.Data
                 await DBHandler.db.ExecuteAsync(String.Format("INSERT INTO APPOINTMENT (PATIENT_ID,DOC_ID, HOS_ID, APP_DATE, " +
                     "START_TIME) VALUES({0},{1},{2},'{3}','{4}')", p_id, doc_id, hosp_id, app_date, start)
                 ); 
-                System.Diagnostics.Debug.WriteLine("Appointment insert dao Success");
+                //System.Diagnostics.Debug.WriteLine("Appointment insert dao Success");
                 await DBHandler.db.CloseAsync();
 
             }
@@ -31,6 +31,7 @@ namespace DocApp.Data
             {
                 System.Diagnostics.Debug.WriteLine("Appointment insert dao exception=" + e.Message);
                 callback.AppReadFail();
+                return;
 
             }
             
@@ -41,7 +42,7 @@ namespace DocApp.Data
                 var results = await DBHandler.db.QueryAsync<Appointment>("SELECT * FROM APPOINTMENT " +
                 "ORDER BY ID DESC LIMIT 1");
 
-                if (results != null)
+                if (results != null && results.Count()>0)
                 {
                     System.Diagnostics.Debug.WriteLine("appointment Select dao Success");
 

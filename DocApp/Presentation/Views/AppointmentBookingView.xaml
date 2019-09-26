@@ -390,6 +390,8 @@
     <Grid Margin="0,100">
         <StackPanel HorizontalAlignment="Center">
             <TextBlock Text="Book Appointment" FontSize="60" FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
+            <TextBlock x:Name="InsertFail" Visibility="Collapsed" Text="Appointment already booked at that time." Foreground="Red"
+                     FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" FontSize="20"  TextAlignment="Center"/>
             <TextBox  IsEnabled="False" HorizontalAlignment="Center" Text="{x:Bind sys:String.Format('Dr. {0}',viewModel.doc_name), Mode=OneWay}"
                      FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" FontSize="20"
                      Width="300" Margin="10,30" Background="White"/>

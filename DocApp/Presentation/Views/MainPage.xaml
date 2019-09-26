@@ -37,6 +37,7 @@
             
 
         </Style>
+           
         </ResourceDictionary>
 
     </Page.Resources>
@@ -66,18 +67,22 @@
 
             
             <AutoSuggestBox x:Name="HospDocSuggest" PlaceholderText="Search for Doctor or Hospital" TextChanged="HospDocSuggest_TextChanged" 
-                    TextBoxStyle="{StaticResource AutoboxStyle}" RelativePanel.AlignRightWithPanel="True" GotFocus="HospDocSuggest_GotFocus"
-                QueryIcon="Find" ItemContainerStyle="{StaticResource AutoListStyle}" Width="467" Margin="0,5,135,0" LostFocus="HospDocSuggest_LostFocus"/>
+                    TextBoxStyle="{StaticResource AutoboxStyle}" RelativePanel.RightOf="MyAutoSuggest" GotFocus="HospDocSuggest_GotFocus"
+                QueryIcon="Find" ItemContainerStyle="{StaticResource AutoListStyle}" Width="467" Margin="0,5,10,0" LostFocus="HospDocSuggest_LostFocus"/>
             <!--<ComboBox x:Name="DeptComboBox" PlaceholderText="All Departments" RelativePanel.LeftOf="HospDocSuggest" Margin="0,5"
                       Height="40" BorderThickness="0,0,1.5,0" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"
                  AllowDrop="True" FontSize="14" ItemsSource="{x:Bind viewModel.depts}" 
                       DropDownOpened="Comboboxitem_DropDownOpened"/>-->
-            <Popup x:Name="KeyWordBox" IsOpen="False" RelativePanel.Below="HospDocSuggest" Margin="0,0,135,0"
-                   RelativePanel.AlignRightWithPanel="True" Width="467">
+            <Popup x:Name="KeyWordBox" IsOpen="False" RelativePanel.Below="HospDocSuggest" Margin="0,0,10,0" RelativePanel.RightOf="MyAutoSuggest"
+                   Width="467">
                 <ListBox Width="467" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" FontSize="14"
                   ItemsSource="{x:Bind viewModel.keywords}" SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged"/>
             </Popup>
-            
+            <HyperlinkButton Name="AppBtn" BorderThickness="0,0,0,1" Padding="0" Click="AppBtn_Click"
+                             Margin="0,15,30,-3" RelativePanel.AlignRightWithPanel="True">
+                <TextBlock Text="Your Appointments" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" 
+                           FontSize="16"/>
+            </HyperlinkButton>
 
         </RelativePanel>
         <ProgressRing x:Name="progring" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100" Foreground="White" 

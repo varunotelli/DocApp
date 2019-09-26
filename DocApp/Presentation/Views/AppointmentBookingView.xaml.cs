@@ -37,6 +37,7 @@ namespace DocApp.Presentation.Views
             TimeSlotBox.IsEnabled = false;
             Appointment_Date.MinDate = DateTimeOffset.Now;
             BookButton.IsEnabled = (HospCombo.SelectedIndex != -1) && (Appointment_Date.Date != null) && (TimeSlotBox.SelectedIndex != -1);
+            
             Bindings.Update();
 
         }
@@ -46,6 +47,8 @@ namespace DocApp.Presentation.Views
 
             doc_id = (int)e1.Parameter;
             viewModel = new AppointmentBookingViewModel(doc_id);
+            viewModel.InsertSuccess += this.onInsertSuccess;
+            viewModel.InsertFail += this.onInsertFail;
             await viewModel.GetDoctor(doc_id);
             Bindings.Update();
 
@@ -118,11 +121,8 @@ namespace DocApp.Presentation.Views
             BookButton.IsEnabled = (HospCombo.SelectedIndex != -1) && (Appointment_Date.Date != null) && (TimeSlotBox.SelectedIndex != -1);
         }
 
-        private async void BookButton_Click(object sender, RoutedEventArgs e)
+        public void onInsertSuccess(object source, EventArgs args)
         {
-            
-            
-            await viewModel.BookAppointment(1, doc_id, hosp_id, app_date, time);
             Frame parentFrame = Window.Current.Content as Frame;
 
             MainPage mp1 = parentFrame.Content as MainPage;
@@ -130,6 +130,21 @@ namespace DocApp.Presentation.Views
 
             Frame my_frame = grid.FindName("myFrame") as Frame;
             my_frame.Navigate(typeof(AppointmentsDisplayView), new SuppressNavigationTransitionInfo());
+        }
+
+        public void onInsertFail(object source, EventArgs args)
+        {
+            InsertFail.Visibility = Visibility.Visible;
+        }
+
+        private async void BookButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            InsertFail.Visibility = Visibility.Collapsed;
+            await viewModel.BookAppointment(1, doc_id, hosp_id, app_date, time);
+            
+            
+                
 
         }
 

@@ -167,7 +167,7 @@
                         <TextBlock Text="Hospitals" FontWeight="Bold" FontSize="24"
                                    FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
                     </HyperlinkButton>
-                    <HyperlinkButton BorderThickness="0,0,0,1" Padding="0" HorizontalAlignment="Right" Margin="0,0,0,-5">
+                    <HyperlinkButton BorderThickness="0,0,0,1" Padding="0" HorizontalAlignment="Right" Margin="0,0,0,-3">
                         <TextBlock Text="SEE ALL" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
                     </HyperlinkButton>
                 </Grid>

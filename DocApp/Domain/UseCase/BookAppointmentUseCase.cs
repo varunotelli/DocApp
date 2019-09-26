@@ -43,6 +43,7 @@ namespace DocApp.Domain.UseCase
             catch(Exception e1)
             {
                 System.Diagnostics.Debug.WriteLine("appointment Usecase exception="+e1.Message);
+                viewCallback.AppViewReadFail();
             }
             if (appointment != null)
                 viewCallback.AppViewReadSuccess(appointment);

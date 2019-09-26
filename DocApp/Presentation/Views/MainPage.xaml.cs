@@ -22,6 +22,9 @@ using Windows.UI.Xaml.Navigation;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 /*@todo Create profile page to track appointments
  *@todo Add reschedule and cancel functionality
+ *@todo Display number of slots available in a session
+ * @todo Remove booking page and create as popup
+ * @todo Remove empty spaces in UI
  */
 
 namespace DocApp.Presentation.Views
@@ -68,6 +71,7 @@ namespace DocApp.Presentation.Views
             progring.IsActive = true;
             MyAutoSuggest.IsEnabled = false;
             HospDocSuggest.IsEnabled = false;
+            AppBtn.IsEnabled = false;
             //myFrame.Navigate(typeof(MainPageLoadingScreenView));
         
         }
@@ -91,7 +95,7 @@ namespace DocApp.Presentation.Views
                 LoadText.Visibility = Visibility.Collapsed;
                 MyAutoSuggest.IsEnabled = true;
                 HospDocSuggest.IsEnabled = true;
-
+                AppBtn.IsEnabled = true;
                 StatusText.Visibility = Visibility.Collapsed;
                 
             }
@@ -228,6 +232,11 @@ namespace DocApp.Presentation.Views
                     index = (sender as ListBox).SelectedIndex
                 });
             }
+        }
+
+        private void AppBtn_Click(object sender, RoutedEventArgs e)
+        {
+            myFrame.Navigate(typeof(AppointmentsDisplayView));
         }
     }
 }
