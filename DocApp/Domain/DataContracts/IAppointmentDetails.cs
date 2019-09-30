@@ -10,5 +10,6 @@ namespace DocApp.Domain.DataContracts
     public interface IAppointmentDetails
     {
         Task GetAppointment(int id, IAppointmentListCallback callback);
+        Task GetAppointmentByID(string app_date, string time, IAppointmentCallback callback);
     }
 }

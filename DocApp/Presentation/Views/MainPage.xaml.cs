@@ -185,8 +185,7 @@ namespace DocApp.Presentation.Views
 
             if (myFrame.CanGoBack)
             {
-                MyAutoSuggest.Text = "";
-                HospDocSuggest.Text = "";
+                
                 myFrame.GoBack(new SuppressNavigationTransitionInfo());
             }
 

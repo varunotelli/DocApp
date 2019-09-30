@@ -121,8 +121,14 @@
     </Page.Resources>
     
     <Grid>
-        
-            <Grid Margin="50,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Your Appointments" FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"
+                   FontSize="40" Margin="50,10,10,50"/>
+
+        <Grid Margin="50,0" Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="*"/>
@@ -135,7 +141,7 @@
             <TextBlock Text="LOCATION" Grid.Column="2" Style="{StaticResource TextBlockStyle}" Margin="15,0"/>
             <TextBlock Text="DATE" Grid.Column="3" Style="{StaticResource TextBlockStyle}" Margin="35,0"/>
             <TextBlock Text="TIME" Grid.Column="4" Style="{StaticResource TextBlockStyle}" Margin="35,0"/>
-            <ListView ItemsSource="{x:Bind viewModel.apps, Mode=OneWay}" Height="650" SelectionMode="Single"
+            <ListView ItemsSource="{x:Bind viewModel.apps, Mode=OneWay}" Height="600" SelectionMode="Single"
                           ScrollViewer.VerticalScrollBarVisibility="Auto" BorderThickness="0,0.5,0,0" 
                           BorderBrush="#303030" ItemContainerStyle="{StaticResource ListViewItemStyle1}"
                           HorizontalAlignment="Stretch" Grid.ColumnSpan="5" Margin="0,20" 

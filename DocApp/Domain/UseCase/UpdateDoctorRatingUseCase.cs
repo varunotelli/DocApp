@@ -15,7 +15,7 @@ namespace DocApp.Domain.UseCase
     {
         int id;
         double rating = 0;
-        IDoctorDetailViewCallBack doctorDetailViewCallBack;
+        IDoctorRatingUpdateViewCallback doctorDetailViewCallBack;
         Doctor doctor = new Doctor();
         public UpdateDoctorRatingUseCase(int x,double r)
         {
@@ -27,7 +27,7 @@ namespace DocApp.Domain.UseCase
 
         public override void SetCallBack<P>(P p)
         {
-            this.doctorDetailViewCallBack = (IDoctorDetailViewCallBack)p;
+            this.doctorDetailViewCallBack = (IDoctorRatingUpdateViewCallback)p;
         }
 
         internal override async Task Action()
@@ -42,9 +42,9 @@ namespace DocApp.Domain.UseCase
                 System.Diagnostics.Debug.WriteLine("DB UPDATE EXCEPTION" + e.Message);
             }
             if (doctor != null)
-                doctorDetailViewCallBack.DataReadSuccess(doctor);
+                doctorDetailViewCallBack.DoctorUpdateSuccess(doctor);
             else
-                doctorDetailViewCallBack.DataReadFail();
+                doctorDetailViewCallBack.DoctorUpdateFail();
 ;        }
         public bool DoctorUpdateFail()
         {

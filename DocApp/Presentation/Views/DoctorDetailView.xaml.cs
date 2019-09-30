@@ -1,5 +1,6 @@
 ﻿using DocApp.Models;
 using DocApp.Presentation.ViewModels;
+using DocApp.Presentation.Views.Templates;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -45,6 +46,10 @@ namespace DocApp.Presentation.Views
             
         }
 
+        public void onButtonClicked(object source, ButtonClickArgs args)
+        {
+
+        }
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
 

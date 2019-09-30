@@ -53,7 +53,7 @@ namespace DocApp.Data
                 {
                     results = results.GroupBy(h => h.Hosp_ID).Select(g => g.FirstOrDefault()).ToList();
                     HospitalDoctorCallBack.ReadSuccess(results);
-                    await DBHandler.db.CloseAsync();
+                    //await DBHandler.db.CloseAsync();
                 }
 
                 else HospitalDoctorCallBack.ReadFail();

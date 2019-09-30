@@ -7,8 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:DocApp.Presentation.Views.Templates"
     xmlns:data="using:DocApp.Models"
+    xmlns:sys="using:System"
     mc:Ignorable="d"
-   RequestedTheme="Dark">
+   RequestedTheme="Dark"
+    >
     <Page.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#2A2A2A" Offset="0.007"/>
@@ -19,6 +21,91 @@
         <ResourceDictionary>
             <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="DimGray"/>
             <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="White"/>
+            <Style x:Key="ButtonStyle1" TargetType="Button">
+                <Setter Property="Background" Value="#1ED761"/>
+                <Setter Property="Width" Value="105"/>
+                <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}"/>
+                <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="8,8,8,8" />
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
+                <Setter Property="FocusVisualMargin" Value="-3"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw"  Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" CornerRadius="{TemplateBinding CornerRadius}" ContentTransitions="{TemplateBinding ContentTransitions}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <Storyboard>
+                                                <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#1ED761"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Width">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="105"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="FontSize">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="14"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#16BD53"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <PointerDownThemeAnimation Storyboard.TargetName="ContentPresenter"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </ContentPresenter>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+                <Setter Property="Margin" Value="10,5"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
+            </Style>
             <Style x:Key="ListBoxItemStyle1" TargetType="ListBoxItem">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="DimGray"/>
@@ -142,38 +229,156 @@
     </Page.Resources>
 
     <Grid Margin="0,0,0,0">
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Background="#FF121212" Padding="15" Margin="0,0,0,0">
-                <StackPanel VerticalAlignment="Stretch" Margin="0,0,0,400">
-                    <TextBlock FontSize="20" Text="DEPARTMENTS" Margin="10,10,10,10" Foreground="DimGray"
+        
+            <SplitView x:Name="mySplitView" DisplayMode="Inline" PanePlacement="Right" OpenPaneLength="800">
+                <SplitView.Content>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Background="#FF121212" Padding="15" Margin="0,0,0,0">
+                            <StackPanel VerticalAlignment="Stretch" Margin="0,0,0,400">
+                                <TextBlock FontSize="20" Text="DEPARTMENTS" Margin="10,10,10,10" Foreground="DimGray"
                     FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
-                    <ListBox x:Name="DeptListbox" ItemsSource="{x:Bind viewModel.deptnames}" VerticalAlignment="Stretch" 
+                                <ListBox x:Name="DeptListbox" ItemsSource="{x:Bind viewModel.deptnames}" VerticalAlignment="Stretch" 
                              ItemContainerStyle="{StaticResource ListBoxItemStyle1}" SelectionChanged="ListBox_SelectionChanged">
+
+
+
+                                </ListBox>
+                            </StackPanel>
+
+                        </Grid>
+                        <ListView x:Name="myListView" Grid.Column="1" HorizontalAlignment="Center" ItemsSource="{x:Bind viewModel.docs, Mode=TwoWay}" IsItemClickEnabled="True"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="ListView_ItemClick">
+                            <ListView.ItemContainerTransitions>
+                                <TransitionCollection/>
+                            </ListView.ItemContainerTransitions>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="data:Doctor">
+                                    <uc:DoctorProfileLargeTemplate/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+
+                        </ListView>
+                        
+                    <Popup x:Name="Book_Pop" 
+                    IsOpen="False" 
+                    Opened="Book_Pop_Opened"
+                    Closed="Book_Pop_Closed"
+                    IsLightDismissEnabled="True"
+                    VerticalOffset="300"
+                    HorizontalOffset="200"
+                    Margin="10,10"
+                    HorizontalAlignment="Right"
+                    LightDismissOverlayMode="On"
+                   Visibility="Collapsed"
+                           >
+                                <StackPanel Background="#FF121212" Height="300" Width="300" VerticalAlignment="Center">
+
+                                    <CalendarDatePicker x:Name="Appointment_Date" PlaceholderText="Choose your Appointment Date" 
+                FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14" Margin="10,30" HorizontalAlignment="Center"
+                                BorderThickness="0.5" DateChanged="Appointment_Date_DateChanged">
+                                        <CalendarDatePicker.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="Appointment Date" FontSize="18" Margin="5,0"/>
+                                            </DataTemplate>
+                                        </CalendarDatePicker.HeaderTemplate>
+                                    </CalendarDatePicker>
+                                    <ComboBox x:Name="TimeSlotBox" ItemsSource="{x:Bind viewModel.timeslots,Mode=OneWay}" Margin="10,30"
+                      FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14"
+                      DropDownOpened="TimeSlotBox_DropDownOpened" BorderThickness="0.5" HorizontalAlignment="Center"
+                      SelectionChanged="TimeSlotBox_SelectionChanged" PlaceholderText="Time Slot" >
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate x:DataType="data:Roster">
+                                                <TextBlock Text="{x:Bind start_time.ToString()}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <Button Style="{StaticResource ButtonStyle1}" x:Name="BookButton"  Content="BOOK" Margin="10,20" 
+                           FontStretch="ExtraExpanded" Click="BookButton_Click"   FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
+                            FontSize="12" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Popup>
+                        
                         
 
-                        
-                    </ListBox>
+                    </Grid>
+                    
+                </SplitView.Content>
+                <SplitView.Pane>
+                    <StackPanel Padding="5">
+                        <Button x:Name="CloseBtn" Click="CloseBtn_Click"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Margin="10"/>
+
+                            <!--<Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
+                       VerticalAlignment="Top" Margin="10"/>-->
+
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}', viewModel.doctor.Name),Mode=OneWay}" HorizontalAlignment="Left"
+                                FontSize="22" FontWeight="Bold" Margin="10,10" FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
+                                    <RatingControl x:Name="DocRating" Value="{x:Bind viewModel.doctor.Rating,Mode=TwoWay}"  Margin="5"
+                                    Caption="{x:Bind sys:String.Format('({0})',viewModel.doctor.Number_of_Rating),Mode=OneWay}" 
+                                    IsReadOnly="True" HorizontalAlignment="Left">
+                                        <RatingControl.Resources>
+                                            <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
+
+                                        </RatingControl.Resources>
+                                    </RatingControl>
+                                </StackPanel>
+                                
+                                <TextBlock Text="{x:Bind viewModel.doctor.Designation,Mode=OneWay}" Style="{StaticResource TextBlockStyle}"
+                        HorizontalAlignment="Left"/>
+                                <TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', viewModel.doctor.Experience),Mode=OneWay}" 
+                            Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Left"/>
+
+                                <RatingControl x:Name="myRating" ValueChanged="MyRating_ValueChanged"  Margin="10,5"
+                            Caption="Your Rating" HorizontalAlignment="Left">
+                                    <RatingControl.Resources>
+                                        <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
+
+                                    </RatingControl.Resources>
+                                </RatingControl>
+                            </StackPanel>
+                            
+                        </StackPanel>
+                       
+                        <TextBlock Text="{x:Bind viewModel.doctor.Description,Mode=OneWay}" Margin="10,10" TextWrapping="WrapWholeWords"
+                        FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" 
+                                   HorizontalAlignment="Left" FontSize="15"/>
+
+
+                        <TextBlock FontSize="24" FontWeight="Bold" Margin="10,10" 
+                        FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
+                        Text="{x:Bind sys:String.Format('Places where Dr. {0} visits',viewModel.doctor.Name),Mode=OneWay}"/>
+                    <ListView x:Name="HospList" ItemsSource="{x:Bind viewModel.hospitals,Mode=TwoWay}" 
+                                  IsItemClickEnabled="True" Height="300"
+                                          ItemClick="HospList_ItemClick" ScrollViewer.VerticalScrollMode="Enabled">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Margin" Value="10,10"/>
+                                <Setter Property="Padding" Value="10"/>
+                                <Setter Property="Height" Value="Auto"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="data:HospitalInDoctorDetails" x:Name="Hosptemp">
+                                <uc:HospitalsInDoctorsTemplate Loaded="HospitalsInDoctorsTemplate_Loaded"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
                 </StackPanel>
-                
-            </Grid>
-            <GridView Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind viewModel.docs}" IsItemClickEnabled="True"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="GridView_ItemClick">
-                <GridView.ItemTemplate>
-                    <DataTemplate x:DataType="data:Doctor">
-                        <uc:DoctorProfileLargeTemplate/>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-                
-            </GridView>
-
-        </Grid>
+                </SplitView.Pane>
+            </SplitView>
+        
+        
 
 
     </Grid>

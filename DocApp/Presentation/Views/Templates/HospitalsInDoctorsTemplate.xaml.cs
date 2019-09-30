@@ -17,13 +17,35 @@ using Windows.UI.Xaml.Navigation;
 
 namespace DocApp.Presentation.Views.Templates
 {
+    public class ButtonClickArgs:EventArgs
+    {
+        public Models.HospitalInDoctorDetails model { get; set; }
+    }
+
     public sealed partial class HospitalsInDoctorsTemplate : UserControl
     {
+        public delegate void ButtonClickedEventHandler(object source, ButtonClickArgs args);
+        public ButtonClickedEventHandler ButtonClicked;
+
         Models.HospitalInDoctorDetails hospital { get { return this.DataContext as Models.HospitalInDoctorDetails; } }
         public HospitalsInDoctorsTemplate()
         {
             this.InitializeComponent();
             this.DataContextChanged += (s, e) => Bindings.Update();
+        }
+
+        public void onButtonClicked()
+        {
+            if (ButtonClicked != null)
+                ButtonClicked(this, new ButtonClickArgs {model=hospital });
+        }
+
+        private void BookButton_Click(object sender, RoutedEventArgs e)
+        {
+            //BookCal.Visibility = Visibility.Visible;
+            //BookCombo.Visibility = Visibility.Visible;
+           
+            onButtonClicked();
         }
     }
 }

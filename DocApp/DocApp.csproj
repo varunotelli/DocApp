@@ -134,6 +134,7 @@
     <Compile Include="Data\OpenAddressProxy.cs" />
     <Compile Include="Data\RosterDAO.cs" />
     <Compile Include="Domain\Callbacks\IAddressCallBack.cs" />
+    <Compile Include="Domain\Callbacks\IAppointmentCallback.cs" />
     <Compile Include="Domain\Callbacks\IBookAppointmentCallback.cs" />
     <Compile Include="Domain\Callbacks\IDepartmentListCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDoctorCallback.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Domain\DataContracts\IRoster.cs" />
     <Compile Include="Domain\UseCase\BookAppointmentUseCase.cs" />
     <Compile Include="Domain\UseCase\GetAddressUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetAppointmentByIDUseCase.cs" />
     <Compile Include="Domain\UseCase\GetAppointmentsUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDeptsUseCase.cs" />
     <Compile Include="Domain\UseCase\GetDoctorByDeptLocationUseCase.cs" />
@@ -187,10 +189,12 @@
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\RootLocationObject.cs" />
     <Compile Include="Presentation\Callbacks\IAppBookingViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IAppByIDViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IAppDisplayViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IDepartmentViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IDoctorDeptLocationViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IDoctorLocationPresenterCallBack.cs" />
+    <Compile Include="Presentation\Callbacks\IDoctorRatingUpdateViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IGetLocationPresenterCallback.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalByDeptViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalLocationPresenterCallBack.cs" />
@@ -206,6 +210,9 @@
     </Compile>
     <Compile Include="Presentation\Views\AppointmentsDisplayView.xaml.cs">
       <DependentUpon>AppointmentsDisplayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Views\DialogBoxes\AppointmentBookSuccess.xaml.cs">
+      <DependentUpon>AppointmentBookSuccess.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Views\DoctorSearchResultView.xaml.cs">
       <DependentUpon>DoctorSearchResultView.xaml</DependentUpon>
@@ -319,6 +326,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Presentation\Views\DialogBoxes\AppointmentBookSuccess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Presentation\Views\DoctorSearchResultView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -352,8 +363,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\Templates\ComboBoxControl.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Presentation\Views\Templates\DoctorProfileLargeTemplate.xaml">
       <SubType>Designer</SubType>

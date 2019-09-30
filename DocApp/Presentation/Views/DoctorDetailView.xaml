@@ -149,9 +149,9 @@
                 <TextBlock Text="{x:Bind viewModel.doctor.Description,Mode=OneWay}" Margin="10,0" TextWrapping="WrapWholeWords"
                            FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
 
-                    <Button Style="{StaticResource ButtonStyle1}" x:Name="BookButton"  Content="BOOK" Margin="10,10" 
+                    <!--<Button Style="{StaticResource ButtonStyle1}" x:Name="BookButton"  Content="BOOK" Margin="10,10" 
                            FontStretch="ExtraExpanded"  Click="BookButton_Click" FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
-                            FontSize="12"/>
+                            FontSize="12"/>-->
 
 
                     <TextBlock FontSize="24" FontWeight="Bold" Margin="10,10" 
@@ -169,7 +169,7 @@
                     </GridView.ItemContainerStyle>
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="data:HospitalInDoctorDetails">
-                            <uc:HospitalsInDoctorsTemplate/>
+                            <uc:HospitalsInDoctorsTemplate x:Name="Hosptemp"/>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>

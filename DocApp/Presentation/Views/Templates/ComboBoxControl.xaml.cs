@@ -19,9 +19,12 @@ namespace DocApp.Presentation.Views.Templates
 {
     public sealed partial class ComboBoxControl : UserControl
     {
+        int doc_id, hosp_id;
+        
         public ComboBoxControl()
         {
             this.InitializeComponent();
         }
+        
     }
 }
