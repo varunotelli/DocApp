@@ -26,7 +26,9 @@ namespace DocApp.Presentation.Views
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     /*
-     * @todo Make new query to get doctors by location,department
+     * @todo Style Testimonials and fix testimonial bugs
+     * @todo Complete insert Testimonial
+     * @todo Complete show more show less functionality for description
      * 
      */
 
@@ -275,6 +277,12 @@ namespace DocApp.Presentation.Views
                 CloseButtonText = "OK"
             };
             await bookSuccess.ShowAsync();
+        }
+
+        private async void Tabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Tabs.SelectedIndex == 1)
+                await viewModel.GetTests(id);
         }
 
         public async void onInsertFail(object source, EventArgs args)

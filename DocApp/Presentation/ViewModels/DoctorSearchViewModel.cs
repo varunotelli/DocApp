@@ -13,7 +13,7 @@ namespace DocApp.Presentation.ViewModels
 {
     public class DoctorSearchViewModel : IDepartmentViewCallback,IDoctorDeptLocationViewCallback,IDoctorLocationPresenterCallBack,
         INotifyPropertyChanged,IDoctorDetailViewCallBack,IDoctorRatingUpdateViewCallback,IHospitalDoctorViewCallBack,IRosterViewCallback,
-        IAppBookingViewCallback,IAppByIDViewCallback
+        IAppBookingViewCallback,IAppByIDViewCallback,ITestDetailsViewCallback
     {
         public UseCaseBase getDepts;
         public UseCaseBase getDocs;
@@ -23,11 +23,13 @@ namespace DocApp.Presentation.ViewModels
         public UseCaseBase getTimeSlots;
         public UseCaseBase bookApp;
         public UseCaseBase getApp;
+        public UseCaseBase getTest;
         public AppointmentDetails app;
         public ObservableCollection<string> deptnames;
         public ObservableCollection<HospitalInDoctorDetails> hospitals;
         public ObservableCollection<Roster> timeslots;
         public ObservableCollection<Doctor> docs;
+        public ObservableCollection<TestDetails> tests;
         public delegate void DoctorReadSuccessEventHandler(object source, EventArgs args);
         public DoctorReadSuccessEventHandler DoctorReadSuccess;
         public DoctorReadSuccessEventHandler DoctorRatingUpdateSuccess;
@@ -66,6 +68,7 @@ namespace DocApp.Presentation.ViewModels
             docs= new ObservableCollection<Doctor>();
             hospitals = new ObservableCollection<HospitalInDoctorDetails>();
             timeslots = new ObservableCollection<Roster>();
+            tests = new ObservableCollection<TestDetails>();
             
         }
 
@@ -170,9 +173,7 @@ namespace DocApp.Presentation.ViewModels
             {
 
                 await bookApp.Execute();
-                
-
-
+        
             }
             catch (Exception e)
             {
@@ -189,14 +190,26 @@ namespace DocApp.Presentation.ViewModels
 
                 await getApp.Execute();
 
-
-
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("Get Appointment EXCEPTION=" + e.Message);
             }
 
+        }
+
+        public async Task GetTests(int id)
+        {
+            getTest = new GetTestDetailsUseCase(id);
+            getTest.SetCallBack(this);
+            try
+            {
+                await getTest.Execute();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Get testimonials EXCEPTION=" + e.Message);
+            }
         }
 
 
@@ -316,6 +329,20 @@ namespace DocApp.Presentation.ViewModels
 
         public bool AppByIDViewFail()
         {
+            return false;
+        }
+
+        public bool TestReadViewSuccess(List<TestDetails> t)
+        {
+            tests.Clear();
+            foreach (var x in t)
+                tests.Add(x);
+            return true;
+        }
+
+        public bool TestReadViewFail()
+        {
+            System.Diagnostics.Debug.WriteLine("Testimonial view fail");
             return false;
         }
     }
