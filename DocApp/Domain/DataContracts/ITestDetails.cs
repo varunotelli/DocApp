@@ -10,5 +10,6 @@ namespace DocApp.Domain.DataContracts
     public interface ITestDetails
     {
         Task GetTestDetails(int doc_id, ITestDetailsCallback callback);
+        Task GetLastTestDetail(int doc_id, ILastTestDetailCallback callback);
     }
 }

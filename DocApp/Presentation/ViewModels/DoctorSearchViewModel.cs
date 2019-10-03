@@ -13,7 +13,7 @@ namespace DocApp.Presentation.ViewModels
 {
     public class DoctorSearchViewModel : IDepartmentViewCallback,IDoctorDeptLocationViewCallback,IDoctorLocationPresenterCallBack,
         INotifyPropertyChanged,IDoctorDetailViewCallBack,IDoctorRatingUpdateViewCallback,IHospitalDoctorViewCallBack,IRosterViewCallback,
-        IAppBookingViewCallback,IAppByIDViewCallback,ITestDetailsViewCallback
+        IAppBookingViewCallback,IAppByIDViewCallback,ITestDetailsViewCallback,ITestViewCallback,ILastTestViewCallback
     {
         public UseCaseBase getDepts;
         public UseCaseBase getDocs;
@@ -24,6 +24,7 @@ namespace DocApp.Presentation.ViewModels
         public UseCaseBase bookApp;
         public UseCaseBase getApp;
         public UseCaseBase getTest;
+        public UseCaseBase addTest;
         public AppointmentDetails app;
         public ObservableCollection<string> deptnames;
         public ObservableCollection<HospitalInDoctorDetails> hospitals;
@@ -35,8 +36,10 @@ namespace DocApp.Presentation.ViewModels
         public DoctorReadSuccessEventHandler DoctorRatingUpdateSuccess;
         public delegate void InsertSuccessEventHandler(object source, EventArgs e);
         public event InsertSuccessEventHandler InsertSuccess;
+        public event InsertFailEventHandler TestimonialAddedSuccess;
         public delegate void InsertFailEventHandler(object source, EventArgs e);
         public event InsertFailEventHandler InsertFail;
+        public event InsertFailEventHandler TestimonialAddedFail;
         public delegate void AppointmentReadEventHandler(object source, EventArgs e);
         public event AppointmentReadEventHandler AppointmentRead;
 
@@ -87,11 +90,25 @@ namespace DocApp.Presentation.ViewModels
             if (InsertSuccess != null)
                 InsertSuccess(this, EventArgs.Empty);
         }
+
+        public void onTestimonialAddedSuccess()
+        {
+            if (TestimonialAddedSuccess != null)
+                TestimonialAddedSuccess(this, EventArgs.Empty);
+        }
+
         public void onInsertFail()
         {
             if (InsertFail != null)
                 InsertFail(this, EventArgs.Empty);
         }
+
+        public void onTestimonialAddedFail()
+        {
+            if (TestimonialAddedFail != null)
+                TestimonialAddedFail(this, EventArgs.Empty);
+        }
+
         public void onAppointmentRead()
         {
             if (AppointmentRead != null)
@@ -209,6 +226,34 @@ namespace DocApp.Presentation.ViewModels
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("Get testimonials EXCEPTION=" + e.Message);
+            }
+        }
+
+        public async Task AddTest(int pid,int doc,string msg, string time)
+        {
+            addTest = new AddTestimonialUseCase(pid, doc, msg, time);
+            addTest.SetCallBack(this);
+            try
+            {
+                await addTest.Execute();
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Add testimonials view EXCEPTION=" + e.Message);
+            }
+        }
+
+        public async Task GetLastTest(int doc)
+        {
+            getTest = new GetLastAddedTestUseCase(doc);
+            getTest.SetCallBack(this);
+            try
+            {
+                await getTest.Execute();
+            }
+            catch (Exception e)
+            {
+                //System.Diagnostics.Debug.WriteLine("Add testimonials view EXCEPTION=" + e.Message);
             }
         }
 
@@ -332,17 +377,48 @@ namespace DocApp.Presentation.ViewModels
             return false;
         }
 
-        public bool TestReadViewSuccess(List<TestDetails> t)
+        public bool TestDetailsReadViewSuccess(List<TestDetails> t)
         {
+            //t.OrderByDescending(x => x.posted_time);
             tests.Clear();
-            foreach (var x in t)
+            foreach (var x in t.OrderByDescending(x => x.posted_time))
+            {
+                x.posted_time = DateTime.ParseExact(x.posted_time, "yyyy-MM-dd HH:mm:ss", null).ToString("dd/MM/yyyy HH:mm");
                 tests.Add(x);
+            }
+            
+
+            return true;
+        }
+
+        public bool TestDetailsReadViewFail()
+        {
+            System.Diagnostics.Debug.WriteLine("Testimonial view fail");
+            return false;
+        }
+
+        public bool TestReadViewSucces()
+        {
+            onTestimonialAddedSuccess();
             return true;
         }
 
         public bool TestReadViewFail()
         {
-            System.Diagnostics.Debug.WriteLine("Testimonial view fail");
+            onTestimonialAddedFail();
+            return false;
+        }
+
+        public bool LastTestViewSuccess(TestDetails detail)
+        {
+            detail.posted_time = DateTime.ParseExact(detail.posted_time, "yyyy-MM-dd HH:mm:ss", null).ToString("dd/MM/yyyy HH:mm");
+            tests.Insert(0, detail);
+            tests.OrderByDescending(x => x.posted_time);
+            return true;
+        }
+
+        public bool LastTestViewFail()
+        {
             return false;
         }
     }

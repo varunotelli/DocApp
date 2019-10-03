@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DocApp.Presentation.Callbacks
 {
-    public interface ITestDetailsViewCallback
+    interface ILastTestViewCallback
     {
-        bool TestDetailsReadViewSuccess(List<TestDetails> tests);
-        bool TestDetailsReadViewFail();
+        bool LastTestViewSuccess(TestDetails detail);
+        bool LastTestViewFail();
     }
 }

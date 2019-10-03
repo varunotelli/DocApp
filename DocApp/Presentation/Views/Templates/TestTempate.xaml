@@ -9,14 +9,15 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
+    <Grid BorderBrush="White" BorderThickness="1" Padding="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{x:Bind TestDetails.patient_name}" HorizontalAlignment="Left"/>
+        <TextBlock Text="{x:Bind TestDetails.patient_name}" HorizontalAlignment="Left" 
+                   FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
         <TextBlock Text="{x:Bind TestDetails.posted_time}" HorizontalAlignment="Right"/>
-        <TextBlock Text="{x:Bind TestDetails.message}" Grid.Row="1" HorizontalAlignment="Stretch"
+        <TextBlock Text="{x:Bind TestDetails.message, Mode=OneWay}" Grid.Row="1" HorizontalAlignment="Stretch"
                    TextWrapping="WrapWholeWords"/>
 
     </Grid>

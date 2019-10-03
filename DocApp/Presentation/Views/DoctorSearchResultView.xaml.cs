@@ -102,6 +102,7 @@ namespace DocApp.Presentation.Views
             viewModel.InsertSuccess += this.onInsertSuccess;
             viewModel.AppointmentRead += this.onAppointmentRead;
             viewModel.DoctorRatingUpdateSuccess += this.onDoctorRatingUpdateSucess;
+            viewModel.TestimonialAddedSuccess += this.onTestAddedSuccess;
             await viewModel.GetDoctors(address);
             
            
@@ -285,6 +286,22 @@ namespace DocApp.Presentation.Views
                 await viewModel.GetTests(id);
         }
 
+        private void PostBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
+            MessageBox.Visibility = Visibility.Visible;
+            SubmitBtn.Visibility = Visibility.Visible;
+            TestScroll.UpdateLayout();
+            //TestScroll.ChangeView(0, double.MaxValue, 1);
+            
+        }
+
+        private async void SubmitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            await viewModel.AddTest(1, id, MessageBox.Text, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            MessageBox.Text = "";
+        }
+
         public async void onInsertFail(object source, EventArgs args)
         {
             AppointmentBookSuccess bookFail = new AppointmentBookSuccess()
@@ -295,6 +312,27 @@ namespace DocApp.Presentation.Views
 
             };
             await bookFail.ShowAsync();
+        }
+
+        private async void MySplitView_PaneOpened(SplitView sender, object args)
+        {
+            MessageBox.Visibility = Visibility.Collapsed;
+            SubmitBtn.Visibility = Visibility.Collapsed;
+            await viewModel.GetTests(id);
+           
+
+        }
+
+        private void MyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            mySplitView.IsPaneOpen = false;
+            mySplitView.IsPaneOpen = true;
+        }
+
+        public async void onTestAddedSuccess(object source, EventArgs args)
+        {
+            await viewModel.GetLastTest(id);
+            //TestScroll.ChangeView(0, 0, 1);
         }
     }
 }

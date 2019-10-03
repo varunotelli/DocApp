@@ -53,5 +53,43 @@ namespace DocApp.Data
                 System.Diagnostics.Debug.WriteLine("Testimonial details select exception=" + e.Message);
             }
         }
+        public async Task GetLastTestDetail(int doc_id, ILastTestDetailCallback callback)
+        {
+            //TestDetails result;
+            try
+            {
+                if (DBHandler.db == null)
+                    DBHandler.DBConnection();
+                var patients = await DBHandler.db.Table<Patient>().ToListAsync();
+        var tests = await DBHandler.db.Table<Testimonial>().ToListAsync();
+
+        var details = (from t in tests
+                       join p in patients
+                       on t.Patient_ID equals p.ID
+
+                       where tests.Any(g => t.Doc_ID == doc_id)
+                       select new TestDetails
+                       {
+                           doc_id = t.Doc_ID,
+                           message = t.message,
+                           patient_name = p.name,
+                           posted_time = t.posted_time,
+                           p_id = p.ID,
+                           test_id = t.ID
+                       }
+            ).OrderBy(x => x.posted_time).Last();
+
+                if (details != null)
+                    callback.LastTestReadSuccess(details);
+                else
+                    callback.LastTestReadFail();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Testimonial details select exception=" + e.Message);
+            }
+        }
     }
 }

@@ -40,8 +40,8 @@ namespace DocApp.Domain.UseCase
                 System.Diagnostics.Debug.WriteLine("Testimonial use case exception=" + e.Message);
             }
             if (dets != null)
-                viewCallback.TestReadViewSuccess(dets);
-            else viewCallback.TestReadViewFail();
+                viewCallback.TestDetailsReadViewSuccess(dets);
+            else viewCallback.TestDetailsReadViewFail();
 
             
         }
