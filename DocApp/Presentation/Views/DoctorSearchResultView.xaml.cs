@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using System.Text.RegularExpressions;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -49,6 +50,7 @@ namespace DocApp.Presentation.Views
         int id;
         int hosp_id;
         double pos;
+        bool show = false;
         string time,app_date;
         MainPage mainPage;
         public DoctorSearchResultView()
@@ -291,7 +293,7 @@ namespace DocApp.Presentation.Views
             
             MessageBox.Visibility = Visibility.Visible;
             SubmitBtn.Visibility = Visibility.Visible;
-            TestScroll.UpdateLayout();
+            //TestScroll.UpdateLayout();
             //TestScroll.ChangeView(0, double.MaxValue, 1);
             
         }
@@ -316,8 +318,17 @@ namespace DocApp.Presentation.Views
 
         private async void MySplitView_PaneOpened(SplitView sender, object args)
         {
+            
             MessageBox.Visibility = Visibility.Collapsed;
             SubmitBtn.Visibility = Visibility.Collapsed;
+            if (viewModel.doctor != null)
+            {
+                System.Diagnostics.Debug.WriteLine("Count=" + viewModel.doctor.Description.Count(c => c.Equals('\n')));
+                if (viewModel.doctor.Description.Count(c => c.Equals('\n')) > 1)
+                    Showbutton.Visibility = Visibility.Visible;
+                else
+                    Showbutton.Visibility = Visibility.Collapsed;
+            }
             await viewModel.GetTests(id);
            
 
@@ -326,7 +337,28 @@ namespace DocApp.Presentation.Views
         private void MyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             mySplitView.IsPaneOpen = false;
-            mySplitView.IsPaneOpen = true;
+            //mySplitView.IsPaneOpen = true;
+        }
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            show = !show;
+            Button temp = sender as Button;
+            if(show)
+            {
+                DescBox.TextWrapping = TextWrapping.WrapWholeWords;
+                DescBox.Height = Double.NaN;
+                DescBox.Width = Double.NaN;
+                temp.Content = "Show Less";
+            }
+            else
+            {
+                DescBox.TextWrapping = TextWrapping.NoWrap;
+                DescBox.Height = 20;
+                DescBox.Width = Double.NaN;
+                temp.Content = "Show More";
+            }
+                
         }
 
         public async void onTestAddedSuccess(object source, EventArgs args)
