@@ -50,7 +50,7 @@ namespace DocApp.Presentation.Views
         int id;
         int hosp_id;
         double pos;
-        bool show = false;
+        
         string time,app_date;
         MainPage mainPage;
         public DoctorSearchResultView()
@@ -163,43 +163,28 @@ namespace DocApp.Presentation.Views
 
 
 
-        //private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //Bindings.Update();
-
-        //    var temp = sender as HyperlinkButton;
-        //    System.Diagnostics.Debug.WriteLine("Content="+(temp.Content as TextBlock).Text);
-        //    await viewModel.GetDoctorsByDept(address, (temp.Content as TextBlock).Text);
-        //    //await viewModel.GetDoctorsByDept(address, (temp.Content as TextBlock).Text);
-        //    System.Diagnostics.Debug.WriteLine("Doc dept val=" + viewModel.docs.Count);
-        //    Bindings.Update();
-        //}
+       
 
         private async void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listbox = sender as ListBox;
             var select = listbox.SelectedIndex;
-            mySplitView.IsPaneOpen = false;
+            myListView.SelectedIndex = -1;
+            if (myListView.SelectedIndex==-1)
+                mySplitView.IsPaneOpen = false;
             await viewModel.GetDoctorsByDept(address, select);
             //Bindings.Update();
         }
 
         private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //Doctor d = e.ClickedItem as Doctor;
-
-            //Frame parentFrame = Window.Current.Content as Frame;
-
-            //MainPage mp1 = parentFrame.Content as MainPage;
-            //StackPanel grid = mp1.Content as StackPanel;
-
-            //Frame my_frame = grid.FindName("myFrame") as Frame;
-            //my_frame.Navigate(typeof(DoctorDetailView), (e.ClickedItem as Doctor).ID, new SuppressNavigationTransitionInfo());
+           
             var doc = e.ClickedItem as Doctor;
             id = doc.ID;
             await viewModel.GetDoctor(id);
             
             mySplitView.IsPaneOpen = true;
+           
 
         }
 
@@ -250,7 +235,6 @@ namespace DocApp.Presentation.Views
             //MyScroll.ChangeView(null, pos, 1);
 
         }
-
         private void Book_Pop_Opened(object sender, object e)
         {
             BookButton.IsEnabled = (Appointment_Date.Date != null) && (TimeSlotBox.SelectedIndex != -1);
@@ -318,46 +302,48 @@ namespace DocApp.Presentation.Views
 
         private async void MySplitView_PaneOpened(SplitView sender, object args)
         {
-            
+            //Showbutton.Visibility = Visibility.Collapsed;
             MessageBox.Visibility = Visibility.Collapsed;
             SubmitBtn.Visibility = Visibility.Collapsed;
             if (viewModel.doctor != null)
             {
                 System.Diagnostics.Debug.WriteLine("Count=" + viewModel.doctor.Description.Count(c => c.Equals('\n')));
-                if (viewModel.doctor.Description.Count(c => c.Equals('\n')) > 1)
+                if (viewModel.doctor.Description.Count(c => c.Equals('\n')) >= 1)
+                {
+                    DescBox.Height = 20;
+                    DescBox.Width = 550;
                     Showbutton.Visibility = Visibility.Visible;
+                }
                 else
                     Showbutton.Visibility = Visibility.Collapsed;
             }
             await viewModel.GetTests(id);
-           
+
 
         }
 
         private void MyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             mySplitView.IsPaneOpen = false;
-            //mySplitView.IsPaneOpen = true;
+            mySplitView.IsPaneOpen = true;
+           // mySplitView.IsPaneOpen = false;
+
         }
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            show = !show;
-            Button temp = sender as Button;
-            if(show)
+            bool show = false;
+            
+            HyperlinkButton temp = sender as HyperlinkButton;
+            if(!show)
             {
+                temp.Visibility = Visibility.Collapsed;
                 DescBox.TextWrapping = TextWrapping.WrapWholeWords;
                 DescBox.Height = Double.NaN;
-                DescBox.Width = Double.NaN;
-                temp.Content = "Show Less";
+                DescBox.Width = 750;
+                
             }
-            else
-            {
-                DescBox.TextWrapping = TextWrapping.NoWrap;
-                DescBox.Height = 20;
-                DescBox.Width = Double.NaN;
-                temp.Content = "Show More";
-            }
+           
                 
         }
 
