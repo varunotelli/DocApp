@@ -20,8 +20,9 @@
     </Page.Background>
     <Page.Resources>
         <ResourceDictionary>
-            <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="DimGray"/>
+            <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="White"/>
             <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="White"/>
+            <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="White"/>
             
             <Style x:Key="TextBlockStyle" TargetType="TextBlock">
                 <Setter Property="Margin" Value="10,5"/>
@@ -238,11 +239,17 @@
                 </SplitView.Content>
                 <SplitView.Pane>
                     <StackPanel Padding="5">
-                        <Button x:Name="CloseBtn" Click="CloseBtn_Click"/>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Height="150" Width="150" Source="ms-appx:///Assets/400_placeholder.png" Margin="10"/>
+                    <HyperlinkButton x:Name="CloseBtn" FontFamily="Segoe MDL2 Assets" Click="CloseBtn_Click" Margin="5,0">
+                        <TextBlock Text="&#xE0E3;" FontSize="20"/>
+                    </HyperlinkButton>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="100" Width="100" Margin="10,0,10,10">
+                            <Image.Source>
+                                <BitmapImage UriSource="{x:Bind viewModel.doctor.Image,Mode=OneWay}"/>
+                            </Image.Source>
+                        </Image>
 
-                            <!--<Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
+                        <!--<Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
                        VerticalAlignment="Top" Margin="10"/>-->
 
                             <StackPanel>

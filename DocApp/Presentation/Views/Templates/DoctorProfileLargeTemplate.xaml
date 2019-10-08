@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="using:System"
     mc:Ignorable="d"
+    Loaded="UserControl_Loaded"
     d:DesignHeight="300"
     d:DesignWidth="400"
     RequestedTheme="Dark">
@@ -19,9 +20,15 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Margin="10,10">
-        <StackPanel Orientation="Horizontal">
-            <Image Source="ms-appx:///Assets/400_placeholder.png" Width="100" Height="100" Stretch="UniformToFill"/>
+    <Grid Margin="10,10" >
+        <StackPanel Orientation="Horizontal" >
+            <Image x:Name="Img" Width="100" Height="100" Stretch="UniformToFill" >
+                <Image.Source>
+                    <BitmapImage UriSource="{x:Bind doctor.Image, Mode=OneWay}"/>
+                </Image.Source>
+                
+                
+            </Image>
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,5" FontSize="16" FontWeight="ExtraBold"

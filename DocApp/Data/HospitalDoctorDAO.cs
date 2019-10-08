@@ -38,7 +38,8 @@ namespace DocApp.Data
                                    End_Time = r.end_time.Split(':')[0] + ":" + r.end_time.Split(':')[1],
                                    Fees = r.fee,
                                    Rating = h.Rating,
-                                   Number_of_Rating = h.Number_Of_Rating
+                                   Number_of_Rating = h.Number_Of_Rating,
+                                   Image=h.Image
                                    
 
 

@@ -92,7 +92,11 @@
     </UserControl.Resources>
 
     <StackPanel Orientation="Horizontal">
-        <Image Height="160" Width="160" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" />
+        <Image Height="120" Width="120" Stretch="UniformToFill" >
+            <Image.Source>
+                <BitmapImage UriSource="{x:Bind hospital.Image, Mode=OneWay}"/>
+            </Image.Source>
+        </Image>
         <StackPanel>
             <TextBlock FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova" FontSize="14" TextWrapping="NoWrap" Margin="10,10"
                    TextTrimming="CharacterEllipsis">
@@ -117,7 +121,7 @@
             <TextBlock Text="{x:Bind sys:String.Format('Rs.{0}',hospital.Fees)}" FontSize="12" Margin="10,0"
                    FontFamily="ms-appx:///Assets/ProximaNova-Regular#Proxima Nova"/>
             <Button Style="{StaticResource ButtonStyle1}" x:Name="BookButton"  Content="BOOK" Margin="10,20" 
-                           FontStretch="ExtraExpanded" Click="BookButton_Click"   FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
+                           FontStretch="ExtraExpanded" Click="BookButton_Click" FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
                             FontSize="12"/>
         </StackPanel>
 
