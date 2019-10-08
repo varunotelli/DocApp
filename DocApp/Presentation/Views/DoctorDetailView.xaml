@@ -107,7 +107,7 @@
     </Page.Background>
 
     <Grid Margin="0,0,0,100">
-        <ScrollViewer Height="750">
+        
             <Grid HorizontalAlignment="Left">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -159,10 +159,10 @@
                            Text="{x:Bind sys:String.Format('Places where Dr. {0} visits',viewModel.doctor.Name),Mode=OneWay}"/>
 
                 <GridView x:Name="HospList" ItemsSource="{x:Bind viewModel.hospitals,Mode=OneWay}" IsItemClickEnabled="True"
-                                          ItemClick="HospList_ItemClick">
+                                          ItemClick="HospList_ItemClick" Height="500" ScrollViewer.VerticalScrollMode="Auto">
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
-                            <Setter Property="Margin" Value="10,10"/>
+                            <Setter Property="Margin" Value="0,10"/>
                             <Setter Property="Padding" Value="10"/>
                             <Setter Property="Height" Value="Auto"/>
                         </Style>
@@ -176,6 +176,6 @@
             </StackPanel>
 
                 </Grid>
-        </ScrollViewer>
+        
     </Grid>
 </Page>

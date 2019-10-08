@@ -25,6 +25,9 @@ using Windows.UI.Xaml.Navigation;
  *@todo Display number of slots available in a session
  * @todo Remove booking page and create as popup
  * @todo Remove empty spaces in UI
+ * @todo Add Forum Tab
+ * @todo Relative Time for testimonials
+ * @todo Handle Light Theme
  */
 
 namespace DocApp.Presentation.Views

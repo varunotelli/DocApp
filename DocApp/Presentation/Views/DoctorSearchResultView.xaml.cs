@@ -190,7 +190,15 @@ namespace DocApp.Presentation.Views
 
         private void HospList_ItemClick(object sender, ItemClickEventArgs e)
         {
+            
+            Frame parentFrame = Window.Current.Content as Frame;
 
+            MainPage mp1 = parentFrame.Content as MainPage;
+            StackPanel grid = mp1.Content as StackPanel;
+            
+            Frame my_frame = grid.FindName("myFrame") as Frame;
+            my_frame.Navigate(typeof(HospitalDetailView), (e.ClickedItem as HospitalInDoctorDetails).Hosp_ID, 
+                new SuppressNavigationTransitionInfo());
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
