@@ -101,9 +101,9 @@ namespace DocApp.Presentation.ViewModels
             await getHosps.Execute();
         }
 
-        public async Task GetTimeSlots(int doc_id, int hosp_id)
+        public async Task GetTimeSlots(int doc_id, int hosp_id,string app)
         {
-            getTimeSlots = new GetRosterUseCase(doc_id, hosp_id);
+            getTimeSlots = new GetRosterUseCase(doc_id, hosp_id,app);
             getTimeSlots.SetCallBack(this);
             await getTimeSlots.Execute();
 

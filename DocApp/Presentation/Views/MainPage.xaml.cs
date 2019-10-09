@@ -28,6 +28,7 @@ using Windows.UI.Xaml.Navigation;
  * @todo Add Forum Tab
  * @todo Relative Time for testimonials
  * @todo Handle Light Theme
+ * @todo Colour Available slots green
  */
 
 namespace DocApp.Presentation.Views

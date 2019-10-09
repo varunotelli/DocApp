@@ -17,10 +17,12 @@ namespace DocApp.Domain.UseCase
         List<Roster> rosters;
         int doc_id;
         int hosp_id;
-        public GetRosterUseCase(int d, int h)
+        string app_date;
+        public GetRosterUseCase(int d, int h,string s)
         {
             this.doc_id = d;
             this.hosp_id = h;
+            this.app_date = s;
 
         }
 
@@ -34,7 +36,7 @@ namespace DocApp.Domain.UseCase
             IRoster roster = new RosterDAO();
             try
             {
-                await roster.GetTimeSlots(doc_id, hosp_id, this);
+                await roster.GetTimeSlots(doc_id, hosp_id, app_date,this);
             }
             catch(Exception e)
             {

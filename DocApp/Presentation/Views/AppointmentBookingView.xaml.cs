@@ -85,7 +85,7 @@ namespace DocApp.Presentation.Views
         private async void TimeSlotBox_DropDownOpened(object sender, object e)
         {
 
-            await viewModel.GetTimeSlots(doc_id, hosp_id);
+            await viewModel.GetTimeSlots(doc_id, hosp_id,app_date);
             Bindings.Update();
         }
 

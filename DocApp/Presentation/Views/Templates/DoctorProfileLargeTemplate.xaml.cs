@@ -22,7 +22,7 @@ namespace DocApp.Presentation.Views.Templates
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            imagesource = new BitmapImage(new Uri(String.Format("ms-appx:///Assets/Doc{0}.jpg", doctor.ID), UriKind.Absolute));
+            //imagesource = new BitmapImage(new Uri(String.Format("ms-appx:///Assets/Doc{0}.jpg", doctor.ID), UriKind.Absolute));
         }
 
         private void Img_Loaded(object sender, RoutedEventArgs e)
@@ -35,7 +35,7 @@ namespace DocApp.Presentation.Views.Templates
         {
             Image imgtemp = new Image();
             if (d != null)
-                imagesource = new BitmapImage(new Uri(d.Image, UriKind.Absolute));
+                imagesource = new BitmapImage(new Uri(String.Format("ms-appx:///Assets/Doc{0}.jpg", d.ID), UriKind.Absolute));
             else
                 imagesource = new BitmapImage();
             imgtemp.Source = imagesource;

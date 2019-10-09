@@ -178,7 +178,7 @@
 
                         </Grid>
                         <ListView x:Name="myListView" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind viewModel.docs, Mode=TwoWay}" IsItemClickEnabled="True"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="ListView_ItemClick" SelectionChanged="MyListView_SelectionChanged">
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="ListView_ItemClick" SelectionChanged="MyListView_SelectionChanged" Height="700">
                             <ListView.ItemContainerTransitions>
                                 <TransitionCollection/>
                             </ListView.ItemContainerTransitions>
@@ -222,8 +222,11 @@
                                   SelectionChanged="TimeSlotBox_SelectionChanged" PlaceholderText="Time Slot" >
                                 <ComboBox.ItemTemplate>
                                             <DataTemplate x:DataType="data:Roster">
-                                                <TextBlock Text="{x:Bind start_time.ToString()}"/>
-                                            </DataTemplate>
+                                                <TextBlock >
+                                                    <Run Text="{x:Bind start_time.ToString()}"/>
+                                                    <Run Text="{x:Bind sys:String.Format('({0} vacancies)',val)}"/>
+                                        </TextBlock>
+                                    </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                     <Button Style="{StaticResource ButtonStyle1}" x:Name="BookButton"  Content="BOOK" Margin="10,20" 
@@ -282,7 +285,7 @@
                             
                         </StackPanel>
                                         <!--START SCROLL HERE-->
-                    <ScrollViewer Height="450">
+                    <ScrollViewer Height="500">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>

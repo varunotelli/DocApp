@@ -9,6 +9,6 @@ namespace DocApp.Domain.DataContracts
 {
     public interface IRoster
     {
-        Task GetTimeSlots(int doc_id, int hosp_id,IRosterCallback callback);
+        Task GetTimeSlots(int doc_id, int hosp_id, string app_date,IRosterCallback callback);
     }
 }

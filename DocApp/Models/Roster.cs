@@ -14,5 +14,6 @@ namespace DocApp.Models
         public string end_time { get; set; }
         public int fee { get; set; }
         public int max_patients { get; set; }
+        public int val { get; set; }
     }
 }

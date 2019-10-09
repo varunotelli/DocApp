@@ -40,15 +40,13 @@ namespace DocApp.Presentation.Views.Converters
             if (delta < 48 * HOUR)
                 return "yesterday";
 
-            
-
             if (delta < 7 * DAY)
                 return Math.Abs(ts.Days) + " days ago";
 
             if(delta<30*DAY)
             {
                 int weeks = (int)Math.Floor((double)ts.Days / 7);
-                return weeks <= 1 ? "1 week ago" : weeks + " weeks ago";
+                return weeks == 1 ? "1 week ago" : weeks + " weeks ago";
             }
 
             if (delta < 12 * MONTH)

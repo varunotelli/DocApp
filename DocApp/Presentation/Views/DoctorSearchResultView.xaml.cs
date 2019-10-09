@@ -75,7 +75,7 @@ namespace DocApp.Presentation.Views
         private async void TimeSlotBox_DropDownOpened(object sender, object e)
         {
 
-            await viewModel.GetTimeSlots(id, hosp_id);
+            await viewModel.GetTimeSlots(id, hosp_id,app_date);
             Bindings.Update();
         }
 
@@ -245,6 +245,7 @@ namespace DocApp.Presentation.Views
         }
         private void Book_Pop_Opened(object sender, object e)
         {
+            TimeSlotBox.IsEnabled = false;
             BookButton.IsEnabled = (Appointment_Date.Date != null) && (TimeSlotBox.SelectedIndex != -1);
         }
 
