@@ -383,7 +383,7 @@ namespace DocApp.Presentation.ViewModels
             tests.Clear();
             foreach (var x in t.OrderByDescending(x => x.posted_time))
             {
-                x.posted_time = DateTime.ParseExact(x.posted_time, "yyyy-MM-dd HH:mm:ss", null).ToString("dd/MM/yyyy HH:mm");
+                //x.posted_time = DateTime.ParseExact(x.posted_time, "yyyy-MM-dd HH:mm:ss", null).ToString("dd/MM/yyyy HH:mm");
                 tests.Add(x);
             }
             
@@ -411,7 +411,7 @@ namespace DocApp.Presentation.ViewModels
 
         public bool LastTestViewSuccess(TestDetails detail)
         {
-            detail.posted_time = DateTime.ParseExact(detail.posted_time, "yyyy-MM-dd HH:mm:ss", null).ToString("dd/MM/yyyy HH:mm");
+            //detail.posted_time = DateTime.ParseExact(detail.posted_time, "yyyy-MM-dd HH:mm:ss", null).ToString("dd/MM/yyyy HH:mm");
             tests.Insert(0, detail);
             tests.OrderByDescending(x => x.posted_time);
             return true;

@@ -227,6 +227,7 @@
     <Compile Include="Presentation\Views\AppointmentsDisplayView.xaml.cs">
       <DependentUpon>AppointmentsDisplayView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Views\Converters\RelativeTimeConverter.cs" />
     <Compile Include="Presentation\Views\DialogBoxes\AppointmentBookSuccess.xaml.cs">
       <DependentUpon>AppointmentBookSuccess.xaml</DependentUpon>
     </Compile>
