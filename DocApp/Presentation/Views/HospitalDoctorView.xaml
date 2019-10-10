@@ -8,21 +8,22 @@
     xmlns:uc="using:DocApp.Presentation.Views.Templates"
     xmlns:data="using:DocApp.Models"
     mc:Ignorable="d"
-    RequestedTheme="Dark "
+    RequestedTheme="Light"
+    Background="White"
     >
-    <Page.Background>
+    <!--<Page.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#2A2A2A" Offset="0.007"/>
             <GradientStop Color="#080808" Offset="0.548"/>
         </LinearGradientBrush>
-    </Page.Background>
+    </Page.Background>-->
     <Page.Resources>
 
 
         <ResourceDictionary>
-            <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="White"/>
-            <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="White"/>
-            <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="White"/>
+            <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="Black"/>
+            <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="Black"/>
+            <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="Black"/>
             <Style x:Key="GridViewItemStyle1" TargetType="GridViewItem">
                 <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
                 <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
@@ -144,7 +145,7 @@
                 <!--<ComboBox PlaceholderText="Order By" HorizontalAlignment="Right" BorderThickness="0" Margin="0,0,10,0"
                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>-->
                 <uc:ComboBoxControl HorizontalAlignment="Right" Margin="0,0,10,0"/>
-                <GridView x:Name="DoctorGrid" ItemsSource="{x:Bind viewModel.doctors}" ItemContainerStyle="{StaticResource GridViewItemStyle1}" 
+                <GridView x:Name="DoctorGrid" ItemsSource="{x:Bind viewModel.doctors}" 
                           Margin="0,10,0,5"  Padding="5,0,5,0" IsItemClickEnabled="True" ItemClick="DoctorGrid_ItemClick">
                     <GridView.ItemContainerTransitions>
                         <TransitionCollection></TransitionCollection>

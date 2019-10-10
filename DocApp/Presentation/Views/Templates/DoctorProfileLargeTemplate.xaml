@@ -10,12 +10,12 @@
     Loaded="UserControl_Loaded"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    RequestedTheme="Dark">
+    RequestedTheme="Light">
     <UserControl.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="10,5"/>
             <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Foreground" Value="White"/>
+            <!--<Setter Property="Foreground" Value="White"/>-->
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
         </Style>
     </UserControl.Resources>
@@ -32,14 +32,14 @@
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,5" FontSize="16" FontWeight="ExtraBold"
-                   Foreground="White" FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
+                   FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
                     <RatingControl Value="{x:Bind doctor.Rating, Mode=OneWay}" HorizontalAlignment="Left" Margin="10,0"
                                        Caption="{x:Bind sys:String.Format('({0})',doctor.Number_of_Rating)}" 
                                        IsReadOnly="True" >
-                        <RatingControl.Resources>
+                        <!--<RatingControl.Resources>
                             <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
 
-                        </RatingControl.Resources>
+                        </RatingControl.Resources>-->
                     </RatingControl>
 
                 </StackPanel>

@@ -48,8 +48,9 @@ namespace DocApp.Presentation.Views
         public DoctorSearchViewModel viewModel;
         string address = "";
         int id;
+        int i;
         int hosp_id;
-        double pos;
+        int index;
         
         string time,app_date;
         MainPage mainPage;
@@ -100,6 +101,7 @@ namespace DocApp.Presentation.Views
             mainPage = args.mp;
             DeptListbox.SelectedIndex = args.index;
             mainPage.AutoSuggestChanged += this.onAutoSuggestChanged;
+            viewModel.DoctorsSuccess+=this.onDoctorsSuccess;
             viewModel.InsertFail += this.onInsertFail;
             viewModel.InsertSuccess += this.onInsertSuccess;
             viewModel.AppointmentRead += this.onAppointmentRead;
@@ -119,6 +121,11 @@ namespace DocApp.Presentation.Views
         //    if (GridItemClicked != null)
         //        GridItemClicked(this, new DocSendEventArgs { doc = d, view = this });
         //}
+        public void onDoctorsSuccess(object source, EventArgs args)
+        {
+            //mySplitView.IsPaneOpen = false;
+        }
+
 
         public void onDoctorReadSuccess(object source, EventArgs args)
         {
@@ -132,27 +139,36 @@ namespace DocApp.Presentation.Views
 
         public async void onDoctorRatingUpdateSucess(object source, EventArgs args)
         {
+            //i = index;
+            //viewModel.docs.Remove(viewModel.docs[index]);
+            //viewModel.docs.Insert(i, viewModel.doctor);
+            mySplitView.IsPaneOpen = true;
             await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
+
         }
 
         public async void onAutoSuggestChanged(object sender, navargs2 n)
         {
+            this.mySplitView.IsPaneOpen = false;
             address = n.location;
+            
             if (DeptListbox.SelectedItem != null)
                 await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
-            else
-                await viewModel.GetDoctors(address);
+           
+           this.mySplitView.IsPaneOpen = false;
+
+            
         }
         private async void MyRating_ValueChanged(RatingControl sender, object args)
         {
-
+            
             if (sender.Value > 0)
             {
                 Bindings.Update();
                 await viewModel.UpdateDoctor(id, (double)sender.Value);
                 Bindings.Update();
                 //await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
-               
+                myListView.SelectedIndex = i;
                 myRating.Caption = myRating.Value.ToString();
 
 
@@ -169,7 +185,7 @@ namespace DocApp.Presentation.Views
         {
             var listbox = sender as ListBox;
             var select = listbox.SelectedIndex;
-            myListView.SelectedIndex = -1;
+            //myListView.SelectedIndex = -1;
             if (myListView.SelectedIndex==-1)
                 mySplitView.IsPaneOpen = false;
             await viewModel.GetDoctorsByDept(address, select);
@@ -178,7 +194,8 @@ namespace DocApp.Presentation.Views
 
         private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-           
+            var temp = sender as ListView;
+            index = myListView.SelectedIndex;
             var doc = e.ClickedItem as Doctor;
             id = doc.ID;
             await viewModel.GetDoctor(id);
@@ -333,6 +350,7 @@ namespace DocApp.Presentation.Views
 
         private void MyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            index = myListView.SelectedIndex;
             mySplitView.IsPaneOpen = false;
             mySplitView.IsPaneOpen = true;
            // mySplitView.IsPaneOpen = false;

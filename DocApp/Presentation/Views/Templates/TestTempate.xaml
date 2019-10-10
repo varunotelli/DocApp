@@ -13,7 +13,7 @@
         <conv:RelativeTimeConverter x:Key="RelativeTimeConverter"/>
     </UserControl.Resources>
 
-    <Grid BorderBrush="White" BorderThickness="1" Padding="10">
+    <Grid BorderBrush="Black" BorderThickness="1" Padding="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>

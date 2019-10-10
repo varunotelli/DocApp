@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    RequestedTheme="Dark"
+    RequestedTheme="Light"
+    Background="#263440"
     >
     <Page.Resources>
         
@@ -49,15 +50,15 @@
                                                    
                                                    PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}" 
                                                    
-                                                   PointerOverBackground="#2e2e2e" 
+                                                   
                                                    
                                                    ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}" 
                                                    
                                                    SelectedForeground="{ThemeResource GridViewItemForegroundSelected}" 
                                                    SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}" 
-                                                   SelectedBackground="#2e2e2e" 
                                                    
-                                                   SelectedPointerOverBackground="#2e2e2e" 
+                                                   
+                                                   
                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
@@ -110,12 +111,12 @@
        
     </Page.Resources>
 
-    <Page.Background>
+    <!--<Page.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#2B2B2A" Offset="0.007"/>
             <GradientStop Color="#080808" Offset="0.548"/>
         </LinearGradientBrush>
-    </Page.Background>
+    </Page.Background>-->
 
     <Grid Margin="0,150,0,300" HorizontalAlignment="Stretch">
         <!--<TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1A3;" FontSize="80" VerticalAlignment="Center"
@@ -125,10 +126,10 @@
           TextAlignment="Center" Style="{StaticResource TextBlockStyle}" 
                    HorizontalAlignment="Center" Margin="0,20" TextWrapping="WrapWholeWords"/>-->
         <GridView HorizontalAlignment="Center" VerticalAlignment="Stretch" IsItemClickEnabled="True" 
-                  ItemContainerStyle="{StaticResource GridViewItemStyle1}" SelectionMode="Single" SelectionChanged="GridView_SelectionChanged">
+                   SelectionMode="Single" SelectionChanged="GridView_SelectionChanged">
             <GridViewItem Margin="0,10,20,10">
                 <Grid>
-                    <Image Source="ms-appx:///Assets/doctor.jpg" Height="400" Width="400" Opacity="0.4"
+                    <Image Source="ms-appx:///Assets/doctor.jpg" Height="400" Width="400" 
                            Stretch="UniformToFill"/>
                     <TextBlock HorizontalAlignment="Left" Text="Explore&#x0a;Doctors" VerticalAlignment="Bottom" Margin="30,0,0,30"
                         FontSize="38" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova"/>
@@ -136,7 +137,7 @@
             </GridViewItem>
             <GridViewItem Margin="10,10,10,10">
                 <Grid>
-                    <Image Source="ms-appx:///Assets/hospital.jpg" Width="400" Height="400" Opacity="0.4" Stretch="Fill"/>
+                    <Image Source="ms-appx:///Assets/hospital.jpg" Width="400" Height="400" Stretch="Fill"/>
                     <TextBlock HorizontalAlignment="Left" Text="Explore&#x0a;Hospitals" VerticalAlignment="Bottom" Margin="30,0,0,30"
                         FontSize="38" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova"/>
                 </Grid>

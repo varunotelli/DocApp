@@ -34,6 +34,7 @@ namespace DocApp.Presentation.ViewModels
         public delegate void DoctorReadSuccessEventHandler(object source, EventArgs args);
         public DoctorReadSuccessEventHandler DoctorReadSuccess;
         public DoctorReadSuccessEventHandler DoctorRatingUpdateSuccess;
+        public DoctorReadSuccessEventHandler DoctorsSuccess;
         public delegate void InsertSuccessEventHandler(object source, EventArgs e);
         public event InsertSuccessEventHandler InsertSuccess;
         public event InsertFailEventHandler TestimonialAddedSuccess;
@@ -73,6 +74,12 @@ namespace DocApp.Presentation.ViewModels
             timeslots = new ObservableCollection<Roster>();
             tests = new ObservableCollection<TestDetails>();
             
+        }
+
+        public void onDoctorsSuccess()
+        {
+            if (DoctorsSuccess != null)
+                DoctorsSuccess(this, EventArgs.Empty);
         }
 
         public void onDoctorReadSuccess()
@@ -279,11 +286,13 @@ namespace DocApp.Presentation.ViewModels
             docs.Clear();
             foreach (var x in doctors)
                 docs.Add(x);
+            onDoctorsSuccess();
             return true;
         }
 
         public bool DeptLocationViewFail()
         {
+            onDoctorsSuccess();
             System.Diagnostics.Debug.WriteLine("Dept location view fail");
             return false;
         }
@@ -291,15 +300,17 @@ namespace DocApp.Presentation.ViewModels
         public bool DoctorLocationReadSuccess(List<Doctor> doctors)
         {
             //docs = new ObservableCollection<Doctor>();
-
+            
             docs.Clear();
             foreach (var x in doctors)
                 docs.Add(x);
+            
             return true;
         }
 
         public bool DoctorLocationReadFail()
         {
+           
             System.Diagnostics.Debug.WriteLine("Doc location view fail");
             return false;
         }

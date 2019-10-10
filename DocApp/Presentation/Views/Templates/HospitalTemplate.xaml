@@ -13,7 +13,7 @@
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="10,5"/>
             <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
         </Style>
     </UserControl.Resources>
@@ -22,7 +22,7 @@
         <Image Height="100" Width="100" Source="ms-appx:///Assets/400_placeholder.png" />
         <StackPanel>
             <TextBlock Text="{x:Bind hospital.Name}" Margin="10,5" FontSize="18" FontWeight="Bold" TextTrimming="CharacterEllipsis"
-               TextWrapping="NoWrap" Foreground="White" FontFamily="ms-appx:///Assets/ProximaNova-ExtraBold.ttf#Proxima Nova"/>
+               TextWrapping="NoWrap" Foreground="Black" FontFamily="ms-appx:///Assets/ProximaNova-ExtraBold.ttf#Proxima Nova"/>
             <!--<TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', doctor.Experience)}" 
                    Style="{StaticResource TextBlockStyle}"/>-->
             <TextBlock Text="{x:Bind hospital.Location}" Style="{StaticResource TextBlockStyle}"/>

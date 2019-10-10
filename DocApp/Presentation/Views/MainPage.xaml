@@ -9,6 +9,7 @@
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     RequestedTheme="Light"
+    Background="#263440"
     >
     <Page.Resources>
         <ResourceDictionary>
@@ -17,23 +18,42 @@
             <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="White"/>
         
         
-        <Style x:Key="AutoboxStyle" TargetType="TextBox" >
-                <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
+        <Style x:Key="AutoboxStyle1" TargetType="TextBox" >
+            <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Height" Value="40"/>
-            <!--<Setter Property="CornerRadius" Value="30"/>-->
-            <Setter Property="Padding" Value="20,10,0,0"/>
+            <Setter Property="CornerRadius" Value="30,0,0,30"/>
+            <Setter Property="Padding" Value="20,10,20,10"/>
             <Setter Property="PlaceholderForeground" Value="Black"/>
             <!--<Setter Property="FontWeight" Value=""/>-->
             <!--<Setter Property="Margin" Value="20,0,20,0"/>-->
-            <Setter Property="BorderThickness" Value="0,0,0,0"/>
+            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <!--<Setter Property="Foreground" Value="Black"/>-->
 
 
-        </Style>
-        <Style x:Key="AutoListStyle" TargetType="ListViewItem">
+
+            </Style>
+
+            <Style x:Key="AutoboxStyle2" TargetType="TextBox" >
                 <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
-            <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="CornerRadius" Value="0,30,30,0"/>
+                <Setter Property="Padding" Value="20,10,20,10"/>
+                <Setter Property="PlaceholderForeground" Value="Black"/>
+                <!--<Setter Property="FontWeight" Value=""/>-->
+                <!--<Setter Property="Margin" Value="20,0,20,0"/>-->
+                <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                <!--<Setter Property="Foreground" Value="Black"/>-->
+
+
+
+            </Style>
+            <Style x:Key="AutoListStyle" TargetType="ListViewItem">
+                <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            
             
 
         </Style>
@@ -42,49 +62,63 @@
 
     </Page.Resources>
     
-    <Page.Background>
+    <!--<Page.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FF080808" Offset="0.688"/>
             <GradientStop Color="#FF313131" Offset="0.007"/>
         </LinearGradientBrush>
-    </Page.Background>
+    </Page.Background>-->
 
     
-        <StackPanel x:Name="MainStack" Margin="0,35,0,0">
+        <StackPanel x:Name="MainStack" Margin="0,10,0,0">
 
-        <RelativePanel>
-            <HyperlinkButton x:Name="BackButton" RelativePanel.AlignLeftWithPanel="True" Margin="10,10" Click="BackButton_Click">
+        
+            <!--<HyperlinkButton x:Name="BackButton" RelativePanel.AlignLeftWithPanel="True" Margin="10,10" Click="BackButton_Click">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE016;" FontSize="24"/>
-            </HyperlinkButton>
+            </HyperlinkButton>-->
             <!--<HyperlinkButton x:Name="ForwardButton" RelativePanel.RightOf="BackButton" Margin="5,10" Click="ForwardButton_Click">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE017;" FontSize="24"/>
             </HyperlinkButton>-->
+        <Grid HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,10,30">
+                <AutoSuggestBox x:Name="MyAutoSuggest" PlaceholderText="{x:Bind viewModel.loc, Mode=TwoWay}" TextChanged="MyAutoSuggest_TextChanged" 
+                    TextBoxStyle="{StaticResource AutoboxStyle1}" QuerySubmitted="MyAutoSuggest_QuerySubmitted" UpdateTextOnSelect="True"
+                    QueryIcon="Map" ItemContainerStyle="{StaticResource AutoListStyle}"  Width="200" Foreground="Black"
+                                Height="40"  FontSize="16" GotFocus="MyAutoSuggest_GotFocus"
+                                    
+                            Margin="35,5,0,5" SuggestionChosen="MyAutoSuggest_SuggestionChosen" BorderThickness="0,0,1,0" BorderBrush="Black"/>
+                <StackPanel>
+                    <AutoSuggestBox x:Name="HospDocSuggest" TextBoxStyle="{StaticResource AutoboxStyle2}"
+                                    PlaceholderText="Search for Doctor or Hospital" TextChanged="HospDocSuggest_TextChanged" 
+                    Height="40"  FontSize="16"
+                                    GotFocus="HospDocSuggest_GotFocus" BorderThickness="0,0,1,0" 
+                QueryIcon="Find" ItemContainerStyle="{StaticResource AutoListStyle}" Width="467" Margin="0,5,10,0" LostFocus="HospDocSuggest_LostFocus"/>
+                    <Popup x:Name="KeyWordBox" IsOpen="False" Margin="0,0,10,0" 
+                   Width="467">
+                        <ListBox Width="442" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" FontSize="14"
+                  ItemsSource="{x:Bind viewModel.keywords}" SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged"/>
+                    </Popup>
+                </StackPanel>
 
-            <AutoSuggestBox x:Name="MyAutoSuggest" PlaceholderText="{x:Bind viewModel.loc, Mode=TwoWay}" TextChanged="MyAutoSuggest_TextChanged" 
-                    TextBoxStyle="{StaticResource AutoboxStyle}" QuerySubmitted="MyAutoSuggest_QuerySubmitted" UpdateTextOnSelect="True"
-                    QueryIcon="Map" ItemContainerStyle="{StaticResource AutoListStyle}" RelativePanel.RightOf="BackButton" Width="467"
-                            Margin="35,5" SuggestionChosen="MyAutoSuggest_SuggestionChosen"/>
+
+                
+            </StackPanel>
+            <HyperlinkButton Name="AppBtn" BorderThickness="0,0,0,1" Padding="0" Click="AppBtn_Click"
+                             Margin="0,0,30,-3" HorizontalAlignment="Right">
+                <TextBlock Text="Your Appointments" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" 
+                           FontSize="16"/>
+            </HyperlinkButton>
+        </Grid>
 
             
-            <AutoSuggestBox x:Name="HospDocSuggest" PlaceholderText="Search for Doctor or Hospital" TextChanged="HospDocSuggest_TextChanged" 
-                    TextBoxStyle="{StaticResource AutoboxStyle}" RelativePanel.RightOf="MyAutoSuggest" GotFocus="HospDocSuggest_GotFocus"
-                QueryIcon="Find" ItemContainerStyle="{StaticResource AutoListStyle}" Width="467" Margin="0,5,10,0" LostFocus="HospDocSuggest_LostFocus"/>
             <!--<ComboBox x:Name="DeptComboBox" PlaceholderText="All Departments" RelativePanel.LeftOf="HospDocSuggest" Margin="0,5"
                       Height="40" BorderThickness="0,0,1.5,0" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"
                  AllowDrop="True" FontSize="14" ItemsSource="{x:Bind viewModel.depts}" 
                       DropDownOpened="Comboboxitem_DropDownOpened"/>-->
-            <Popup x:Name="KeyWordBox" IsOpen="False" RelativePanel.Below="HospDocSuggest" Margin="0,0,10,0" RelativePanel.RightOf="MyAutoSuggest"
-                   Width="467">
-                <ListBox Width="467" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" FontSize="14"
-                  ItemsSource="{x:Bind viewModel.keywords}" SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged"/>
-            </Popup>
-            <HyperlinkButton Name="AppBtn" BorderThickness="0,0,0,1" Padding="0" Click="AppBtn_Click"
-                             Margin="0,15,30,-3" RelativePanel.AlignRightWithPanel="True">
-                <TextBlock Text="Your Appointments" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" 
-                           FontSize="16"/>
-            </HyperlinkButton>
+           
+           
 
-        </RelativePanel>
+        
         <ProgressRing x:Name="progring" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100" Foreground="White" 
                       Margin="0,200,0,100"></ProgressRing>
         <TextBlock x:Name="LoadText" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"
@@ -93,7 +127,7 @@
         <TextBlock x:Name="StatusText" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
                    Foreground="DimGray"  FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" Margin="0,20">
             CONNECTING</TextBlock>
-        <Frame x:Name="myFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,10">
+        <Frame x:Name="myFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0">
 
         </Frame>
     </StackPanel>

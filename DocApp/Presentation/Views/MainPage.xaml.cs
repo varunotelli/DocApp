@@ -214,7 +214,11 @@ namespace DocApp.Presentation.Views
         private async void HospDocSuggest_GotFocus(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("GOT FOCUS");
-            KeyWordBox.IsOpen = true;
+            if (MyAutoSuggest.IsFocusEngaged == false)
+            {
+                KeyWordBox.IsOpen = true;
+                HospDocSuggest.IsFocusEngaged = false;
+            }
             await viewModel.GetKeyWords();
            
         }
@@ -235,11 +239,17 @@ namespace DocApp.Presentation.Views
                     index = (sender as ListBox).SelectedIndex
                 });
             }
+            KeyWordBox.IsOpen = false;
         }
 
         private void AppBtn_Click(object sender, RoutedEventArgs e)
         {
             myFrame.Navigate(typeof(AppointmentsDisplayView));
+        }
+
+        private void MyAutoSuggest_GotFocus(object sender, RoutedEventArgs e)
+        {
+            KeyWordBox.IsOpen = false;
         }
     }
 }

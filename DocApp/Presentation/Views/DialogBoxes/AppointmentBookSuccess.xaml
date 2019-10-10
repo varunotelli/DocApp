@@ -11,8 +11,8 @@
     
     
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    Background="#FF121212"
-    RequestedTheme="Dark">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    RequestedTheme="Light">
    
 
     <Grid>

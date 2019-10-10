@@ -8,13 +8,14 @@
     xmlns:data="using:DocApp.Models"
     xmlns:uc="using:DocApp.Presentation.Views.Templates"
     mc:Ignorable="d"
-    RequestedTheme="Dark">
-    <Page.Background>
+    RequestedTheme="Light"
+    Background="White">
+    <!--<Page.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#2A2A2A" Offset="0.007"/>
             <GradientStop Color="#080808" Offset="0.548"/>
         </LinearGradientBrush>
-    </Page.Background>
+    </Page.Background>-->
     <Page.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
@@ -143,7 +144,7 @@
             <TextBlock Text="TIME" Grid.Column="4" Style="{StaticResource TextBlockStyle}" Margin="35,0"/>
             <ListView ItemsSource="{x:Bind viewModel.apps, Mode=OneWay}" Height="600" SelectionMode="Single"
                           ScrollViewer.VerticalScrollBarVisibility="Auto" BorderThickness="0,0.5,0,0" 
-                          BorderBrush="#303030" ItemContainerStyle="{StaticResource ListViewItemStyle1}"
+                          BorderBrush="#303030" 
                           HorizontalAlignment="Stretch" Grid.ColumnSpan="5" Margin="0,20" 
                       ScrollViewer.VerticalScrollMode="Enabled">
                    
