@@ -9,32 +9,57 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    RequestedTheme="Dark">
+    RequestedTheme="Light">
     <UserControl.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="10,5"/>
             <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
         </Style>
     </UserControl.Resources>
 
-    <StackPanel>
-        <Image Source="ms-appx:///Assets/400_placeholder.png" Width="300" Height="300" Stretch="UniformToFill"/>
-        <TextBlock Text="{x:Bind hospital.Name}" Margin="10,5" FontSize="18" FontWeight="ExtraBold"
-                   Foreground="White" FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
-        <!--<TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', doctor.Experience)}" 
-                   Style="{StaticResource TextBlockStyle}"/>-->
-        <TextBlock Text="{x:Bind hospital.Location}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"
-                       TextTrimming="CharacterEllipsis"/>
-        <RatingControl Value="{x:Bind hospital.Rating}" HorizontalAlignment="Left" Margin="10,3"
+    <Grid Margin="10,10" >
+        <StackPanel Orientation="Horizontal" >
+            <Image x:Name="Img" Width="100" Height="100" Stretch="UniformToFill" >
+                <Image.Source>
+                    <BitmapImage UriSource="{x:Bind hospital.Image, Mode=OneWay}"/>
+                </Image.Source>
+
+
+            </Image>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{x:Bind hospital.Name}" Margin="10,5" FontSize="16" FontWeight="ExtraBold"
+                   FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
+                    <RatingControl Value="{x:Bind hospital.Rating, Mode=OneWay}" HorizontalAlignment="Left" Margin="10,0"
                                        Caption="{x:Bind sys:String.Format('({0})',hospital.Number_Of_Rating)}" 
                                        IsReadOnly="True" >
-            <RatingControl.Resources>
-                <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
+                        <!--<RatingControl.Resources>
+                            <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
 
-            </RatingControl.Resources>
-        </RatingControl>
+                        </RatingControl.Resources>-->
+                    </RatingControl>
 
-    </StackPanel>
+                </StackPanel>
+                
+                <TextBlock Text="{x:Bind hospital.Location}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"
+                       TextTrimming="CharacterEllipsis"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}">
+                    <Run Text="{x:Bind hospital.Start_Time}"/>
+                    <Run Text="-"/>
+                    <Run Text="{x:Bind hospital.Close_Time}"/>
+                </TextBlock>
+                <TextBlock Text="{x:Bind hospital.Speciality}" Style="{StaticResource TextBlockStyle}"/>
+
+
+            </StackPanel>
+
+
+        </StackPanel>
+        <!--<HyperlinkButton VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <TextBlock Text="View full profile" />
+        </HyperlinkButton>-->
+
+    </Grid>
 </UserControl>

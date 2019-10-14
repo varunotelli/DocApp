@@ -11,36 +11,45 @@
     d:DesignWidth="400">
     <UserControl.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="Margin" Value="10,0"/>
             <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
         </Style>
     </UserControl.Resources>
 
     <Grid Margin="10,10">
-        <StackPanel>
-            <Image Source="ms-appx:///Assets/400_placeholder.png" Width="200" Height="200" Stretch="UniformToFill"/>
-            <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,5" FontSize="14" FontWeight="ExtraBold"
-                   Foreground="White" FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
-            
-            <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+
+            <Image Source="{x:Bind doctor.Image}" Width="120" Height="120" Stretch="UniformToFill"/>
+            <StackPanel>
+                <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,2" FontSize="14" FontWeight="ExtraBold"
+                   Foreground="Black" FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
+
+                <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"
                        TextTrimming="CharacterEllipsis"/>
-            <RatingControl Value="{x:Bind doctor.Rating}" HorizontalAlignment="Left" Margin="10,3"
+                <RatingControl Value="{x:Bind doctor.Rating}" HorizontalAlignment="Left" Margin="10,-5"
                                        Caption="{x:Bind sys:String.Format('({0})',doctor.Number_of_Rating)}" 
                                        IsReadOnly="True" >
-                <RatingControl.Resources>
-                    <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
+                    <RatingControl.Resources>
+                        <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
 
-                </RatingControl.Resources>
-            </RatingControl>
-            <TextBlock Style="{StaticResource TextBlockStyle}">
+                    </RatingControl.Resources>
+                </RatingControl>
+                <TextBlock Style="{StaticResource TextBlockStyle}">
                 <Run Text="{x:Bind doctor.Start_Time}"/>
                 <Run Text="-"/>
                 <Run Text="{x:Bind doctor.End_Time}"/>
-            </TextBlock>
-            <TextBlock Text="{x:Bind sys:String.Format('Rs.{0}', doctor.fees)}" 
+                </TextBlock>
+                <TextBlock Text="{x:Bind sys:String.Format('Rs.{0}', doctor.fees)}" 
                    Style="{StaticResource TextBlockStyle}"/>
+                <Button Style="{StaticResource ButtonStyle1}" x:Name="BookButton"  Content="BOOK" Margin="10,20" 
+                           FontStretch="ExtraExpanded" Click="BookButton_Click" 
+                    FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
+                            FontSize="12"/>
+            </StackPanel>
+            
         </StackPanel>
 
     </Grid>

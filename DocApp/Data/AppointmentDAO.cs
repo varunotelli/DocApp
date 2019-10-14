@@ -59,6 +59,19 @@ namespace DocApp.Data
             }
         }
 
+        public async Task CheckAppointment(int p_id,string app_date, string time, ICheckAppointmentCallback callback)
+        {
+            if (DBHandler.db == null)
+                DBHandler.DBConnection();
+            int count = await DBHandler.db.ExecuteScalarAsync<int>(String.Format("SELECT COUNT(*) FROM APPOINTMENT WHERE " +
+                "PATIENT_ID={0} AND " +
+                "APP_DATE='{1}' AND START_TIME='{2}'",p_id,app_date,time));
+            if (count >= 0)
+                callback.CheckAppointmentSuccess(count);
+            else callback.CheckAppointmentFail();
+
+        }
+
        
     }
 }

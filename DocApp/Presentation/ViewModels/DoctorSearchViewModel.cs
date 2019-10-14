@@ -13,7 +13,9 @@ namespace DocApp.Presentation.ViewModels
 {
     public class DoctorSearchViewModel : IDepartmentViewCallback,IDoctorDeptLocationViewCallback,IDoctorLocationPresenterCallBack,
         INotifyPropertyChanged,IDoctorDetailViewCallBack,IDoctorRatingUpdateViewCallback,IHospitalDoctorViewCallBack,IRosterViewCallback,
-        IAppBookingViewCallback,IAppByIDViewCallback,ITestDetailsViewCallback,ITestViewCallback,ILastTestViewCallback
+        IAppBookingViewCallback,IAppByIDViewCallback,ITestDetailsViewCallback,ITestViewCallback,ILastTestViewCallback, IHospitalByDeptViewCallback, 
+        IHospitalLocationPresenterCallBack, IHospitalDetailViewCallBack, IDoctorHospitalDetailViewCallback,
+        IHospitalRatingUpdateViewCallback,ICheckAppointmentViewCallback
     {
         public UseCaseBase getDepts;
         public UseCaseBase getDocs;
@@ -25,16 +27,24 @@ namespace DocApp.Presentation.ViewModels
         public UseCaseBase getApp;
         public UseCaseBase getTest;
         public UseCaseBase addTest;
+        public UseCaseBase getHosps;
+        public UseCaseBase getHospital;
+        public UseCaseBase getDoctorByHospital;
+        public UseCaseBase updateHospital;
+        public UseCaseBase checkApp;
         public AppointmentDetails app;
         public ObservableCollection<string> deptnames;
         public ObservableCollection<HospitalInDoctorDetails> hospitals;
+        public ObservableCollection<DoctorInHospitalDetails> Doctors;
         public ObservableCollection<Roster> timeslots;
         public ObservableCollection<Doctor> docs;
+        public ObservableCollection<Hospital> hosps;
         public ObservableCollection<TestDetails> tests;
-        public delegate void DoctorReadSuccessEventHandler(object source, EventArgs args);
-        public DoctorReadSuccessEventHandler DoctorReadSuccess;
-        public DoctorReadSuccessEventHandler DoctorRatingUpdateSuccess;
-        public DoctorReadSuccessEventHandler DoctorsSuccess;
+        public delegate void ReadSuccessEventHandler(object source, EventArgs args);
+        public ReadSuccessEventHandler DoctorReadSuccess;
+        public ReadSuccessEventHandler DoctorRatingUpdateSuccess;
+        public ReadSuccessEventHandler HospitalRatingUpdateSuccess;
+        public ReadSuccessEventHandler DoctorsSuccess;
         public delegate void InsertSuccessEventHandler(object source, EventArgs e);
         public event InsertSuccessEventHandler InsertSuccess;
         public event InsertFailEventHandler TestimonialAddedSuccess;
@@ -43,6 +53,8 @@ namespace DocApp.Presentation.ViewModels
         public event InsertFailEventHandler TestimonialAddedFail;
         public delegate void AppointmentReadEventHandler(object source, EventArgs e);
         public event AppointmentReadEventHandler AppointmentRead;
+        public event AppointmentReadEventHandler AppointmentCheckSuccess;
+        public int ct = -1;
 
         private Doctor doc;
         public Doctor doctor
@@ -55,6 +67,28 @@ namespace DocApp.Presentation.ViewModels
 
             }
         }
+        private Hospital h;
+        public Hospital hospital
+        {
+            get { return h; }
+            set
+            {
+                h = value;
+                RaisePropertyChanged("hospital");
+
+            }
+        }
+        private bool e;
+        public bool enabled
+        {
+            get { return e; }
+            set
+            {
+                e = value;
+                RaisePropertyChanged("enabled");
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string name)
         {
@@ -62,9 +96,10 @@ namespace DocApp.Presentation.ViewModels
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
 
-
             }
         }
+
+        
 
         public DoctorSearchViewModel()
         {
@@ -73,8 +108,18 @@ namespace DocApp.Presentation.ViewModels
             hospitals = new ObservableCollection<HospitalInDoctorDetails>();
             timeslots = new ObservableCollection<Roster>();
             tests = new ObservableCollection<TestDetails>();
+            hosps = new ObservableCollection<Hospital>();
+            Doctors = new ObservableCollection<DoctorInHospitalDetails>();
             
         }
+
+
+        public void onAppCheckSuccess()
+        {
+            if (AppointmentCheckSuccess != null)
+                AppointmentCheckSuccess(this, EventArgs.Empty);
+        }
+        
 
         public void onDoctorsSuccess()
         {
@@ -87,6 +132,13 @@ namespace DocApp.Presentation.ViewModels
             if (DoctorReadSuccess != null)
                 DoctorReadSuccess(this, EventArgs.Empty);
         }
+
+        public void onHospitalRatingUpdateSuccess()
+        {
+            if (HospitalRatingUpdateSuccess != null)
+                HospitalRatingUpdateSuccess(this, EventArgs.Empty);
+        }
+
         public void onDoctorRatingUpdateSuccess()
         {
             if (DoctorRatingUpdateSuccess != null)
@@ -122,6 +174,14 @@ namespace DocApp.Presentation.ViewModels
                 AppointmentRead(this, EventArgs.Empty);
         }
 
+
+        public async Task CheckApp(int p_id,string app_date, string time)
+        {
+            checkApp = new CheckAppointmentUseCase(p_id, app_date, time);
+            checkApp.SetCallBack(this);
+            await checkApp.Execute();
+        }
+
         public async Task GetDoctor(int id)
         {
             
@@ -142,10 +202,6 @@ namespace DocApp.Presentation.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine("EXCEPTION=" + e.Message);
             }
-
-
-
-
         }
 
         public async Task GetTimeSlots(int doc_id, int hosp_id, string app_date)
@@ -189,13 +245,53 @@ namespace DocApp.Presentation.ViewModels
             getDocs.SetCallBack<IDoctorDeptLocationViewCallback>(this);
             await getDocs.Execute();
         }
+
+        public async Task GetHospitals(string location)
+        {
+            getHosp = new GetHospitalByLocationUseCase(location);
+            getHosp.SetCallBack<IHospitalLocationPresenterCallBack>(this);
+            await getHosp.Execute();
+        }
+
+        public async Task GetHospitalByDept(string location, int dept)
+        {
+            getHosp = new GetHospitalByDeptUseCase(location.ToUpper(), dept + 1);
+            getHosp.SetCallBack<IHospitalByDeptViewCallback>(this);
+            await getHosp.Execute();
+        }
+
+        public async Task GetHospital(int id)
+        {
+            Doctors = new ObservableCollection<DoctorInHospitalDetails>();
+            getHospital = new GetHospitalUseCase(id);
+            getDoctorByHospital = new GetDoctorByHospitalUseCase(id);
+            getHospital.SetCallBack<IHospitalDetailViewCallBack>(this);
+            getDoctorByHospital.SetCallBack<IDoctorHospitalDetailViewCallback>(this);
+            try
+            {
+                await getHospital.Execute();
+                await getDoctorByHospital.Execute();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION=" + e.Message);
+            }
+        }
+
+        public async Task UpdateHospitalRating(int id, double rating)
+        {
+            updateHospital = new UpdateHospitalRatingUseCase(id, rating);
+            updateHospital.SetCallBack(this);
+            await updateHospital.Execute();
+        }
+
+
         public async Task BookAppointment(int p_id, int doc_id, int hosp_id, string app_date, string start)
         {
             bookApp = new BookAppointmentUseCase(p_id, doc_id, hosp_id, app_date, start);
             bookApp.SetCallBack(this);
             try
             {
-
                 await bookApp.Execute();
         
             }
@@ -429,6 +525,71 @@ namespace DocApp.Presentation.ViewModels
         }
 
         public bool LastTestViewFail()
+        {
+            return false;
+        }
+
+        public bool HospitalLocationReadFail()
+        {
+            return false;
+        }
+
+        public bool HospitalLocationReadSuccess(List<Hospital> h)
+        {
+            hosps.Clear();
+            foreach (var x in h)
+                hosps.Add(x);
+            return true;
+        }
+
+        public bool ReadViewFail()
+        {
+            return false;
+        }
+
+        public bool ReadViewSuccess(List<Hospital> h)
+        {
+            hosps.Clear();
+            foreach (var x in h)
+                hosps.Add(x);
+            return true;
+        }
+        public bool DataReadSuccess(Hospital h)
+        {
+            this.hospital = h;
+            //onHospitalRatingUpdateSuccess();
+            return true;
+        }
+
+        
+        public bool DataReadSuccess(List<DoctorInHospitalDetails> d)
+        {
+            Doctors.Clear();
+            foreach (var x in d)
+                Doctors.Add(x);
+            return true;
+        }
+
+        public bool HospitalUpdateSuccess(Hospital h)
+        {
+            this.hospital = h;
+            onHospitalRatingUpdateSuccess();
+            return true;
+        }
+
+        public bool HospitalUpdateFail()
+        {
+            return false;
+        }
+
+        public bool CheckAppointmentViewSuccess(int count)
+        {
+            ct = count;
+            onAppCheckSuccess();
+            return true;
+        }
+
+        public bool CheckAppointmentViewFail()
         {
             return false;
         }

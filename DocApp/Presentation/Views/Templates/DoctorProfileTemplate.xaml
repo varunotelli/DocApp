@@ -9,10 +9,10 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    RequestedTheme="Dark">
+    RequestedTheme="Light">
     <UserControl.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="Margin" Value="10,0"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
@@ -23,11 +23,11 @@
         <Image Height="100" Width="100" Source="{x:Bind doctor.Image}" />
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,5" FontSize="16" FontWeight="ExtraBold"
+                <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,0" FontSize="12" FontWeight="ExtraBold"
                    Foreground="Black" FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
-                <RatingControl Value="{x:Bind doctor.Rating}" HorizontalAlignment="Left" Margin="10,0"
+                <RatingControl Value="{x:Bind doctor.Rating}" HorizontalAlignment="Left" Margin="0,0"
                                        Caption="{x:Bind sys:String.Format('({0})',doctor.Number_of_Rating)}" 
-                                       IsReadOnly="True" Foreground="Black" >
+                                       IsReadOnly="True" Foreground="Black" RequestedTheme="Dark">
                 </RatingControl>
             </StackPanel>
            

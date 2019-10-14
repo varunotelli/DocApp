@@ -19,7 +19,7 @@ namespace DocApp.Presentation.Views.Templates
 {
     public class ButtonClickArgs:EventArgs
     {
-        public Models.HospitalInDoctorDetails model { get; set; }
+        public int id_val { get; set; }
     }
 
     public sealed partial class HospitalsInDoctorsTemplate : UserControl
@@ -37,7 +37,7 @@ namespace DocApp.Presentation.Views.Templates
         public void onButtonClicked()
         {
             if (ButtonClicked != null)
-                ButtonClicked(this, new ButtonClickArgs {model=hospital });
+                ButtonClicked(this, new ButtonClickArgs {id_val=hospital.Hosp_ID });
         }
 
         private void BookButton_Click(object sender, RoutedEventArgs e)

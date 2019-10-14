@@ -84,9 +84,10 @@
                 <AutoSuggestBox x:Name="MyAutoSuggest" PlaceholderText="{x:Bind viewModel.loc, Mode=TwoWay}" TextChanged="MyAutoSuggest_TextChanged" 
                     TextBoxStyle="{StaticResource AutoboxStyle1}" QuerySubmitted="MyAutoSuggest_QuerySubmitted" UpdateTextOnSelect="True"
                     QueryIcon="Map" ItemContainerStyle="{StaticResource AutoListStyle}"  Width="200" Foreground="Black"
-                                Height="40"  FontSize="16" GotFocus="MyAutoSuggest_GotFocus"
+                                Height="40"  FontSize="16" GotFocus="MyAutoSuggest_GotFocus" IsFocusEngaged="False"
                                     
-                            Margin="35,5,0,5" SuggestionChosen="MyAutoSuggest_SuggestionChosen" BorderThickness="0,0,1,0" BorderBrush="Black"/>
+                            Margin="35,5,0,5" SuggestionChosen="MyAutoSuggest_SuggestionChosen" BorderThickness="0,0,1,0" 
+                                BorderBrush="Black"/>
                 <StackPanel>
                     <AutoSuggestBox x:Name="HospDocSuggest" TextBoxStyle="{StaticResource AutoboxStyle2}"
                                     PlaceholderText="Search for Doctor or Hospital" TextChanged="HospDocSuggest_TextChanged" 
@@ -125,7 +126,7 @@
                    Foreground="White" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova">
             LOADING HEALTH AND WELLNESS JUST FOR YOU</TextBlock>
         <TextBlock x:Name="StatusText" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
-                   Foreground="DimGray"  FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" Margin="0,20">
+                   Foreground="White"  FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" Margin="0,20">
             CONNECTING</TextBlock>
         <Frame x:Name="myFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0">
 

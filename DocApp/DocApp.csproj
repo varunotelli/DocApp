@@ -138,6 +138,7 @@
     <Compile Include="Domain\Callbacks\IAddressCallBack.cs" />
     <Compile Include="Domain\Callbacks\IAppointmentCallback.cs" />
     <Compile Include="Domain\Callbacks\IBookAppointmentCallback.cs" />
+    <Compile Include="Domain\Callbacks\ICheckAppointmentCallback.cs" />
     <Compile Include="Domain\Callbacks\IDepartmentListCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDoctorCallback.cs" />
     <Compile Include="Domain\Callbacks\IDoctorCountByDeptCallback.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Domain\DataContracts\ITestDetails.cs" />
     <Compile Include="Domain\UseCase\AddTestimonialUseCase.cs" />
     <Compile Include="Domain\UseCase\BookAppointmentUseCase.cs" />
+    <Compile Include="Domain\UseCase\CheckAppointmentUseCase.cs" />
     <Compile Include="Domain\UseCase\GetAddressUseCase.cs" />
     <Compile Include="Domain\UseCase\GetAppointmentByIDUseCase.cs" />
     <Compile Include="Domain\UseCase\GetAppointmentsUseCase.cs" />
@@ -204,6 +206,7 @@
     <Compile Include="Presentation\Callbacks\IAppBookingViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IAppByIDViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IAppDisplayViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\ICheckAppointmentViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IDepartmentViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IDoctorDeptLocationViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IDoctorLocationPresenterCallBack.cs" />
@@ -211,6 +214,7 @@
     <Compile Include="Presentation\Callbacks\IGetLocationPresenterCallback.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalByDeptViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalLocationPresenterCallBack.cs" />
+    <Compile Include="Presentation\Callbacks\IHospitalRatingUpdateViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IKeywordViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ILastTestViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IRosterViewCallback.cs" />

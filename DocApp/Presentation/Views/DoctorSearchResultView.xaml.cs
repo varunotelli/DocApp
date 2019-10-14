@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using System.Text.RegularExpressions;
+using Windows.UI;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,7 +31,10 @@ namespace DocApp.Presentation.Views
      * @todo Style Testimonials and fix testimonial bugs
      * @todo Complete insert Testimonial
      * @todo Complete show more show less functionality for description
-     * 
+     * @todo Add filters
+     * @todo Display next available slots if no vacancy
+     * @todo Back Button for Appointments
+     * @todo Custom Calendar
      */
 
      public class DocSendEventArgs: EventArgs
@@ -48,10 +52,10 @@ namespace DocApp.Presentation.Views
         public DoctorSearchViewModel viewModel;
         string address = "";
         int id;
-        int i;
+        int h_id;
         int hosp_id;
         int index;
-        
+        bool en;
         string time,app_date;
         MainPage mainPage;
         public DoctorSearchResultView()
@@ -65,14 +69,41 @@ namespace DocApp.Presentation.Views
 
         public void onButtonClicked(object source, ButtonClickArgs args)
         {
-            System.Diagnostics.Debug.WriteLine(args.model.Name);
-            hosp_id = args.model.Hosp_ID;
+            //System.Diagnostics.Debug.WriteLine(args.model.Name);
+            hosp_id = args.id_val;
             //pos = MyScroll.VerticalOffset;
             //MyScroll.ChangeView(null, 100, 1);
             Book_Pop.Visibility = Visibility.Visible;
             Book_Pop.IsOpen = true;
             HospList.SelectedItem = ((FrameworkElement)source).DataContext;
         }
+
+        public void onHospButtonClicked(object source, ButtonClickArgs args)
+        {
+            id = args.id_val;
+            Book_Pop.Visibility = Visibility.Visible;
+            Book_Pop.IsOpen = true;
+            DocList.SelectedItem = ((FrameworkElement)source).DataContext;
+
+        }
+
+        public async void onAppCheckSuccess(object source, EventArgs args)
+        {
+            if(viewModel.ct>0)
+            {
+                AppointmentBookSuccess bookFail = new AppointmentBookSuccess()
+                {
+                    Title = "Appointment Booking Failed",
+                    Content = String.Format("You already have an appointment on {0} at {1}", app_date, time),
+                    CloseButtonText = "OK"
+
+                };
+                await bookFail.ShowAsync();
+                TimeSlotBox.SelectedIndex = -1;
+            }
+
+        }
+
         private async void TimeSlotBox_DropDownOpened(object sender, object e)
         {
 
@@ -80,13 +111,30 @@ namespace DocApp.Presentation.Views
             Bindings.Update();
         }
 
-        private void TimeSlotBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void TimeSlotBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox box = sender as ComboBox;
             if (box.SelectedIndex != -1)
             {
                 var val = box.SelectedItem as Roster;
                 time = val.start_time.ToString();
+                if(val.val==0)
+                {
+                    AppointmentBookSuccess bookFail = new AppointmentBookSuccess()
+                    {
+                        Title = "Appointment Booking Failed",
+                        Content = String.Format("No vacancies on {0} at {1}", app_date, time),
+                        CloseButtonText = "OK"
+
+                    };
+                    await bookFail.ShowAsync();
+                    box.SelectedIndex = -1;
+                }
+                else
+                {
+                    await viewModel.CheckApp(1, app_date, time);
+                }
+
             }
             BookButton.IsEnabled = (Appointment_Date.Date != null) && (TimeSlotBox.SelectedIndex != -1);
             Bindings.Update();
@@ -100,6 +148,10 @@ namespace DocApp.Presentation.Views
             address = args.name;
             mainPage = args.mp;
             DeptListbox.SelectedIndex = args.index;
+            if (args.doc)
+                MainTabs.SelectedIndex = 0;
+            else
+                MainTabs.SelectedIndex = 1;
             mainPage.AutoSuggestChanged += this.onAutoSuggestChanged;
             viewModel.DoctorsSuccess+=this.onDoctorsSuccess;
             viewModel.InsertFail += this.onInsertFail;
@@ -107,44 +159,54 @@ namespace DocApp.Presentation.Views
             viewModel.AppointmentRead += this.onAppointmentRead;
             viewModel.DoctorRatingUpdateSuccess += this.onDoctorRatingUpdateSucess;
             viewModel.TestimonialAddedSuccess += this.onTestAddedSuccess;
-            await viewModel.GetDoctors(address);
-            
-           
+            viewModel.HospitalRatingUpdateSuccess += this.onHospitalUpdateSuccess;
+            viewModel.AppointmentCheckSuccess += this.onAppCheckSuccess;
+         
             await viewModel.GetDepartments();
             
             //Bindings.Update();
 
         }
 
-        //public void onGridItemClicked(Doctor d)
-        //{
-        //    if (GridItemClicked != null)
-        //        GridItemClicked(this, new DocSendEventArgs { doc = d, view = this });
-        //}
+        public void onHospitalUpdateSuccess(object source, EventArgs args)
+        {
+            myHospSplitView.IsPaneOpen = true;
+            int x = -1;
+           
+            for (int i = 0; i < viewModel.hosps.Count; i++)
+                if (viewModel.hosps[i].ID == hosp_id)
+                {
+                    x = i;
+                    break;
+                }
+            viewModel.hosps.Remove(viewModel.hosps[x]);
+            viewModel.hosps.Insert(x, viewModel.hospital);
+        }
+        
         public void onDoctorsSuccess(object source, EventArgs args)
         {
-            //mySplitView.IsPaneOpen = false;
+            mySplitView.IsPaneOpen = false;
+            myHospSplitView.IsPaneOpen = false;
         }
 
 
         public void onDoctorReadSuccess(object source, EventArgs args)
         {
-            //myListView.SelectedIndex = -1;
-            //Bindings.Update();
             mySplitView.IsPaneOpen = true;
-            
-
-
         }
 
-        public async void onDoctorRatingUpdateSucess(object source, EventArgs args)
+        public void onDoctorRatingUpdateSucess(object source, EventArgs args)
         {
-            //i = index;
-            //viewModel.docs.Remove(viewModel.docs[index]);
-            //viewModel.docs.Insert(i, viewModel.doctor);
-            mySplitView.IsPaneOpen = true;
-            await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
-
+            int x=-1;
+          
+            for(int i=0;i<viewModel.docs.Count;i++)
+                if(viewModel.docs[i].ID==id)
+                {
+                    x = i;
+                    break;
+                }
+            viewModel.docs.Remove(viewModel.docs[x]);
+            viewModel.docs.Insert(x, viewModel.doctor);
         }
 
         public async void onAutoSuggestChanged(object sender, navargs2 n)
@@ -153,10 +215,19 @@ namespace DocApp.Presentation.Views
             address = n.location;
             
             if (DeptListbox.SelectedItem != null)
-                await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
-           
-           this.mySplitView.IsPaneOpen = false;
-
+            {
+                if (MainTabs.SelectedIndex == 0)
+                {
+                    await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
+                    this.mySplitView.IsPaneOpen = false;
+                }
+                else if (MainTabs.SelectedIndex==1)
+                {
+                    await viewModel.GetHospitalByDept(address, DeptListbox.SelectedIndex);
+                    this.myHospSplitView.IsPaneOpen = false;
+                    Bindings.Update();
+                }
+            }
             
         }
         private async void MyRating_ValueChanged(RatingControl sender, object args)
@@ -164,31 +235,30 @@ namespace DocApp.Presentation.Views
             
             if (sender.Value > 0)
             {
-                Bindings.Update();
+                
                 await viewModel.UpdateDoctor(id, (double)sender.Value);
-                Bindings.Update();
-                //await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
-                myListView.SelectedIndex = i;
+               
+                myListView.SelectedIndex = index;
                 myRating.Caption = myRating.Value.ToString();
-
-
 
             }
 
         }
 
-
-
-       
-
         private async void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            mySplitView.IsPaneOpen = false;
+            myHospSplitView.IsPaneOpen = false;
             var listbox = sender as ListBox;
             var select = listbox.SelectedIndex;
             //myListView.SelectedIndex = -1;
             if (myListView.SelectedIndex==-1)
                 mySplitView.IsPaneOpen = false;
-            await viewModel.GetDoctorsByDept(address, select);
+            if (MainTabs.SelectedIndex == 0)
+                await viewModel.GetDoctorsByDept(address, select);
+            else if (MainTabs.SelectedIndex == 1)
+                await viewModel.GetHospitalByDept(address, select);
+            
             //Bindings.Update();
         }
 
@@ -199,9 +269,8 @@ namespace DocApp.Presentation.Views
             var doc = e.ClickedItem as Doctor;
             id = doc.ID;
             await viewModel.GetDoctor(id);
-            
+            mySplitView.IsPaneOpen = false;
             mySplitView.IsPaneOpen = true;
-           
 
         }
 
@@ -214,8 +283,8 @@ namespace DocApp.Presentation.Views
             StackPanel grid = mp1.Content as StackPanel;
             
             Frame my_frame = grid.FindName("myFrame") as Frame;
-            my_frame.Navigate(typeof(HospitalDetailView), (e.ClickedItem as HospitalInDoctorDetails).Hosp_ID, 
-                new SuppressNavigationTransitionInfo());
+            //my_frame.Navigate(typeof(HospitalDetailView), (e.ClickedItem as HospitalInDoctorDetails).Hosp_ID, 
+            //    new SuppressNavigationTransitionInfo());
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
@@ -237,7 +306,6 @@ namespace DocApp.Presentation.Views
             if (sender.Date != null)
             {
                 var date = sender.Date;
-
                 DateTime t = date.Value.DateTime;
                 app_date = String.Format("{0:yyyy-MM-dd}", t);
                 System.Diagnostics.Debug.WriteLine("date=" + app_date);
@@ -285,7 +353,7 @@ namespace DocApp.Presentation.Views
             AppointmentBookSuccess bookSuccess = new AppointmentBookSuccess()
             {
                 Title = "Appointment Booking Confirmed",
-                Content = String.Format("Appointment book with Dr. {0} in {1},{2} on {3} at {4}", viewModel.app.doc_name,
+                Content = String.Format("Appointment booked with Dr. {0} in {1},{2} on {3} at {4}", viewModel.app.doc_name,
                viewModel.app.hosp_name, viewModel.app.location, viewModel.app.app_date, viewModel.app.Timeslot),
                 CloseButtonText = "OK"
             };
@@ -303,8 +371,7 @@ namespace DocApp.Presentation.Views
             
             MessageBox.Visibility = Visibility.Visible;
             SubmitBtn.Visibility = Visibility.Visible;
-            //TestScroll.UpdateLayout();
-            //TestScroll.ChangeView(0, double.MaxValue, 1);
+            
             
         }
 
@@ -329,6 +396,8 @@ namespace DocApp.Presentation.Views
         private async void MySplitView_PaneOpened(SplitView sender, object args)
         {
             //Showbutton.Visibility = Visibility.Collapsed;
+            myRating.Value = Double.NaN;
+            myRating.Caption = "Your Rating";
             MessageBox.Visibility = Visibility.Collapsed;
             SubmitBtn.Visibility = Visibility.Collapsed;
             if (viewModel.doctor != null)
@@ -351,10 +420,7 @@ namespace DocApp.Presentation.Views
         private void MyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             index = myListView.SelectedIndex;
-            mySplitView.IsPaneOpen = false;
-            mySplitView.IsPaneOpen = true;
-           // mySplitView.IsPaneOpen = false;
-
+          
         }
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
@@ -372,6 +438,88 @@ namespace DocApp.Presentation.Views
             }
            
                 
+        }
+
+        private async void MainTabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            mySplitView.IsPaneOpen = false;
+            myHospSplitView.IsPaneOpen = false;
+            if (MainTabs.SelectedIndex == 0)
+                await viewModel.GetDoctorsByDept(address,DeptListbox.SelectedIndex);
+            else if (MainTabs.SelectedIndex == 1)
+                await viewModel.GetHospitalByDept(address, DeptListbox.SelectedIndex);
+
+        }
+
+        private async void MyHospListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var temp = sender as ListView;
+            
+            var hos = e.ClickedItem as Hospital;
+            hosp_id = hos.ID;
+            await viewModel.GetHospital(hosp_id);
+            myHospSplitView.IsPaneOpen = false;
+            myHospSplitView.IsPaneOpen = true;
+            Bindings.Update();
+        }
+
+        private void DoctorsInHospitalTemplate_Loaded(object sender, RoutedEventArgs e)
+        {
+            DoctorsInHospitalTemplate temp = (DoctorsInHospitalTemplate)sender;
+            temp.ButtonClicked += this.onHospButtonClicked;
+        }
+
+        private async void MyHospRating_ValueChanged(RatingControl sender, object args)
+        {
+
+            if (sender.Value > 0)
+            {
+                //Bindings.Update();
+                await viewModel.UpdateHospitalRating(hosp_id, (double)sender.Value);
+                //Bindings.Update();
+                //await viewModel.GetHospitalByDept(address, DeptListbox.SelectedIndex);
+                myHospListView.SelectedIndex = index;
+                myHospRating.Caption = myHospRating.Value.ToString();
+
+
+
+            }
+        }
+
+        private void HospCloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            myHospSplitView.IsPaneOpen = false;
+        }
+
+        private async void TimeSlotText_Loaded(object sender, RoutedEventArgs e)
+        {
+            TextBlock t = sender as TextBlock;
+            Roster r = t.DataContext as Roster;
+            if (r.val > 0)
+            {
+                t.Foreground = new SolidColorBrush(Colors.Green);
+                viewModel.enabled = false;
+                en = true;
+            }
+            else
+            {
+                t.Foreground = new SolidColorBrush(Colors.Red);
+                viewModel.enabled = false;
+                en = false;
+                
+            }
+        }
+
+        private void DocList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void MyHospSplitView_PaneOpened(SplitView sender, object args)
+        {
+            myHospRating.Value = Double.NaN;
+            myHospRating.Caption = "Your Rating";
+            
         }
 
         public async void onTestAddedSuccess(object source, EventArgs args)

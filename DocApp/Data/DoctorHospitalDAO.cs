@@ -40,7 +40,8 @@ namespace DocApp.Data
                                    fees = r.fee,
                                    Rating = d.Rating,
                                    Number_of_Rating = d.Number_of_Rating,
-                                   max_patients = r.max_patients
+                                   max_patients = r.max_patients,
+                                   Image=d.Image
 
 
                                }

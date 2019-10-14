@@ -20,10 +20,24 @@ namespace DocApp.Presentation.Views.Templates
     public sealed partial class DoctorsInHospitalTemplate : UserControl
     {
         public Models.DoctorInHospitalDetails doctor { get { return this.DataContext as Models.DoctorInHospitalDetails; } }
+        public delegate void ButtonClickedEventHandler(object source, ButtonClickArgs args);
+        public ButtonClickedEventHandler ButtonClicked;
         public DoctorsInHospitalTemplate()
         {
             this.InitializeComponent();
             this.DataContextChanged += (s, e) => Bindings.Update();
+        }
+
+
+        public void onButtonClicked()
+        {
+            if (ButtonClicked != null)
+                ButtonClicked(this, new ButtonClickArgs {  id_val=doctor.doc_id});
+        }
+
+        private void BookButton_Click(object sender, RoutedEventArgs e)
+        {
+            onButtonClicked();
         }
     }
 }

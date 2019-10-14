@@ -17,8 +17,8 @@ namespace DocApp.Models
         public float Rating { get; set; }
         public int Number_Of_Rating { get; set; }
         public string Image { get; set; }
-        public DateTime Start_Time { get; set; }
-        public DateTime Close_Time { get; set; }
+        public string Start_Time { get; set; }
+        public string Close_Time { get; set; }
         public string Description { get; set; }
         public bool Clinic { get; set; }    
         public string Speciality { get; set; }

@@ -17,7 +17,7 @@ namespace DocApp.Domain.UseCase
         int id;
         double rating;
 
-        IHospitalDetailViewCallBack viewCallBack;
+        IHospitalRatingUpdateViewCallback viewCallBack;
 
         public UpdateHospitalRatingUseCase(int x, double r)
         {
@@ -27,7 +27,7 @@ namespace DocApp.Domain.UseCase
 
         public override void SetCallBack<P>(P p)
         {
-            this.viewCallBack = (IHospitalDetailViewCallBack)p;
+            this.viewCallBack = (IHospitalRatingUpdateViewCallback)p;
         }
 
         internal override async Task Action()
@@ -35,9 +35,9 @@ namespace DocApp.Domain.UseCase
             IHospitalList hospitalList = new HospitalListDAO();
             await hospitalList.UpdateHospitalRating(id, rating, this);
             if (hospital != null)
-                viewCallBack.DataReadSuccess(hospital);
+                viewCallBack.HospitalUpdateSuccess(hospital);
             else
-                viewCallBack.DataReadFail();
+                viewCallBack.HospitalUpdateFail();
         }
 
         public bool HospitalUpdateFail()

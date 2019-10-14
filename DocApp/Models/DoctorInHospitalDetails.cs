@@ -10,7 +10,7 @@ namespace DocApp.Models
     {
         public int doc_id { get; set; }
         public string Name { get; set; }
-        protected string Image { get; set; }
+        public string Image { get; set; }
         public string Experience { get; set; }
         public string Designation { get; set; }
         public float Rating { get; set; }

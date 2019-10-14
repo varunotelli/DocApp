@@ -10,6 +10,6 @@ namespace DocApp.Domain.DataContracts
     public interface IAppointment
     {
         Task AddAppointment(int p_id,int doc_id,int hosp_id,string app_date, string start, IBookAppointmentCallback callback);
-        //Task GetAppointment(int id, IAppointmentListCallback callback);
+        Task CheckAppointment(int p_id, string app_date, string time, ICheckAppointmentCallback callback);
     }
 }

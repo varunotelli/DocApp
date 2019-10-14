@@ -48,6 +48,7 @@ namespace DocApp.Presentation.Views
         public bool location { get; set; }
         public int index { get; set; }
         public MainPage mp { get; set; }
+        public bool doc { get; set; }
     }
 
     public class navargs2:EventArgs
