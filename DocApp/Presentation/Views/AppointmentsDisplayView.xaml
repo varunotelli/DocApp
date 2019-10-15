@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:DocApp.Models"
     xmlns:uc="using:DocApp.Presentation.Views.Templates"
+    xmlns:cont="using:DocApp.Presentation.Views.Controls"
     mc:Ignorable="d"
     RequestedTheme="Light"
     Background="White">
@@ -126,8 +127,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Your Appointments" FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"
-                   FontSize="40" Margin="50,10,10,50"/>
+        <StackPanel Orientation="Horizontal" Margin="10,10,10,50">
+            <cont:BackButtonControl Margin="0,0,20,0"/>
+            <TextBlock Text="Your Appointments" FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"
+                   FontSize="40" />
+        </StackPanel>
+        
 
         <Grid Margin="50,0" Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -146,7 +151,7 @@
                           ScrollViewer.VerticalScrollBarVisibility="Auto" BorderThickness="0,0.5,0,0" 
                           BorderBrush="#303030" 
                           HorizontalAlignment="Stretch" Grid.ColumnSpan="5" Margin="0,20" 
-                      ScrollViewer.VerticalScrollMode="Enabled">
+                          ScrollViewer.VerticalScrollMode="Enabled">
                    
                    
                     <ListView.ItemTemplate>

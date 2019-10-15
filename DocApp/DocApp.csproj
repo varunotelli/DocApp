@@ -231,6 +231,9 @@
     <Compile Include="Presentation\Views\AppointmentsDisplayView.xaml.cs">
       <DependentUpon>AppointmentsDisplayView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Views\Controls\BackButtonControl.xaml.cs">
+      <DependentUpon>BackButtonControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\Converters\RelativeTimeConverter.cs" />
     <Compile Include="Presentation\Views\DialogBoxes\AppointmentBookSuccess.xaml.cs">
       <DependentUpon>AppointmentBookSuccess.xaml</DependentUpon>
@@ -277,7 +280,7 @@
     <Compile Include="Presentation\Views\Templates\AppointmentTemplate.xaml.cs">
       <DependentUpon>AppointmentTemplate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Views\Templates\ComboBoxControl.xaml.cs">
+    <Compile Include="Presentation\Views\Controls\ComboBoxControl.xaml.cs">
       <DependentUpon>ComboBoxControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Views\Templates\DoctorProfileLargeTemplate.xaml.cs">
@@ -376,6 +379,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Presentation\Views\Controls\BackButtonControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Presentation\Views\DialogBoxes\AppointmentBookSuccess.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -412,7 +419,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\Views\Templates\ComboBoxControl.xaml">
+    <Page Include="Presentation\Views\Controls\ComboBoxControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

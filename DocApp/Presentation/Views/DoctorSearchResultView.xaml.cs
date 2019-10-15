@@ -28,9 +28,6 @@ namespace DocApp.Presentation.Views
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     /*
-     * @todo Style Testimonials and fix testimonial bugs
-     * @todo Complete insert Testimonial
-     * @todo Complete show more show less functionality for description
      * @todo Add filters
      * @todo Display next available slots if no vacancy
      * @todo Back Button for Appointments
