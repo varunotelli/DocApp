@@ -38,7 +38,11 @@ namespace DocApp.Data
 
                                }
                     ).OrderBy(x => x.app_date).ThenBy(x => x.Timeslot);
-                foreach (var x in details)
+                foreach (var x in details.Where(a=>DateTime.Parse(a.app_date)==
+                DateTime.Parse(DateTime.Now.Date.ToString("yyyy-MM-dd")) && DateTime.Parse(a.Timeslot).CompareTo(
+                    DateTime.Parse(DateTime.Now.TimeOfDay.ToString())) > 0
+
+                ))
                 {
                     x.app_date = DateTime.ParseExact(x.app_date, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
                     results.Add(x);

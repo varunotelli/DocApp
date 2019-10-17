@@ -75,22 +75,14 @@ namespace DocApp.Presentation.ViewModels
             await getLocalityList.Execute();
         }
 
-        public async Task<Geoposition> GetPosition()
-        {
-            var accessStatus = await Geolocator.RequestAccessAsync();
-            if (accessStatus != GeolocationAccessStatus.Allowed) throw new Exception();
-            var geolocator = new Geolocator { DesiredAccuracyInMeters = 0 };
-            var pos = await geolocator.GetGeopositionAsync();
-            return pos;
-        }
-
+       
         public async Task GetCurrentAddress()
         {
-            var temp = await GetPosition();
-            latitude = temp.Coordinate.Latitude;
-            longitude = temp.Coordinate.Longitude;
+            //var temp = await GetPosition();
+            //latitude = temp.Coordinate.Latitude;
+            //longitude = temp.Coordinate.Longitude;
 
-            getAddress = new GetAddressUseCase(latitude, longitude);
+            getAddress = new GetAddressUseCase();
             
 
             //getDoctor.SetCallBack<DoctorViewCallback>(this);

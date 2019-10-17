@@ -17,15 +17,19 @@ namespace DocApp.Domain.UseCase
         List<Doctor> docs;
         string location = "";
         int dept;
+        int lexp = -1, uexp=-1, rating = -1;
 
         
     
 
-        public GetDoctorByDeptLocationUseCase(string loc,int d)
+        public GetDoctorByDeptLocationUseCase(string loc,int d, int le=-1, int ue=-1,int r=-1)
         {
             docs = new List<Doctor>();
             location = loc;
             dept=d;
+            lexp = le;
+            uexp = ue;
+            rating = r;
         }
 
         public override void SetCallBack<P>(P p)
@@ -38,7 +42,7 @@ namespace DocApp.Domain.UseCase
             IDoctorList doctorList = new DoctorListDAO();
             try
             {
-                await doctorList.GetDoctorByDeptLocationAsync(location.ToUpper(), dept, this);
+                await doctorList.GetDoctorByDeptLocationAsync(location.ToUpper(), dept,this, lexp,uexp,rating);
             }
             catch(Exception e)
             {

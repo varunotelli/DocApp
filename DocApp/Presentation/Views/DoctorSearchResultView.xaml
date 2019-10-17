@@ -6,11 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:DocApp.Presentation.Views.Templates"
+    xmlns:cont="using:DocApp.Presentation.Views.Controls"
     xmlns:data="using:DocApp.Models"
     xmlns:sys="using:System"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-   RequestedTheme="Light"
+    RequestedTheme="Light"
     Background="White"
     >
     <!--<Page.Background>
@@ -21,10 +22,11 @@
     </Page.Background>-->
     <Page.Resources>
         <ResourceDictionary>
-            <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="Black"/>
-            <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="Black"/>
-            <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="Black"/>
-            
+            <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="DimGray"/>
+            <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="White"/>
+            <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="White"/>
+            <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold"/>
+
             <Style x:Key="TextBlockStyle" TargetType="TextBlock">
                 <Setter Property="Margin" Value="10,0"/>
                 <Setter Property="FontSize" Value="12"/>
@@ -33,9 +35,10 @@
             </Style>
             <Style x:Key="ListBoxItemStyle1" TargetType="ListBoxItem">
                 <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="FontSize" Value="12"/>
                 <Setter Property="Foreground" Value="DarkGray"/>
                 <Setter Property="TabNavigation" Value="Local"/>
-                <Setter Property="Padding" Value="{StaticResource ListBoxItemPadding}"/>
+                <Setter Property="Padding" Value="10,2"/>
                 <Setter Property="HorizontalContentAlignment" Value="Left"/>
                 <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
                 <Setter Property="Template">
@@ -44,7 +47,7 @@
                             <Grid x:Name="LayoutRoot" Background="#263440" BorderThickness="{TemplateBinding BorderThickness}">
                                 <Grid.Resources>
                                     <Style x:Key="BaseContentPresenterStyle" TargetType="ContentPresenter">
-                                        <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
+                                        <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
                                         <Setter Property="FontWeight" Value="Bold"/>
                                         <Setter Property="TextWrapping" Value="Wrap"/>
                                         <Setter Property="LineStackingStrategy" Value="MaxHeight"/>
@@ -156,19 +159,62 @@
 
     <Grid Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Background="#263440" Padding="15" Margin="0,0,0,0">
             <StackPanel VerticalAlignment="Stretch" Margin="0,0,0,400">
-                <TextBlock FontSize="20" Text="DEPARTMENTS" Margin="10,10,10,10" Foreground="White"
-                    FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
-                <ListBox x:Name="DeptListbox" ItemsSource="{x:Bind viewModel.deptnames}" VerticalAlignment="Stretch" 
+                <TextBlock  Text="DEPARTMENTS" Margin="10,10,0,10" Foreground="White"
+                    FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
+                <ListBox x:Name="DeptListbox" ItemsSource="{x:Bind viewModel.deptnames}" VerticalAlignment="Stretch" Margin="0,0,0,10"
                              ItemContainerStyle="{StaticResource ListBoxItemStyle1}" SelectionChanged="ListBox_SelectionChanged">
 
-
-
                 </ListBox>
+                <TextBlock Text="Avg. Customer Review" FontWeight="Bold" Foreground="White" Margin="10,0"/>
+                <HyperlinkButton x:Name="RatingClearBtn" Click="RatingClearBtn_Click" Margin="10,0">
+                    <TextBlock Text="Clear"/>
+                </HyperlinkButton>
+                <ListBox x:Name="RatingListBox" Background="#263440" RequestedTheme="Dark" Margin="10" SelectionMode="Single"
+                        SelectionChanged="RatingListBox_SelectionChanged">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Background" Value="#263440"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBoxItem>
+                        <RatingControl Value="4.0" IsReadOnly="True" Caption="&amp; Above"/>
+                        
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <RatingControl Value="3.0" IsReadOnly="True" Caption="&amp; Above"/>
+                        
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <RatingControl Value="2.0" IsReadOnly="True" Caption="&amp; Above"/>
+                        
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <RatingControl Value="1.0" IsReadOnly="True" Caption="&amp; Above"/>
+                    </ListBoxItem>
+                </ListBox>
+                <StackPanel x:Name="ExpStack">
+                    <TextBlock Text="Experience" FontWeight="Bold" Foreground="White" Margin="10,0"/>
+                    <HyperlinkButton x:Name="ExpClearBtn" Click="ExpClearBtn_Click" Margin="10,0">
+                        <TextBlock>Clear</TextBlock>
+                    </HyperlinkButton>
+                    <StackPanel Margin="10">
+                        <RadioButton x:Name="TenyearExp" Content="More than 10 year exp" GroupName="ExpGroup" RequestedTheme="Dark"
+                                 Checked="TenyearExp_Checked"/>
+                        <RadioButton x:Name="FiveYearExp" Content="5-10 year exp" GroupName="ExpGroup" RequestedTheme="Dark"
+                                 Checked="TenyearExp_Checked"/>
+                        <RadioButton x:Name="OneYearExp" Content="Less than 5 year exp" GroupName="ExpGroup" RequestedTheme="Dark"
+                                 Checked="TenyearExp_Checked"/>
+
+                    </StackPanel>
+                </StackPanel>
+                
+
             </StackPanel>
 
         </Grid>
@@ -226,15 +272,21 @@
 
 
 
-        <controls:TabView x:Name="MainTabs" Grid.Column="1" Background="White" SelectionChanged="MainTabs_SelectionChanged">
+        <controls:TabView x:Name="MainTabs" Grid.Column="1" Background="White" SelectionChanged="MainTabs_SelectionChanged"
+                          Loaded="MainTabs_Loaded">
                         <controls:TabViewItem Header="Doctors">
                         <SplitView x:Name="mySplitView" DisplayMode="Inline" 
                             PanePlacement="Right" OpenPaneLength="800" PaneOpened="MySplitView_PaneOpened"
                             >
                     <SplitView.Content>
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <ListView x:Name="myListView"  HorizontalAlignment="Stretch" 
-                                      ItemsSource="{x:Bind viewModel.docs, Mode=TwoWay}" IsItemClickEnabled="True"
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <cont:ComboBoxControl HorizontalAlignment="Right" x:Name="OrderCombo"/>
+                            <ListView Grid.Row="1" x:Name="myListView"  HorizontalAlignment="Stretch" 
+                                      ItemsSource="{x:Bind viewModel.docsmain, Mode=TwoWay}" IsItemClickEnabled="True"
                       ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="ListView_ItemClick" 
                                       SelectionChanged="MyListView_SelectionChanged" Height="650" IsSynchronizedWithCurrentItem="False">
                                     <ListView.ItemContainerTransitions>
@@ -283,7 +335,7 @@
 
                                     <TextBlock Text="{x:Bind viewModel.doctor.Designation,Mode=OneWay}" Style="{StaticResource TextBlockStyle}"
                         HorizontalAlignment="Left"/>
-                                    <TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', viewModel.doctor.Experience),Mode=OneWay}" 
+                                    <TextBlock Text="{x:Bind sys:String.Format('{0} years of experience overall', viewModel.doctor.Experience),Mode=OneWay}" 
                             Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Left"/>
 
                                     <RatingControl x:Name="myRating" ValueChanged="MyRating_ValueChanged"  Margin="10,5"
@@ -317,8 +369,7 @@
                                 FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" Margin="0,15,10,10"
                                 
                                 FontSize="12"
-                                        
-                                         
+                                       
                                          Click="HyperlinkButton_Click" 
                                          
                                          VerticalAlignment="Bottom"/>
@@ -386,7 +437,6 @@
                                                         </DataTemplate>
                                                     </ItemsControl.ItemTemplate>
                                                 </ItemsControl>
-
                                             </Grid>
 
                                         </controls:TabViewItem>
@@ -411,11 +461,17 @@
                             PanePlacement="Right" OpenPaneLength="800" PaneOpened="MyHospSplitView_PaneOpened"
                             >
                     <SplitView.Content>
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
                             <ListView x:Name="myHospListView"  HorizontalAlignment="Stretch" 
-                                      ItemsSource="{x:Bind viewModel.hosps, Mode=TwoWay}" IsItemClickEnabled="True"
+                                      ItemsSource="{x:Bind viewModel.hospsmain, Mode=TwoWay}" IsItemClickEnabled="True"
                       ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="MyHospListView_ItemClick" 
                                       SelectionChanged="MyListView_SelectionChanged" Height="700">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Vertical"/>
+                                    </ItemsPanelTemplate>
+                                    
+                                </ListView.ItemsPanel>
                                 <ListView.ItemContainerTransitions>
                                     <TransitionCollection/>
                                 </ListView.ItemContainerTransitions>

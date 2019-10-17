@@ -27,7 +27,7 @@ namespace DocApp.Presentation.Views
 
     public sealed partial class MainPageBuffer : Page
     {
-        string addr;
+        string addr="Chennai";
         MainPage mainPage;
         public MainPageBuffer()
         {
@@ -40,11 +40,16 @@ namespace DocApp.Presentation.Views
             addr = temp.name;
             mainPage = temp.mp;
             mainPage.AutoSuggestChanged += this.onAutoSuggestChanged;
+            mainPage.LocationButtonClicked += this.onLocationButtonClicked;
             
 
         }
 
         public void onAutoSuggestChanged(object sender, navargs2 args)
+        {
+            addr = args.location;
+        }
+        public void onLocationButtonClicked(object sender, navargs2 args)
         {
             addr = args.location;
         }

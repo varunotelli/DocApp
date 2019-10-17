@@ -238,6 +238,9 @@
     <Compile Include="Presentation\Views\DialogBoxes\AppointmentBookSuccess.xaml.cs">
       <DependentUpon>AppointmentBookSuccess.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Views\DialogBoxes\LocationRequestDialog.xaml.cs">
+      <DependentUpon>LocationRequestDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\DoctorSearchResultView.xaml.cs">
       <DependentUpon>DoctorSearchResultView.xaml</DependentUpon>
     </Compile>
@@ -357,6 +360,7 @@
     <Content Include="Assets\hosp5.png" />
     <Content Include="Assets\hospital.jpg" />
     <Content Include="Assets\ProximaNova-Extrabld.ttf" />
+    <Content Include="Data\LocationCache.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -384,6 +388,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\DialogBoxes\AppointmentBookSuccess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\DialogBoxes\LocationRequestDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

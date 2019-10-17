@@ -147,7 +147,7 @@
                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>-->
                 <cont:ComboBoxControl HorizontalAlignment="Right" Margin="0,0,10,0"/>
                 <GridView x:Name="DoctorGrid" ItemsSource="{x:Bind viewModel.doctors}" 
-                          Margin="0,10,0,5"  Padding="5,0,5,0" IsItemClickEnabled="True" ItemClick="DoctorGrid_ItemClick">
+                          Margin="0,10,0,5"  Padding="5,5,5,5" IsItemClickEnabled="True" ItemClick="DoctorGrid_ItemClick">
                     <GridView.ItemContainerTransitions>
                         <TransitionCollection></TransitionCollection>
                     </GridView.ItemContainerTransitions>
@@ -177,7 +177,7 @@
                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>-->
                 <cont:ComboBoxControl HorizontalAlignment="Right" Margin="0,0,10,0"/>
                 <GridView x:Name="HospitalGrid" ItemsSource="{x:Bind viewModel.hospitals}" IsItemClickEnabled="True"
-                          ItemContainerStyle="{StaticResource GridViewItemStyle1}" ItemClick="HospitalGrid_ItemClick"
+                          ItemClick="HospitalGrid_ItemClick"
                           Margin="0,10" Padding="5,0,0,0">
                     <GridView.ItemContainerTransitions>
                         <TransitionCollection></TransitionCollection>

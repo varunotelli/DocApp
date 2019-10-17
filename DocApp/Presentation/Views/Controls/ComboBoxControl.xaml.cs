@@ -17,14 +17,29 @@ using Windows.UI.Xaml.Navigation;
 
 namespace DocApp.Presentation.Views.Controls
 {
+    public class ComboBoxSelectEventArgs:EventArgs
+    {
+        public int val { get; set; }
+    }
     public sealed partial class ComboBoxControl : UserControl
     {
-        int doc_id, hosp_id;
-        
+
+        public delegate void ComboChangedEvent(object source, ComboBoxSelectEventArgs args);
+        public event ComboChangedEvent ComboSelectionChanged; 
         public ComboBoxControl()
         {
             this.InitializeComponent();
         }
-        
+
+        public void onComboChanged()
+        {
+            if (ComboSelectionChanged != null)
+                ComboSelectionChanged(this, new ComboBoxSelectEventArgs { val = myCombo.SelectedIndex });
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            onComboChanged();
+        }
     }
 }

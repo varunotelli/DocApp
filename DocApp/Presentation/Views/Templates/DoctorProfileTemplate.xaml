@@ -19,18 +19,21 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel Orientation="Horizontal" Padding="0">
+    <StackPanel Orientation="Horizontal">
         <Image Height="100" Width="100" Source="{x:Bind doctor.Image}" />
         <StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,0" FontSize="12" FontWeight="ExtraBold"
-                   Foreground="Black" FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
+            
+            <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,0" FontSize="12" FontWeight="ExtraBold"
+                Foreground="Black" FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
+            <Viewbox Width="90" Margin="-10,5">
                 <RatingControl Value="{x:Bind doctor.Rating}" HorizontalAlignment="Left" Margin="0,0"
-                                       Caption="{x:Bind sys:String.Format('({0})',doctor.Number_of_Rating)}" 
-                                       IsReadOnly="True" Foreground="Black" RequestedTheme="Dark">
+                                    
+                                    IsReadOnly="True" Foreground="Black" RequestedTheme="Dark">
                 </RatingControl>
-            </StackPanel>
-           
+            </Viewbox>
+            
+
+
             <!--<TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', doctor.Experience)}" 
                    Style="{StaticResource TextBlockStyle}"/>-->
             <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"

@@ -1,4 +1,5 @@
 ﻿using DocApp.Presentation.ViewModels;
+using DocApp.Presentation.Views.DialogBoxes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,13 +23,8 @@ using Windows.UI.Xaml.Navigation;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 /*@todo Create profile page to track appointments
  *@todo Add reschedule and cancel functionality
- *@todo Display number of slots available in a session
- * @todo Remove booking page and create as popup
- * @todo Remove empty spaces in UI
- * @todo Add Forum Tab
- * @todo Relative Time for testimonials
- * @todo Handle Light Theme
- * @todo Colour Available slots green
+ *@todo Fix Filter bugs
+ *@todo Implement Dashboard 
  */
 
 namespace DocApp.Presentation.Views
@@ -66,6 +62,10 @@ namespace DocApp.Presentation.Views
         public string address = "";
         public delegate void AutoSuggestChangedEventHandler(object source, navargs2 e);
         public event AutoSuggestChangedEventHandler AutoSuggestChanged;
+        public delegate void LocationButtonClickedEventHandler(object source, navargs2 e);
+        public event LocationButtonClickedEventHandler LocationButtonClicked;
+        LocationRequestDialog dialog = new LocationRequestDialog();
+
         public MainPage()
         {
 
@@ -87,39 +87,62 @@ namespace DocApp.Presentation.Views
                 AutoSuggestChanged(this, new navargs2 { location = add, mp = this });
         }
 
-        public async void onLocationChanged(object source, LocationEventArgs e)
+        public void onLocationButtonClicked(string add)
+        {
+            if (LocationButtonClicked != null)
+                LocationButtonClicked(this, new navargs2 {location=add, mp = this });
+        }
+
+        public void onLocationChanged(object source, LocationEventArgs e)
         {
             address = e.address;
-            locflag = true;
-            if(locflag)
-            {
-                StatusText.Text = "READY";
-                await Task.Delay(1000);
-                progring.IsActive = false;
-                progring.Visibility = Visibility.Collapsed;
-                LoadText.Visibility = Visibility.Collapsed;
-                MyAutoSuggest.IsEnabled = true;
-                HospDocSuggest.IsEnabled = true;
-                AppBtn.IsEnabled = true;
-                StatusText.Visibility = Visibility.Collapsed;
+            LocationProg.IsActive = false;
+            onLocationButtonClicked(address);
+            //locflag = true;
+            
+            //StatusText.Text = "READY";
+            //await Task.Delay(1000);
+            //progring.IsActive = false;
+            //progring.Visibility = Visibility.Collapsed;
+            //LoadText.Visibility = Visibility.Collapsed;
+            //MyAutoSuggest.IsEnabled = true;
+            //HospDocSuggest.IsEnabled = true;
+            //AppBtn.IsEnabled = true;
+            //StatusText.Visibility = Visibility.Collapsed;
                 
-            }
-            if(HospDocSuggest.Text.Equals(""))
-                myFrame.Navigate(typeof(MainPageBuffer), new navargs {name=address,location=true,mp=this });
+           
+            //if(HospDocSuggest.Text.Equals(""))
+            //    myFrame.Navigate(typeof(MainPageBuffer), new navargs {name=address,location=true,mp=this });
         }
 
         
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                await viewModel.GetCurrentAddress();
-            }
-            catch(Exception _)
-            {
-                CoreApplication.Exit();
-            }
-              
+            //try
+            //{
+            //    await viewModel.GetCurrentAddress();
+            //}
+            //catch(Exception _)
+            //{
+            //    CoreApplication.Exit();
+            //}
+            //address = e.address;
+            locflag = true;
+
+            StatusText.Text = "READY";
+            await Task.Delay(1000);
+            progring.IsActive = false;
+            progring.Visibility = Visibility.Collapsed;
+            LoadText.Visibility = Visibility.Collapsed;
+            MyAutoSuggest.IsEnabled = true;
+            HospDocSuggest.IsEnabled = true;
+            AppBtn.IsEnabled = true;
+            StatusText.Visibility = Visibility.Collapsed;
+
+
+            if (HospDocSuggest.Text.Equals(""))
+                myFrame.Navigate(typeof(MainPageBuffer), new navargs { name = viewModel.loc, location = true, mp = this });
+
         }
 
         
@@ -251,6 +274,23 @@ namespace DocApp.Presentation.Views
         private void MyAutoSuggest_GotFocus(object sender, RoutedEventArgs e)
         {
             KeyWordBox.IsOpen = false;
+        }
+
+        private async void onYesClicked(object sender, EventArgs args)
+        {
+            await viewModel.GetCurrentAddress();
+            LocationProg.IsActive = true;
+            
+        }
+
+        private async void LocationBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
+            dialog.YesClicked += this.onYesClicked;
+            if(!dialog.flag)
+                await dialog.ShowAsync();
+           
+            
         }
     }
 }

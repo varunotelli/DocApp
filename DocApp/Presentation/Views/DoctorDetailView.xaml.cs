@@ -91,9 +91,7 @@ namespace DocApp.Presentation.Views
 
                 Bindings.Update();
                 myRating.Caption = myRating.Value.ToString();
-                
-
-
+            
             }
             
         }

@@ -34,7 +34,7 @@ namespace DocApp.Data
                                    doc_id = d.ID,
                                    Name = d.Name,
                                    Designation = d.Designation,
-                                   Experience = d.Experience.ToLower(),
+                                   Experience = d.Experience,
                                    Start_Time = r.start_time.Split(':')[0] + ":" + r.start_time.Split(':')[1],
                                    End_Time = r.end_time.Split(':')[0] + ":" + r.end_time.Split(':')[1],
                                    fees = r.fee,

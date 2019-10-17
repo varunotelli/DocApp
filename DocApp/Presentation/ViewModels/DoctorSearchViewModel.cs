@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Devices.Geolocation;
 
 namespace DocApp.Presentation.ViewModels
 {
@@ -15,7 +16,7 @@ namespace DocApp.Presentation.ViewModels
         INotifyPropertyChanged,IDoctorDetailViewCallBack,IDoctorRatingUpdateViewCallback,IHospitalDoctorViewCallBack,IRosterViewCallback,
         IAppBookingViewCallback,IAppByIDViewCallback,ITestDetailsViewCallback,ITestViewCallback,ILastTestViewCallback, IHospitalByDeptViewCallback, 
         IHospitalLocationPresenterCallBack, IHospitalDetailViewCallBack, IDoctorHospitalDetailViewCallback,
-        IHospitalRatingUpdateViewCallback,ICheckAppointmentViewCallback
+        IHospitalRatingUpdateViewCallback,ICheckAppointmentViewCallback, IGetAddressPresenterCallback
     {
         public UseCaseBase getDepts;
         public UseCaseBase getDocs;
@@ -37,8 +38,10 @@ namespace DocApp.Presentation.ViewModels
         public ObservableCollection<HospitalInDoctorDetails> hospitals;
         public ObservableCollection<DoctorInHospitalDetails> Doctors;
         public ObservableCollection<Roster> timeslots;
+        public ObservableCollection<Doctor> docsmain;
         public ObservableCollection<Doctor> docs;
         public ObservableCollection<Hospital> hosps;
+        public ObservableCollection<Hospital> hospsmain;
         public ObservableCollection<TestDetails> tests;
         public delegate void ReadSuccessEventHandler(object source, EventArgs args);
         public ReadSuccessEventHandler DoctorReadSuccess;
@@ -104,11 +107,13 @@ namespace DocApp.Presentation.ViewModels
         public DoctorSearchViewModel()
         {
             deptnames = new ObservableCollection<string>();
+            docsmain = new ObservableCollection<Doctor>();
             docs= new ObservableCollection<Doctor>();
             hospitals = new ObservableCollection<HospitalInDoctorDetails>();
             timeslots = new ObservableCollection<Roster>();
             tests = new ObservableCollection<TestDetails>();
             hosps = new ObservableCollection<Hospital>();
+            hospsmain = new ObservableCollection<Hospital>();
             Doctors = new ObservableCollection<DoctorInHospitalDetails>();
             
         }
@@ -231,6 +236,39 @@ namespace DocApp.Presentation.ViewModels
             getDepts.SetCallBack<IDepartmentViewCallback>(this);
             await getDepts.Execute();
         }
+        public async Task<Geoposition> GetPosition()
+        {
+            var accessStatus = await Geolocator.RequestAccessAsync();
+            if (accessStatus != GeolocationAccessStatus.Allowed) throw new Exception();
+            var geolocator = new Geolocator { DesiredAccuracyInMeters = 0 };
+            var pos = await geolocator.GetGeopositionAsync();
+            return pos;
+        }
+
+        public async Task GetCurrentAddress()
+        {
+            //var temp = await GetPosition();
+            //double latitude = temp.Coordinate.Latitude;
+            //double longitude = temp.Coordinate.Longitude;
+
+            UseCaseBase getAddress = new GetAddressUseCase();
+
+
+            //getDoctor.SetCallBack<DoctorViewCallback>(this);
+
+            getAddress.SetCallBack<IGetAddressPresenterCallback>(this);
+
+            try
+            {
+                    await getAddress.Execute();
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION=" + e.Message);
+            }
+
+        }
 
         public async Task GetDoctors(string location)
         {
@@ -239,9 +277,9 @@ namespace DocApp.Presentation.ViewModels
             await getDocs.Execute();
         }
 
-        public async Task GetDoctorsByDept(string location, int dept)
+        public async Task GetDoctorsByDept(string location, int dept, int lexp=-1, int uexp=200,  int rating=-1)
         {
-            getDocs = new GetDoctorByDeptLocationUseCase(location, dept+1);
+            getDocs = new GetDoctorByDeptLocationUseCase(location, dept+1,lexp, uexp, rating);
             getDocs.SetCallBack<IDoctorDeptLocationViewCallback>(this);
             await getDocs.Execute();
         }
@@ -537,8 +575,13 @@ namespace DocApp.Presentation.ViewModels
         public bool HospitalLocationReadSuccess(List<Hospital> h)
         {
             hosps.Clear();
+            hospsmain.Clear();
             foreach (var x in h)
+            {
                 hosps.Add(x);
+                hospsmain.Add(x);
+            }
+            
             return true;
         }
 
@@ -550,8 +593,12 @@ namespace DocApp.Presentation.ViewModels
         public bool ReadViewSuccess(List<Hospital> h)
         {
             hosps.Clear();
+            hospsmain.Clear();
             foreach (var x in h)
+            {
                 hosps.Add(x);
+                hospsmain.Add(x);
+            }
             return true;
         }
         public bool DataReadSuccess(Hospital h)
@@ -592,6 +639,11 @@ namespace DocApp.Presentation.ViewModels
         public bool CheckAppointmentViewFail()
         {
             return false;
+        }
+
+        public bool DataReadFromAPISuccess(RootObject r)
+        {
+            throw new NotImplementedException();
         }
     }
 }

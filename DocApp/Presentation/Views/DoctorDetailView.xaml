@@ -10,13 +10,13 @@
     xmlns:sys="using:System"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    
-    RequestedTheme="Dark">
+    Background="White"
+    RequestedTheme="Light">
     <Page.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="10,5"/>
             <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
             </Style>
         <Style x:Key="ButtonStyle1" TargetType="Button">
@@ -99,12 +99,7 @@
             </Setter>
         </Style>
     </Page.Resources>
-    <Page.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#2A2A2A" Offset="0.007"/>
-            <GradientStop Color="#080808" Offset="0.548"/>
-        </LinearGradientBrush>
-    </Page.Background>
+    
 
     <Grid Margin="0,0,0,100">
         
@@ -115,7 +110,7 @@
                     </Grid.ColumnDefinitions>
             <controls:DropShadowPanel BlurRadius="4" ShadowOpacity="0.5" Margin="10,10,10,10"
                           OffsetX="4" OffsetY="4" OffsetZ="0.2" Color="Black" VerticalAlignment="Top">
-                <Image Height="300" Width="300" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
+                <Image Height="150" Width="150" Source="{x:Bind viewModel.doctor.Image}" Stretch="UniformToFill" 
                        VerticalAlignment="Top"/>
             </controls:DropShadowPanel>
                     
@@ -126,10 +121,10 @@
                     <RatingControl x:Name="DocRating" Value="{x:Bind viewModel.doctor.Rating,Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10"
                                        Caption="{x:Bind sys:String.Format('({0})',viewModel.doctor.Number_of_Rating),Mode=OneWay}" 
                                        IsReadOnly="True">
-                        <RatingControl.Resources>
+                        <!--<RatingControl.Resources>
                             <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
 
-                        </RatingControl.Resources>
+                        </RatingControl.Resources>-->
                     </RatingControl>
                 </StackPanel>
 

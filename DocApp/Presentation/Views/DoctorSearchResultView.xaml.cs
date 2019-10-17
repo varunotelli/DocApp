@@ -19,6 +19,8 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using System.Text.RegularExpressions;
 using Windows.UI;
+using System.Collections.ObjectModel;
+using DocApp.Presentation.Views.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -43,9 +45,7 @@ namespace DocApp.Presentation.Views
 
     public sealed partial class DoctorSearchResultView : Page
     {
-        public delegate void GridItemClickedEventHandler(object sender, DocSendEventArgs args);
-        public event GridItemClickedEventHandler GridItemClicked;
-
+        ObservableCollection<Doctor> doctemp = new ObservableCollection<Doctor>();
         public DoctorSearchViewModel viewModel;
         string address = "";
         int id;
@@ -53,6 +53,8 @@ namespace DocApp.Presentation.Views
         int hosp_id;
         int index;
         bool en;
+        int docorderby = -1;
+        int lexp = -1, uexp=200, rating = -1;
         string time,app_date;
         MainPage mainPage;
         public DoctorSearchResultView()
@@ -150,6 +152,7 @@ namespace DocApp.Presentation.Views
             else
                 MainTabs.SelectedIndex = 1;
             mainPage.AutoSuggestChanged += this.onAutoSuggestChanged;
+            mainPage.LocationButtonClicked += this.onLocationButtonClicked;
             viewModel.DoctorsSuccess+=this.onDoctorsSuccess;
             viewModel.InsertFail += this.onInsertFail;
             viewModel.InsertSuccess += this.onInsertSuccess;
@@ -158,10 +161,63 @@ namespace DocApp.Presentation.Views
             viewModel.TestimonialAddedSuccess += this.onTestAddedSuccess;
             viewModel.HospitalRatingUpdateSuccess += this.onHospitalUpdateSuccess;
             viewModel.AppointmentCheckSuccess += this.onAppCheckSuccess;
-         
+            OrderCombo.ComboSelectionChanged += this.onComboChanged;
             await viewModel.GetDepartments();
-            
+            //await viewModel.GetDoctorsByDept("Chennai", 0);
+
             //Bindings.Update();
+
+        }
+
+
+        public async void onLocationButtonClicked(object source, navargs2 n)
+        {
+            this.mySplitView.IsPaneOpen = false;
+            address = n.location;
+
+            if (DeptListbox.SelectedItem != null)
+            {
+                if (MainTabs.SelectedIndex == 0)
+                {
+                    await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
+                    this.mySplitView.IsPaneOpen = false;
+                    TenyearExp.IsChecked = false;
+                    FiveYearExp.IsChecked = false;
+                    OneYearExp.IsChecked = false;
+                    
+                }
+                else if (MainTabs.SelectedIndex == 1)
+                {
+                    await viewModel.GetHospitalByDept(address, DeptListbox.SelectedIndex);
+                    this.myHospSplitView.IsPaneOpen = false;
+                    Bindings.Update();
+                }
+                RatingListBox.SelectedIndex = -1;
+            }
+
+        }
+
+        public void onComboChanged(object source, ComboBoxSelectEventArgs args)
+        {
+            var temp = new List<Doctor>(viewModel.docsmain);
+            viewModel.docsmain.Clear();
+            docorderby = args.val;
+            if(args.val==0)
+            {
+                foreach (var i in temp.OrderBy(d => d.Name))
+                    viewModel.docsmain.Add(i);
+            }
+
+            else if(args.val==1)
+            {
+                foreach (var i in temp.OrderByDescending(d => d.Rating))
+                    viewModel.docsmain.Add(i);
+            }
+            else if(args.val==2)
+            {
+                foreach (var i in temp.OrderByDescending(d => d.Number_of_Rating))
+                    viewModel.docsmain.Add(i);
+            }
 
         }
 
@@ -169,7 +225,15 @@ namespace DocApp.Presentation.Views
         {
             myHospSplitView.IsPaneOpen = true;
             int x = -1;
-           
+            for (int i = 0; i < viewModel.hospsmain.Count; i++)
+                if (viewModel.hospsmain[i].ID == hosp_id)
+                {
+                    x = i;
+                    break;
+                }
+            viewModel.hosps.Remove(viewModel.hospsmain[x]);
+            viewModel.hosps.Insert(x, viewModel.hospital);
+
             for (int i = 0; i < viewModel.hosps.Count; i++)
                 if (viewModel.hosps[i].ID == hosp_id)
                 {
@@ -178,10 +242,15 @@ namespace DocApp.Presentation.Views
                 }
             viewModel.hosps.Remove(viewModel.hosps[x]);
             viewModel.hosps.Insert(x, viewModel.hospital);
+            myHospListView.SelectedItem = viewModel.hospital;
         }
         
         public void onDoctorsSuccess(object source, EventArgs args)
         {
+            viewModel.docsmain.Clear();
+            foreach (var i in viewModel.docs)
+                viewModel.docsmain.Add(i);
+            doctemp = viewModel.docsmain;
             mySplitView.IsPaneOpen = false;
             myHospSplitView.IsPaneOpen = false;
         }
@@ -195,15 +264,29 @@ namespace DocApp.Presentation.Views
         public void onDoctorRatingUpdateSucess(object source, EventArgs args)
         {
             int x=-1;
-          
-            for(int i=0;i<viewModel.docs.Count;i++)
-                if(viewModel.docs[i].ID==id)
+
+            for (int i = 0; i < viewModel.docsmain.Count; i++)
+                if (viewModel.docsmain[i].ID == id)
                 {
                     x = i;
                     break;
                 }
+
+            viewModel.docsmain.Remove(viewModel.docsmain[x]);
+            viewModel.docsmain.Insert(x, viewModel.doctor);
+            for (int i = 0; i < viewModel.docs.Count; i++)
+                if (viewModel.docs[i].ID == id)
+                {
+                    x = i;
+                    break;
+                }
+
             viewModel.docs.Remove(viewModel.docs[x]);
             viewModel.docs.Insert(x, viewModel.doctor);
+
+
+
+            myListView.SelectedItem = viewModel.doctor;
         }
 
         public async void onAutoSuggestChanged(object sender, navargs2 n)
@@ -248,11 +331,14 @@ namespace DocApp.Presentation.Views
             myHospSplitView.IsPaneOpen = false;
             var listbox = sender as ListBox;
             var select = listbox.SelectedIndex;
+            //TenyearExp.IsChecked = false;
+            //FiveYearExp.IsChecked = false;
+            //OneYearExp.IsChecked = false;
             //myListView.SelectedIndex = -1;
             if (myListView.SelectedIndex==-1)
                 mySplitView.IsPaneOpen = false;
             if (MainTabs.SelectedIndex == 0)
-                await viewModel.GetDoctorsByDept(address, select);
+                await viewModel.GetDoctorsByDept(address, select,lexp,uexp,rating);
             else if (MainTabs.SelectedIndex == 1)
                 await viewModel.GetHospitalByDept(address, select);
             
@@ -442,9 +528,16 @@ namespace DocApp.Presentation.Views
             mySplitView.IsPaneOpen = false;
             myHospSplitView.IsPaneOpen = false;
             if (MainTabs.SelectedIndex == 0)
-                await viewModel.GetDoctorsByDept(address,DeptListbox.SelectedIndex);
+            {
+                ExpStack.Visibility = Visibility.Visible;
+                await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
+                await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
+            }
             else if (MainTabs.SelectedIndex == 1)
+            {
+                ExpStack.Visibility = Visibility.Collapsed;
                 await viewModel.GetHospitalByDept(address, DeptListbox.SelectedIndex);
+            }
 
         }
 
@@ -475,7 +568,7 @@ namespace DocApp.Presentation.Views
                 await viewModel.UpdateHospitalRating(hosp_id, (double)sender.Value);
                 //Bindings.Update();
                 //await viewModel.GetHospitalByDept(address, DeptListbox.SelectedIndex);
-                myHospListView.SelectedIndex = index;
+                //myHospListView.SelectedIndex = index;
                 myHospRating.Caption = myHospRating.Value.ToString();
 
 
@@ -517,6 +610,214 @@ namespace DocApp.Presentation.Views
             myHospRating.Value = Double.NaN;
             myHospRating.Caption = "Your Rating";
             
+        }
+
+        private void RatingClearBtn_Click(object sender, RoutedEventArgs e)
+        {
+            RatingListBox.SelectedIndex = -1;
+            rating = -1;
+            viewModel.docsmain.Clear();
+            if (docorderby == 0)
+                foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                d.Experience <= uexp && d.Rating >= rating).OrderBy(d => d.Name))
+                    viewModel.docsmain.Add(i);
+            else if (docorderby == 1)
+                foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Rating))
+                    viewModel.docsmain.Add(i);
+            else if (docorderby == 2)
+                foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Number_of_Rating))
+                    viewModel.docsmain.Add(i);
+            else
+                foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                d.Experience <= uexp && d.Rating >= rating))
+                    viewModel.docsmain.Add(i);
+
+        }
+
+        private void ExpClearBtn_Click(object sender, RoutedEventArgs e)
+        {
+            TenyearExp.IsChecked = false;
+            FiveYearExp.IsChecked = false;
+            OneYearExp.IsChecked = false;
+            lexp = -1;
+            uexp = 200;
+            if(MainTabs.SelectedIndex==0)
+            {
+                viewModel.docsmain.Clear();
+                if (docorderby == 0)
+                    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                    d.Experience <= uexp && d.Rating >= rating).OrderBy(d => d.Name))
+                        viewModel.docsmain.Add(i);
+                else if (docorderby == 1)
+                    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                    d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Rating))
+                        viewModel.docsmain.Add(i);
+                else if (docorderby == 2)
+                    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                    d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Number_of_Rating))
+                        viewModel.docsmain.Add(i);
+                else
+                    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                    d.Experience <= uexp && d.Rating >= rating))
+                        viewModel.docsmain.Add(i);
+            }
+            else if(MainTabs.SelectedIndex==1)
+            {
+                viewModel.hospsmain.Clear();
+                foreach (var x in viewModel.hosps.Where(h=>h.Rating>=rating))
+                    viewModel.hospsmain.Add(x);
+            }
+
+        }
+
+        private  void MainTabs_Loaded(object sender, RoutedEventArgs e)
+        {
+           // await viewModel.GetDoctorsByDept("Chennai".ToUpper(), 0);
+        }
+
+        private void TenyearExp_Checked(object sender, RoutedEventArgs e)
+        {
+
+            RadioButton rb = sender as RadioButton;
+            //doctemp = viewModel.docs;
+            if(rb!=null)
+            {
+                mySplitView.IsPaneOpen = false;
+                
+                string exp = rb.Content.ToString();
+                doctemp = viewModel.docsmain;
+                switch(exp)
+                {
+                    case "More than 10 year exp":
+                        //viewModel.docsmain.Clear();
+                        //foreach (var i in doctemp.Where(d => Int32.Parse(d.Experience.Split(' ')[0]) > 10))
+                        //    viewModel.docsmain.Add(i);
+                        lexp = 11;
+                        uexp = 200;
+
+                        break;
+                    case "5-10 year exp":
+                        //viewModel.docsmain.Clear();
+                        //foreach (var i in doctemp.Where(d => Int32.Parse(d.Experience.Split(' ')[0]) <= 10 &&
+                        //    Int32.Parse(d.Experience.Split(' ')[0]) >= 5))
+                        //    viewModel.docsmain.Add(i);
+                        lexp = 5;
+                        uexp = 10;
+                        
+
+                        break;
+                    case "Less than 5 year exp":
+                        //viewModel.docsmain.Clear();
+                        //foreach (var i in doctemp.Where(d => Int32.Parse(d.Experience.Split(' ')[0]) < 5))
+                        //    viewModel.docsmain.Add(i);
+                        uexp = 4;
+                        lexp = -1;
+                        break;
+
+                }
+                viewModel.docsmain.Clear();
+                if(docorderby==0)
+                    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp && 
+                    d.Experience <= uexp && d.Rating >= rating).OrderBy(d=>d.Name))
+                        viewModel.docsmain.Add(i);
+                else if (docorderby == 1)
+                    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                    d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Rating))
+                        viewModel.docsmain.Add(i);
+                else if (docorderby == 2)
+                    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                    d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Number_of_Rating))
+                        viewModel.docsmain.Add(i);
+                else
+                    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                    d.Experience <= uexp && d.Rating >= rating))
+                        viewModel.docsmain.Add(i);
+
+                //await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex,lexp,uexp, rating);
+
+                //lexp = -1;
+                //uexp = 200;
+                //rating = -1;
+
+            }
+            else
+            {
+                //foreach (var i in viewModel.docs)
+                //    viewModel.docsmain.Add(i);
+            }
+            
+        }
+
+        private  void RatingListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListBox lb = sender as ListBox;
+            if(lb.SelectedIndex!=-1)
+            {
+                mySplitView.IsPaneOpen = false;
+                doctemp = viewModel.docsmain;
+                switch(lb.SelectedIndex)
+                {
+                    case 1:
+                        //viewModel.docsmain.Clear();
+                        //foreach (var i in doctemp.Where(d => d.Rating >= 4))
+                        //    viewModel.docsmain.Add(i);
+                        rating = 4;
+                        break;
+                    case 2:
+                        //viewModel.docsmain.Clear();
+                        //foreach (var i in doctemp.Where(d => d.Rating >= 3))
+                        //    viewModel.docsmain.Add(i);
+                        rating = 3;
+                        break;
+                    case 3:
+                        //viewModel.docsmain.Clear();
+                        //foreach (var i in doctemp.Where(d => d.Rating >= 2))
+                        //    viewModel.docsmain.Add(i);
+                        rating = 2;
+                        break;
+                    case 4:
+                        //viewModel.docsmain.Clear();
+                        //foreach (var i in doctemp.Where(d => d.Rating >= 1))
+                        //    viewModel.docsmain.Add(i);
+                        rating = 1;
+                        break;
+
+                }
+                if (MainTabs.SelectedIndex == 0)
+                {
+                    viewModel.docsmain.Clear();
+
+                    if (docorderby == 0)
+                        foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                        d.Experience <= uexp && d.Rating >= rating).OrderBy(d => d.Name))
+                            viewModel.docsmain.Add(i);
+                    else if (docorderby == 1)
+                        foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                        d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Rating))
+                            viewModel.docsmain.Add(i);
+                    else if (docorderby == 2)
+                        foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                        d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Number_of_Rating))
+                            viewModel.docsmain.Add(i);
+                    else
+                        foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                        d.Experience <= uexp && d.Rating >= rating))
+                            viewModel.docsmain.Add(i);
+                }
+                else if(MainTabs.SelectedIndex == 1)
+                {
+                    viewModel.hospsmain.Clear();
+                    foreach (var i in viewModel.hosps.Where(h => h.Rating >= rating))
+                        viewModel.hospsmain.Add(i);
+                }
+                //await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex, lexp, uexp, rating);
+                //lexp = -1;
+                //uexp = 200;
+                //rating = -1;
+            }
+
         }
 
         public async void onTestAddedSuccess(object source, EventArgs args)
