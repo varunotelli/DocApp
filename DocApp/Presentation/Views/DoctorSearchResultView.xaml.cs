@@ -248,9 +248,23 @@ namespace DocApp.Presentation.Views
         public void onDoctorsSuccess(object source, EventArgs args)
         {
             viewModel.docsmain.Clear();
-            foreach (var i in viewModel.docs)
-                viewModel.docsmain.Add(i);
-            doctemp = viewModel.docsmain;
+            if (docorderby == 0)
+                foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                d.Experience <= uexp && d.Rating >= rating).OrderBy(d => d.Name))
+                    viewModel.docsmain.Add(i);
+            else if (docorderby == 1)
+                foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Rating))
+                    viewModel.docsmain.Add(i);
+            else if (docorderby == 2)
+                foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Number_of_Rating))
+                    viewModel.docsmain.Add(i);
+            else
+                foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                d.Experience <= uexp && d.Rating >= rating))
+                    viewModel.docsmain.Add(i);
+            //doctemp = viewModel.docsmain;
             mySplitView.IsPaneOpen = false;
             myHospSplitView.IsPaneOpen = false;
         }
@@ -530,8 +544,8 @@ namespace DocApp.Presentation.Views
             if (MainTabs.SelectedIndex == 0)
             {
                 ExpStack.Visibility = Visibility.Visible;
-                await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
-                await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
+                await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex,lexp,uexp,rating);
+                //await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
             }
             else if (MainTabs.SelectedIndex == 1)
             {
@@ -677,7 +691,7 @@ namespace DocApp.Presentation.Views
            // await viewModel.GetDoctorsByDept("Chennai".ToUpper(), 0);
         }
 
-        private void TenyearExp_Checked(object sender, RoutedEventArgs e)
+        private async void TenyearExp_Checked(object sender, RoutedEventArgs e)
         {
 
             RadioButton rb = sender as RadioButton;
@@ -718,24 +732,24 @@ namespace DocApp.Presentation.Views
 
                 }
                 viewModel.docsmain.Clear();
-                if(docorderby==0)
-                    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp && 
-                    d.Experience <= uexp && d.Rating >= rating).OrderBy(d=>d.Name))
-                        viewModel.docsmain.Add(i);
-                else if (docorderby == 1)
-                    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
-                    d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Rating))
-                        viewModel.docsmain.Add(i);
-                else if (docorderby == 2)
-                    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
-                    d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Number_of_Rating))
-                        viewModel.docsmain.Add(i);
-                else
-                    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
-                    d.Experience <= uexp && d.Rating >= rating))
-                        viewModel.docsmain.Add(i);
+                //if(docorderby==0)
+                //    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp && 
+                //    d.Experience <= uexp && d.Rating >= rating).OrderBy(d=>d.Name))
+                //        viewModel.docsmain.Add(i);
+                //else if (docorderby == 1)
+                //    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                //    d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Rating))
+                //        viewModel.docsmain.Add(i);
+                //else if (docorderby == 2)
+                //    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                //    d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Number_of_Rating))
+                //        viewModel.docsmain.Add(i);
+                //else
+                //    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                //    d.Experience <= uexp && d.Rating >= rating))
+                //        viewModel.docsmain.Add(i);
 
-                //await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex,lexp,uexp, rating);
+                await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex,lexp,uexp, rating);
 
                 //lexp = -1;
                 //uexp = 200;
@@ -750,14 +764,14 @@ namespace DocApp.Presentation.Views
             
         }
 
-        private  void RatingListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void RatingListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBox lb = sender as ListBox;
             if(lb.SelectedIndex!=-1)
             {
                 mySplitView.IsPaneOpen = false;
                 doctemp = viewModel.docsmain;
-                switch(lb.SelectedIndex)
+                switch(lb.SelectedIndex+1)
                 {
                     case 1:
                         //viewModel.docsmain.Clear();
@@ -789,22 +803,23 @@ namespace DocApp.Presentation.Views
                 {
                     viewModel.docsmain.Clear();
 
-                    if (docorderby == 0)
-                        foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
-                        d.Experience <= uexp && d.Rating >= rating).OrderBy(d => d.Name))
-                            viewModel.docsmain.Add(i);
-                    else if (docorderby == 1)
-                        foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
-                        d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Rating))
-                            viewModel.docsmain.Add(i);
-                    else if (docorderby == 2)
-                        foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
-                        d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Number_of_Rating))
-                            viewModel.docsmain.Add(i);
-                    else
-                        foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
-                        d.Experience <= uexp && d.Rating >= rating))
-                            viewModel.docsmain.Add(i);
+                    //if (docorderby == 0)
+                    //    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                    //    d.Experience <= uexp && d.Rating >= rating).OrderBy(d => d.Name))
+                    //        viewModel.docsmain.Add(i);
+                    //else if (docorderby == 1)
+                    //    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                    //    d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Rating))
+                    //        viewModel.docsmain.Add(i);
+                    //else if (docorderby == 2)
+                    //    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                    //    d.Experience <= uexp && d.Rating >= rating).OrderByDescending(d => d.Number_of_Rating))
+                    //        viewModel.docsmain.Add(i);
+                    //else
+                    //    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
+                    //    d.Experience <= uexp && d.Rating >= rating))
+                    //        viewModel.docsmain.Add(i);
+                    await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex, lexp, uexp, rating);
                 }
                 else if(MainTabs.SelectedIndex == 1)
                 {
