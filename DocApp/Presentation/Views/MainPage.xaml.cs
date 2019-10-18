@@ -73,10 +73,12 @@ namespace DocApp.Presentation.Views
             
             viewModel = new AutoSuggestViewModel();
             viewModel.LocationChanged += this.onLocationChanged;
+            viewModel.LoginEventSuccess += this.onLoginSuccess;
             progring.IsActive = true;
             MyAutoSuggest.IsEnabled = false;
             HospDocSuggest.IsEnabled = false;
             AppBtn.IsEnabled = false;
+            
             //myFrame.Navigate(typeof(MainPageLoadingScreenView));
         
         }
@@ -85,6 +87,29 @@ namespace DocApp.Presentation.Views
         {
             if (AutoSuggestChanged != null)
                 AutoSuggestChanged(this, new navargs2 { location = add, mp = this });
+        }
+
+        public async void onLoginSuccess(object source, LoginSuccessEventArgs args)
+        {
+            StatusText.Text = "READY";
+            await Task.Delay(1000);
+            progring.IsActive = false;
+            progring.Visibility = Visibility.Collapsed;
+            LoadText.Visibility = Visibility.Collapsed;
+            MyAutoSuggest.IsEnabled = true;
+            HospDocSuggest.IsEnabled = true;
+            AppBtn.IsEnabled = true;
+            StatusText.Visibility = Visibility.Collapsed;
+            if (args.ct>1)
+            {
+                myFrame.Navigate(typeof(Dashboard));
+
+            }
+            else
+            {
+                if (HospDocSuggest.Text.Equals(""))
+                    myFrame.Navigate(typeof(MainPageBuffer), new navargs { name = viewModel.loc, location = true, mp = this });
+            }
         }
 
         public void onLocationButtonClicked(string add)
@@ -129,19 +154,20 @@ namespace DocApp.Presentation.Views
             //address = e.address;
             locflag = true;
 
-            StatusText.Text = "READY";
-            await Task.Delay(1000);
-            progring.IsActive = false;
-            progring.Visibility = Visibility.Collapsed;
-            LoadText.Visibility = Visibility.Collapsed;
-            MyAutoSuggest.IsEnabled = true;
-            HospDocSuggest.IsEnabled = true;
-            AppBtn.IsEnabled = true;
-            StatusText.Visibility = Visibility.Collapsed;
+            //StatusText.Text = "READY";
+            //await Task.Delay(1000);
+            //progring.IsActive = false;
+            //progring.Visibility = Visibility.Collapsed;
+            //LoadText.Visibility = Visibility.Collapsed;
+            //MyAutoSuggest.IsEnabled = true;
+            //HospDocSuggest.IsEnabled = true;
+            //AppBtn.IsEnabled = true;
+            //StatusText.Visibility = Visibility.Collapsed;
 
 
-            if (HospDocSuggest.Text.Equals(""))
-                myFrame.Navigate(typeof(MainPageBuffer), new navargs { name = viewModel.loc, location = true, mp = this });
+            //if (HospDocSuggest.Text.Equals(""))
+            //    myFrame.Navigate(typeof(MainPageBuffer), new navargs { name = viewModel.loc, location = true, mp = this });
+            await viewModel.UserLogin();
 
         }
 

@@ -595,7 +595,7 @@ namespace DocApp.Presentation.Views
             myHospSplitView.IsPaneOpen = false;
         }
 
-        private async void TimeSlotText_Loaded(object sender, RoutedEventArgs e)
+        private void TimeSlotText_Loaded(object sender, RoutedEventArgs e)
         {
             TextBlock t = sender as TextBlock;
             Roster r = t.DataContext as Roster;

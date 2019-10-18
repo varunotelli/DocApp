@@ -26,7 +26,17 @@ namespace DocApp.Data
                 //System.Diagnostics.Debug.WriteLine("results=" + DateTime.Now.ToString("HH:mm:ss"));
                 if (results != null)
                 {
-                    callback.RosterReadSuccess(results);
+                    List<Roster> resultmain = new List<Roster>();
+                    foreach(var x in results)
+                    {
+                        string s = app_date + " " + x.start_time;
+                        DateTime d1 = DateTime.Parse(s);
+                        DateTime d2 = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+                        if (d1.CompareTo(d2) >=0)
+                            resultmain.Add(x);
+                           
+                    }
+                    callback.RosterReadSuccess(resultmain);
                     await DBHandler.db.CloseAsync();
                 }
                 else

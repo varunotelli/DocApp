@@ -16,8 +16,14 @@ namespace DocApp.Presentation.ViewModels
     {
         public string address { get; set; }
     }
+
+    public class LoginSuccessEventArgs:EventArgs
+    {
+        public int ct { get; set; }
+    }
+
     public class AutoSuggestViewModel: IGetLocationPresenterCallback, IGetAddressPresenterCallback, IDepartmentViewCallback,
-        INotifyPropertyChanged, IKeywordViewCallback
+        INotifyPropertyChanged, IKeywordViewCallback,ILoginViewCallback
     {
         public double latitude;
         public double longitude;
@@ -31,6 +37,9 @@ namespace DocApp.Presentation.ViewModels
         public UseCaseBase getAddress;
         public delegate void LocationChangedEventHandler(object source, LocationEventArgs e);
         public event LocationChangedEventHandler LocationChanged;
+        public delegate void LoginSuccessEventHandler(object source, LoginSuccessEventArgs args);
+        public event LoginSuccessEventHandler LoginEventSuccess;
+        public int count;
         public string loc
         {
             get
@@ -67,6 +76,12 @@ namespace DocApp.Presentation.ViewModels
                 LocationChanged(this, new LocationEventArgs { address = loc });
         }
 
+        public void onLoginSuccess(int x)
+        {
+            if (LoginEventSuccess != null)
+                LoginEventSuccess(this, new LoginSuccessEventArgs() { ct = x });
+        }
+
         public async Task GetLocalities(string s)
         {
             localities = new ObservableCollection<string>();
@@ -74,6 +89,8 @@ namespace DocApp.Presentation.ViewModels
             getLocalityList.SetCallBack<IGetLocationPresenterCallback>(this);
             await getLocalityList.Execute();
         }
+
+        
 
        
         public async Task GetCurrentAddress()
@@ -115,6 +132,14 @@ namespace DocApp.Presentation.ViewModels
             getKeyWords = new GetKeyWordUseCase();
             getKeyWords.SetCallBack<IKeywordViewCallback>(this);
             await getKeyWords.Execute();
+        }
+
+        public async Task UserLogin()
+        {
+            Logins l = new Logins() { user_id = 1, login_time = DateTime.Now.ToString("yyyy-MM-dd HH:mm") };
+            UseCaseBase loginUseCase = new LoginUseCase(l);
+            loginUseCase.SetCallBack(this);
+            await loginUseCase.Execute();
         }
 
 
@@ -175,6 +200,18 @@ namespace DocApp.Presentation.ViewModels
         public bool KeywordReadViewFail()
         {
             System.Diagnostics.Debug.WriteLine("Keyword view fail");
+            return false;
+        }
+
+        public bool LoginViewSuccess(int val)
+        {
+            this.count = val;
+            onLoginSuccess(val);
+            return false;
+        }
+
+        public bool LoginViewFail()
+        {
             return false;
         }
     }

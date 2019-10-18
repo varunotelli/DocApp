@@ -59,8 +59,6 @@ namespace DocApp.Presentation.Views
             mp.AutoSuggestChanged += this.onAutoSuggestChanged;
             return;
 
-
-
         }
 
         public async void onAutoSuggestChanged(object sender, navargs2 n)

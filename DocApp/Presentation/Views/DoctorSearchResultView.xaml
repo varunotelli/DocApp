@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:DocApp.Presentation.Views.Templates"
     xmlns:cont="using:DocApp.Presentation.Views.Controls"
+    xmlns:conv="using:DocApp.Presentation.Views.Converters"
     xmlns:data="using:DocApp.Models"
     xmlns:sys="using:System"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
@@ -22,6 +23,7 @@
     </Page.Background>-->
     <Page.Resources>
         <ResourceDictionary>
+            <conv:TwelveHourConverter x:Key="TwelveHourTime"/>
             <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="DimGray"/>
             <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="White"/>
             <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="White"/>
@@ -256,7 +258,7 @@
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="data:Roster" x:Name="TimeSlotComboItem">
                             <TextBlock x:Name="TimeSlotText" Loaded="TimeSlotText_Loaded">
-                                <Run Text="{x:Bind start_time.ToString()}"/>
+                                <Run Text="{x:Bind start_time,Converter={StaticResource TwelveHourTime}}"/>
                                 <Run x:Name="TextSlotRun" Text="{x:Bind sys:String.Format('({0} vacancies)',val)}"/>
                             </TextBlock>
                         </DataTemplate>
