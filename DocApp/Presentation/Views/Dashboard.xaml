@@ -13,13 +13,19 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <StackPanel Orientation="Horizontal">
-            <controls:DropShadowPanel BlurRadius="4" ShadowOpacity="0.0" Margin="10,10,10,10"
-                          OffsetX="4" OffsetY="4" OffsetZ="0.2" Color="Black" VerticalAlignment="Top">
-                <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Padding="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Padding="5" HorizontalAlignment="Stretch">
                     <TextBlock Text="Your Recent Searches" FontSize="20" 
                            FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
-                    <ListView Height="200" ItemsSource="{x:Bind viewModel.recent_docs, Mode=OneWay}" 
+                    <ListView Height="300" ItemsSource="{x:Bind viewModel.recent_docs, Mode=OneWay}" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="data:Doctor">
@@ -33,10 +39,44 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </StackPanel>
-            </controls:DropShadowPanel>
-            
-           
-            
+            <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Padding="5" HorizontalAlignment="Stretch" Grid.Column="1">
+                <TextBlock Text="Your Most Visited Doctors" FontSize="20" 
+                           FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
+                <ListView Height="300" ItemsSource="{x:Bind viewModel.most_booked_docs, Mode=OneWay}" 
+                      ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:Doctor">
+                            <!--<StackPanel Orientation="Horizontal" Margin="10">
+                                    <Image Source="{x:Bind Image}" Height="50" Width="50"/>
+                                    <TextBlock Text="{x:Bind sys:String.Format('Dr.{0}',Name)}" Margin="5"
+                                               FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
+                                </StackPanel>-->
+                            <uc:DoctorProfileLargeTemplate/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Grid.Row="1"
+                    Padding="5" HorizontalAlignment="Stretch" Grid.ColumnSpan="2">
+            <TextBlock Text="Your Upcoming Appointments" FontSize="20" 
+                           FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
+            <ListView  ItemsSource="{x:Bind viewModel.appointments, Mode=OneWay}" 
+                      ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="data:AppointmentDetails">
+                        <!--<StackPanel Orientation="Horizontal" Margin="10">
+                                    <Image Source="{x:Bind Image}" Height="50" Width="50"/>
+                                    <TextBlock Text="{x:Bind sys:String.Format('Dr.{0}',Name)}" Margin="5"
+                                               FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
+                                </StackPanel>-->
+                        <uc:AppointmentTemplate/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
+
+
+
+
     </Grid>
 </Page>

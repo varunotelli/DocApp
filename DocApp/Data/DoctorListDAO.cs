@@ -249,7 +249,7 @@ namespace DocApp.Data
         }
 
        public async Task GetRecentDoctor(int id, IRecentDoctorCallback callback)
-        {
+       {
             if (DBHandler.db == null)
                 DBHandler.DBConnection();
             List<Doctor> results = new List<Doctor>();
@@ -275,7 +275,7 @@ namespace DocApp.Data
                                }
                                );
                 //details.Reverse();
-                foreach (var x in details.Take(3))
+                foreach (var x in details.Take(5))
                     results.Add(x);
                 if (results != null)
                     callback.RecentDocSuccess(results);
@@ -285,6 +285,27 @@ namespace DocApp.Data
             {
                 System.Diagnostics.Debug.WriteLine("SEARCH DOC SELECT EXCEPTION" + e.Message);
             }
+        }
+
+        public async Task GetMostBookedDoctor(int id, IMostBookedDoctorCallback callback)
+        {
+            if (DBHandler.db == null)
+                DBHandler.DBConnection();
+            List<Doctor> docs = new List<Doctor>();
+            try
+            {
+                docs=await DBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR WHERE ID IN(" +
+                "SELECT DOC_ID FROM APPOINTMENT GROUP BY DOC_ID HAVING PATIENT_ID={0} ORDER BY COUNT(*))", id));
+                if (docs != null)
+                    callback.MostBookedDocReadSuccess(docs);
+                else callback.MostBookedDocReadFail();
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("most booked doctor dao fail "+e.Message);
+            }
+            
+
         }
     }
 }

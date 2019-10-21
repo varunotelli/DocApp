@@ -158,6 +158,7 @@
     <Compile Include="Domain\Callbacks\ILastTestDetailCallback.cs" />
     <Compile Include="Domain\Callbacks\ILocationCallBack.cs" />
     <Compile Include="Domain\Callbacks\ILoginCallback.cs" />
+    <Compile Include="Domain\Callbacks\IMostBookedDoctorCallback.cs" />
     <Compile Include="Domain\Callbacks\IRecentDoctorCallback.cs" />
     <Compile Include="Domain\Callbacks\IRosterCallback.cs" />
     <Compile Include="Domain\Callbacks\ITestCallback.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Domain\UseCase\GetKeyWordUseCase.cs" />
     <Compile Include="Domain\UseCase\GetLastAddedTestUseCase.cs" />
     <Compile Include="Domain\UseCase\GetLocationsUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetMostBookedDoctorUseCase.cs" />
     <Compile Include="Domain\UseCase\GetRecentDoctorsUseCase.cs" />
     <Compile Include="Domain\UseCase\GetRosterUseCase.cs" />
     <Compile Include="Domain\UseCase\GetTestDetailsUseCase.cs" />
@@ -231,6 +233,7 @@
     <Compile Include="Presentation\Callbacks\IKeywordViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ILastTestViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ILoginViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IMostBookedDocViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IRecentDoctorViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IRosterViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ITestDetailsViewCallback.cs" />

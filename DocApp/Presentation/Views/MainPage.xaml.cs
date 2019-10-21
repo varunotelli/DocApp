@@ -25,6 +25,7 @@ using Windows.UI.Xaml.Navigation;
  *@todo Add reschedule and cancel functionality
  *@todo Fix Filter bugs
  *@todo Implement Dashboard 
+ *@todo Add navigation to all listview items
  */
 
 namespace DocApp.Presentation.Views

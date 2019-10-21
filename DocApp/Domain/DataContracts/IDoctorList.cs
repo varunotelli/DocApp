@@ -22,6 +22,7 @@ namespace DocApp.Domain.DataContracts
             int lexp = -1, int uexp = 200, int rating = -1);
         Task UpdateDoctorRating(int id, double rating, IDoctorUpdateCallback doctorCallback);
         Task GetRecentDoctor(int id, IRecentDoctorCallback callback);
+        Task GetMostBookedDoctor(int id, IMostBookedDoctorCallback callback);
     }
         
 }
