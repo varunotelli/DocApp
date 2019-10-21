@@ -21,7 +21,8 @@ namespace DocApp.Presentation.ViewModels
 
 
     class HospitalDoctorViewModel: IHospitalLocationPresenterCallBack, IDoctorViewCallBack, IHospitalViewCallback
-        , IDoctorLocationPresenterCallBack, IHospitalByDeptViewCallback, IDoctorDeptLocationViewCallback
+        , IDoctorLocationPresenterCallBack, IHospitalByDeptViewCallback, IDoctorDeptLocationViewCallback,
+        IDoc_SearchInsertViewCallback
     {
         //public double latitude;
         //public double longitude;
@@ -34,6 +35,7 @@ namespace DocApp.Presentation.ViewModels
         
         public UseCaseBase getHosps;
         public UseCaseBase getDocs;
+        int temp=-1;
         
         public HospitalDoctorViewModel()
         {
@@ -42,6 +44,13 @@ namespace DocApp.Presentation.ViewModels
      
         }
 
+
+        public async Task AddDocSearchResult(Doc_Search d)
+        {
+            UseCaseBase addDoc = new AddSearchResultUseCase(d);
+            addDoc.SetCallBack(this);
+            await addDoc.Execute();
+        }
 
         public async Task GetHospitalByLocation(string loc)
         {
@@ -164,6 +173,18 @@ namespace DocApp.Presentation.ViewModels
         public bool DataReadFail()
         {
             System.Diagnostics.Debug.WriteLine("Doc Search fail");
+            return false;
+        }
+
+        public bool Doc_SearchInsertViewSuccess(int x)
+        {
+            this.temp = x;
+            return true;
+        }
+
+        public bool Doc_SearchInsertViewFail()
+        {
+            System.Diagnostics.Debug.WriteLine("doc search viewmodel fail");
             return false;
         }
     }

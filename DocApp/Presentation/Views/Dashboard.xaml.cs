@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocApp.Presentation.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,19 @@ namespace DocApp.Presentation.Views
     /// </summary>
     public sealed partial class Dashboard : Page
     {
+        DashboardViewModel viewModel;
         public Dashboard()
         {
             this.InitializeComponent();
         }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e1)
+        {
+
+            viewModel = new DashboardViewModel();
+            await viewModel.GetRecentSearchDoctors(1);
+
+        }
+
     }
 }

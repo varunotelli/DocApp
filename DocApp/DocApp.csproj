@@ -125,6 +125,7 @@
     <Compile Include="Data\AppointmentDetailsDAO.cs" />
     <Compile Include="Data\DepartmentDAO.cs" />
     <Compile Include="Data\DBHandler.cs" />
+    <Compile Include="Data\DocSearchDAO.cs" />
     <Compile Include="Data\DoctorHospitalDAO.cs" />
     <Compile Include="Data\HospitalDoctorDAO.cs" />
     <Compile Include="Data\DoctorListDAO.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Domain\Callbacks\IDoctorHospitalCallBack.cs" />
     <Compile Include="Domain\Callbacks\IDoctorUpdateCallback.cs" />
     <Compile Include="Domain\Callbacks\IAppointmentListCallback.cs" />
+    <Compile Include="Domain\Callbacks\IDoc_SearchCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalDetailCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalListCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalDoctorCallback.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="Domain\Callbacks\ILastTestDetailCallback.cs" />
     <Compile Include="Domain\Callbacks\ILocationCallBack.cs" />
     <Compile Include="Domain\Callbacks\ILoginCallback.cs" />
+    <Compile Include="Domain\Callbacks\IRecentDoctorCallback.cs" />
     <Compile Include="Domain\Callbacks\IRosterCallback.cs" />
     <Compile Include="Domain\Callbacks\ITestCallback.cs" />
     <Compile Include="Domain\Callbacks\ITestDetailsCallback.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="Domain\DataContracts\IDepartmentList.cs" />
     <Compile Include="Domain\DataContracts\IDoctorInHospitalList.cs" />
     <Compile Include="Domain\DataContracts\IDoctorList.cs" />
+    <Compile Include="Domain\DataContracts\IDoc_Search.cs" />
     <Compile Include="Domain\DataContracts\IGetAddress.cs" />
     <Compile Include="Domain\DataContracts\IHospitalInDoctorList.cs" />
     <Compile Include="Domain\DataContracts\IHospitalList.cs" />
@@ -173,6 +177,7 @@
     <Compile Include="Domain\DataContracts\IRoster.cs" />
     <Compile Include="Domain\DataContracts\ITest.cs" />
     <Compile Include="Domain\DataContracts\ITestDetails.cs" />
+    <Compile Include="Domain\UseCase\AddSearchResultUseCase.cs" />
     <Compile Include="Domain\UseCase\AddTestimonialUseCase.cs" />
     <Compile Include="Domain\UseCase\BookAppointmentUseCase.cs" />
     <Compile Include="Domain\UseCase\CheckAppointmentUseCase.cs" />
@@ -193,6 +198,7 @@
     <Compile Include="Domain\UseCase\GetKeyWordUseCase.cs" />
     <Compile Include="Domain\UseCase\GetLastAddedTestUseCase.cs" />
     <Compile Include="Domain\UseCase\GetLocationsUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetRecentDoctorsUseCase.cs" />
     <Compile Include="Domain\UseCase\GetRosterUseCase.cs" />
     <Compile Include="Domain\UseCase\GetTestDetailsUseCase.cs" />
     <Compile Include="Domain\UseCase\LoginUseCase.cs" />
@@ -201,6 +207,7 @@
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\AppointmentDetails.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Doc_Search.cs" />
     <Compile Include="Models\KeyWord.cs" />
     <Compile Include="Models\Logins.cs" />
     <Compile Include="Models\Match.cs" />
@@ -216,6 +223,7 @@
     <Compile Include="Presentation\Callbacks\IDoctorDeptLocationViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IDoctorLocationPresenterCallBack.cs" />
     <Compile Include="Presentation\Callbacks\IDoctorRatingUpdateViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IDoc_SearchInsertViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IGetLocationPresenterCallback.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalByDeptViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalLocationPresenterCallBack.cs" />
@@ -223,12 +231,14 @@
     <Compile Include="Presentation\Callbacks\IKeywordViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ILastTestViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ILoginViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IRecentDoctorViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IRosterViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ITestDetailsViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ITestViewCallback.cs" />
     <Compile Include="Presentation\ViewModels\AppointmentBookingViewModel.cs" />
     <Compile Include="Presentation\ViewModels\AppointmentDisplayViewModel.cs" />
     <Compile Include="Presentation\ViewModels\AutoSuggestViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Presentation\ViewModels\DoctorSearchViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalSearchViewModel.cs" />
     <Compile Include="Presentation\Views\AppointmentBookingView.xaml.cs">

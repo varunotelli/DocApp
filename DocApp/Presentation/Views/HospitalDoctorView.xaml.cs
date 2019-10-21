@@ -78,18 +78,18 @@ namespace DocApp.Presentation.Views
         }
 
 
-        private void DoctorGrid_ItemClick(object sender, ItemClickEventArgs e)
+        private async void DoctorGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
             Frame parentFrame = Window.Current.Content as Frame;
 
             MainPage mp = parentFrame.Content as MainPage;
             StackPanel grid = mp.Content as StackPanel;
             Frame my_frame = grid.FindName("myFrame") as Frame;
-
-            my_frame.Navigate(typeof(DoctorDetailView), (e.ClickedItem as Doctor).ID, new SuppressNavigationTransitionInfo());
+            await viewModel.AddDocSearchResult(new Doc_Search() { doc_id = (e.ClickedItem as Doctor).ID, user_id = 1 });
+            //my_frame.Navigate(typeof(DoctorDetailView), (e.ClickedItem as Doctor).ID, new SuppressNavigationTransitionInfo());
         }
 
-        private void HospitalGrid_ItemClick(object sender, ItemClickEventArgs e)
+        private async void HospitalGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
             Frame parentFrame = Window.Current.Content as Frame;
 

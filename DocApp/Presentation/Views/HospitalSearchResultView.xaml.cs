@@ -71,14 +71,14 @@ namespace DocApp.Presentation.Views
             
         }
 
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             Frame parentFrame = Window.Current.Content as Frame;
 
             MainPage mp = parentFrame.Content as MainPage;
             StackPanel grid = mp.Content as StackPanel;
             Frame my_frame = grid.FindName("myFrame") as Frame;
-
+            
             my_frame.Navigate(typeof(HospitalDetailView), (e.ClickedItem as Hospital).ID, new SuppressNavigationTransitionInfo());
         }
     }

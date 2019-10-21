@@ -59,6 +59,7 @@ namespace DocApp.Presentation.Views
         
         AutoSuggestViewModel viewModel;
         bool locflag = false;
+        int ct = -1;
         public string address = "";
         public delegate void AutoSuggestChangedEventHandler(object source, navargs2 e);
         public event AutoSuggestChangedEventHandler AutoSuggestChanged;
@@ -102,13 +103,14 @@ namespace DocApp.Presentation.Views
             StatusText.Visibility = Visibility.Collapsed;
             if (args.ct>1)
             {
+                ct = args.ct;
                 myFrame.Navigate(typeof(Dashboard));
 
             }
             else
             {
-                if (HospDocSuggest.Text.Equals(""))
-                    myFrame.Navigate(typeof(MainPageBuffer), new navargs { name = viewModel.loc, location = true, mp = this });
+                myFrame.Navigate(typeof(MainPageBuffer), new navargs { name = viewModel.loc, location = true, mp = this });
+                   
             }
         }
 
@@ -218,6 +220,11 @@ namespace DocApp.Presentation.Views
             }
             else
             {
+                if(ct>1)
+                {
+                    myFrame.Navigate(typeof(Dashboard));
+                }
+                else
                 myFrame.Navigate(typeof(MainPageBuffer), new navargs
                 {
                     

@@ -248,29 +248,43 @@ namespace DocApp.Data
             throw new NotImplementedException();
         }
 
-        //public async Task SearchDoctor(string name, string location, int dept, IDoctorCallback callback)
-        //{
-        //    DBHandler.DBConnection();
-        //    List<Doctor> results = new List<Doctor>();
-        //    try
-        //    {
-        //        results = await DBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR " +
-        //        "WHERE NAME LIKE '{2}%' AND ID IN (" +
-        //        "SELECT DOC_ID FROM ROSTER WHERE HOSP_ID IN(" +
-        //        "SELECT ID FROM HOSPITAL WHERE LOCATION='{0}')" +
-        //        ")" +
-        //        "AND DEPT_ID ={1}", location, dept, name));
-        //        System.Diagnostics.Debug.WriteLine("Results val=" + results.Count);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        System.Diagnostics.Debug.WriteLine("Dept loc select exception " + e.Message);
-        //    }
-        //    if (results != null)
-        //        callback.ReadSuccess(results);
-        //    else
-        //        callback.ReadFail();
-
-        //}
+       public async Task GetRecentDoctor(int id, IRecentDoctorCallback callback)
+        {
+            if (DBHandler.db == null)
+                DBHandler.DBConnection();
+            List<Doctor> results = new List<Doctor>();
+            try
+            {
+                var doctors = await DBHandler.db.Table<Doctor>().ToListAsync();
+                var doc_searches = await DBHandler.db.Table<Doc_Search>().ToListAsync();
+                var details = (from doc in doctors
+                               join doc_search in doc_searches
+                               on doc.ID equals doc_search.doc_id
+                               where doc_search.user_id==id
+                               orderby doc_search.id descending
+                               select new Doctor
+                               {
+                                   Name=doc.Name,
+                                   Description=doc.Description,
+                                   Designation=doc.Designation,
+                                   Rating=doc.Rating,
+                                   Number_of_Rating=doc.Number_of_Rating,
+                                   Experience=doc.Experience,
+                                   ID=doc.ID,
+                                   Image=doc.Image
+                               }
+                               );
+                //details.Reverse();
+                foreach (var x in details.Take(3))
+                    results.Add(x);
+                if (results != null)
+                    callback.RecentDocSuccess(results);
+                else callback.RecentDocFail();
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("SEARCH DOC SELECT EXCEPTION" + e.Message);
+            }
+        }
     }
 }
