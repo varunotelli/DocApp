@@ -14,7 +14,7 @@ namespace DocApp.Presentation.ViewModels
     public abstract class DoctorDetailsAbstract : INotifyPropertyChanged, IDoctorDetailViewCallBack, IDoctorRatingUpdateViewCallback,
         IHospitalDoctorViewCallBack, IRosterViewCallback,
         IAppBookingViewCallback, IAppByIDViewCallback, ITestDetailsViewCallback, ITestViewCallback, ILastTestViewCallback,
-        IHospitalDetailViewCallBack, IDoctorHospitalDetailViewCallback,
+        
         ICheckAppointmentViewCallback
     {
         public AppointmentDetails app;
@@ -260,111 +260,143 @@ namespace DocApp.Presentation.ViewModels
                 //System.Diagnostics.Debug.WriteLine("Add testimonials view EXCEPTION=" + e.Message);
             }
         }
-
-
-        public bool AppByIDViewFail()
+        public bool DataReadSuccess(Doctor d)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool AppByIDViewSuccess(AppointmentDetails appointment)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AppViewReadFail()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AppViewReadSuccess(Appointment appointment)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool CheckAppointmentViewFail()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool CheckAppointmentViewSuccess(int count)
-        {
-            throw new NotImplementedException();
+            this.doctor = d;
+            //onDoctorReadSuccess();
+            return true;
         }
 
         public bool DataReadFail()
         {
-            throw new NotImplementedException();
-        }
-
-        public bool DataReadSuccess(Doctor d)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DataReadSuccess(List<HospitalInDoctorDetails> d)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DataReadSuccess(Hospital h)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DataReadSuccess(List<DoctorInHospitalDetails> d)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DoctorUpdateFail()
-        {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool DoctorUpdateSuccess(Doctor d)
         {
-            throw new NotImplementedException();
+            this.doctor = d;
+            onDoctorRatingUpdateSuccess();
+            return true;
         }
 
-        public bool LastTestViewFail()
+        public bool DoctorUpdateFail()
         {
-            throw new NotImplementedException();
+            return false;
         }
 
-        public bool LastTestViewSuccess(TestDetails detail)
+        public bool DataReadSuccess(List<HospitalInDoctorDetails> h)
         {
-            throw new NotImplementedException();
-        }
+            hospitals.Clear();
 
-        public bool RosterViewReadFail()
-        {
-            throw new NotImplementedException();
+            foreach (var x in h)
+                hospitals.Add(x);
+            //onDoctorReadSuccess();
+            return true;
         }
 
         public bool RosterViewReadSuccess(List<Roster> l)
         {
-            throw new NotImplementedException();
+            timeslots.Clear();
+            foreach (var x in l)
+                timeslots.Add(x);
+            return true;
+        }
+
+        public bool RosterViewReadFail()
+        {
+            System.Diagnostics.Debug.WriteLine("Roster view fail");
+            return false;
+        }
+
+        public bool AppViewReadSuccess(Appointment appointment)
+        {
+            //this.app = appointment;
+            onInsertSuccess();
+            return true;
+        }
+
+        public bool AppViewReadFail()
+        {
+            onInsertFail();
+            return false;
+        }
+
+        public bool AppByIDViewSuccess(AppointmentDetails appointment)
+        {
+            this.app = appointment;
+            onAppointmentRead();
+            return true;
+        }
+
+        public bool AppByIDViewFail()
+        {
+            return false;
+        }
+
+        public bool TestDetailsReadViewSuccess(List<TestDetails> t)
+        {
+            //t.OrderByDescending(x => x.posted_time);
+            tests.Clear();
+            foreach (var x in t.OrderByDescending(x => x.posted_time))
+            {
+                //x.posted_time = DateTime.ParseExact(x.posted_time, "yyyy-MM-dd HH:mm:ss", null).ToString("dd/MM/yyyy HH:mm");
+                tests.Add(x);
+            }
+
+
+            return true;
         }
 
         public bool TestDetailsReadViewFail()
         {
-            throw new NotImplementedException();
-        }
-
-        public bool TestDetailsReadViewSuccess(List<TestDetails> tests)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool TestReadViewFail()
-        {
-            throw new NotImplementedException();
+            System.Diagnostics.Debug.WriteLine("Testimonial view fail");
+            return false;
         }
 
         public bool TestReadViewSucces()
         {
-            throw new NotImplementedException();
+            onTestimonialAddedSuccess();
+            return true;
         }
+
+        public bool TestReadViewFail()
+        {
+            onTestimonialAddedFail();
+            return false;
+        }
+
+        public bool LastTestViewSuccess(TestDetails detail)
+        {
+            //detail.posted_time = DateTime.ParseExact(detail.posted_time, "yyyy-MM-dd HH:mm:ss", null).ToString("dd/MM/yyyy HH:mm");
+            tests.Insert(0, detail);
+            tests.OrderByDescending(x => x.posted_time);
+            return true;
+        }
+
+        public bool LastTestViewFail()
+        {
+            return false;
+        }
+
+
+
+        public bool CheckAppointmentViewSuccess(int count)
+        {
+            ct = count;
+            onAppCheckSuccess();
+            return true;
+        }
+
+        public bool CheckAppointmentViewFail()
+        {
+            return false;
+        }
+
+
+       
+
+       
+
+       
     }
 }

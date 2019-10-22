@@ -24,7 +24,7 @@ using Windows.UI.Xaml.Navigation;
 /*@todo Create profile page to track appointments
  *@todo Add reschedule and cancel functionality
  *@todo Fix Filter bugs
- *@todo Implement Dashboard 
+ *@todo Complete Dashboard 
  *@todo Add navigation to all listview items
  */
 
