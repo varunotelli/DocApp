@@ -275,7 +275,7 @@ namespace DocApp.Data
                                }
                                );
                 //details.Reverse();
-                foreach (var x in details.Take(5))
+                foreach (var x in details.GroupBy(d=>d.ID).Select(g=>g.First()))
                     results.Add(x);
                 if (results != null)
                     callback.RecentDocSuccess(results);

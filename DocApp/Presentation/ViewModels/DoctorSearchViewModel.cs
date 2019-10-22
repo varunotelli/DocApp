@@ -18,21 +18,7 @@ namespace DocApp.Presentation.ViewModels
         IHospitalLocationPresenterCallBack, IHospitalDetailViewCallBack, IDoctorHospitalDetailViewCallback,
         IHospitalRatingUpdateViewCallback,ICheckAppointmentViewCallback, IGetAddressPresenterCallback
     {
-        public UseCaseBase getDepts;
-        public UseCaseBase getDocs;
-        public UseCaseBase getDoc;
-        public UseCaseBase updateDoc;
-        public UseCaseBase getHosp;
-        public UseCaseBase getTimeSlots;
-        public UseCaseBase bookApp;
-        public UseCaseBase getApp;
-        public UseCaseBase getTest;
-        public UseCaseBase addTest;
-        public UseCaseBase getHosps;
-        public UseCaseBase getHospital;
-        public UseCaseBase getDoctorByHospital;
-        public UseCaseBase updateHospital;
-        public UseCaseBase checkApp;
+        
         public AppointmentDetails app;
         public ObservableCollection<string> deptnames;
         public ObservableCollection<HospitalInDoctorDetails> hospitals;
@@ -182,7 +168,7 @@ namespace DocApp.Presentation.ViewModels
 
         public async Task CheckApp(int p_id,string app_date, string time)
         {
-            checkApp = new CheckAppointmentUseCase(p_id, app_date, time);
+            UseCaseBase checkApp = new CheckAppointmentUseCase(p_id, app_date, time);
             checkApp.SetCallBack(this);
             await checkApp.Execute();
         }
@@ -190,8 +176,8 @@ namespace DocApp.Presentation.ViewModels
         public async Task GetDoctor(int id)
         {
             
-            getDoc = new GetDoctorUseCase(id);
-            getHosp = new GetHospitalByDoctorUseCase(id);
+            UseCaseBase getDoc = new GetDoctorUseCase(id);
+            UseCaseBase getHosp = new GetHospitalByDoctorUseCase(id);
 
             getDoc.SetCallBack<IDoctorDetailViewCallBack>(this);
             getHosp.SetCallBack<IHospitalDoctorViewCallBack>(this);
@@ -211,7 +197,7 @@ namespace DocApp.Presentation.ViewModels
 
         public async Task GetTimeSlots(int doc_id, int hosp_id, string app_date)
         {
-            getTimeSlots = new GetRosterUseCase(doc_id, hosp_id,app_date);
+            UseCaseBase getTimeSlots = new GetRosterUseCase(doc_id, hosp_id,app_date);
             getTimeSlots.SetCallBack(this);
             await getTimeSlots.Execute();
 
@@ -219,7 +205,7 @@ namespace DocApp.Presentation.ViewModels
 
         public async Task UpdateDoctor(int id, double rating)
         {
-            updateDoc = new UpdateDoctorRatingUseCase(id, rating);
+            UseCaseBase updateDoc = new UpdateDoctorRatingUseCase(id, rating);
             updateDoc.SetCallBack(this);
             try
             {
@@ -232,7 +218,7 @@ namespace DocApp.Presentation.ViewModels
         }
         public async Task GetDepartments()
         {
-            getDepts = new GetDeptsUseCase();
+            UseCaseBase getDepts = new GetDeptsUseCase();
             getDepts.SetCallBack<IDepartmentViewCallback>(this);
             await getDepts.Execute();
         }
@@ -272,28 +258,28 @@ namespace DocApp.Presentation.ViewModels
 
         public async Task GetDoctors(string location)
         {
-            getDocs = new GetDoctorByLocationUseCase(location);
+            UseCaseBase getDocs = new GetDoctorByLocationUseCase(location);
             getDocs.SetCallBack<IDoctorLocationPresenterCallBack>(this);
             await getDocs.Execute();
         }
 
         public async Task GetDoctorsByDept(string location, int dept, int lexp=-1, int uexp=200,  int rating=-1)
         {
-            getDocs = new GetDoctorByDeptLocationUseCase(location, dept+1,lexp, uexp, rating);
+            UseCaseBase getDocs = new GetDoctorByDeptLocationUseCase(location, dept+1,lexp, uexp, rating);
             getDocs.SetCallBack<IDoctorDeptLocationViewCallback>(this);
             await getDocs.Execute();
         }
 
         public async Task GetHospitals(string location)
         {
-            getHosp = new GetHospitalByLocationUseCase(location);
+            UseCaseBase getHosp = new GetHospitalByLocationUseCase(location);
             getHosp.SetCallBack<IHospitalLocationPresenterCallBack>(this);
             await getHosp.Execute();
         }
 
         public async Task GetHospitalByDept(string location, int dept)
         {
-            getHosp = new GetHospitalByDeptUseCase(location.ToUpper(), dept + 1);
+            UseCaseBase getHosp = new GetHospitalByDeptUseCase(location.ToUpper(), dept + 1);
             getHosp.SetCallBack<IHospitalByDeptViewCallback>(this);
             await getHosp.Execute();
         }
@@ -301,8 +287,8 @@ namespace DocApp.Presentation.ViewModels
         public async Task GetHospital(int id)
         {
             Doctors = new ObservableCollection<DoctorInHospitalDetails>();
-            getHospital = new GetHospitalUseCase(id);
-            getDoctorByHospital = new GetDoctorByHospitalUseCase(id);
+            UseCaseBase getHospital = new GetHospitalUseCase(id);
+            UseCaseBase getDoctorByHospital = new GetDoctorByHospitalUseCase(id);
             getHospital.SetCallBack<IHospitalDetailViewCallBack>(this);
             getDoctorByHospital.SetCallBack<IDoctorHospitalDetailViewCallback>(this);
             try
@@ -318,7 +304,7 @@ namespace DocApp.Presentation.ViewModels
 
         public async Task UpdateHospitalRating(int id, double rating)
         {
-            updateHospital = new UpdateHospitalRatingUseCase(id, rating);
+            UseCaseBase updateHospital = new UpdateHospitalRatingUseCase(id, rating);
             updateHospital.SetCallBack(this);
             await updateHospital.Execute();
         }
@@ -326,7 +312,7 @@ namespace DocApp.Presentation.ViewModels
 
         public async Task BookAppointment(int p_id, int doc_id, int hosp_id, string app_date, string start)
         {
-            bookApp = new BookAppointmentUseCase(p_id, doc_id, hosp_id, app_date, start);
+            UseCaseBase bookApp = new BookAppointmentUseCase(p_id, doc_id, hosp_id, app_date, start);
             bookApp.SetCallBack(this);
             try
             {
@@ -341,7 +327,7 @@ namespace DocApp.Presentation.ViewModels
         }
         public async Task GetAppointment(string app_date, string start)
         {
-            getApp = new GetAppointmentByIDUseCase(app_date, start);
+            UseCaseBase getApp = new GetAppointmentByIDUseCase(app_date, start);
             getApp.SetCallBack(this);
             try
             {
@@ -358,7 +344,7 @@ namespace DocApp.Presentation.ViewModels
 
         public async Task GetTests(int id)
         {
-            getTest = new GetTestDetailsUseCase(id);
+            UseCaseBase getTest = new GetTestDetailsUseCase(id);
             getTest.SetCallBack(this);
             try
             {
@@ -372,7 +358,7 @@ namespace DocApp.Presentation.ViewModels
 
         public async Task AddTest(int pid,int doc,string msg, string time)
         {
-            addTest = new AddTestimonialUseCase(pid, doc, msg, time);
+            UseCaseBase addTest = new AddTestimonialUseCase(pid, doc, msg, time);
             addTest.SetCallBack(this);
             try
             {
@@ -386,7 +372,7 @@ namespace DocApp.Presentation.ViewModels
 
         public async Task GetLastTest(int doc)
         {
-            getTest = new GetLastAddedTestUseCase(doc);
+            UseCaseBase getTest = new GetLastAddedTestUseCase(doc);
             getTest.SetCallBack(this);
             try
             {

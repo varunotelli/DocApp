@@ -231,7 +231,7 @@
                     HorizontalAlignment="Right"
                     LightDismissOverlayMode="On"
                    Visibility="Collapsed"
-                           RequestedTheme="Dark"
+                   RequestedTheme="Dark"
                            
                            >
             <StackPanel Background="#3b5163" Height="200" Width="300" VerticalAlignment="Center" BorderThickness="1"

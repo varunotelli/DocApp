@@ -242,6 +242,7 @@
     <Compile Include="Presentation\ViewModels\AppointmentDisplayViewModel.cs" />
     <Compile Include="Presentation\ViewModels\AutoSuggestViewModel.cs" />
     <Compile Include="Presentation\ViewModels\DashboardViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\DoctorDetailsAbstract.cs" />
     <Compile Include="Presentation\ViewModels\DoctorSearchViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalSearchViewModel.cs" />
     <Compile Include="Presentation\Views\AppointmentBookingView.xaml.cs">

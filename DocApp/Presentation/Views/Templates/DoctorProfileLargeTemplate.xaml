@@ -43,7 +43,7 @@
                     </RatingControl>
 
                 </StackPanel>
-                <TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', doctor.Experience)}" 
+                <TextBlock Text="{x:Bind sys:String.Format('{0} years of experience overall', doctor.Experience)}" 
                    Style="{StaticResource TextBlockStyle}"/>
                 <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"
                        TextTrimming="CharacterEllipsis"/>

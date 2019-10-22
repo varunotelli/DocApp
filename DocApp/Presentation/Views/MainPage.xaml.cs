@@ -79,7 +79,9 @@ namespace DocApp.Presentation.Views
             progring.IsActive = true;
             MyAutoSuggest.IsEnabled = false;
             HospDocSuggest.IsEnabled = false;
+            Dashboardbtn.IsEnabled = false;
             AppBtn.IsEnabled = false;
+            MyAutoSuggest.Focus(FocusState.Programmatic);
             
             //myFrame.Navigate(typeof(MainPageLoadingScreenView));
         
@@ -101,6 +103,7 @@ namespace DocApp.Presentation.Views
             MyAutoSuggest.IsEnabled = true;
             HospDocSuggest.IsEnabled = true;
             AppBtn.IsEnabled = true;
+            Dashboardbtn.IsEnabled = true;
             StatusText.Visibility = Visibility.Collapsed;
             if (args.ct>1)
             {
@@ -110,6 +113,7 @@ namespace DocApp.Presentation.Views
             }
             else
             {
+                Dashboardbtn.Visibility = Visibility.Collapsed;
                 myFrame.Navigate(typeof(MainPageBuffer), new navargs { name = viewModel.loc, location = true, mp = this });
                    
             }
@@ -298,12 +302,15 @@ namespace DocApp.Presentation.Views
             {
                 myFrame.Navigate(typeof(DoctorSearchResultView), new navargs
                 {
-                    name = address,
+                    name = viewModel.loc,
                     mp = this,
-                    index = (sender as ListBox).SelectedIndex
-                });
+                    index = (sender as ListBox).SelectedIndex,
+                    doc = true
+
+                }) ;
             }
             KeyWordBox.IsOpen = false;
+            MyAutoSuggest.IsFocusEngaged = false;
         }
 
         private void AppBtn_Click(object sender, RoutedEventArgs e)
@@ -331,6 +338,16 @@ namespace DocApp.Presentation.Views
                 await dialog.ShowAsync();
            
             
+        }
+
+        private void Dashboardbtn_Click(object sender, RoutedEventArgs e)
+        {
+            myFrame.Navigate(typeof(Dashboard), new navargs
+            {
+
+                name = viewModel.loc.ToUpper(),
+                mp = this
+            });
         }
     }
 }

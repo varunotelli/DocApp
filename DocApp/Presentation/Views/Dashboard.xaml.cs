@@ -24,6 +24,8 @@ namespace DocApp.Presentation.Views
     public sealed partial class Dashboard : Page
     {
         DashboardViewModel viewModel;
+        MainPage mainPage;
+        string address;
         public Dashboard()
         {
             this.InitializeComponent();
@@ -33,11 +35,25 @@ namespace DocApp.Presentation.Views
         {
 
             viewModel = new DashboardViewModel();
+            var args = e1.Parameter as navargs;
+            address = args.name;
+            mainPage = args.mp;
             await viewModel.GetRecentSearchDoctors(1);
             await viewModel.GetMostBookedDoc(1);
             await viewModel.GetAppointments(1);
 
         }
 
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            Frame parentFrame = Window.Current.Content as Frame;
+
+            MainPage mp1 = parentFrame.Content as MainPage;
+            StackPanel grid = mp1.Content as StackPanel;
+
+            Frame my_frame = grid.FindName("myFrame") as Frame;
+            my_frame.Navigate(typeof(DoctorSearchResultView), new navargs() { mp = mainPage, name = address, doc=true });
+        }
     }
 }
