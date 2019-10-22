@@ -9,8 +9,13 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:data="using:DocApp.Models"
     xmlns:sys="using:System"
+    xmlns:conv="using:DocApp.Presentation.Views.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <conv:NameConverter x:Key="NameConv"/>
+        <conv:TwelveHourConverter x:Key="TimeConv"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -57,19 +62,38 @@
                 </ListView>
             </StackPanel>
         <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Grid.Row="1"
-                    Padding="5" HorizontalAlignment="Stretch" Grid.ColumnSpan="2">
+                    Padding="5" HorizontalAlignment="Center" Grid.ColumnSpan="2">
             <TextBlock Text="Your Upcoming Appointments" FontSize="20" 
                            FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
             <ListView  ItemsSource="{x:Bind viewModel.appointments, Mode=OneWay}" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="data:AppointmentDetails">
-                        <!--<StackPanel Orientation="Horizontal" Margin="10">
-                                    <Image Source="{x:Bind Image}" Height="50" Width="50"/>
-                                    <TextBlock Text="{x:Bind sys:String.Format('Dr.{0}',Name)}" Margin="5"
-                                               FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
-                                </StackPanel>-->
-                        <uc:AppointmentTemplate/>
+                        <Grid Margin="10" HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel HorizontalAlignment="Left" Margin="10">
+                                <TextBlock Text="{x:Bind doc_name,Converter={StaticResource NameConv}}"
+                                           FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
+                                <TextBlock Text="{x:Bind hosp_name}" 
+                                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
+
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" HorizontalAlignment="Right" Margin="10">
+                                <TextBlock Text="{x:Bind app_date}" 
+                                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
+                                <TextBlock Text="{x:Bind Timeslot, Converter={StaticResource TimeConv}}"
+                                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
+                            </StackPanel>
+                        </Grid>
+                        <!--<uc:AppointmentTemplate/>-->
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

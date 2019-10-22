@@ -35,6 +35,7 @@ namespace DocApp.Presentation.Views
             viewModel = new DashboardViewModel();
             await viewModel.GetRecentSearchDoctors(1);
             await viewModel.GetMostBookedDoc(1);
+            await viewModel.GetAppointments(1);
 
         }
 

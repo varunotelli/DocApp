@@ -105,7 +105,7 @@ namespace DocApp.Presentation.Views
             if (args.ct>1)
             {
                 ct = args.ct;
-                myFrame.Navigate(typeof(Dashboard));
+                myFrame.Navigate(typeof(Dashboard), new navargs { name = viewModel.loc, location = true, mp = this });
 
             }
             else
@@ -223,7 +223,13 @@ namespace DocApp.Presentation.Views
             {
                 if(ct>1)
                 {
-                    myFrame.Navigate(typeof(Dashboard));
+                    myFrame.Navigate(typeof(Dashboard), new navargs
+                    {
+
+                        name = viewModel.loc.ToUpper(),
+
+                        mp = this
+                    });
                 }
                 else
                 myFrame.Navigate(typeof(MainPageBuffer), new navargs
