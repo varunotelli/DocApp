@@ -84,8 +84,13 @@ namespace DocApp.Presentation.ViewModels
             
         }
 
+        public void onHospitalRatingUpdateSuccess()
+        {
+            if (HospitalRatingUpdateSuccess != null)
+                HospitalRatingUpdateSuccess(this, EventArgs.Empty);
+        }
 
-       
+
         public async Task GetDepartments()
         {
             UseCaseBase getDepts = new GetDeptsUseCase();

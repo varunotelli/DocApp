@@ -12,30 +12,42 @@ using System.Threading.Tasks;
 namespace DocApp.Presentation.ViewModels
 {
     public class DashboardViewModel: DoctorDetailsAbstract, IRecentDoctorViewCallback,IMostBookedDocViewCallback,
-        IAppDisplayViewCallback
+        IAppDisplayViewCallback, ILastHospitalViewCallback
     {
-        
-        
-
+       
         public ObservableCollection<Doctor> recent_docs;
         public ObservableCollection<Doctor> most_booked_docs;
         public ObservableCollection<AppointmentDetails> appointments;
-
-        
 
         public DashboardViewModel()
         {
             this.recent_docs = new ObservableCollection<Doctor>();
             this.most_booked_docs = new ObservableCollection<Doctor>();
             this.appointments = new ObservableCollection<AppointmentDetails>();
-            
-            
+
+            hospitals = new ObservableCollection<HospitalInDoctorDetails>();
             timeslots = new ObservableCollection<Roster>();
             tests = new ObservableCollection<TestDetails>();
             hosps = new ObservableCollection<Hospital>();
             hospsmain = new ObservableCollection<Hospital>();
             Doctors = new ObservableCollection<DoctorInHospitalDetails>();
         }
+
+        public async Task GetLastHospital(int p_id, int doc_id)
+        {
+            try
+            {
+                UseCaseBase lastHosp = new GetLastHospitalUseCase(p_id, doc_id);
+                lastHosp.SetCallBack(this);
+                await lastHosp.Execute();
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Last hospital view exception=" + e.Message);
+            }
+        }
+
+
         public async Task GetRecentSearchDoctors(int id)
         {
 
@@ -114,6 +126,14 @@ namespace DocApp.Presentation.ViewModels
             return false;
         }
 
-        
+        public bool LastHospitalViewSuccess(Hospital hospital)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool LastHospitalViewFail()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -32,7 +32,7 @@
                     Closed="Book_Pop_Closed"
                     IsLightDismissEnabled="True"
                     VerticalOffset="300"
-                    HorizontalOffset="700"
+                    HorizontalOffset="-650"
                     Margin="10,10"
                     HorizontalAlignment="Right"
                     LightDismissOverlayMode="On"
@@ -64,7 +64,7 @@
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="data:Roster" x:Name="TimeSlotComboItem">
                             <TextBlock x:Name="TimeSlotText" Loaded="TimeSlotText_Loaded">
-                                <Run Text="{x:Bind start_time,Converter={StaticResource TwelveHourTime}}"/>
+                                <Run Text="{x:Bind start_time,Converter={StaticResource TimeConv}}"/>
                                 <Run x:Name="TextSlotRun" Text="{x:Bind sys:String.Format('({0} vacancies)',val)}"/>
                             </TextBlock>
                         </DataTemplate>
@@ -77,9 +77,11 @@
             </StackPanel>
         </Popup>
 
-        <SplitView x:Name="mySplitView" DisplayMode="Inline" PanePlacement="Right" OpenPaneLength="800">
+        <SplitView x:Name="mySplitView" DisplayMode="Inline" PanePlacement="Right" OpenPaneLength="800" PaneOpened="MySplitView_PaneOpened">
             <SplitView.Pane>
+                
                 <StackPanel Padding="5" Background="White">
+                    
                     <HyperlinkButton x:Name="CloseBtn" VerticalAlignment="Top"
                                              FontFamily="Segoe MDL2 Assets" Click="CloseBtn_Click" Margin="20,0">
                         <TextBlock Text="&#xE106;" FontSize="20"/>
@@ -247,8 +249,11 @@
                                              Click="HyperlinkButton_Click"/>
                         </Grid>
                         
-                        <ListView Height="300" ItemsSource="{x:Bind viewModel.recent_docs, Mode=OneWay}" 
+                        <ListView Height="300" x:Name="myListView" ItemsSource="{x:Bind viewModel.recent_docs, Mode=OneWay}" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto" ItemClick="ListView_ItemClick" IsItemClickEnabled="True">
+                            <ListView.ItemContainerTransitions>
+                                <TransitionCollection/>
+                            </ListView.ItemContainerTransitions>
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="data:Doctor">
                                     <!--<StackPanel Orientation="Horizontal" Margin="10">
@@ -271,16 +276,20 @@
                                              FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"
                                              Click="HyperlinkButton_Click"/>
                         </Grid>
-                        
-                        <ListView Height="300" ItemsSource="{x:Bind viewModel.most_booked_docs, Mode=OneWay}" 
-                      ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                        <ListView x:Name="BookedListView" Height="300" ItemClick="BookedListView_ItemClick" IsItemClickEnabled="True"
+                                  ItemsSource="{x:Bind viewModel.most_booked_docs, Mode=OneWay}" 
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <ListView.ItemContainerTransitions>
+                                <TransitionCollection/>
+                            </ListView.ItemContainerTransitions>
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="data:Doctor">
                                     <!--<StackPanel Orientation="Horizontal" Margin="10">
                                     <Image Source="{x:Bind Image}" Height="50" Width="50"/>
                                     <TextBlock Text="{x:Bind sys:String.Format('Dr.{0}',Name)}" Margin="5"
                                                FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
-                                </StackPanel>-->
+                                    </StackPanel>-->
                                     <uc:DoctorProfileLargeTemplate/>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

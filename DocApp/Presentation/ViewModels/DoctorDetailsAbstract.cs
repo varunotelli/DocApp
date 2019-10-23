@@ -96,11 +96,7 @@ namespace DocApp.Presentation.ViewModels
                 DoctorReadSuccess(this, EventArgs.Empty);
         }
 
-        public void onHospitalRatingUpdateSuccess()
-        {
-            if (HospitalRatingUpdateSuccess != null)
-                HospitalRatingUpdateSuccess(this, EventArgs.Empty);
-        }
+        
 
         public void onDoctorRatingUpdateSuccess()
         {
@@ -378,8 +374,6 @@ namespace DocApp.Presentation.ViewModels
             return false;
         }
 
-
-
         public bool CheckAppointmentViewSuccess(int count)
         {
             ct = count;
@@ -391,12 +385,6 @@ namespace DocApp.Presentation.ViewModels
         {
             return false;
         }
-
-
-       
-
-       
-
-       
+   
     }
 }

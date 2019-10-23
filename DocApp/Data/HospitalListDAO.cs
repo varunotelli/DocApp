@@ -199,6 +199,26 @@ namespace DocApp.Data
             //await DoctorDBHandler.db.CloseAsync();
         }
 
+        public async Task GetLastHospital(int p_id,int doc_id,ILastHospitalCallback callback)
+        {
+            if (DBHandler.db == null)
+                DBHandler.DBConnection();
+            try
+            {
+                var results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
+                            "WHERE ID in(" +
+                            "SELECT HOS_ID FROM APPOINTMENT WHERE DOC_ID={0} AND PATIENT_ID={1} ORDER BY ID DESC LIMIT 1", doc_id, p_id));
+                if (results != null)
+                    callback.ILastHospitalSuccess(results.First());
+                else callback.ILastHospitalFail();
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("last hospital dao exception=" + e.Message);
+            }
+            
+        }
+
 
     }
 }

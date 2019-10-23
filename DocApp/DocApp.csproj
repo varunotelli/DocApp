@@ -155,6 +155,7 @@
     <Compile Include="Domain\Callbacks\IHospitalDoctorCallback.cs" />
     <Compile Include="Domain\Callbacks\IHospitalUpdateCallback.cs" />
     <Compile Include="Domain\Callbacks\IKeyWordCallback.cs" />
+    <Compile Include="Domain\Callbacks\ILastHospitalCallback.cs" />
     <Compile Include="Domain\Callbacks\ILastTestDetailCallback.cs" />
     <Compile Include="Domain\Callbacks\ILocationCallBack.cs" />
     <Compile Include="Domain\Callbacks\ILoginCallback.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Domain\UseCase\GetHospitalUseCase.cs" />
     <Compile Include="Domain\UseCase\GetKeyWordUseCase.cs" />
     <Compile Include="Domain\UseCase\GetLastAddedTestUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetLastHospitalUseCase.cs" />
     <Compile Include="Domain\UseCase\GetLocationsUseCase.cs" />
     <Compile Include="Domain\UseCase\GetMostBookedDoctorUseCase.cs" />
     <Compile Include="Domain\UseCase\GetRecentDoctorsUseCase.cs" />
@@ -231,6 +233,7 @@
     <Compile Include="Presentation\Callbacks\IHospitalLocationPresenterCallBack.cs" />
     <Compile Include="Presentation\Callbacks\IHospitalRatingUpdateViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IKeywordViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\ILastHospitalViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ILastTestViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ILoginViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IMostBookedDocViewCallback.cs" />
@@ -310,6 +313,9 @@
     </Compile>
     <Compile Include="Presentation\Views\Controls\ComboBoxControl.xaml.cs">
       <DependentUpon>ComboBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Views\Templates\BookedDocTemplate.xaml.cs">
+      <DependentUpon>BookedDocTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Views\Templates\DoctorProfileLargeTemplate.xaml.cs">
       <DependentUpon>DoctorProfileLargeTemplate.xaml</DependentUpon>
@@ -458,6 +464,10 @@
     <Page Include="Presentation\Views\Controls\ComboBoxControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Presentation\Views\Templates\BookedDocTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\Templates\DoctorProfileLargeTemplate.xaml">
       <SubType>Designer</SubType>

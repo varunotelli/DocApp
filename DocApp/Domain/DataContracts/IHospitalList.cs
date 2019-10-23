@@ -18,6 +18,7 @@ namespace DocApp.Domain.DataContracts
         Task GetHospitalByLocationAsync(string location, IHospitalListCallback hospitalCallback);
         Task GetHospitalByDept(string location,int dept_id, IHospitalListCallback hospitalCallback);
         Task UpdateHospitalRating(int id, double rating, IHospitalUpdateCallback hospitalCallback);
+        Task GetLastHospital(int p_id, int doc_id, ILastHospitalCallback callback);
 
     }
 }

@@ -26,6 +26,7 @@ using Windows.UI.Xaml.Navigation;
  *@todo Fix Filter bugs
  *@todo Complete Dashboard 
  *@todo Add navigation to all listview items
+ *@todo Complete Rebook functionality
  */
 
 namespace DocApp.Presentation.Views
@@ -81,7 +82,7 @@ namespace DocApp.Presentation.Views
             HospDocSuggest.IsEnabled = false;
             Dashboardbtn.IsEnabled = false;
             AppBtn.IsEnabled = false;
-            MyAutoSuggest.Focus(FocusState.Programmatic);
+            //MyAutoSuggest.Focus(FocusState.Programmatic);
             
             //myFrame.Navigate(typeof(MainPageLoadingScreenView));
         
