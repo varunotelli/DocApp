@@ -48,9 +48,10 @@
                    Style="{StaticResource TextBlockStyle}"/>
                 <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"
                        TextTrimming="CharacterEllipsis"/>
-
+                <HyperlinkButton Click="Button_Click" Margin="10,5">Book another appointment with this doctor</HyperlinkButton>
 
             </StackPanel>
+            
             
 
 

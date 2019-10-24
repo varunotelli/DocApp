@@ -164,6 +164,7 @@
     <Compile Include="Domain\Callbacks\IRosterCallback.cs" />
     <Compile Include="Domain\Callbacks\ITestCallback.cs" />
     <Compile Include="Domain\Callbacks\ITestDetailsCallback.cs" />
+    <Compile Include="Domain\Callbacks\IUpcomingAppCallback.cs" />
     <Compile Include="Domain\DataContracts\IAppointment.cs" />
     <Compile Include="Domain\DataContracts\IAppointmentDetails.cs" />
     <Compile Include="Domain\DataContracts\IDepartmentList.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Domain\UseCase\GetRecentDoctorsUseCase.cs" />
     <Compile Include="Domain\UseCase\GetRosterUseCase.cs" />
     <Compile Include="Domain\UseCase\GetTestDetailsUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetUpcomingAppsUseCase.cs" />
     <Compile Include="Domain\UseCase\LoginUseCase.cs" />
     <Compile Include="Domain\UseCase\UpdateDoctorRatingUseCase.cs" />
     <Compile Include="Domain\UseCase\UpdateHospitalRatingUseCase.cs" />
@@ -241,6 +243,7 @@
     <Compile Include="Presentation\Callbacks\IRosterViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ITestDetailsViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ITestViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IUpcomingAppViewCallback.cs" />
     <Compile Include="Presentation\ViewModels\AppointmentBookingViewModel.cs" />
     <Compile Include="Presentation\ViewModels\AppointmentDisplayViewModel.cs" />
     <Compile Include="Presentation\ViewModels\AutoSuggestViewModel.cs" />
@@ -265,6 +268,9 @@
     </Compile>
     <Compile Include="Presentation\Views\DialogBoxes\AppointmentBookSuccess.xaml.cs">
       <DependentUpon>AppointmentBookSuccess.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Views\DialogBoxes\LastBookDialog.xaml.cs">
+      <DependentUpon>LastBookDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Views\DialogBoxes\LocationRequestDialog.xaml.cs">
       <DependentUpon>LocationRequestDialog.xaml</DependentUpon>
@@ -422,6 +428,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\DialogBoxes\AppointmentBookSuccess.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\DialogBoxes\LastBookDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

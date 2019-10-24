@@ -207,7 +207,7 @@ namespace DocApp.Data
             {
                 var results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL " +
                             "WHERE ID in(" +
-                            "SELECT HOS_ID FROM APPOINTMENT WHERE DOC_ID={0} AND PATIENT_ID={1} ORDER BY ID DESC LIMIT 1", doc_id, p_id));
+                            "SELECT HOS_ID FROM APPOINTMENT WHERE DOC_ID={0} AND PATIENT_ID={1} ORDER BY ID DESC LIMIT 1)", doc_id, p_id));
                 if (results != null)
                     callback.ILastHospitalSuccess(results.First());
                 else callback.ILastHospitalFail();

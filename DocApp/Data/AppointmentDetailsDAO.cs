@@ -105,5 +105,53 @@ namespace DocApp.Data
             }
 
         }
+
+        public async Task GetUpcomingApps(int p_id,IUpcomingAppCallback callback)
+        {
+            List<AppointmentDetails> results = new List<AppointmentDetails>();
+            try
+            {
+                if (DBHandler.db == null)
+                    DBHandler.DBConnection();
+                var apps = await DBHandler.db.Table<Appointment>().ToListAsync();
+                var docs = await DBHandler.db.Table<Doctor>().ToListAsync();
+                var hosp = await DBHandler.db.Table<Hospital>().ToListAsync();
+                var details = (from a in apps
+                               join d in docs
+                               on a.DOC_ID equals d.ID
+                               join h in hosp
+                               on a.HOS_ID equals h.ID
+                               where apps.Any(g => g.PATIENT_ID.Equals(p_id))
+                               select new AppointmentDetails
+                               {
+                                   app_date = a.APP_DATE,
+                                   doc_name = d.Name,
+                                   hosp_name = h.Name,
+                                   id = a.ID,
+                                   location = h.Location,
+                                   Timeslot = a.start_time
+
+                               }
+                    ).OrderBy(x => x.app_date).ThenBy(x => x.Timeslot);
+                foreach (var x in details.Where(a => DateTime.Parse(a.app_date) >=
+                DateTime.Parse(DateTime.Now.Date.ToString("yyyy-MM-dd")) 
+
+                ).Take(10))
+                {
+                    x.app_date = DateTime.ParseExact(x.app_date, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
+                    results.Add(x);
+                }
+                if (results != null)
+                    callback.UpcomingAppSuccess(results);
+                else
+                    callback.UpcomingAppFail();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Appointment details select exception=" + e.Message);
+            }
+        }
     }
 }

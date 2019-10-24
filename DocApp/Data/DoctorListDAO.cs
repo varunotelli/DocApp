@@ -294,8 +294,19 @@ namespace DocApp.Data
             List<Doctor> docs = new List<Doctor>();
             try
             {
-                docs=await DBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR WHERE ID IN(" +
-                "SELECT DOC_ID FROM APPOINTMENT GROUP BY DOC_ID HAVING PATIENT_ID={0} ORDER BY COUNT(*))", id));
+                //docs=await DBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR WHERE ID IN(" +
+                //"SELECT DOC_ID FROM APPOINTMENT GROUP BY DOC_ID HAVING PATIENT_ID={0} ORDER BY COUNT(*) DESC)", id));
+                
+                var doctors = await DBHandler.db.Table<Doctor>().ToListAsync();
+                var temp = await DBHandler.db.QueryAsync<Appointment>(String.Format(
+                    "SELECT DOC_ID FROM APPOINTMENT GROUP BY DOC_ID HAVING PATIENT_ID={0} ORDER BY COUNT(*) DESC", id));
+                //var all = doctors.Where(d => temp.Any(t => t.DOC_ID==d.ID));
+                //foreach (var x in temp)
+                //    System.Diagnostics.Debug.WriteLine(x.DOC_ID);
+                var all = from t in temp
+                          join d in doctors on t.DOC_ID equals d.ID
+                          select d;
+                docs = new List<Doctor>(all);
                 if (docs != null)
                     callback.MostBookedDocReadSuccess(docs);
                 else callback.MostBookedDocReadFail();

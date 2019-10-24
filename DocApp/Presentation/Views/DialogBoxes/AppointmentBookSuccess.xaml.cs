@@ -19,13 +19,24 @@ namespace DocApp.Presentation.Views.DialogBoxes
 {
     public sealed partial class AppointmentBookSuccess : ContentDialog
     {
+        public delegate void ButtonClickedEventHandler(object source, EventArgs args);
+        public event ButtonClickedEventHandler ButtonClicked;
         public AppointmentBookSuccess()
         {
             this.InitializeComponent();
         }
 
+        public void onButtonClicked()
+        {
+            if (ButtonClicked != null)
+                ButtonClicked(this, EventArgs.Empty);
+        }
+
+
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            this.Hide();
+            onButtonClicked();
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

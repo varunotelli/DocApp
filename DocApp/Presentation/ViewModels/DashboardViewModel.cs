@@ -18,6 +18,9 @@ namespace DocApp.Presentation.ViewModels
         public ObservableCollection<Doctor> recent_docs;
         public ObservableCollection<Doctor> most_booked_docs;
         public ObservableCollection<AppointmentDetails> appointments;
+        public Hospital LastBookedHosp;
+        public delegate void LastHospBookedEventHandler(object souce, EventArgs args);
+        public event LastHospBookedEventHandler LastHospBooked;
 
         public DashboardViewModel()
         {
@@ -31,6 +34,12 @@ namespace DocApp.Presentation.ViewModels
             hosps = new ObservableCollection<Hospital>();
             hospsmain = new ObservableCollection<Hospital>();
             Doctors = new ObservableCollection<DoctorInHospitalDetails>();
+        }
+
+        public void onLastHospBooked()
+        {
+            if (LastHospBooked != null)
+                LastHospBooked(this, EventArgs.Empty);
         }
 
         public async Task GetLastHospital(int p_id, int doc_id)
@@ -128,12 +137,14 @@ namespace DocApp.Presentation.ViewModels
 
         public bool LastHospitalViewSuccess(Hospital hospital)
         {
-            throw new NotImplementedException();
+            this.LastBookedHosp = hospital;
+            onLastHospBooked();
+            return true;
         }
 
         public bool LastHospitalViewFail()
         {
-            throw new NotImplementedException();
+            return false;
         }
     }
 }

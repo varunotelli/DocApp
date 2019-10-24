@@ -77,7 +77,8 @@
             </StackPanel>
         </Popup>
 
-        <SplitView x:Name="mySplitView" DisplayMode="Inline" PanePlacement="Right" OpenPaneLength="800" PaneOpened="MySplitView_PaneOpened">
+        <SplitView x:Name="mySplitView" DisplayMode="Inline" PanePlacement="Right" OpenPaneLength="800" 
+                   PaneOpened="MySplitView_PaneOpened">
             <SplitView.Pane>
                 
                 <StackPanel Padding="5" Background="White">
@@ -290,14 +291,14 @@
                                     <TextBlock Text="{x:Bind sys:String.Format('Dr.{0}',Name)}" Margin="5"
                                                FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
                                     </StackPanel>-->
-                                    <uc:DoctorProfileLargeTemplate/>
+                                    <uc:BookedDocTemplate x:Name="BookedDocTemp" Loaded="BookedDocTemp_Loaded"/>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
                     </StackPanel>
                     <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Grid.Row="1"
                     Padding="5" HorizontalAlignment="Center" Grid.ColumnSpan="2" x:Name="AppStack">
-                        <TextBlock Text="Your Upcoming Appointments" FontSize="20" 
+                        <TextBlock Text="Today's Appointments" FontSize="20" HorizontalAlignment="Center"
                            FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
                         <ListView  ItemsSource="{x:Bind viewModel.appointments, Mode=OneWay}" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto">

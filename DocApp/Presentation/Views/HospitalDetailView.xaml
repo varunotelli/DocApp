@@ -10,8 +10,8 @@
     xmlns:sys="using:System"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    
-    RequestedTheme="Dark"
+    Background="White"
+    RequestedTheme="Light"
     
     >
     <Page.Resources>
@@ -22,12 +22,7 @@
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
         </Style>
     </Page.Resources>
-    <Page.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#2A2A2A" Offset="0.007"/>
-            <GradientStop Color="#080808" Offset="0.548"/>
-        </LinearGradientBrush>
-    </Page.Background>
+    
 
     <Grid Margin="0,0,0,0">
         <ScrollViewer Height="1000">

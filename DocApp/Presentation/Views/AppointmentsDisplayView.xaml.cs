@@ -34,7 +34,7 @@ namespace DocApp.Presentation.Views
 
            
             viewModel = new AppointmentDisplayViewModel();
-            await viewModel.GetAppointments(1);
+            await viewModel.GetUpcomingApps(1);
             //Bindings.Update();
 
         }

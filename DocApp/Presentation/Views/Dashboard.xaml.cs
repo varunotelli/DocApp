@@ -52,7 +52,7 @@ namespace DocApp.Presentation.Views
             viewModel.AppointmentRead += this.onAppointmentRead;
             viewModel.DoctorRatingUpdateSuccess += this.onDoctorRatingUpdateSucess;
             viewModel.TestimonialAddedSuccess += this.onTestAddedSuccess;
-
+            viewModel.LastHospBooked += this.onLastHospRead;
             viewModel.AppointmentCheckSuccess += this.onAppCheckSuccess;
             
             await viewModel.GetRecentSearchDoctors(1);
@@ -99,11 +99,7 @@ namespace DocApp.Presentation.Views
                 viewModel.recent_docs.Remove(viewModel.recent_docs[x]);
                 viewModel.recent_docs.Insert(x, viewModel.doctor);
             }
-            
-            
-
-
-
+        
             myListView.SelectedItem = viewModel.doctor;
         }
 
@@ -115,7 +111,7 @@ namespace DocApp.Presentation.Views
                 {
                     Title = "Appointment Booking Failed",
                     Content = String.Format("You already have an appointment on {0} at {1}", app_date, time),
-                    CloseButtonText = "OK"
+                    
 
                 };
                 await bookFail.ShowAsync();
@@ -159,6 +155,35 @@ namespace DocApp.Presentation.Views
             }
             BookButton.IsEnabled = (Appointment_Date.Date != null) && (TimeSlotBox.SelectedIndex != -1);
             Bindings.Update();
+        }
+
+        public async void onLastHospRead(object source, EventArgs args)
+        {
+            LastBookDialog dialog = new LastBookDialog();
+            dialog.YesButtonClicked += this.onYesButtonClicked;
+            dialog.NoButtonClicked += this.onNoButtonClicked;
+            hosp_id = viewModel.LastBookedHosp.ID;
+            dialog.txt = String.Format("Would you like to book an appointment at the last location ({0},{1})?",
+                viewModel.LastBookedHosp.Name, viewModel.LastBookedHosp.Location);
+            await dialog.ShowAsync();
+        }
+
+        public void onYesButtonClicked(object source, EventArgs args)
+        {
+            Book_Pop.IsOpen = true;
+            Book_Pop.Visibility = Visibility.Visible;
+        }
+
+        public async void onNoButtonClicked(object souce, EventArgs args)
+        {
+            await viewModel.GetDoctor(id);
+            mySplitView.IsPaneOpen = false;
+            mySplitView.IsPaneOpen = true;
+            VisitedDocStack.SetValue(Grid.ColumnProperty, 0);
+            VisitedDocStack.SetValue(Grid.ColumnSpanProperty, 2);
+            SearchPanel.Visibility = Visibility.Collapsed;
+            AppStack.Visibility = Visibility.Collapsed;
+            flag = true;
         }
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
@@ -351,15 +376,15 @@ namespace DocApp.Presentation.Views
 
         }
 
-        private async void CloseBtn_Click(object sender, RoutedEventArgs e)
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
 
             mySplitView.IsPaneOpen = false;
             VisitedDocStack.SetValue(Grid.ColumnProperty, 1);
             VisitedDocStack.SetValue(Grid.ColumnSpanProperty, 1);
             SearchPanel.SetValue(Grid.ColumnSpanProperty, 1);
-            await viewModel.GetMostBookedDoc(1);
-            await viewModel.GetAppointments(1);
+            //await viewModel.GetMostBookedDoc(1);
+            //await viewModel.GetAppointments(1);
             SearchPanel.Visibility = Visibility.Visible;
             VisitedDocStack.Visibility = Visibility.Visible;
             AppStack.Visibility = Visibility.Visible;
@@ -383,6 +408,21 @@ namespace DocApp.Presentation.Views
             flag = true;
         }
 
+        private void BookedDocTemp_Loaded(object sender, RoutedEventArgs e)
+        {
+            BookedDocTemplate temp = (BookedDocTemplate)sender;
+            temp.ButtonClicked += this.onRebookButtonClicked;
+        }
+
+        public async void onRebookButtonClicked(object source, ButtonClickArgs args)
+        {
+            BookedListView.SelectedItem = ((FrameworkElement)source).DataContext;
+            id = args.id_val;
+            
+            await viewModel.GetLastHospital(1, args.id_val);
+        }
+        
+
         public async void onTestAddedSuccess(object source, EventArgs args)
         {
             await viewModel.GetLastTest(id);
@@ -401,9 +441,17 @@ namespace DocApp.Presentation.Views
                 Title = "Appointment Booking Confirmed",
                 Content = String.Format("Appointment booked with Dr. {0} in {1},{2} on {3} at {4}", viewModel.app.doc_name,
                viewModel.app.hosp_name, viewModel.app.location, viewModel.app.app_date, viewModel.app.Timeslot),
-                CloseButtonText = "OK"
+                
             };
+            bookSuccess.ButtonClicked += this.onOKButtonClicked;
             await bookSuccess.ShowAsync();
+        }
+
+        public async void onOKButtonClicked(object source,EventArgs args)
+        {
+            await viewModel.GetMostBookedDoc(1);
+            await viewModel.GetAppointments(1);
+            Bindings.Update();
         }
 
 
