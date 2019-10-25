@@ -72,6 +72,52 @@ namespace DocApp.Data
 
         }
 
+        public async Task CancelAppointment(int id,ICancelAppCallback callback)
+        {
+            if (DBHandler.db == null)
+                DBHandler.DBConnection();
+            try
+            {
+                await DBHandler.db.ExecuteAsync("DELETE FROM APPOINTMENT WHERE ID="+id);
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Cancel dao fail "+e.Message);
+                callback.CancelAppFail();
+                return;
+            }
+            callback.CancelAppSuccess(true);
+
+        }
+
+        public async Task UpdateAppointment(int id,string app_date,string time,IUpdateAppCallback callback)
+        {
+            if (DBHandler.db == null)
+                DBHandler.DBConnection();
+            try
+            {
+                await DBHandler.db.ExecuteAsync(String.Format("UPDATE APPOINTMENT SET " +
+                    "APP_DATE='{0}', START_TIME='{1}' WHERE ID={2}",app_date,time,id));
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Reschedule dao fail " + e.Message);
+                callback.UpdateAppFail();
+                return;
+            }
+            callback.UpdateAppSuccess(true);
+        }
+
+        public async Task GetAppointmentByID(int id,IAppCallback callback)
+        {
+            if (DBHandler.db == null)
+                DBHandler.DBConnection();
+            var results = await DBHandler.db.Table<Appointment>().Where(a => a.ID == id).ToListAsync();
+            if (results != null)
+                callback.AppSuccess(results.First());
+            else callback.AppFail();
+
+        }
        
     }
 }

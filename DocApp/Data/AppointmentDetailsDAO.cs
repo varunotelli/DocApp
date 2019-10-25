@@ -136,8 +136,14 @@ namespace DocApp.Data
                 foreach (var x in details.Where(a => DateTime.Parse(a.app_date) >=
                 DateTime.Parse(DateTime.Now.Date.ToString("yyyy-MM-dd")) 
 
-                ).Take(10))
+                ))
                 {
+                    if (DateTime.Parse(x.app_date) == DateTime.Parse(DateTime.Now.Date.ToString("yyyy-MM-dd")))
+                    {
+                        if (DateTime.Parse(x.Timeslot).CompareTo(DateTime.Parse(DateTime.Now.TimeOfDay.ToString())) < 0)
+                            continue;
+                        
+                    }
                     x.app_date = DateTime.ParseExact(x.app_date, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
                     results.Add(x);
                 }

@@ -13,6 +13,10 @@
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova"/>
         </Style>
+        <Style TargetType="Button" x:Key="RoundButtonStyle">
+            <Setter Property="CornerRadius" Value="500"/>
+            <Setter Property="Margin" Value="10,0"/>
+        </Style>
     </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch">
@@ -22,13 +26,24 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-            
+            <ColumnDefinition Width="*"/>
+
         </Grid.ColumnDefinitions>
         <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',app.doc_name)}" Grid.Column="0"/>
         <TextBlock Text="{x:Bind app.hosp_name}" Grid.Column="1"/>
         <TextBlock Text="{x:Bind app.location}" Grid.Column="2"/>
         <TextBlock Text="{x:Bind app.app_date}" Grid.Column="3"/>
         <TextBlock Text="{x:Bind app.Timeslot}" Grid.Column="4"/>
+        <StackPanel Orientation="Horizontal" Grid.Column="5">
+            <Button Style="{StaticResource RoundButtonStyle}" ToolTipService.ToolTip="Cancel Appointment" x:Name="CancelBtn"
+                    Click="CancelBtn_Click">
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE10A;"/>
+            </Button>
+            <Button Style="{StaticResource RoundButtonStyle}" ToolTipService.ToolTip="Reschedule Appointment"
+                    x:Name="ResBtn" Click="ResBtn_Click">
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE70F;"/>
+            </Button>
+        </StackPanel>
 
     </Grid>
 </UserControl>
