@@ -17,13 +17,13 @@ using Windows.UI.Xaml.Navigation;
 
 namespace DocApp.Presentation.Views.Templates
 {
-    public sealed partial class AppointmentTemplate : UserControl
+    public sealed partial class DashboardAppTemplate : UserControl
     {
-        Models.AppointmentDetails app { get { return this.DataContext as Models.AppointmentDetails; } }
         public delegate void ButtonClickedEventHandler(object source, ButtonClickArgs args);
         public event ButtonClickedEventHandler CancelButtonClicked;
         public event ButtonClickedEventHandler RescheduleButtonClicked;
-        public AppointmentTemplate()
+        Models.AppointmentDetails details { get { return this.DataContext as Models.AppointmentDetails; } }
+        public DashboardAppTemplate()
         {
             this.InitializeComponent();
             this.DataContextChanged += (s, e) => Bindings.Update();
@@ -32,24 +32,44 @@ namespace DocApp.Presentation.Views.Templates
         void onCancelButtonClicked()
         {
             if (CancelButtonClicked != null)
-                CancelButtonClicked(this, new ButtonClickArgs() { id_val=app.id});
+                CancelButtonClicked(this, new ButtonClickArgs() { id_val = details.id });
         }
 
         void onResButtonClicked()
         {
             if (RescheduleButtonClicked != null)
-                RescheduleButtonClicked(this, new ButtonClickArgs() { id_val = app.id });
+                RescheduleButtonClicked(this, new ButtonClickArgs() { id_val = details.id });
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("image=" + app.img);
             onCancelButtonClicked();
         }
 
         private void ResBtn_Click(object sender, RoutedEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("image=" + details.img);
             onResButtonClicked();
+        }
+
+        
+        public void onPointerEntered(object sender, EventArgs args)
+        {
+            ResBtn.Opacity = 1;
+            CancelBtn.Opacity = 1;
+        }
+
+        public void onPointerExited(object sender, EventArgs args)
+        {
+            ResBtn.Opacity = 0;
+            CancelBtn.Opacity = 0;
+        }
+
+        private void Grid_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+
+            //ResBtn.Opacity = 0;
+            //CancelBtn.Opacity = 0;
         }
     }
 }

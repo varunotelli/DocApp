@@ -24,6 +24,7 @@
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
         </Style>
+       
     </Page.Resources>
     <Grid>
         <Popup x:Name="Book_Pop" 
@@ -32,16 +33,33 @@
                     Closed="Book_Pop_Closed"
                     IsLightDismissEnabled="True"
                     VerticalOffset="300"
-                    HorizontalOffset="-650"
+                    HorizontalOffset="650"
                     Margin="10,10"
-                    HorizontalAlignment="Right"
+                    
                     LightDismissOverlayMode="On"
                    Visibility="Collapsed"
                    RequestedTheme="Dark"
                            
                            >
-            <StackPanel Background="#3b5163" Height="200" Width="300" VerticalAlignment="Center" BorderThickness="1"
+            <StackPanel Background="#3b5163" Height="300" Width="300" VerticalAlignment="Center" BorderThickness="1"
                                             BorderBrush="White" CornerRadius="10">
+                <TextBlock HorizontalAlignment="Center">Book Appointment</TextBlock>
+                <ComboBox x:Name="LocationBox" Margin="10" HorizontalAlignment="Center" 
+                          ItemsSource="{x:Bind viewModel.hospitals,Mode=OneWay}"
+                          FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14"
+                                  DropDownOpened="LocationBox_DropDownOpened" BorderThickness="0.5" 
+                          SelectedItem="{x:Bind viewModel.LastBookedHosp,Mode=OneWay}"
+                                  SelectionChanged="LocationBox_SelectionChanged" RequestedTheme="Light">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="data:HospitalInDoctorDetails" >
+                            <TextBlock>
+                                <Run Text="{x:Bind Name}"/>
+                                <Run Text="{x:Bind sys:String.Format('({0})',Location)}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
 
                 <CalendarDatePicker x:Name="Appointment_Date" PlaceholderText="Choose your Appointment Date" 
                 FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14" Margin="10,10" HorizontalAlignment="Center"
@@ -239,8 +257,33 @@
                         <ColumnDefinition x:Name="firstcol" Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Grid.Row="0"
+                    Padding="5" HorizontalAlignment="Center" Grid.ColumnSpan="2" x:Name="AppStack">
+                        <TextBlock Text="Today's Appointments" FontSize="20" HorizontalAlignment="Center"
+                           FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
+                        <ListView  ItemsSource="{x:Bind viewModel.appointments, Mode=OneWay}" 
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" GotFocus="ListView_GotFocus">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    <Setter Property="Padding" Value="-10"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <uc:DashboardAppTemplate x:Name="AppTemp"
+                                        PointerEntered="DashboardAppTemplate_PointerEntered" 
+                                                             Loaded="DashboardAppTemplate_Loaded"
+                                                             PointerExited="DashboardAppTemplate_PointerExited"/>
+
+                                    <!--<uc:AppointmentTemplate/>-->
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
 
                     <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Padding="5" HorizontalAlignment="Stretch"
+                                Grid.Row="1"
                     x:Name="SearchPanel">
                         <Grid HorizontalAlignment="Stretch">
                             <TextBlock Text="Your Recent Searches" FontSize="20" HorizontalAlignment="Left"
@@ -267,9 +310,9 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </StackPanel>
-                    
+
                     <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Padding="5" x:Name="VisitedDocStack"
-                        HorizontalAlignment="Stretch" Grid.Column="1">
+                        HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1">
                         <Grid HorizontalAlignment="Stretch">
                             <TextBlock Text="Your Most Visited Doctors" FontSize="20" HorizontalAlignment="Left"
                            FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
@@ -296,47 +339,6 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </StackPanel>
-                    <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Grid.Row="1"
-                    Padding="5" HorizontalAlignment="Center" Grid.ColumnSpan="2" x:Name="AppStack">
-                        <TextBlock Text="Today's Appointments" FontSize="20" HorizontalAlignment="Center"
-                           FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
-                        <ListView  ItemsSource="{x:Bind viewModel.appointments, Mode=OneWay}" 
-                      ScrollViewer.VerticalScrollBarVisibility="Auto">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="data:AppointmentDetails">
-                                    <Grid Margin="10" HorizontalAlignment="Stretch">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel HorizontalAlignment="Left" Margin="10">
-                                            <TextBlock Text="{x:Bind doc_name,Converter={StaticResource NameConv}}"
-                                           FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
-                                            <TextBlock Text="{x:Bind hosp_name}" 
-                                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
-
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="1" HorizontalAlignment="Right" Margin="10">
-                                            <TextBlock Text="{x:Bind app_date}" 
-                                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
-                                            <TextBlock Text="{x:Bind Timeslot, Converter={StaticResource TimeConv}}"
-                                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
-                                        </StackPanel>
-                                    </Grid>
-                                    <!--<uc:AppointmentTemplate/>-->
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
-
-
-
-
                 </Grid>
             </SplitView.Content>
         </SplitView>

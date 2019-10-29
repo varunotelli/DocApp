@@ -30,9 +30,15 @@ namespace DocApp.Presentation.Views
         DashboardViewModel viewModel;
         MainPage mainPage;
         string address,time,app_date;
-        int id,hosp_id;
+        int id,hosp_id,app_id;
         bool en;
+        bool openflag = false;
         bool flag = false;
+        AppointmentDetails app_temp;
+        public delegate void PointerEventHandler(object source, EventArgs args);
+        public event PointerEventHandler PointerEntered;
+        public event PointerEventHandler PointerExited;
+
         public Dashboard()
         {
             this.InitializeComponent();
@@ -47,6 +53,7 @@ namespace DocApp.Presentation.Views
             var args = e1.Parameter as navargs;
             address = args.name;
             mainPage = args.mp;
+            viewModel.DoctorReadSuccess += this.onDoctorReadSuccess;
             viewModel.InsertFail += this.onInsertFail;
             viewModel.InsertSuccess += this.onInsertSuccess;
             viewModel.AppointmentRead += this.onAppointmentRead;
@@ -61,12 +68,26 @@ namespace DocApp.Presentation.Views
 
         }
         
+        public void onPointerEntered()
+        {
+            if (PointerEntered != null)
+                PointerEntered(this, EventArgs.Empty);
+        }
+
+        public void onPointerExited()
+        {
+            if (PointerExited != null)
+                PointerExited(this, EventArgs.Empty);
+        }
+
+
         public void onButtonClicked(object source, ButtonClickArgs args)
         {
             //System.Diagnostics.Debug.WriteLine(args.model.Name);
             hosp_id = args.id_val;
             //pos = MyScroll.VerticalOffset;
             //MyScroll.ChangeView(null, 100, 1);
+            LocationBox.Visibility = Visibility.Collapsed;
             Book_Pop.Visibility = Visibility.Visible;
             Book_Pop.IsOpen = true;
             HospList.SelectedItem = ((FrameworkElement)source).DataContext;
@@ -157,21 +178,48 @@ namespace DocApp.Presentation.Views
             Bindings.Update();
         }
 
-        public async void onLastHospRead(object source, EventArgs args)
+        public void onLastHospRead(object source, EventArgs args)
         {
-            LastBookDialog dialog = new LastBookDialog();
-            dialog.YesButtonClicked += this.onYesButtonClicked;
-            dialog.NoButtonClicked += this.onNoButtonClicked;
-            hosp_id = viewModel.LastBookedHosp.ID;
-            dialog.txt = String.Format("Would you like to book an appointment at the last location ({0},{1})?",
-                viewModel.LastBookedHosp.Name, viewModel.LastBookedHosp.Location);
-            await dialog.ShowAsync();
+            //LastBookDialog dialog = new LastBookDialog();
+            //dialog.YesButtonClicked += this.onYesButtonClicked;
+            //dialog.NoButtonClicked += this.onNoButtonClicked;
+            //hosp_id = viewModel.LastBookedHosp.ID;
+            //dialog.txt = String.Format("Would you like to book an appointment at the last location ({0},{1})?",
+            //    viewModel.LastBookedHosp.Name, viewModel.LastBookedHosp.Location);
+            //await dialog.ShowAsync();
+            for(int i=0;i<viewModel.hospitals.Count();i++)
+                if(viewModel.hospitals[i].Hosp_ID==viewModel.LastBookedHosp.ID)
+                {
+                    LocationBox.SelectedIndex = i;
+                    break;
+
+                }
+            //Book_Pop.IsOpen = true;
+            //Book_Pop.Visibility = Visibility.Visible;
+            //onYesButtonClicked(source, args);
         }
 
-        public void onYesButtonClicked(object source, EventArgs args)
+        public void onDoctorReadSuccess(object source, EventArgs args)
         {
-            Book_Pop.IsOpen = true;
-            Book_Pop.Visibility = Visibility.Visible;
+            for (int i = 0; i < viewModel.hospitals.Count(); i++)
+                if (viewModel.hospitals[i].Hosp_ID == viewModel.LastBookedHosp.ID)
+                {
+                    LocationBox.SelectedIndex = i;
+                    break;
+
+                }
+            if(openflag)
+            {
+                Book_Pop.IsOpen = true;
+                Book_Pop.Visibility = Visibility.Visible;
+            }
+
+        }
+
+        public async void onYesButtonClicked(object source, EventArgs args)
+        {
+            viewModel.appointments.Remove(app_temp);
+            await viewModel.CancelApp(app_id);
         }
 
         public async void onNoButtonClicked(object souce, EventArgs args)
@@ -184,6 +232,16 @@ namespace DocApp.Presentation.Views
             SearchPanel.Visibility = Visibility.Collapsed;
             AppStack.Visibility = Visibility.Collapsed;
             flag = true;
+        }
+
+        async void onCancelButtonClicked(object source, ButtonClickArgs args)
+        {
+            app_id = args.id_val;
+            app_temp = ((FrameworkElement)source).DataContext as AppointmentDetails;
+            CancelDialog dialog = new CancelDialog();
+            dialog.ButtonClicked += this.onYesButtonClicked;
+            await dialog.ShowAsync();
+
         }
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
@@ -244,6 +302,8 @@ namespace DocApp.Presentation.Views
             VisitedDocStack.Visibility = Visibility.Collapsed;
             AppStack.Visibility = Visibility.Collapsed;
             flag = false;
+            openflag = false;
+            
         }
 
         private async void MySplitView_PaneOpened(SplitView sender, object args)
@@ -418,8 +478,10 @@ namespace DocApp.Presentation.Views
         {
             BookedListView.SelectedItem = ((FrameworkElement)source).DataContext;
             id = args.id_val;
-            
+            openflag = true;
+            LocationBox.Visibility = Visibility.Visible;
             await viewModel.GetLastHospital(1, args.id_val);
+            await viewModel.GetDoctor(args.id_val);
         }
         
 
@@ -429,6 +491,51 @@ namespace DocApp.Presentation.Views
             //TestScroll.ChangeView(0, 0, 1);
         }
 
+        private async void LocationBox_DropDownOpened(object sender, object e)
+        {
+            //await viewModel.GetDoctor(id);
+            Bindings.Update();
+        }
+
+        private void LocationBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (LocationBox.Visibility.Equals(Visibility.Visible))
+                    hosp_id = (LocationBox.SelectedItem as HospitalInDoctorDetails).Hosp_ID;
+            }
+            catch(Exception _)
+            {
+                hosp_id = -1;
+            }
+            
+
+        }
+
+        private void DashboardAppTemplate_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+
+            onPointerEntered();
+        }
+
+        private void DashboardAppTemplate_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            onPointerExited();
+        }
+
+        private void DashboardAppTemplate_Loaded(object sender, RoutedEventArgs e)
+        {
+            var temp = sender as DashboardAppTemplate;
+            this.PointerEntered += temp.onPointerEntered;
+            this.PointerExited += temp.onPointerExited;
+            temp.CancelButtonClicked += this.onCancelButtonClicked;
+            
+        }
+
+        private void ListView_GotFocus(object sender, RoutedEventArgs e)
+        {
+            //onPointerEntered();
+        }
         public async void onInsertSuccess(object source, EventArgs args)
         {
             await viewModel.GetAppointment(app_date, time);

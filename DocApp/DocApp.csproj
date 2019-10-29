@@ -335,6 +335,9 @@
     <Compile Include="Presentation\Views\Templates\BookedDocTemplate.xaml.cs">
       <DependentUpon>BookedDocTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Views\Templates\DashboardAppTemplate.xaml.cs">
+      <DependentUpon>DashboardAppTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\Templates\DoctorProfileLargeTemplate.xaml.cs">
       <DependentUpon>DoctorProfileLargeTemplate.xaml</DependentUpon>
     </Compile>
@@ -492,6 +495,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Presentation\Views\Templates\BookedDocTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\Templates\DashboardAppTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

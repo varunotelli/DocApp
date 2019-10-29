@@ -10,6 +10,7 @@ namespace DocApp.Models
    {
         public int id { get; set; }
         public string doc_name { get; set; }
+        public string img { get; set; }
         public string hosp_name { get; set; }
         public string location { get; set; }
         public string app_date { get; set; }

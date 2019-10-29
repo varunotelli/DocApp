@@ -34,7 +34,8 @@ namespace DocApp.Data
                                    hosp_name = h.Name,
                                    id = a.ID,
                                    location = h.Location,
-                                   Timeslot = a.start_time
+                                   Timeslot = a.start_time,
+                                   img = d.Image
 
                                }
                     ).OrderBy(x => x.app_date).ThenBy(x => x.Timeslot);
@@ -129,7 +130,8 @@ namespace DocApp.Data
                                    hosp_name = h.Name,
                                    id = a.ID,
                                    location = h.Location,
-                                   Timeslot = a.start_time
+                                   Timeslot = a.start_time,
+                                   img=d.Image
 
                                }
                     ).OrderBy(x => x.app_date).ThenBy(x => x.Timeslot);

@@ -286,7 +286,7 @@ namespace DocApp.Presentation.ViewModels
 
             foreach (var x in h)
                 hospitals.Add(x);
-            //onDoctorReadSuccess();
+            onDoctorReadSuccess();
             return true;
         }
 

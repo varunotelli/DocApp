@@ -12,15 +12,17 @@ using System.Threading.Tasks;
 namespace DocApp.Presentation.ViewModels
 {
     public class DashboardViewModel: DoctorDetailsAbstract, IRecentDoctorViewCallback,IMostBookedDocViewCallback,
-        IAppDisplayViewCallback, ILastHospitalViewCallback
+        IAppDisplayViewCallback, ILastHospitalViewCallback,ICancelAppViewCallback
     {
        
         public ObservableCollection<Doctor> recent_docs;
         public ObservableCollection<Doctor> most_booked_docs;
         public ObservableCollection<AppointmentDetails> appointments;
+        public ObservableCollection<HospitalInDoctorDetails> hospsinbox;
         public Hospital LastBookedHosp;
         public delegate void LastHospBookedEventHandler(object souce, EventArgs args);
         public event LastHospBookedEventHandler LastHospBooked;
+        bool flag;
 
         public DashboardViewModel()
         {
@@ -34,6 +36,7 @@ namespace DocApp.Presentation.ViewModels
             hosps = new ObservableCollection<Hospital>();
             hospsmain = new ObservableCollection<Hospital>();
             Doctors = new ObservableCollection<DoctorInHospitalDetails>();
+            hospsinbox = new ObservableCollection<HospitalInDoctorDetails>();
         }
 
         public void onLastHospBooked()
@@ -96,6 +99,13 @@ namespace DocApp.Presentation.ViewModels
             await getApps.Execute();
         }
 
+        public async Task CancelApp(int id)
+        {
+            UseCaseBase cancelApp = new CancelAppointmentUseCase(id);
+            cancelApp.SetCallBack(this);
+            await cancelApp.Execute();
+        }
+
         public bool MostBookedDocViewFail()
         {
             return false;
@@ -143,6 +153,17 @@ namespace DocApp.Presentation.ViewModels
         }
 
         public bool LastHospitalViewFail()
+        {
+            return false;
+        }
+
+        public bool CancelAppViewSuccess(bool f)
+        {
+            this.flag = f;
+            return true;
+        }
+
+        public bool CancelAppViewFail()
         {
             return false;
         }

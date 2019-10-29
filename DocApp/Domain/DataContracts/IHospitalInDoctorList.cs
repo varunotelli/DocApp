@@ -10,6 +10,7 @@ namespace DocApp.Domain.DataContracts
     public interface IHospitalInDoctorList
     {
          Task GetHospitalByDoctor(int id, IHospitalDoctorCallback doctorHospitalCallBack);
+
         
     }
 }
