@@ -45,7 +45,7 @@ namespace DocApp.Data
 
                 ))
                 {
-                    x.app_date = DateTime.ParseExact(x.app_date, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
+                    //x.app_date = DateTime.ParseExact(x.app_date, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
                     results.Add(x);
                 }
                 if (results != null)
@@ -90,7 +90,7 @@ namespace DocApp.Data
                     );
                 foreach (var x in details)
                 {
-                    x.app_date = DateTime.ParseExact(x.app_date, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
+                    //x.app_date = DateTime.ParseExact(x.app_date, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
                     results.Add(x);
                 }
                 if (results != null)
@@ -146,7 +146,7 @@ namespace DocApp.Data
                             continue;
                         
                     }
-                    x.app_date = DateTime.ParseExact(x.app_date, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
+                    //x.app_date = DateTime.ParseExact(x.app_date, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
                     results.Add(x);
                 }
                 if (results != null)

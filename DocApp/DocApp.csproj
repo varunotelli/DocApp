@@ -269,6 +269,7 @@
     <Compile Include="Presentation\Views\Controls\BackButtonControl.xaml.cs">
       <DependentUpon>BackButtonControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Views\Converters\DateFormatConverter.cs" />
     <Compile Include="Presentation\Views\Converters\NameConverter.cs" />
     <Compile Include="Presentation\Views\Converters\RelativeTimeConverter.cs" />
     <Compile Include="Presentation\Views\Converters\TwelveHourConverter.cs" />

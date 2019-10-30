@@ -515,12 +515,12 @@ namespace DocApp.Presentation.Views
         private void DashboardAppTemplate_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
 
-            onPointerEntered();
+            //onPointerEntered();
         }
 
         private void DashboardAppTemplate_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            onPointerExited();
+            //onPointerExited();
         }
 
         private void DashboardAppTemplate_Loaded(object sender, RoutedEventArgs e)

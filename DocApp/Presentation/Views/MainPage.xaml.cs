@@ -28,6 +28,7 @@ using Windows.UI.Xaml.Navigation;
  *@todo Add navigation to all listview items
  *@todo Complete Rebook functionality
  *@todo Fix rebook functionality 
+ *@todo Add rebook for dashboard
  */
 
 namespace DocApp.Presentation.Views

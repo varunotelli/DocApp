@@ -6,10 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="using:System"
+    xmlns:conv="using:DocApp.Presentation.Views.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
     <UserControl.Resources>
+        <conv:DateFormatConverter x:Key="DateConv"/>
+        <conv:TwelveHourConverter x:Key="TimeConv"/>
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova"/>
         </Style>
@@ -32,8 +35,8 @@
         <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',app.doc_name)}" Grid.Column="0"/>
         <TextBlock Text="{x:Bind app.hosp_name}" Grid.Column="1"/>
         <TextBlock Text="{x:Bind app.location}" Grid.Column="2"/>
-        <TextBlock Text="{x:Bind app.app_date}" Grid.Column="3"/>
-        <TextBlock Text="{x:Bind app.Timeslot}" Grid.Column="4"/>
+        <TextBlock Text="{x:Bind app.app_date,Converter={StaticResource DateConv}}" Grid.Column="3"/>
+        <TextBlock Text="{x:Bind app.Timeslot, Converter={StaticResource TimeConv}}" Grid.Column="4"/>
         <StackPanel Orientation="Horizontal" Grid.Column="5">
             <Button Style="{StaticResource RoundButtonStyle}" ToolTipService.ToolTip="Cancel Appointment" x:Name="CancelBtn"
                     Click="CancelBtn_Click">

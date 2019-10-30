@@ -68,8 +68,14 @@ namespace DocApp.Presentation.Views.Templates
         private void Grid_PointerExited(object sender, PointerRoutedEventArgs e)
         {
 
-            //ResBtn.Opacity = 0;
-            //CancelBtn.Opacity = 0;
+            ResBtn.Opacity = 0;
+            CancelBtn.Opacity = 0;
+        }
+
+        private void Grid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ResBtn.Opacity = 1;
+            CancelBtn.Opacity = 1;
         }
     }
 }

@@ -15,6 +15,7 @@
     <Page.Resources>
         <conv:NameConverter x:Key="NameConv"/>
         <conv:TwelveHourConverter x:Key="TimeConv"/>
+        
         <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="Black"/>
         <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="Black"/>
         <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="Black"/>
@@ -266,7 +267,7 @@
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                                    <Setter Property="Padding" Value="-10"/>
+                                    <Setter Property="Padding" Value="0"/>
                                 </Style>
                             </ListView.ItemContainerStyle>
                             <ListView.ItemTemplate>

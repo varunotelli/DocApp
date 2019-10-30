@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:DocApp.Models"
     xmlns:sys="using:System"
+    xmlns:conv="using:DocApp.Presentation.Views.Converters"
     xmlns:uc="using:DocApp.Presentation.Views.Templates"
     xmlns:cont="using:DocApp.Presentation.Views.Controls"
     mc:Ignorable="d"
@@ -19,6 +20,9 @@
         </LinearGradientBrush>
     </Page.Background>-->
     <Page.Resources>
+        <conv:TwelveHourConverter x:Key="TimeConv"/>
+        
+
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
             <Setter Property="Foreground" Value="DimGray"/>
@@ -169,7 +173,8 @@
 
                     <CalendarDatePicker x:Name="Appointment_Date" PlaceholderText="Choose your Appointment Date" 
                 FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14" Margin="10,10" HorizontalAlignment="Center"
-                                BorderThickness="0.5" DateChanged="Appointment_Date_DateChanged" RequestedTheme="Light">
+                                BorderThickness="0.5" DateChanged="Appointment_Date_DateChanged" RequestedTheme="Light"
+                                        >
                         <CalendarDatePicker.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Appointment Date" FontSize="18" Margin="5,0"/>
@@ -188,13 +193,13 @@
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="data:Roster" x:Name="TimeSlotComboItem">
                                 <TextBlock x:Name="TimeSlotText" Loaded="TimeSlotText_Loaded">
-                                <Run Text="{x:Bind start_time,Converter={StaticResource TimeConv}}"/>
+                                <Run Text="{x:Bind start_time,Converter={StaticResource TimeConv},Mode=OneWay}"/>
                                 <Run x:Name="TextSlotRun" Text="{x:Bind sys:String.Format('({0} vacancies)',val)}"/>
                                 </TextBlock>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Button Style="{StaticResource ButtonStyle1}" x:Name="BookButton"  Content="BOOK" Margin="10,10" 
+                    <Button Style="{StaticResource ButtonStyle1}" x:Name="BookButton"  Content="RESCHEDULE" Margin="10,10" 
                            FontStretch="ExtraExpanded" Click="BookButton_Click"   
                         FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
                             FontSize="12" HorizontalAlignment="Center" RequestedTheme="Dark"/>
@@ -207,9 +212,12 @@
                           BorderBrush="#303030" 
                           HorizontalAlignment="Stretch" Grid.ColumnSpan="6" Margin="0,20" 
                           ScrollViewer.VerticalScrollMode="Enabled">
-                   
-                   
-                    <ListView.ItemTemplate>
+                <ListView.ItemContainerTransitions>
+                    <TransitionCollection></TransitionCollection>
+                </ListView.ItemContainerTransitions>
+
+
+                <ListView.ItemTemplate>
                         <DataTemplate x:DataType="data:AppointmentDetails">
                             <uc:AppointmentTemplate HorizontalAlignment="Stretch" Width="1460" Loaded="AppointmentTemplate_Loaded"/>
 

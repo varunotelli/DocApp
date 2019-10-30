@@ -14,8 +14,6 @@ namespace DocApp.Presentation.ViewModels
     class DoctorDetailViewModel: IDoctorDetailViewCallBack, IHospitalDoctorViewCallBack, INotifyPropertyChanged
     {
 
-
-        
         private Doctor doc;
         public Doctor doctor
         {
