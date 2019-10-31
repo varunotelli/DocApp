@@ -28,7 +28,41 @@
        
     </Page.Resources>
     <Grid>
-        <Popup x:Name="Book_Pop" 
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Phone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="400"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="mySplitView.DisplayMode" Value="Inline"/>
+                        <Setter Target="mySplitView.OpenPaneLength" Value="750"/>
+                        <Setter Target="VisitedDocStack.(Grid.Row)" Value="2"/>
+                        <Setter Target="VisitedDocStack.(Grid.Column)" Value="0"/>
+                        <Setter Target="SearchPanel.(Grid.Column)" Value="0"/>
+                        <Setter Target="AppStack.HorizontalAlignment" Value="Left"/>
+                        <Setter Target="Book_Pop.VerticalOffset" Value="50"/>
+                        <Setter Target="Book_Pop.HorizontalOffset" Value="0"/>
+                        
+                        <Setter Target="DescBox.Width" Value="100"/>
+
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Tablet">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <ScrollViewer Height="700">
+            <Grid>
+                <Popup x:Name="Book_Pop" 
                     IsOpen="False" 
                     Opened="Book_Pop_Opened"
                     Closed="Book_Pop_Closed"
@@ -42,127 +76,177 @@
                    RequestedTheme="Dark"
                            
                            >
-            <StackPanel Background="#3b5163" Height="300" Width="300" VerticalAlignment="Center" BorderThickness="1"
-                                            BorderBrush="White" CornerRadius="10">
-                <TextBlock HorizontalAlignment="Center">Book Appointment</TextBlock>
-                <ComboBox x:Name="LocationBox" Margin="10" HorizontalAlignment="Center" 
+                    <StackPanel  Background="#3b5163" Height="300" Width="300" VerticalAlignment="Center" BorderThickness="1"
+                                            BorderBrush="White" >
+                        <TextBlock HorizontalAlignment="Center">Book Appointment</TextBlock>
+                        <ComboBox x:Name="LocationBox" Margin="10" HorizontalAlignment="Center" 
                           ItemsSource="{x:Bind viewModel.hospitals,Mode=OneWay}"
                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14"
                                   DropDownOpened="LocationBox_DropDownOpened" BorderThickness="0.5" 
                           SelectedItem="{x:Bind viewModel.LastBookedHosp,Mode=OneWay}"
                                   SelectionChanged="LocationBox_SelectionChanged" RequestedTheme="Light">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="data:HospitalInDoctorDetails" >
-                            <TextBlock>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="data:HospitalInDoctorDetails" >
+                                    <TextBlock>
                                 <Run Text="{x:Bind Name}"/>
                                 <Run Text="{x:Bind sys:String.Format('({0})',Location)}"/>
-                            </TextBlock>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
 
 
-                <CalendarDatePicker x:Name="Appointment_Date" PlaceholderText="Choose your Appointment Date" 
+                        <CalendarDatePicker x:Name="Appointment_Date" PlaceholderText="Choose your Appointment Date" 
                 FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14" Margin="10,10" HorizontalAlignment="Center"
                                 BorderThickness="0.5" DateChanged="Appointment_Date_DateChanged" RequestedTheme="Light">
-                    <CalendarDatePicker.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="Appointment Date" FontSize="18" Margin="5,0"/>
-                        </DataTemplate>
-                    </CalendarDatePicker.HeaderTemplate>
-                </CalendarDatePicker>
-                <ComboBox x:Name="TimeSlotBox" ItemsSource="{x:Bind viewModel.timeslots,Mode=OneWay}" Margin="10,10"
+                            <CalendarDatePicker.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="Appointment Date" FontSize="18" Margin="5,0"/>
+                                </DataTemplate>
+                            </CalendarDatePicker.HeaderTemplate>
+                        </CalendarDatePicker>
+                        <ComboBox x:Name="TimeSlotBox" ItemsSource="{x:Bind viewModel.timeslots,Mode=OneWay}" Margin="10,10"
                                   FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14"
                                   DropDownOpened="TimeSlotBox_DropDownOpened" BorderThickness="0.5" HorizontalAlignment="Center"
                                   SelectionChanged="TimeSlotBox_SelectionChanged" PlaceholderText="Time Slot" RequestedTheme="Light">
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="ComboBoxItem">
-                            <Setter Property="IsEnabled" Value="{Binding en,Mode=TwoWay}"/>
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="data:Roster" x:Name="TimeSlotComboItem">
-                            <TextBlock x:Name="TimeSlotText" Loaded="TimeSlotText_Loaded">
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem">
+                                    <Setter Property="IsEnabled" Value="{Binding en,Mode=TwoWay}"/>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="data:Roster">
+                                    <TextBlock x:Name="TimeSlotText" Loaded="TimeSlotText_Loaded">
                                 <Run Text="{x:Bind start_time,Converter={StaticResource TimeConv}}"/>
                                 <Run x:Name="TextSlotRun" Text="{x:Bind sys:String.Format('({0} vacancies)',val)}"/>
-                            </TextBlock>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <Button Style="{StaticResource ButtonStyle1}" x:Name="BookButton"  Content="BOOK" Margin="10,10" 
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Style="{StaticResource ButtonStyle1}" x:Name="BookButton"  Content="BOOK" Margin="10,10" 
                            FontStretch="ExtraExpanded" Click="BookButton_Click"   
                         FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
                             FontSize="12" HorizontalAlignment="Center" RequestedTheme="Dark"/>
-            </StackPanel>
-        </Popup>
+                    </StackPanel>
+                </Popup>
 
-        <SplitView x:Name="mySplitView" DisplayMode="Inline" PanePlacement="Right" OpenPaneLength="800" 
+                <Popup x:Name="Res_Pop" 
+                    IsOpen="False" 
+                    Opened="Res_Pop_Opened"
+                    Closed="Res_Pop_Closed"
+                    IsLightDismissEnabled="True"
+                    VerticalOffset="300"
+                    HorizontalOffset="650"
+                    Margin="10,10"
+                    LightDismissOverlayMode="On"
+                   Visibility="Collapsed"
+                   RequestedTheme="Dark"
+                           
+                           >
+                    <StackPanel Background="#3b5163" Height="300" Width="300" VerticalAlignment="Center" BorderThickness="1"
+                                            BorderBrush="White" >
+                        <TextBlock HorizontalAlignment="Center">Book Appointment</TextBlock>
+                        <CalendarDatePicker x:Name="App_Date" PlaceholderText="Choose your Appointment Date" 
+                FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14" Margin="10,10" HorizontalAlignment="Center"
+                                BorderThickness="0.5" DateChanged="App_Date_DateChanged" RequestedTheme="Light">
+                            <CalendarDatePicker.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="Appointment Date" FontSize="18" Margin="5,0"/>
+                                </DataTemplate>
+                            </CalendarDatePicker.HeaderTemplate>
+                        </CalendarDatePicker>
+                        <ComboBox x:Name="Res_TimeSlotBox" ItemsSource="{x:Bind viewModel.timeslots,Mode=OneWay}" Margin="10,10"
+                                  FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14"
+                                  DropDownOpened="Res_TimeSlotBox_DropDownOpened" BorderThickness="0.5" HorizontalAlignment="Center"
+                                  SelectionChanged="Res_TimeSlotBox_SelectionChanged" PlaceholderText="Time Slot" RequestedTheme="Light">
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem">
+                                    <Setter Property="IsEnabled" Value="{Binding en,Mode=TwoWay}"/>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="data:Roster" x:Name="TimeSlotComboItem">
+                                    <TextBlock x:Name="TimeSlotText" Loaded="TimeSlotText_Loaded">
+                                <Run Text="{x:Bind start_time,Converter={StaticResource TimeConv}}"/>
+                                <Run x:Name="TextSlotRun" Text="{x:Bind sys:String.Format('({0} vacancies)',val)}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Style="{StaticResource ButtonStyle1}" x:Name="ResButton"  Content="RESCHEDULE" Margin="10,10" 
+                           FontStretch="ExtraExpanded" Click="ResButton_Click"   
+                        FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
+                            FontSize="12" HorizontalAlignment="Center" RequestedTheme="Dark"/>
+                    </StackPanel>
+                </Popup>
+
+                <SplitView x:Name="mySplitView" DisplayMode="Inline" PanePlacement="Right" OpenPaneLength="800" 
                    PaneOpened="MySplitView_PaneOpened">
-            <SplitView.Pane>
-                
-                <StackPanel Padding="5" Background="White">
-                    
-                    <HyperlinkButton x:Name="CloseBtn" VerticalAlignment="Top"
-                                             FontFamily="Segoe MDL2 Assets" Click="CloseBtn_Click" Margin="20,0">
-                        <TextBlock Text="&#xE106;" FontSize="20"/>
-                    </HyperlinkButton>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Height="100" Width="100" Margin="10,0,10,10">
-                            <Image.Source>
-                                <BitmapImage UriSource="{x:Bind viewModel.doctor.Image,Mode=OneWay}"/>
-                            </Image.Source>
-                        </Image>
+                    <SplitView.Pane>
 
-                        <!--<Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
+                        <StackPanel Padding="5" Background="White">
+
+                            <HyperlinkButton x:Name="CloseBtn" VerticalAlignment="Top"
+                                             FontFamily="Segoe MDL2 Assets" Click="CloseBtn_Click" Margin="20,0">
+                                <TextBlock Text="&#xE106;" FontSize="20"/>
+                            </HyperlinkButton>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="100" Width="100" Margin="10,0,10,10">
+                                    <Image.Source>
+                                        <BitmapImage UriSource="{x:Bind viewModel.doctor.Image,Mode=OneWay}"/>
+                                    </Image.Source>
+                                </Image>
+
+                                <!--<Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
                        VerticalAlignment="Top" Margin="10"/>-->
 
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}', viewModel.doctor.Name),Mode=OneWay}" HorizontalAlignment="Left"
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}', viewModel.doctor.Name),Mode=OneWay}" HorizontalAlignment="Left"
                                 FontSize="22" FontWeight="Bold" Margin="10,5" FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
-                                <RatingControl x:Name="Rating" Value="{x:Bind viewModel.doctor.Rating,Mode=TwoWay}"  Margin="5"
+                                        <RatingControl x:Name="Rating" Value="{x:Bind viewModel.doctor.Rating,Mode=TwoWay}"  Margin="5"
                                     Caption="{x:Bind sys:String.Format('({0})',viewModel.doctor.Number_of_Rating),Mode=OneWay}" 
                                     IsReadOnly="True" HorizontalAlignment="Left">
-                                    <!--<RatingControl.Resources>
+                                            <!--<RatingControl.Resources>
                                             <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
 
                                         </RatingControl.Resources>-->
-                                </RatingControl>
-                            </StackPanel>
+                                        </RatingControl>
+                                    </StackPanel>
 
-                            <TextBlock Text="{x:Bind viewModel.doctor.Designation,Mode=OneWay}" Style="{StaticResource TextBlockStyle}"
+                                    <TextBlock Text="{x:Bind viewModel.doctor.Designation,Mode=OneWay}" Style="{StaticResource TextBlockStyle}"
                         HorizontalAlignment="Left"/>
-                            <TextBlock Text="{x:Bind sys:String.Format('{0} years of experience overall', viewModel.doctor.Experience),Mode=OneWay}" 
+                                    <TextBlock Text="{x:Bind sys:String.Format('{0} years of experience overall', viewModel.doctor.Experience),Mode=OneWay}" 
                             Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Left"/>
 
-                            <RatingControl x:Name="myRating" ValueChanged="MyRating_ValueChanged"  Margin="10,5"
+                                    <RatingControl x:Name="myRating" ValueChanged="MyRating_ValueChanged"  Margin="10,5"
                             Caption="Your Rating" HorizontalAlignment="Left">
-                                <!--<RatingControl.Resources>
+                                        <!--<RatingControl.Resources>
                                         <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
 
                                     </RatingControl.Resources>-->
-                            </RatingControl>
-                        </StackPanel>
+                                    </RatingControl>
+                                </StackPanel>
 
-                    </StackPanel>
-                    <!--START SCROLL HERE-->
-                    <ScrollViewer Height="520">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{x:Bind viewModel.doctor.Description,Mode=OneWay}" x:Name="DescBox" Grid.Column="0"
+                            </StackPanel>
+                            <!--START SCROLL HERE-->
+                            <ScrollViewer Height="520">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{x:Bind viewModel.doctor.Description,Mode=OneWay}" x:Name="DescBox" Grid.Column="0"
                                    Margin="10,10,0,0" TextWrapping="WrapWholeWords" Width="550"
                         FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" Height="20" 
                                    TextTrimming="CharacterEllipsis"
                                    HorizontalAlignment="Left" FontSize="15"/>
-                                <HyperlinkButton Content="Show More" x:Name="Showbutton" HorizontalAlignment="Left" Grid.Column="1"
+                                        <HyperlinkButton Content="Show More" x:Name="Showbutton" HorizontalAlignment="Left" Grid.Column="1"
                                 FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" Margin="0,15,10,10"
                                 
                                 FontSize="12"
@@ -170,179 +254,183 @@
                                          Click="ShowButton_Click" 
                                          
                                          VerticalAlignment="Bottom"/>
-                            </Grid>
+                                    </Grid>
 
 
-                            <controls:TabView x:Name="Tabs" SelectionChanged="Tabs_SelectionChanged" Grid.Row="1">
+                                    <controls:TabView x:Name="Tabs" SelectionChanged="Tabs_SelectionChanged" Grid.Row="1">
 
-                                <controls:TabViewItem Icon="Home"
+                                        <controls:TabViewItem Icon="Home"
                             Header="Hospitals" >
 
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock FontSize="24" FontWeight="Bold" Margin="10,10" 
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock FontSize="24" FontWeight="Bold" Margin="10,10" 
                         FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
                         Text="{x:Bind sys:String.Format('Places where Dr. {0} visits',viewModel.doctor.Name),Mode=OneWay}"/>
-                                        <ListView x:Name="HospList" ItemsSource="{x:Bind viewModel.hospitals,Mode=TwoWay}" 
+                                                <ListView x:Name="HospList" ItemsSource="{x:Bind viewModel.hospitals,Mode=TwoWay}" 
                                   IsItemClickEnabled="True"  Grid.Row="1" ScrollViewer.VerticalScrollMode="Disabled"
                                           ItemClick="HospList_ItemClick" >
-                                            <ListView.ItemContainerStyle>
-                                                <Style TargetType="ListViewItem">
-                                                    <Setter Property="Margin" Value="10,10"/>
-                                                    <Setter Property="Padding" Value="10"/>
-                                                    <Setter Property="Height" Value="Auto"/>
-                                                </Style>
-                                            </ListView.ItemContainerStyle>
-                                            <ListView.ItemContainerTransitions>
-                                                <TransitionCollection/>
-                                            </ListView.ItemContainerTransitions>
-                                            <ListView.ItemTemplate>
-                                                <DataTemplate x:DataType="data:HospitalInDoctorDetails" x:Name="Doctemp">
-                                                    <uc:HospitalsInDoctorsTemplate Loaded="HospitalsInDoctorsTemplate_Loaded"/>
-                                                </DataTemplate>
-                                            </ListView.ItemTemplate>
-                                        </ListView>
+                                                    <ListView.ItemContainerStyle>
+                                                        <Style TargetType="ListViewItem">
+                                                            <Setter Property="Margin" Value="10,10"/>
+                                                            <Setter Property="Padding" Value="10"/>
+                                                            <Setter Property="Height" Value="Auto"/>
+                                                        </Style>
+                                                    </ListView.ItemContainerStyle>
+                                                    <ListView.ItemContainerTransitions>
+                                                        <TransitionCollection/>
+                                                    </ListView.ItemContainerTransitions>
+                                                    <ListView.ItemTemplate>
+                                                        <DataTemplate x:DataType="data:HospitalInDoctorDetails" x:Name="Doctemp">
+                                                            <uc:HospitalsInDoctorsTemplate Loaded="HospitalsInDoctorsTemplate_Loaded"/>
+                                                        </DataTemplate>
+                                                    </ListView.ItemTemplate>
+                                                </ListView>
 
-                                    </Grid>
-                                </controls:TabViewItem>
-                                <controls:TabViewItem Header="Testimonials" Icon="Favorite" x:Name="TestTab" >
+                                            </Grid>
+                                        </controls:TabViewItem>
+                                        <controls:TabViewItem Header="Testimonials" Icon="Favorite" x:Name="TestTab" >
 
 
-                                    <Grid Padding="10">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Button x:Name="PostBtn" HorizontalAlignment="Right" Margin="5,10" Style="{StaticResource ButtonStyle1}"
+                                            <Grid Padding="10">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Button x:Name="PostBtn" HorizontalAlignment="Right" Margin="5,10" Style="{StaticResource ButtonStyle1}"
                                             Click="PostBtn_Click">New Post</Button>
-                                        <TextBox Grid.Row="1" x:Name="MessageBox" HorizontalAlignment="Stretch" MaxHeight="300"
+                                                <TextBox Grid.Row="1" x:Name="MessageBox" HorizontalAlignment="Stretch" MaxHeight="300"
                                                  ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True"
                                                  PlaceholderText="Type your message here" Margin="5" Visibility="Collapsed"
                                                  FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf# Proxima Nova"/>
-                                        <Button x:Name="SubmitBtn" 
+                                                <Button x:Name="SubmitBtn" 
                                                 VerticalAlignment="Top" Grid.Row="2" Margin="5" Click="SubmitBtn_Click"
                                                 Visibility="Collapsed" Style="{StaticResource ButtonStyle1}">Submit</Button>
-                                        <ItemsControl Grid.Row="3" ItemsSource="{x:Bind viewModel.tests,Mode=OneWay}" HorizontalAlignment="Stretch">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate x:DataType="data:TestDetails">
-                                                    <uc:TestTempate HorizontalAlignment="Stretch" Margin="10"/>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </Grid>
+                                                <ItemsControl Grid.Row="3" ItemsSource="{x:Bind viewModel.tests,Mode=OneWay}" HorizontalAlignment="Stretch">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate x:DataType="data:TestDetails">
+                                                            <uc:TestTempate HorizontalAlignment="Stretch" Margin="10"/>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </Grid>
 
-                                </controls:TabViewItem>
+                                        </controls:TabViewItem>
 
-                            </controls:TabView>
-                        </Grid>
-                    </ScrollViewer>
+                                    </controls:TabView>
+                                </Grid>
+                            </ScrollViewer>
 
-                    <!--END SCROLL HERE-->
+                            <!--END SCROLL HERE-->
 
 
 
-                </StackPanel>
-            </SplitView.Pane>
-            <SplitView.Content>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition x:Name="firstcol" Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Grid.Row="0"
+                        </StackPanel>
+                    </SplitView.Pane>
+                    <SplitView.Content>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="firstcol" Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Grid.Row="0"
                     Padding="5" HorizontalAlignment="Center" Grid.ColumnSpan="2" x:Name="AppStack">
-                        <TextBlock Text="Today's Appointments" FontSize="20" HorizontalAlignment="Center"
+                                <TextBlock Text="Today's Appointments" FontSize="20" HorizontalAlignment="Center"
                            FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
-                        <ListView  ItemsSource="{x:Bind viewModel.appointments, Mode=OneWay}" 
+                                <ListView  ItemsSource="{x:Bind viewModel.appointments, Mode=OneWay}" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto" GotFocus="ListView_GotFocus">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                                    <Setter Property="Padding" Value="0"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <uc:DashboardAppTemplate x:Name="AppTemp"
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <uc:DashboardAppTemplate x:Name="AppTemp"
                                         PointerEntered="DashboardAppTemplate_PointerEntered" 
                                                              Loaded="DashboardAppTemplate_Loaded"
                                                              PointerExited="DashboardAppTemplate_PointerExited"/>
 
-                                    <!--<uc:AppointmentTemplate/>-->
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
+                                            <!--<uc:AppointmentTemplate/>-->
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
 
-                    <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Padding="5" HorizontalAlignment="Stretch"
+                            <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Padding="5" HorizontalAlignment="Stretch"
                                 Grid.Row="1"
                     x:Name="SearchPanel">
-                        <Grid HorizontalAlignment="Stretch">
-                            <TextBlock Text="Your Recent Searches" FontSize="20" HorizontalAlignment="Left"
+                                <Grid HorizontalAlignment="Stretch">
+                                    <TextBlock Text="Your Recent Searches" FontSize="20" HorizontalAlignment="Left"
                            FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
-                            <HyperlinkButton Content="View All" FontSize="12" HorizontalAlignment="Right" Foreground="Black"
+                                    <HyperlinkButton Content="View All" FontSize="12" HorizontalAlignment="Right" Foreground="Black"
                                              FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"
                                              Click="HyperlinkButton_Click"/>
-                        </Grid>
-                        
-                        <ListView Height="300" x:Name="myListView" ItemsSource="{x:Bind viewModel.recent_docs, Mode=OneWay}" 
+                                </Grid>
+
+                                <ListView Height="500" x:Name="myListView" ItemsSource="{x:Bind viewModel.recent_docs, Mode=OneWay}" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto" ItemClick="ListView_ItemClick" IsItemClickEnabled="True">
-                            <ListView.ItemContainerTransitions>
-                                <TransitionCollection/>
-                            </ListView.ItemContainerTransitions>
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="data:Doctor">
-                                    <!--<StackPanel Orientation="Horizontal" Margin="10">
+                                    <ListView.ItemContainerTransitions>
+                                        <TransitionCollection/>
+                                    </ListView.ItemContainerTransitions>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="data:Doctor">
+                                            <!--<StackPanel Orientation="Horizontal" Margin="10">
                                     <Image Source="{x:Bind Image}" Height="50" Width="50"/>
                                     <TextBlock Text="{x:Bind sys:String.Format('Dr.{0}',Name)}" Margin="5"
                                                FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
                                 </StackPanel>-->
-                                    <uc:DoctorProfileLargeTemplate/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
+                                            <uc:DoctorProfileLargeTemplate/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
 
-                    <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Padding="5" x:Name="VisitedDocStack"
+                            <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Padding="5" x:Name="VisitedDocStack"
                         HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1">
-                        <Grid HorizontalAlignment="Stretch">
-                            <TextBlock Text="Your Most Visited Doctors" FontSize="20" HorizontalAlignment="Left"
+                                <Grid HorizontalAlignment="Stretch">
+                                    <TextBlock Text="Your Most Visited Doctors" FontSize="20" HorizontalAlignment="Left"
                            FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
-                            <HyperlinkButton Content="View All" FontSize="12" HorizontalAlignment="Right" Foreground="Black"
+                                    <HyperlinkButton Content="View All" FontSize="12" HorizontalAlignment="Right" Foreground="Black"
                                              FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"
                                              Click="HyperlinkButton_Click"/>
-                        </Grid>
+                                </Grid>
 
-                        <ListView x:Name="BookedListView" Height="300" ItemClick="BookedListView_ItemClick" IsItemClickEnabled="True"
+                                <ListView x:Name="BookedListView" Height="500" ItemClick="BookedListView_ItemClick" IsItemClickEnabled="True"
                                   ItemsSource="{x:Bind viewModel.most_booked_docs, Mode=OneWay}" 
                                   ScrollViewer.VerticalScrollBarVisibility="Auto">
-                            <ListView.ItemContainerTransitions>
-                                <TransitionCollection/>
-                            </ListView.ItemContainerTransitions>
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="data:Doctor">
-                                    <!--<StackPanel Orientation="Horizontal" Margin="10">
+                                    <ListView.ItemContainerTransitions>
+                                        <TransitionCollection/>
+                                    </ListView.ItemContainerTransitions>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="data:Doctor">
+                                            <!--<StackPanel Orientation="Horizontal" Margin="10">
                                     <Image Source="{x:Bind Image}" Height="50" Width="50"/>
                                     <TextBlock Text="{x:Bind sys:String.Format('Dr.{0}',Name)}" Margin="5"
                                                FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
                                     </StackPanel>-->
-                                    <uc:BookedDocTemplate x:Name="BookedDocTemp" Loaded="BookedDocTemp_Loaded"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
-                </Grid>
-            </SplitView.Content>
-        </SplitView>
+                                            <uc:BookedDocTemplate x:Name="BookedDocTemp" Loaded="BookedDocTemp_Loaded"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </Grid>
+                    </SplitView.Content>
+                </SplitView>
+            </Grid>
+        </ScrollViewer>
+        
         
     </Grid>
 

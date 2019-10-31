@@ -173,6 +173,7 @@ namespace DocApp.Presentation.ViewModels
             timeslots.Clear();
             
                 foreach (var x in l)
+                    
                     timeslots.Add(x);
             
             return true;

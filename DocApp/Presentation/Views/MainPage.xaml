@@ -71,9 +71,42 @@
 
     
         <StackPanel x:Name="MainStack" Margin="0,10,0,0">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Phone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="400"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LocationProg.(FrameworkElement.Width)" Value="5"/>
+                        <Setter Target="LocationProg.(FrameworkElement.Height)" Value="5"/>
+                        <Setter Target="progring.(FrameworkElement.Width)" Value="50"/>
+                        <Setter Target="progring.(FrameworkElement.Height)" Value="50"/>
+                        <Setter Target="LoadText.(TextBlock.FontSize)" Value="12"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Tablet">
+                    <VisualState.Setters>
+                        <Setter Target="LocationProg.(FrameworkElement.Width)" Value="5"/>
+                        <Setter Target="LocationProg.(FrameworkElement.Height)" Value="5"/>
+                        <Setter Target="progring.(FrameworkElement.Width)" Value="50"/>
+                        <Setter Target="progring.(FrameworkElement.Height)" Value="50"/>
+                        <Setter Target="LoadText.(TextBlock.FontSize)" Value="16"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
-        
-            <!--<HyperlinkButton x:Name="BackButton" RelativePanel.AlignLeftWithPanel="True" Margin="10,10" Click="BackButton_Click">
+
+        <!--<HyperlinkButton x:Name="BackButton" RelativePanel.AlignLeftWithPanel="True" Margin="10,10" Click="BackButton_Click">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE016;" FontSize="24"/>
             </HyperlinkButton>-->
             <!--<HyperlinkButton x:Name="ForwardButton" RelativePanel.RightOf="BackButton" Margin="5,10" Click="ForwardButton_Click">

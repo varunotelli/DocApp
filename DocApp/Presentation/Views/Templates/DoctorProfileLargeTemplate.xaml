@@ -21,8 +21,23 @@
     </UserControl.Resources>
 
     <Grid Margin="10,10" >
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Phone"/>
+                <VisualState x:Name="Tablet">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <StackPanel Orientation="Horizontal" >
-            <Image x:Name="Img" Width="100" Height="100" Stretch="UniformToFill" >
+            <Image x:Name="Img" Width="100" Height="100" Stretch="UniformToFill">
                 <Image.Source>
                     <BitmapImage UriSource="{x:Bind doctor.Image, Mode=OneWay}"/>
                 </Image.Source>

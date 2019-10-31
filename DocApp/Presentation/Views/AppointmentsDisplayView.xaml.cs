@@ -121,7 +121,7 @@ namespace DocApp.Presentation.Views
         {
             await viewModel.UpdateApp(viewModel.app.ID, app_date, time);
             Book_Pop.IsOpen = false;
-            Book_Pop.Visibility = Visibility.Visible;
+            Book_Pop.Visibility = Visibility.Collapsed;
         }
 
         private async void TimeSlotBox_DropDownOpened(object sender, object e)

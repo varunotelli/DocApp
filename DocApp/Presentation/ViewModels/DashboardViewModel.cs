@@ -12,17 +12,32 @@ using System.Threading.Tasks;
 namespace DocApp.Presentation.ViewModels
 {
     public class DashboardViewModel: DoctorDetailsAbstract, IRecentDoctorViewCallback,IMostBookedDocViewCallback,
-        IAppDisplayViewCallback, ILastHospitalViewCallback,ICancelAppViewCallback
+        IAppDisplayViewCallback, ILastHospitalViewCallback,ICancelAppViewCallback,IUpdateAppViewCallback,
+        IAppViewCallback
     {
        
         public ObservableCollection<Doctor> recent_docs;
         public ObservableCollection<Doctor> most_booked_docs;
         public ObservableCollection<AppointmentDetails> appointments;
+        public Appointment app_vals;
         public ObservableCollection<HospitalInDoctorDetails> hospsinbox;
         public Hospital LastBookedHosp;
         public delegate void LastHospBookedEventHandler(object souce, EventArgs args);
         public event LastHospBookedEventHandler LastHospBooked;
+        public delegate void AppointmentEventHandler(object source, EventArgs args);
+        public event AppointmentEventHandler AppointmentUpdated;
+        public event AppointmentReadEventHandler AppRead;
         bool flag;
+        DateTimeOffset d;
+        public DateTimeOffset date
+        {
+            get { return d; }
+            set
+            {
+                d = value;
+                RaisePropertyChanged("date");
+            }
+        }
 
         public DashboardViewModel()
         {
@@ -37,6 +52,19 @@ namespace DocApp.Presentation.ViewModels
             hospsmain = new ObservableCollection<Hospital>();
             Doctors = new ObservableCollection<DoctorInHospitalDetails>();
             hospsinbox = new ObservableCollection<HospitalInDoctorDetails>();
+        }
+
+        public void onAppRead()
+        {
+            if (AppRead != null)
+                AppRead(this, EventArgs.Empty);
+
+        }
+
+        public void onAppointmentUpdated()
+        {
+            if (AppointmentUpdated != null)
+                AppointmentUpdated(this, EventArgs.Empty);
         }
 
         public void onLastHospBooked()
@@ -76,6 +104,12 @@ namespace DocApp.Presentation.ViewModels
 
             }
         }
+        public async Task GetApp(int x)
+        {
+            UseCaseBase getApp = new GetAppUseCase(x);
+            getApp.SetCallBack(this);
+            await getApp.Execute();
+        }
 
         public async Task GetMostBookedDoc(int id)
         {
@@ -104,6 +138,22 @@ namespace DocApp.Presentation.ViewModels
             UseCaseBase cancelApp = new CancelAppointmentUseCase(id);
             cancelApp.SetCallBack(this);
             await cancelApp.Execute();
+        }
+
+        public async Task UpdateApp(int x, string a, string t)
+        {
+            UseCaseBase updateApp = new UpdateAppUseCase(x, a, t);
+            var item = appointments.FirstOrDefault(a1 => a1.id == app_vals.ID);
+            var index = appointments.IndexOf(item);
+            if (item != null)
+            {
+                item.app_date = a;
+                item.Timeslot = t;
+            }
+            appointments[index] = item;
+            //apps.OrderBy(a1 => a1.app_date).ThenBy(a1 => a1.Timeslot);
+            updateApp.SetCallBack(this);
+            await updateApp.Execute();
         }
 
         public bool MostBookedDocViewFail()
@@ -164,6 +214,34 @@ namespace DocApp.Presentation.ViewModels
         }
 
         public bool CancelAppViewFail()
+        {
+            return false;
+        }
+
+        public bool UpdateAppViewSuccess(bool flag)
+        {
+            var templist = new List<AppointmentDetails>(appointments.OrderBy(x => x.app_date).ThenBy(x => x.Timeslot));
+            appointments.Clear();
+            foreach (var x in templist)
+                appointments.Add(x);
+            onAppointmentUpdated();
+            return true;
+        }
+
+        public bool UpdateAppViewFail()
+        {
+            return false;
+        }
+
+        public bool AppViewSuccess(Appointment a)
+        {
+            this.app_vals = a;
+            this.date = DateTimeOffset.Parse(a.APP_DATE);
+            onAppRead();
+            return true;
+        }
+
+        public bool AppViewFail()
         {
             return false;
         }

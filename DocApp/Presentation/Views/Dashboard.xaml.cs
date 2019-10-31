@@ -61,6 +61,8 @@ namespace DocApp.Presentation.Views
             viewModel.TestimonialAddedSuccess += this.onTestAddedSuccess;
             viewModel.LastHospBooked += this.onLastHospRead;
             viewModel.AppointmentCheckSuccess += this.onAppCheckSuccess;
+            viewModel.AppRead += this.onAppReadSuccess;
+            viewModel.AppointmentUpdated += this.onAppUpdateSuccess;
             
             await viewModel.GetRecentSearchDoctors(1);
             await viewModel.GetMostBookedDoc(1);
@@ -135,10 +137,20 @@ namespace DocApp.Presentation.Views
                     
 
                 };
+                Res_Pop.IsOpen = false;
+                Res_Pop.Visibility = Visibility.Collapsed;
                 await bookFail.ShowAsync();
                 TimeSlotBox.SelectedIndex = -1;
             }
 
+        }
+
+        public void onAppReadSuccess(object source, EventArgs args)
+        {
+            App_Date.Date = viewModel.date;
+            Res_Pop.IsOpen = true;
+            Res_Pop.Visibility = Visibility.Visible;
+           
         }
 
         private async void TimeSlotBox_DropDownOpened(object sender, object e)
@@ -162,7 +174,7 @@ namespace DocApp.Presentation.Views
                     {
                         Title = "Appointment Booking Failed",
                         Content = String.Format("No vacancies on {0} at {1}", app_date, time),
-                        CloseButtonText = "OK"
+                        
 
                     };
                     await bookFail.ShowAsync();
@@ -351,6 +363,7 @@ namespace DocApp.Presentation.Views
         private async void BookButton_Click(object sender, RoutedEventArgs e)
         {
             await viewModel.BookAppointment(1, id, hosp_id, app_date, time);
+            LocationBox.Visibility = Visibility.Visible;
             Book_Pop.IsOpen = false;
             Book_Pop.Visibility = Visibility.Visible;
         }
@@ -491,6 +504,32 @@ namespace DocApp.Presentation.Views
             //TestScroll.ChangeView(0, 0, 1);
         }
 
+        async void onResBtnClicked(object source, ButtonClickArgs args)
+        {
+            id = args.id_val;
+            app_temp = ((FrameworkElement)source).DataContext as AppointmentDetails;
+            await viewModel.GetApp(id);
+
+            //temp = ((FrameworkElement)source).DataContext as AppointmentDetails;
+        }
+
+
+        public async void onAppUpdateSuccess(object souce, EventArgs args)
+        {
+            AppointmentBookSuccess bookSuccess = new AppointmentBookSuccess()
+            {
+                Title = "Appointment Rescheduled",
+                Content = String.Format("Appointment booked with Dr. {0} in {1},{2} is rescheduled on {3} at {4}",
+                app_temp.doc_name, app_temp.hosp_name, app_temp.location, app_date, time),
+
+            };
+            //bookSuccess.ButtonClicked += this.onOKButtonClicked;
+            //await viewModel.GetAppointments(1);
+
+            app_date = viewModel.app_vals.APP_DATE;
+            await bookSuccess.ShowAsync();
+        }
+
         private async void LocationBox_DropDownOpened(object sender, object e)
         {
             //await viewModel.GetDoctor(id);
@@ -529,7 +568,76 @@ namespace DocApp.Presentation.Views
             this.PointerEntered += temp.onPointerEntered;
             this.PointerExited += temp.onPointerExited;
             temp.CancelButtonClicked += this.onCancelButtonClicked;
+            temp.RescheduleButtonClicked += this.onResBtnClicked;
             
+        }
+
+        private void Res_Pop_Opened(object sender, object e)
+        {
+            Res_TimeSlotBox.SelectedIndex = -1;
+        }
+
+        private void Res_Pop_Closed(object sender, object e)
+        {
+
+        }
+
+        private void App_Date_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
+        {
+            try
+            {
+                if (sender.Date != null)
+                {
+                    var date = sender.Date;
+                    DateTime t = date.Value.DateTime;
+                    app_date = String.Format("{0:yyyy-MM-dd}", t);
+                    System.Diagnostics.Debug.WriteLine("date=" + app_date);
+
+                }
+            }
+            catch (Exception e)
+            { }
+        }
+
+        private async void Res_TimeSlotBox_DropDownOpened(object sender, object e)
+        {
+            await viewModel.GetTimeSlots(viewModel.app_vals.DOC_ID, viewModel.app_vals.HOS_ID, app_date);
+            Bindings.Update();
+        }
+
+        private async void Res_TimeSlotBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox box = sender as ComboBox;
+            if (box.SelectedIndex != -1)
+            {
+                var val = box.SelectedItem as Roster;
+                time = val.start_time.ToString();
+                if (val.val == 0)
+                {
+                    
+                    AppointmentBookSuccess bookFail = new AppointmentBookSuccess()
+                    {
+                        Title = "Appointment Booking Failed",
+                        Content = String.Format("No vacancies on {0} at {1}", app_date, time),
+                        CloseButtonText = "OK"
+
+                    };
+                    await bookFail.ShowAsync();
+                    box.SelectedIndex = -1;
+                    
+                }
+                else
+                {
+                    await viewModel.CheckApp(1, app_date, time);
+                }
+            }
+        }
+
+        private async void ResButton_Click(object sender, RoutedEventArgs e)
+        {
+            await viewModel.UpdateApp(viewModel.app_vals.ID, app_date, time);
+            Res_Pop.IsOpen = false;
+            Res_Pop.Visibility = Visibility.Collapsed;
         }
 
         private void ListView_GotFocus(object sender, RoutedEventArgs e)
