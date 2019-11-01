@@ -21,12 +21,12 @@
     </Page.Background>-->
     <Page.Resources>
         <conv:TwelveHourConverter x:Key="TimeConv"/>
-        
+
 
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
             <Setter Property="Foreground" Value="DimGray"/>
-            
+
             <!--<Setter Property="Margin" Value="10"/>-->
         </Style>
         <Style x:Key="ListViewItemStyle1" TargetType="ListViewItem">
@@ -37,7 +37,7 @@
             <Setter Property="TabNavigation" Value="Local"/>
             <Setter Property="IsHoldingEnabled" Value="True"/>
             <Setter Property="Padding" Value="5"/>
-            
+
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="BorderThickness" Value="0,0,0,0.5"/>
             <Setter Property="BorderBrush" Value="#303030"/>
@@ -91,7 +91,7 @@
                                     <VisualState x:Name="PointerOverSelected">
                                         <VisualState.Setters>
                                             <Setter Target="Root.(RevealBrush.State)" Value="PointerOver"/>
-                                            
+
                                         </VisualState.Setters>
                                     </VisualState>
                                     <VisualState x:Name="PointerOverPressed">
@@ -126,8 +126,44 @@
             </Setter>
         </Style>
     </Page.Resources>
-    
+
     <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Phone">
+                    <VisualState.Setters>
+                        <!--<Setter Target="textBlock.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="textBlock1.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="textBlock3.(Grid.Column)" Value="2"/>
+                        <Setter Target="textBlock2.(Grid.Column)" Value="1"/>-->
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="400"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Tablet">
+                    <VisualState.Setters>
+                        <Setter Target="textBlock.(UIElement.Visibility)" Value="Collapsed"/>
+                        <!--<Setter Target="textBlock2.(Grid.Column)" Value="2"/>
+                        <Setter Target="textBlock3.(Grid.Column)" Value="3"/>-->
+
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Tiny">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="100"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -137,21 +173,21 @@
             <TextBlock Text="Your Appointments" FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"
                    FontSize="40" />
         </StackPanel>
-        
+
 
         <Grid Margin="50,0" Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="DOCTOR NAME" Style="{StaticResource TextBlockStyle}" />
-                <TextBlock Text="PLACE" Grid.Column="1" Style="{StaticResource TextBlockStyle}" Margin="20,0"/>
-            <TextBlock Text="LOCATION" Grid.Column="2" Style="{StaticResource TextBlockStyle}" Margin="-40,0"/>
-            <TextBlock Text="DATE" Grid.Column="3" Style="{StaticResource TextBlockStyle}" Margin="-95,0"/>
-            <TextBlock Text="TIME" Grid.Column="4" Style="{StaticResource TextBlockStyle}" Margin="-160,0"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="DOCTOR NAME" Style="{StaticResource TextBlockStyle}" />
+            <TextBlock x:Name="textBlock1" Text="PLACE" Grid.Column="1" Style="{StaticResource TextBlockStyle}" Margin="20,0"/>
+            <TextBlock x:Name="textBlock" Text="LOCATION" Grid.Column="2" Style="{StaticResource TextBlockStyle}" Margin="-40,0"/>
+            <TextBlock x:Name="textBlock2" Text="DATE" Grid.Column="3" Style="{StaticResource TextBlockStyle}" Margin="-95,0"/>
+            <TextBlock x:Name="textBlock3" Text="TIME" Grid.Column="4" Style="{StaticResource TextBlockStyle}" Margin="-160,0"/>
 
 
             <Popup x:Name="Book_Pop" 
@@ -218,17 +254,17 @@
 
 
                 <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="data:AppointmentDetails">
-                            <uc:AppointmentTemplate HorizontalAlignment="Stretch" Width="1460" Loaded="AppointmentTemplate_Loaded"/>
+                    <DataTemplate x:DataType="data:AppointmentDetails">
+                        <uc:AppointmentTemplate HorizontalAlignment="Stretch" Width="1460" Loaded="AppointmentTemplate_Loaded"/>
 
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
 
-            </Grid>
-        
-        
+        </Grid>
+
+
     </Grid>
 
 </Page>

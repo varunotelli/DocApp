@@ -23,6 +23,46 @@
     </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Phone">
+                    <VisualState.Setters>
+                        <Setter Target="textBlock.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="textBlock1.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="textBlock3.(Grid.Column)" Value="1"/>
+                        <Setter Target="textBlock2.(Grid.Column)" Value="2"/>
+                        <Setter Target="stackPanel.(Grid.Column)" Value="3"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="400"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Tablet">
+                    <VisualState.Setters>
+                        <Setter Target="textBlock.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="textBlock3.(Grid.Column)" Value="2"/>
+                        <Setter Target="textBlock2.(Grid.Column)" Value="3"/>
+                        <Setter Target="stackPanel.(Grid.Column)" Value="4"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Tiny">
+                    <VisualState.Setters>
+                        <Setter Target="textBlock3.(UIElement.Visibility)" Value="Collapsed"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="200"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -33,11 +73,11 @@
 
         </Grid.ColumnDefinitions>
         <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',app.doc_name)}" Grid.Column="0"/>
-        <TextBlock Text="{x:Bind app.hosp_name}" Grid.Column="1"/>
-        <TextBlock Text="{x:Bind app.location}" Grid.Column="2"/>
-        <TextBlock Text="{x:Bind app.app_date,Converter={StaticResource DateConv}}" Grid.Column="3"/>
-        <TextBlock Text="{x:Bind app.Timeslot, Converter={StaticResource TimeConv}}" Grid.Column="4"/>
-        <StackPanel Orientation="Horizontal" Grid.Column="5">
+        <TextBlock x:Name="textBlock1" Text="{x:Bind app.hosp_name}" Grid.Column="1"/>
+        <TextBlock x:Name="textBlock" Text="{x:Bind app.location}" Grid.Column="2"/>
+        <TextBlock x:Name="textBlock3" Text="{x:Bind app.app_date,Converter={StaticResource DateConv}}" Grid.Column="3"/>
+        <TextBlock x:Name="textBlock2" Text="{x:Bind app.Timeslot, Converter={StaticResource TimeConv}}" Grid.Column="4"/>
+        <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.Column="5">
             <Button Style="{StaticResource RoundButtonStyle}" ToolTipService.ToolTip="Cancel Appointment" x:Name="CancelBtn"
                     Click="CancelBtn_Click">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE10A;"/>

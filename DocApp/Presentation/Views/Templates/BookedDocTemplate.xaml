@@ -22,6 +22,33 @@
     </UserControl.Resources>
 
     <Grid Margin="10,10" >
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Phone">
+                    <VisualState.Setters>
+                        <Setter Target="Img.(FrameworkElement.Width)" Value="50"/>
+                        <Setter Target="Img.(FrameworkElement.Height)" Value="50"/>
+                        <Setter Target="stackPanel.(StackPanel.Orientation)" Value="Vertical"/>
+                        <Setter Target="hyperlinkButton.(Control.FontSize)" Value="11"/>
+                        <Setter Target="textBlock.(TextBlock.FontSize)" Value="14"/>
+
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="400"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Tablet">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <StackPanel Orientation="Horizontal" >
             <Image x:Name="Img" Width="100" Height="100" Stretch="UniformToFill" >
                 <Image.Source>
@@ -31,8 +58,8 @@
 
             </Image>
             <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{x:Bind doctor.Name,Converter={StaticResource NameConv}}" Margin="10,5" FontSize="16" FontWeight="ExtraBold"
+                <StackPanel x:Name="stackPanel" Orientation="Horizontal">
+                    <TextBlock x:Name="textBlock" Text="{x:Bind doctor.Name,Converter={StaticResource NameConv}}" Margin="10,5" FontSize="16" FontWeight="ExtraBold"
                    FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
                     <RatingControl Value="{x:Bind doctor.Rating, Mode=OneWay}" HorizontalAlignment="Left" Margin="10,0"
                                        Caption="{x:Bind sys:String.Format('({0})',doctor.Number_of_Rating)}" 
@@ -48,11 +75,11 @@
                    Style="{StaticResource TextBlockStyle}"/>
                 <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"
                        TextTrimming="CharacterEllipsis"/>
-                <HyperlinkButton Click="Button_Click" Margin="10,5">Book another appointment with this doctor</HyperlinkButton>
+                <HyperlinkButton x:Name="hyperlinkButton" Click="Button_Click" Margin="10,5">Book another appointment with this doctor</HyperlinkButton>
 
             </StackPanel>
-            
-            
+
+
 
 
         </StackPanel>
