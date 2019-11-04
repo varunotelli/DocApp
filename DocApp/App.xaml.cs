@@ -50,6 +50,7 @@ namespace DocApp
             CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
             
+            
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active

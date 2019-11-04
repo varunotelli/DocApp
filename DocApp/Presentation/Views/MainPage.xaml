@@ -22,7 +22,7 @@
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Height" Value="40"/>
-            <Setter Property="CornerRadius" Value="30,0,0,30"/>
+            <!--<Setter Property="CornerRadius" Value="30,0,0,30"/>-->
             <Setter Property="Padding" Value="20,10,20,10"/>
             <Setter Property="PlaceholderForeground" Value="Black"/>
             <!--<Setter Property="FontWeight" Value=""/>-->
@@ -38,12 +38,12 @@
                 <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="Height" Value="40"/>
-                <Setter Property="CornerRadius" Value="0,30,30,0"/>
+                <!--<Setter Property="CornerRadius" Value="0,30,30,0"/>-->
                 <Setter Property="Padding" Value="20,10,20,10"/>
                 <Setter Property="PlaceholderForeground" Value="Black"/>
                 <!--<Setter Property="FontWeight" Value=""/>-->
                 <!--<Setter Property="Margin" Value="20,0,20,0"/>-->
-                <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                <!--<Setter Property="BorderThickness" Value="0,0,1,0"/>-->
                 <!--<Setter Property="Foreground" Value="Black"/>-->
 
 
@@ -52,7 +52,7 @@
             <Style x:Key="AutoListStyle" TargetType="ListViewItem">
                 <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
             <Setter Property="FontSize" Value="16"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
             
             
 
@@ -113,78 +113,124 @@
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE017;" FontSize="24"/>
             </HyperlinkButton>-->
         <Grid HorizontalAlignment="Stretch">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,10,30">
-                <Grid>
-                    <AutoSuggestBox x:Name="MyAutoSuggest" PlaceholderText="{x:Bind viewModel.loc, Mode=TwoWay}" TextChanged="MyAutoSuggest_TextChanged" 
-                    TextBoxStyle="{StaticResource AutoboxStyle1}"  UpdateTextOnSelect="True"
-                    QueryIcon="Map" ItemContainerStyle="{StaticResource AutoListStyle}"  Width="200" Foreground="Black"
-                                Height="40"  FontSize="16" GotFocus="MyAutoSuggest_GotFocus" AllowFocusOnInteraction="False"
-                                    IsTabStop="False"
-                            Margin="35,5,0,5" SuggestionChosen="MyAutoSuggest_SuggestionChosen" BorderThickness="0,0,1,0" 
-                                BorderBrush="Black"/>
-                    <RelativePanel HorizontalAlignment="Right" Margin="0,10,0,0">
-                        <ProgressRing x:Name="LocationProg" IsActive="False" Foreground="Black" Height="10" Width="10"
-                                      RelativePanel.LeftOf="LocationBtn"/>
-                        <Button Background="Transparent" RelativePanel.AlignRightWithPanel="True" ToolTipService.ToolTip="Detect Location" 
-                            x:Name="LocationBtn"
-                            Click="LocationBtn_Click">
-                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE707;" FontSize="16"/>
-                        </Button>
-                    </RelativePanel>
-                    
-                </Grid>
-                
-                <StackPanel>
+            <RelativePanel>
+                <Button x:Name="OpenBtn" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" RelativePanel.AlignLeftWithPanel="True"
+                                    FontSize="24" Foreground="Black" Margin="0,10" Click="OpenBtn_Click" Background="LightGray"/>
+                <StackPanel RelativePanel.RightOf="OpenBtn">
                     <AutoSuggestBox x:Name="HospDocSuggest" TextBoxStyle="{StaticResource AutoboxStyle2}"
-                                    PlaceholderText="Search for Doctor or Hospital" TextChanged="HospDocSuggest_TextChanged" 
-                                    Height="40"  FontSize="16"
+                                    PlaceholderText="Search for Doctor or Hospital" 
+                                            TextChanged="HospDocSuggest_TextChanged" Width="467"
+                                    Height="40"  FontSize="16" HorizontalAlignment="Left" Margin="10,10,0,0"
                                     GotFocus="HospDocSuggest_GotFocus" BorderThickness="0,0,1,0" 
-                QueryIcon="Find" ItemContainerStyle="{StaticResource AutoListStyle}" Width="467" Margin="0,5,10,0" LostFocus="HospDocSuggest_LostFocus"/>
-                    <Popup x:Name="KeyWordBox" IsOpen="False" Margin="0,0,10,0" 
-                   Width="467">
-                        <ListBox Width="442" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" FontSize="14"
-                  ItemsSource="{x:Bind viewModel.keywords}" SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged"/>
+                QueryIcon="Find" ItemContainerStyle="{StaticResource AutoListStyle}"
+                                            LostFocus="HospDocSuggest_LostFocus"/>
+                    <Popup x:Name="KeyWordBox" IsOpen="False" Margin="10,0,10,0" Width="467" HorizontalAlignment="Left">
+                        <ListBox Width="467" 
+                                         FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" 
+                                         FontSize="14"
+                  
+                                         ItemsSource="{x:Bind viewModel.keywords}" 
+                                         SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged"/>
                     </Popup>
                 </StackPanel>
+                <SplitView x:Name="MySplitView_Main" IsPaneOpen="False" DisplayMode="Overlay" OpenPaneLength="400" 
+                           RelativePanel.Below="OpenBtn" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <SplitView.Pane>
+                        <StackPanel>
+                            <Ellipse Height="150" Width="150" Margin="10" HorizontalAlignment="Center">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="ms-appx:///Assets/32.jpg"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <TextBlock FontSize="28" HorizontalAlignment="Center">Suresh</TextBlock>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Grid>
+                                    <AutoSuggestBox x:Name="MyAutoSuggest" 
+                                                    PlaceholderText="{x:Bind viewModel.loc, Mode=TwoWay}" 
+                                                    TextChanged="MyAutoSuggest_TextChanged" 
+                                                    UpdateTextOnSelect="True"
+                                                    ItemContainerStyle="{StaticResource AutoListStyle}"  
+                                                    Width="200" 
+                                                    Foreground="Black"
+                                                    FontSize="16" 
+                                                    GotFocus="MyAutoSuggest_GotFocus" 
+                                                    Margin="10,5,0,5" 
+                                                    SuggestionChosen="MyAutoSuggest_SuggestionChosen" 
+                                                    BorderThickness="0,0,1,0" 
+                                                    BorderBrush="Black"/>
+                                    <ProgressRing 
+                                        x:Name="LocationProg" 
+                                        IsActive="False" 
+                                        Foreground="Black" 
+                                        Height="10" 
+                                              
+                                        Width="10" Margin="0,0,5,0"
+                                        HorizontalAlignment="Right"
+                                      />
+                                </Grid>
+                                <Button Background="Transparent" RelativePanel.AlignRightWithPanel="True" 
+                                        ToolTipService.ToolTip="Detect Location" 
+                            x:Name="LocationBtn"
+                            Click="LocationBtn_Click">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE707;" FontSize="16"/>
+                                </Button>
 
-
-                
-            </StackPanel>
-            <StackPanel Orientation="Horizontal"  Margin="0,0,30,-3" HorizontalAlignment="Right">
-                <HyperlinkButton Name="Dashboardbtn" BorderThickness="0,0,0,1" Padding="0" Click="Dashboardbtn_Click"
+                            </StackPanel>
+                                
+                                <!--<StackPanel Orientation="Horizontal"  Margin="0,0,30,-3" HorizontalAlignment="Right">
+                                    <HyperlinkButton Name="Dashboardbtn" BorderThickness="0,0,0,1" Padding="0" Click="Dashboardbtn_Click"
                                  Margin="0,0,10,0">
-                    <TextBlock Text="Dashboard" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" 
+                                        <TextBlock Text="Dashboard" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" 
                            FontSize="16"/>
-                </HyperlinkButton>
-                <HyperlinkButton Name="AppBtn" BorderThickness="0,0,0,1" Padding="0" Click="AppBtn_Click"
+                                    </HyperlinkButton>
+                                    <HyperlinkButton Name="AppBtn" BorderThickness="0,0,0,1" Padding="0" Click="AppBtn_Click"
                             >
-                    <TextBlock Text="Your Appointments" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" 
+                                        <TextBlock Text="Your Appointments" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" 
                            FontSize="16"/>
-                </HyperlinkButton>
+                                    </HyperlinkButton>
+                                </StackPanel>-->
+                            <ListBox HorizontalAlignment="Center" x:Name="MyListBox" 
+                                     FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"
+                                     SelectionChanged="MyListBox_SelectionChanged" FontSize="16">
+                                
+                                <ListBoxItem HorizontalContentAlignment="Center">Dashboard</ListBoxItem>
+                                <ListBoxItem HorizontalContentAlignment="Center">Appointments</ListBoxItem>
+                                <ListBoxItem HorizontalContentAlignment="Center">Doctors</ListBoxItem>
+                                <ListBoxItem HorizontalContentAlignment="Center">Hospitals</ListBoxItem>
+                            </ListBox>
+                           
+                        </StackPanel>
+                        
+                    </SplitView.Pane>
+                    <SplitView.Content>
+                        <Grid HorizontalAlignment="Stretch">
+                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Frame x:Name="myFrame" VerticalAlignment="Stretch"
+                                       HorizontalAlignment="Stretch" Margin="0,10">
+
+                                </Frame>
+                            </StackPanel>
+                        </Grid>
+                        
+                    </SplitView.Content>
+                </SplitView>
+
+            </RelativePanel>
+            <StackPanel Margin="50,0">
+                <ProgressRing x:Name="progring" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                          Height="100" Width="100" Foreground="White" 
+                                          Margin="0,200,0,100"></ProgressRing>
+                <TextBlock x:Name="LoadText" HorizontalAlignment="Center" FontSize="20"
+                   Foreground="White" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova">
+                    <Run Text="LOADING HEALTH AND WELLNESS JUST FOR YOU"/>
+                </TextBlock>
+                <TextBlock x:Name="StatusText" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
+                   Foreground="White"  FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" Margin="0,20">
+            CONNECTING</TextBlock>
             </StackPanel>
            
         </Grid>
-
-            
-            <!--<ComboBox x:Name="DeptComboBox" PlaceholderText="All Departments" RelativePanel.LeftOf="HospDocSuggest" Margin="0,5"
-                      Height="40" BorderThickness="0,0,1.5,0" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"
-                 AllowDrop="True" FontSize="14" ItemsSource="{x:Bind viewModel.depts}" 
-                      DropDownOpened="Comboboxitem_DropDownOpened"/>-->
-           
-           
-
-        
-        <ProgressRing x:Name="progring" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100" Foreground="White" 
-                      Margin="0,200,0,100"></ProgressRing>
-        <TextBlock x:Name="LoadText" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"
-                   Foreground="White" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova">
-            LOADING HEALTH AND WELLNESS JUST FOR YOU</TextBlock>
-        <TextBlock x:Name="StatusText" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
-                   Foreground="White"  FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" Margin="0,20">
-            CONNECTING</TextBlock>
-        <Frame x:Name="myFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0">
-
-        </Frame>
+         
     </StackPanel>
     
 

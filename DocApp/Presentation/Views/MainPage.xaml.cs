@@ -82,8 +82,9 @@ namespace DocApp.Presentation.Views
             progring.IsActive = true;
             MyAutoSuggest.IsEnabled = false;
             HospDocSuggest.IsEnabled = false;
-            Dashboardbtn.IsEnabled = false;
-            AppBtn.IsEnabled = false;
+            //MyListBox.SelectedIndex = 0;
+            //Dashboardbtn.IsEnabled = false;
+            //AppBtn.IsEnabled = false;
             //MyAutoSuggest.Focus(FocusState.Programmatic);
             
             //myFrame.Navigate(typeof(MainPageLoadingScreenView));
@@ -105,8 +106,8 @@ namespace DocApp.Presentation.Views
             LoadText.Visibility = Visibility.Collapsed;
             MyAutoSuggest.IsEnabled = true;
             HospDocSuggest.IsEnabled = true;
-            AppBtn.IsEnabled = true;
-            Dashboardbtn.IsEnabled = true;
+            //AppBtn.IsEnabled = true;
+            //Dashboardbtn.IsEnabled = true;
             StatusText.Visibility = Visibility.Collapsed;
             if (args.ct>1)
             {
@@ -116,7 +117,7 @@ namespace DocApp.Presentation.Views
             }
             else
             {
-                Dashboardbtn.Visibility = Visibility.Collapsed;
+                //Dashboardbtn.Visibility = Visibility.Collapsed;
                 myFrame.Navigate(typeof(MainPageBuffer), new navargs { name = viewModel.loc, location = true, mp = this });
                    
             }
@@ -351,6 +352,45 @@ namespace DocApp.Presentation.Views
                 name = viewModel.loc.ToUpper(),
                 mp = this
             });
+        }
+
+        private void OpenBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MySplitView_Main.IsPaneOpen = !MySplitView_Main.IsPaneOpen;
+        }
+
+        private void MyListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var temp = sender as ListBox;
+            int val = temp.SelectedIndex;
+
+            if(val==0)
+                myFrame.Navigate(typeof(Dashboard), new navargs
+                {
+
+                    name = viewModel.loc.ToUpper(),
+                    mp = this
+                });
+            else if(val==1)
+                myFrame.Navigate(typeof(AppointmentsDisplayView));
+            else if(val==2)
+                myFrame.Navigate(typeof(DoctorSearchResultView), new navargs
+                {
+                    name = viewModel.loc,
+                    mp = this,
+                    index = 0,
+                    doc = true
+
+                });
+            else if(val==3)
+                myFrame.Navigate(typeof(DoctorSearchResultView), new navargs
+                {
+                    name = viewModel.loc,
+                    mp = this,
+                    index = 0,
+                    doc = false
+
+                });
         }
     }
 }

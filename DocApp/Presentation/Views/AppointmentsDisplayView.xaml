@@ -132,10 +132,12 @@
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="Phone">
                     <VisualState.Setters>
-                        <!--<Setter Target="textBlock.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="textBlock.(UIElement.Visibility)" Value="Collapsed"/>
                         <Setter Target="textBlock1.(UIElement.Visibility)" Value="Collapsed"/>
                         <Setter Target="textBlock3.(Grid.Column)" Value="2"/>
-                        <Setter Target="textBlock2.(Grid.Column)" Value="1"/>-->
+                        <Setter Target="textBlock2.(Grid.Column)" Value="1"/>
+                        <Setter Target="textBlock2.Margin" Value="60,0,0,0"/>
+                        <Setter Target="textBlock3.Margin" Value="20,0,0,0"/>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="400"/>
@@ -144,8 +146,10 @@
                 <VisualState x:Name="Tablet">
                     <VisualState.Setters>
                         <Setter Target="textBlock.(UIElement.Visibility)" Value="Collapsed"/>
-                        <!--<Setter Target="textBlock2.(Grid.Column)" Value="2"/>
-                        <Setter Target="textBlock3.(Grid.Column)" Value="3"/>-->
+                        <Setter Target="textBlock2.(Grid.Column)" Value="2"/>
+                        <Setter Target="textBlock2.Margin" Value="30,0,0,0"/>
+                        <Setter Target="textBlock3.(Grid.Column)" Value="3"/>
+                        <Setter Target="textBlock3.Margin" Value="-30,0,0,0"/>
 
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
@@ -175,19 +179,25 @@
         </StackPanel>
 
 
-        <Grid Margin="50,0" Grid.Row="1">
+        <Grid Margin="50,0,0,500" Grid.Row="1" Width="1460">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="DOCTOR NAME" Style="{StaticResource TextBlockStyle}" />
-            <TextBlock x:Name="textBlock1" Text="PLACE" Grid.Column="1" Style="{StaticResource TextBlockStyle}" Margin="20,0"/>
-            <TextBlock x:Name="textBlock" Text="LOCATION" Grid.Column="2" Style="{StaticResource TextBlockStyle}" Margin="-40,0"/>
-            <TextBlock x:Name="textBlock2" Text="DATE" Grid.Column="3" Style="{StaticResource TextBlockStyle}" Margin="-95,0"/>
-            <TextBlock x:Name="textBlock3" Text="TIME" Grid.Column="4" Style="{StaticResource TextBlockStyle}" Margin="-160,0"/>
+            <TextBlock Text="DOCTOR NAME" Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="textBlock1" Text="PLACE" Grid.Column="1" HorizontalAlignment="Left"
+                       Style="{StaticResource TextBlockStyle}" Margin="50,0,0,0"/>
+            <TextBlock x:Name="textBlock" Text="LOCATION" Grid.Column="2" 
+                       Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Left"
+                       />
+            <TextBlock x:Name="textBlock2" Text="DATE" Grid.Column="3" HorizontalAlignment="Left"
+                       Style="{StaticResource TextBlockStyle}" 
+                       Margin="-40,0,0,0"/>
+            <TextBlock x:Name="textBlock3" Text="TIME" Grid.Column="4" HorizontalAlignment="Left"
+                       Style="{StaticResource TextBlockStyle}" Margin="-80,0,0,0"/>
 
 
             <Popup x:Name="Book_Pop" 
@@ -243,7 +253,7 @@
             </Popup>
 
 
-            <ListView ItemsSource="{x:Bind viewModel.apps, Mode=OneWay}" Height="600" SelectionMode="Single"
+            <ListView ItemsSource="{x:Bind viewModel.apps, Mode=OneWay}" 
                           ScrollViewer.VerticalScrollBarVisibility="Auto" BorderThickness="0,0.5,0,0" 
                           BorderBrush="#303030" 
                           HorizontalAlignment="Stretch" Grid.ColumnSpan="6" Margin="0,20" 
@@ -255,7 +265,8 @@
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="data:AppointmentDetails">
-                        <uc:AppointmentTemplate HorizontalAlignment="Stretch" Width="1460" Loaded="AppointmentTemplate_Loaded"/>
+                        <uc:AppointmentTemplate HorizontalAlignment="Stretch" Width="1460"
+                                                Loaded="AppointmentTemplate_Loaded"/>
 
                     </DataTemplate>
                 </ListView.ItemTemplate>

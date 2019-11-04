@@ -72,12 +72,17 @@
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
-        <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',app.doc_name)}" Grid.Column="0"/>
-        <TextBlock x:Name="textBlock1" Text="{x:Bind app.hosp_name}" Grid.Column="1"/>
-        <TextBlock x:Name="textBlock" Text="{x:Bind app.location}" Grid.Column="2"/>
-        <TextBlock x:Name="textBlock3" Text="{x:Bind app.app_date,Converter={StaticResource DateConv}}" Grid.Column="3"/>
-        <TextBlock x:Name="textBlock2" Text="{x:Bind app.Timeslot, Converter={StaticResource TimeConv}}" Grid.Column="4"/>
-        <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.Column="5">
+        <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',app.doc_name)}" Grid.Column="0" 
+                   HorizontalAlignment="Center"/>
+        <TextBlock x:Name="textBlock1" Text="{x:Bind app.hosp_name}" Grid.Column="1" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="textBlock" Text="{x:Bind app.location}" Grid.Column="2" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="textBlock3" Text="{x:Bind app.app_date,Converter={StaticResource DateConv}}" 
+                   HorizontalAlignment="Center"
+                   Grid.Column="3"/>
+        <TextBlock x:Name="textBlock2" Text="{x:Bind app.Timeslot, Converter={StaticResource TimeConv}}" 
+                   HorizontalAlignment="Center"
+                   Grid.Column="4"/>
+        <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.Column="5" HorizontalAlignment="Center">
             <Button Style="{StaticResource RoundButtonStyle}" ToolTipService.ToolTip="Cancel Appointment" x:Name="CancelBtn"
                     Click="CancelBtn_Click">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE10A;"/>

@@ -19,40 +19,42 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel Orientation="Horizontal">
-        <Image Height="100" Width="100" Source="{x:Bind doctor.Image}" />
-        <StackPanel>
-            
-            <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,0" FontSize="12" FontWeight="ExtraBold"
+    <Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+            <Image Height="100" Width="100" Source="{x:Bind doctor.Image}" />
+            <StackPanel>
+
+                <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,0" FontSize="12" FontWeight="ExtraBold"
                 Foreground="Black" FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
-            <Viewbox Width="90" Margin="-10,5">
-                <RatingControl Value="{x:Bind doctor.Rating}" HorizontalAlignment="Left" Margin="0,0"
-                                    
-                                    IsReadOnly="True" Foreground="Black" RequestedTheme="Dark">
-                </RatingControl>
-            </Viewbox>
-            
+                <Viewbox Width="90" Margin="-10,5">
+                    <RatingControl Value="{x:Bind doctor.Rating}" HorizontalAlignment="Left" Margin="0,0" 
+                               IsReadOnly="True" Foreground="Black" RequestedTheme="Dark">
+                    </RatingControl>
+                </Viewbox>
 
 
-            <!--<TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', doctor.Experience)}" 
+
+                <!--<TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', doctor.Experience)}" 
                    Style="{StaticResource TextBlockStyle}"/>-->
-            <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"
+                <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"
                        TextTrimming="CharacterEllipsis"/>
-            
-               
-            
-            
+
+
+
+
                 <!--<RatingControl.Resources>
                     <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
 
                 </RatingControl.Resources>-->
-            
+
+
+            </StackPanel>
+
+
+
+
 
         </StackPanel>
-        
-        
-
-
-
-    </StackPanel>
+    </Grid>
+    
 </UserControl>
