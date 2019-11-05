@@ -704,7 +704,7 @@ namespace DocApp.Presentation.Views
                 doctemp = viewModel.docsmain;
                 switch(exp)
                 {
-                    case "More than 10 year exp":
+                    case "> 10 year exp":
                         //viewModel.docsmain.Clear();
                         //foreach (var i in doctemp.Where(d => Int32.Parse(d.Experience.Split(' ')[0]) > 10))
                         //    viewModel.docsmain.Add(i);
@@ -722,7 +722,7 @@ namespace DocApp.Presentation.Views
                         
 
                         break;
-                    case "Less than 5 year exp":
+                    case "< 5 year exp":
                         //viewModel.docsmain.Clear();
                         //foreach (var i in doctemp.Where(d => Int32.Parse(d.Experience.Split(' ')[0]) < 5))
                         //    viewModel.docsmain.Add(i);

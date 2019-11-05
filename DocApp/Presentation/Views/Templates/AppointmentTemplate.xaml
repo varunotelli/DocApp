@@ -30,8 +30,8 @@
                         <Setter Target="textBlock.(UIElement.Visibility)" Value="Collapsed"/>
                         <Setter Target="textBlock1.(UIElement.Visibility)" Value="Collapsed"/>
                         <Setter Target="textBlock3.(Grid.Column)" Value="1"/>
-                        <Setter Target="textBlock2.(Grid.Column)" Value="2"/>
-                        <Setter Target="stackPanel.(Grid.Column)" Value="3"/>
+                        <!--<Setter Target="textBlock2.(Grid.Column)" Value="2"/>-->
+                        <Setter Target="stackPanel.(Grid.Column)" Value="2"/>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="400"/>
@@ -58,18 +58,18 @@
                         <Setter Target="textBlock3.(UIElement.Visibility)" Value="Collapsed"/>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="200"/>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
                     </VisualState.StateTriggers>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition x:Name="FirstCol"  Width="*"/>
+            <ColumnDefinition x:Name="SecondCol"  Width="*"/>
+            <ColumnDefinition x:Name="ThirdCol"  Width="*"/>
+            <ColumnDefinition x:Name="FourthCol"  Width="*"/>
+            <ColumnDefinition x:Name="FifthCol"  Width="*"/>
+            <ColumnDefinition x:Name="SixthCol"  Width="*"/>
 
         </Grid.ColumnDefinitions>
         <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',app.doc_name)}" Grid.Column="0" 

@@ -19,9 +19,10 @@
     </UserControl.Resources>
 
     <StackPanel Orientation="Horizontal" Padding="0">
-        <Image Height="100" Width="100" Source="ms-appx:///Assets/400_placeholder.png" />
+        
+        <Image Height="50" Width="50" Source="{x:Bind hospital.Image}" />
         <StackPanel>
-            <TextBlock Text="{x:Bind hospital.Name}" Margin="10,5" FontSize="18" FontWeight="Bold" TextTrimming="CharacterEllipsis"
+            <TextBlock x:Name="textBlock" Text="{x:Bind hospital.Name}" Margin="10,5" FontSize="18" FontWeight="Bold" TextTrimming="CharacterEllipsis"
                TextWrapping="NoWrap" Foreground="Black" FontFamily="ms-appx:///Assets/ProximaNova-ExtraBold.ttf#Proxima Nova"/>
             <!--<TextBlock Text="{x:Bind sys:String.Format('{0} of experience overall', doctor.Experience)}" 
                    Style="{StaticResource TextBlockStyle}"/>-->

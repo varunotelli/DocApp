@@ -44,6 +44,7 @@ namespace DocApp.Presentation.Views
         {
             navargs1 args = e1.Parameter as navargs1;
             name = args.name;
+            address = args.location;
             if(args.dept_id==-1)
             {
                 await viewModel.GetDoctorByLocation(args.location);
@@ -98,6 +99,42 @@ namespace DocApp.Presentation.Views
             Frame my_frame = grid.FindName("myFrame") as Frame;
 
             my_frame.Navigate(typeof(HospitalDetailView), (e.ClickedItem as Hospital).ID, new SuppressNavigationTransitionInfo());
+        }
+
+        private void DocSeeAll_Click(object sender, RoutedEventArgs e)
+        {
+            Frame parentFrame = Window.Current.Content as Frame;
+
+            MainPage mp = parentFrame.Content as MainPage;
+            StackPanel grid = mp.Content as StackPanel;
+            Frame myFrame = grid.FindName("myFrame") as Frame;
+            myFrame.Navigate(typeof(DoctorSearchResultView), new navargs
+            {
+                name = address,
+                mp = this.mp,
+                index = 0,
+                doc = true
+
+            });
+        }
+
+        
+        private void HospSeeAll_Click(object sender, RoutedEventArgs e)
+        {
+            Frame parentFrame = Window.Current.Content as Frame;
+
+            MainPage mp = parentFrame.Content as MainPage;
+            StackPanel grid = mp.Content as StackPanel;
+            Frame myFrame = grid.FindName("myFrame") as Frame;
+            myFrame.Navigate(typeof(DoctorSearchResultView), new navargs
+            {
+                name = address,
+                mp = this.mp,
+                index = 0,
+                doc = false
+
+            });
+
         }
     }
 }

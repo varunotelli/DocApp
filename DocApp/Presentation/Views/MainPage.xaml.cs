@@ -82,6 +82,7 @@ namespace DocApp.Presentation.Views
             progring.IsActive = true;
             MyAutoSuggest.IsEnabled = false;
             HospDocSuggest.IsEnabled = false;
+            OpenBtn.IsEnabled = false;
             //MyListBox.SelectedIndex = 0;
             //Dashboardbtn.IsEnabled = false;
             //AppBtn.IsEnabled = false;
@@ -106,6 +107,7 @@ namespace DocApp.Presentation.Views
             LoadText.Visibility = Visibility.Collapsed;
             MyAutoSuggest.IsEnabled = true;
             HospDocSuggest.IsEnabled = true;
+            OpenBtn.IsEnabled = true;
             //AppBtn.IsEnabled = true;
             //Dashboardbtn.IsEnabled = true;
             StatusText.Visibility = Visibility.Collapsed;
@@ -134,6 +136,7 @@ namespace DocApp.Presentation.Views
             address = e.address;
             LocationProg.IsActive = false;
             onLocationButtonClicked(address);
+            OpenBtn.IsEnabled = true;
             //locflag = true;
             
             //StatusText.Text = "READY";

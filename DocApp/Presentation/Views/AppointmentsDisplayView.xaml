@@ -138,6 +138,7 @@
                         <Setter Target="textBlock2.(Grid.Column)" Value="1"/>
                         <Setter Target="textBlock2.Margin" Value="60,0,0,0"/>
                         <Setter Target="textBlock3.Margin" Value="20,0,0,0"/>
+                        <Setter Target="textBlock3.(UIElement.Visibility)" Value="Collapsed"/>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="400"/>
@@ -150,6 +151,7 @@
                         <Setter Target="textBlock2.Margin" Value="30,0,0,0"/>
                         <Setter Target="textBlock3.(Grid.Column)" Value="3"/>
                         <Setter Target="textBlock3.Margin" Value="-30,0,0,0"/>
+                        
 
                     </VisualState.Setters>
                     <VisualState.StateTriggers>

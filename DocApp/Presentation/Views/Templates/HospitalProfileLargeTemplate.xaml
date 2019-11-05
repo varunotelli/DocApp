@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="using:System"
+    xmlns:conv="using:DocApp.Presentation.Views.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
@@ -17,6 +18,7 @@
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
         </Style>
+        <conv:TwelveHourConverter x:Key="TimeConv"/>
     </UserControl.Resources>
 
     <Grid Margin="10,10" >
@@ -26,6 +28,8 @@
                     <VisualState.Setters>
                         <Setter Target="Img.(FrameworkElement.Width)" Value="70"/>
                         <Setter Target="Img.(FrameworkElement.Height)" Value="70"/>
+                        <Setter Target="NameBlock.FontSize" Value="14"/>
+                        <Setter Target="MyStack.Orientation" Value="Vertical"/>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="400"/>
@@ -52,8 +56,8 @@
 
             </Image>
             <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{x:Bind hospital.Name}" Margin="10,5" FontSize="16" FontWeight="ExtraBold"
+                <StackPanel x:Name="MyStack" Orientation="Horizontal">
+                    <TextBlock Name="NameBlock"  Text="{x:Bind hospital.Name}" Margin="10,5" FontSize="16" FontWeight="ExtraBold"
                    FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
                     <RatingControl Value="{x:Bind hospital.Rating, Mode=OneWay}" HorizontalAlignment="Left" Margin="10,0"
                                        Caption="{x:Bind sys:String.Format('({0})',hospital.Number_Of_Rating)}" 
@@ -69,9 +73,9 @@
                 <TextBlock Text="{x:Bind hospital.Location}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"
                        TextTrimming="CharacterEllipsis"/>
                 <TextBlock Style="{StaticResource TextBlockStyle}">
-                    <Run Text="{x:Bind hospital.Start_Time}"/>
+                    <Run Text="{x:Bind hospital.Start_Time,Converter={StaticResource TimeConv}}"/>
                     <Run Text="-"/>
-                    <Run Text="{x:Bind hospital.Close_Time}"/>
+                    <Run Text="{x:Bind hospital.Close_Time,Converter={StaticResource TimeConv}}"/>
                 </TextBlock>
                 <TextBlock Text="{x:Bind hospital.Speciality}" Style="{StaticResource TextBlockStyle}"/>
 

@@ -16,6 +16,15 @@
             <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="White"/>
             <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="White"/>
             <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="White"/>
+
+            <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyle1}" x:Key="ListBoxItemStyle2">
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BorderBrush" Value="White"/>
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            </Style>
         
         
         <Style x:Key="AutoboxStyle1" TargetType="TextBox" >
@@ -83,6 +92,7 @@
                         <Setter Target="progring.(FrameworkElement.Width)" Value="50"/>
                         <Setter Target="progring.(FrameworkElement.Height)" Value="50"/>
                         <Setter Target="LoadText.(TextBlock.FontSize)" Value="12"/>
+                        <Setter Target="MySplitView_Main.OpenPaneLength" Value="300"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Tablet">
@@ -92,10 +102,12 @@
                         <Setter Target="progring.(FrameworkElement.Width)" Value="50"/>
                         <Setter Target="progring.(FrameworkElement.Height)" Value="50"/>
                         <Setter Target="LoadText.(TextBlock.FontSize)" Value="16"/>
+                        <Setter Target="MySplitView_Main.OpenPaneLength" Value="500"/>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="900"/>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
                     </VisualState.StateTriggers>
+                    
                 </VisualState>
                 <VisualState x:Name="Desktop">
                     <VisualState.StateTriggers>
@@ -136,13 +148,13 @@
                 <SplitView x:Name="MySplitView_Main" IsPaneOpen="False" DisplayMode="Overlay" OpenPaneLength="400" 
                            RelativePanel.Below="OpenBtn" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <SplitView.Pane>
-                        <StackPanel>
+                        <StackPanel Background="#263440">
                             <Ellipse Height="150" Width="150" Margin="10" HorizontalAlignment="Center">
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="ms-appx:///Assets/32.jpg"/>
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <TextBlock FontSize="28" HorizontalAlignment="Center">Suresh</TextBlock>
+                            <TextBlock FontSize="28" HorizontalAlignment="Center" Foreground="White">Suresh</TextBlock>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Grid>
                                     <AutoSuggestBox x:Name="MyAutoSuggest" 
@@ -172,7 +184,7 @@
                                         ToolTipService.ToolTip="Detect Location" 
                             x:Name="LocationBtn"
                             Click="LocationBtn_Click">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE707;" FontSize="16"/>
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE707;" Foreground="White" FontSize="16"/>
                                 </Button>
 
                             </StackPanel>
@@ -189,9 +201,10 @@
                            FontSize="16"/>
                                     </HyperlinkButton>
                                 </StackPanel>-->
-                            <ListBox HorizontalAlignment="Center" x:Name="MyListBox" 
-                                     FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"
-                                     SelectionChanged="MyListBox_SelectionChanged" FontSize="16">
+                            <ListBox HorizontalAlignment="Center" x:Name="MyListBox" Background="#263440" 
+                                     FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" Margin="10"
+                                     SelectionChanged="MyListBox_SelectionChanged" FontSize="16" Foreground="White" 
+                                     ItemContainerStyle="{StaticResource ListBoxItemStyle2}">
                                 
                                 <ListBoxItem HorizontalContentAlignment="Center">Dashboard</ListBoxItem>
                                 <ListBoxItem HorizontalContentAlignment="Center">Appointments</ListBoxItem>
