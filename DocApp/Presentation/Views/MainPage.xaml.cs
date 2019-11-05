@@ -29,6 +29,7 @@ using Windows.UI.Xaml.Navigation;
  *@todo Complete Rebook functionality
  *@todo Fix rebook functionality 
  *@todo Add rebook for dashboard
+ *@todo SplitView for Hospitals
  */
 
 namespace DocApp.Presentation.Views

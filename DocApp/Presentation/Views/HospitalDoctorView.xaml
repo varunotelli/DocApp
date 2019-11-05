@@ -148,88 +148,105 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel HorizontalAlignment="Stretch" Padding="5">
-                <TextBlock x:Name="DocNearYouBlock" Text="Doctors Near You" FontSize="28" FontWeight="Bold" Margin="10,10,10,30"
+            <SplitView x:Name="DetailSplitView" DisplayMode="Inline" OpenPaneLength="800" PanePlacement="Right">
+                <SplitView.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel HorizontalAlignment="Stretch" Padding="5">
+                            <TextBlock x:Name="DocNearYouBlock" Text="Doctors Near You" FontSize="28" FontWeight="Bold" Margin="10,10,10,30"
                            FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova" HorizontalAlignment="Left"/>
 
-                <Grid BorderThickness="0,0,0,0.5" BorderBrush="DimGray" HorizontalAlignment="Stretch" Padding="5" Margin="10,0">
-                    <HyperlinkButton BorderThickness="0,0,0,1" Padding="0" >
-                        <TextBlock Text="Doctors" FontWeight="ExtraBold" FontSize="24" 
+                            <Grid BorderThickness="0,0,0,0.5" BorderBrush="DimGray" HorizontalAlignment="Stretch" Padding="5" Margin="10,0">
+                                <HyperlinkButton BorderThickness="0,0,0,1" Padding="0" >
+                                    <TextBlock Text="Doctors" FontWeight="ExtraBold" FontSize="24" 
                                    FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova" />
-                    </HyperlinkButton>
-                    <HyperlinkButton Name="DocSeeAll" BorderThickness="0,0,0,1" Padding="0" HorizontalAlignment="Right" 
+                                </HyperlinkButton>
+                                <HyperlinkButton Name="DocSeeAll" BorderThickness="0,0,0,1" Padding="0" HorizontalAlignment="Right" 
                                      Click="DocSeeAll_Click">
-                        <TextBlock Text="SEE ALL" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"
+                                    <TextBlock Text="SEE ALL" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"
                                Margin="0,0,0,-3" FontSize="12"/>
-                    </HyperlinkButton>
-                </Grid>
-                <!--<ComboBox PlaceholderText="Order By" HorizontalAlignment="Right" BorderThickness="0" Margin="0,0,10,0"
+                                </HyperlinkButton>
+                            </Grid>
+                            <!--<ComboBox PlaceholderText="Order By" HorizontalAlignment="Right" BorderThickness="0" Margin="0,0,10,0"
                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>-->
-                <!--<cont:ComboBoxControl HorizontalAlignment="Right" Margin="0,0,10,0"/>-->
-                <ListView x:Name="DoctorGrid" ItemsSource="{x:Bind viewModel.doctors}" HorizontalAlignment="Stretch"
+                            <!--<cont:ComboBoxControl HorizontalAlignment="Right" Margin="0,0,10,0"/>-->
+                            <ListView x:Name="DoctorGrid" ItemsSource="{x:Bind viewModel.doctors}" HorizontalAlignment="Stretch"
                           Margin="0,10,0,5"  Padding="5,5,5,5" IsItemClickEnabled="True" ItemClick="DoctorGrid_ItemClick">
-                    <ListView.ItemContainerTransitions>
-                        <TransitionCollection></TransitionCollection>
-                    </ListView.ItemContainerTransitions>
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="data:Doctor">
-                            <uc:DoctorProfileLargeTemplate HorizontalAlignment="Stretch"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel Orientation="Vertical"/>
-                        </ItemsPanelTemplate>
+                                <ListView.ItemContainerTransitions>
+                                    <TransitionCollection></TransitionCollection>
+                                </ListView.ItemContainerTransitions>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="data:Doctor">
+                                        <uc:DoctorProfileLargeTemplate HorizontalAlignment="Stretch"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Vertical"/>
+                                    </ItemsPanelTemplate>
 
-                    </ListView.ItemsPanel>
+                                </ListView.ItemsPanel>
 
-                </ListView>
-            </StackPanel>
+                            </ListView>
+                        </StackPanel>
 
-            <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Padding="5">
-                <TextBlock x:Name="HospNearYouBlock" Text="Hospitals Near You" FontSize="28" FontWeight="Bold" Margin="10,10,10,30"
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Padding="5">
+                            <TextBlock x:Name="HospNearYouBlock" Text="Hospitals Near You" FontSize="28" FontWeight="Bold" Margin="10,10,10,30"
                            FontFamily="ms-appx:///Assets/montserrat-v14-latin-900.ttf#Montserrat" HorizontalAlignment="Left"/>
 
-                <Grid BorderThickness="0,0,0,0.5" BorderBrush="DimGray" HorizontalAlignment="Stretch" Padding="5" Margin="10,0">
-                    <HyperlinkButton  BorderThickness="0,0,0,1" Padding="0">
-                        <TextBlock Text="Hospitals" FontWeight="Bold" FontSize="24"
+                            <Grid BorderThickness="0,0,0,0.5" BorderBrush="DimGray" HorizontalAlignment="Stretch" Padding="5" Margin="10,0">
+                                <HyperlinkButton  BorderThickness="0,0,0,1" Padding="0">
+                                    <TextBlock Text="Hospitals" FontWeight="Bold" FontSize="24"
                                    FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
-                    </HyperlinkButton>
-                    <HyperlinkButton Name="HospSeeAll" BorderThickness="0,0,0,1" Padding="0" HorizontalAlignment="Right" Margin="0,0,0,-3"
+                                </HyperlinkButton>
+                                <HyperlinkButton Name="HospSeeAll" BorderThickness="0,0,0,1" Padding="0" HorizontalAlignment="Right" Margin="0,0,0,-3"
                                      Click="HospSeeAll_Click">
-                        <TextBlock Text="SEE ALL" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" FontSize="12"/>
-                    </HyperlinkButton>
-                </Grid>
-                <!--<ComboBox PlaceholderText="Order By" HorizontalAlignment="Right" BorderThickness="0" Margin="0,0,10,0"
+                                    <TextBlock Text="SEE ALL" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" FontSize="12"/>
+                                </HyperlinkButton>
+                            </Grid>
+                            <!--<ComboBox PlaceholderText="Order By" HorizontalAlignment="Right" BorderThickness="0" Margin="0,0,10,0"
                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>-->
-                <!--<cont:ComboBoxControl HorizontalAlignment="Right" Margin="0,0,10,0"/>-->
-                <ListView x:Name="HospitalGrid" ItemsSource="{x:Bind viewModel.hospitals}" IsItemClickEnabled="True"
+                            <!--<cont:ComboBoxControl HorizontalAlignment="Right" Margin="0,0,10,0"/>-->
+                            <ListView x:Name="HospitalGrid" ItemsSource="{x:Bind viewModel.hospitals}" IsItemClickEnabled="True"
                           ItemClick="HospitalGrid_ItemClick" HorizontalAlignment="Stretch"
                           Margin="0,10" Padding="5,0,0,0">
-                    <ListView.ItemContainerTransitions>
-                        <TransitionCollection></TransitionCollection>
-                    </ListView.ItemContainerTransitions>
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel Orientation="Vertical"/>
-                        </ItemsPanelTemplate>
+                                <ListView.ItemContainerTransitions>
+                                    <TransitionCollection></TransitionCollection>
+                                </ListView.ItemContainerTransitions>
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Vertical"/>
+                                    </ItemsPanelTemplate>
 
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="data:Hospital">
-                            <uc:HospitalProfileLargeTemplate HorizontalAlignment="Stretch"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="data:Hospital">
+                                        <uc:HospitalProfileLargeTemplate HorizontalAlignment="Stretch"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
 
-                </ListView>
-            </StackPanel>
+                            </ListView>
+                        </StackPanel>
 
 
 
+                    </Grid>
+                </SplitView.Content>
+                <SplitView.Pane>
+                    <StackPanel>
+                        <HyperlinkButton x:Name="CloseBtn" VerticalAlignment="Top"
+                                             FontFamily="Segoe MDL2 Assets" Click="CloseBtn_Click" Margin="20,0">
+                            <TextBlock Text="&#xE106;" FontSize="20"/>
+                        </HyperlinkButton>
+                        <Frame x:Name="HospDocFrame" HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                    
+                </SplitView.Pane>
+            </SplitView>
         </Grid>
+        
     </StackPanel>
 </Page>

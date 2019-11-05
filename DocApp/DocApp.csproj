@@ -260,6 +260,7 @@
     <Compile Include="Presentation\ViewModels\DoctorDetailsAbstract.cs" />
     <Compile Include="Presentation\ViewModels\DoctorSearchViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalSearchViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\SelectedDoctorViewModel.cs" />
     <Compile Include="Presentation\Views\AppointmentBookingView.xaml.cs">
       <DependentUpon>AppointmentBookingView.xaml</DependentUpon>
     </Compile>
@@ -326,6 +327,9 @@
     </Compile>
     <Compile Include="Presentation\Views\MainPageLoadingScreenView.xaml.cs">
       <DependentUpon>MainPageLoadingScreenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Views\SelectedDocDetailView.xaml.cs">
+      <DependentUpon>SelectedDocDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Views\Templates\AppointmentTemplate.xaml.cs">
       <DependentUpon>AppointmentTemplate.xaml</DependentUpon>
@@ -485,6 +489,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\MainPageLoadingScreenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\SelectedDocDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -86,8 +86,9 @@ namespace DocApp.Presentation.Views
             MainPage mp = parentFrame.Content as MainPage;
             StackPanel grid = mp.Content as StackPanel;
             Frame my_frame = grid.FindName("myFrame") as Frame;
+            DetailSplitView.IsPaneOpen = true;
             await viewModel.AddDocSearchResult(new Doc_Search() { doc_id = (e.ClickedItem as Doctor).ID, user_id = 1 });
-            //my_frame.Navigate(typeof(DoctorDetailView), (e.ClickedItem as Doctor).ID, new SuppressNavigationTransitionInfo());
+            HospDocFrame.Navigate(typeof(SelectedDocDetailView), (e.ClickedItem as Doctor).ID, new SuppressNavigationTransitionInfo());
         }
 
         private async void HospitalGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -135,6 +136,11 @@ namespace DocApp.Presentation.Views
 
             });
 
+        }
+
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DetailSplitView.IsPaneOpen = false;
         }
     }
 }

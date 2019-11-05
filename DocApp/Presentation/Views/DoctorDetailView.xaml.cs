@@ -86,11 +86,11 @@ namespace DocApp.Presentation.Views
             
             if (sender.Value > 0)
             {
-                Bindings.Update();
-                await viewModel.UpdateDoctor(id, (double)sender.Value);
+                //Bindings.Update();
+                //await viewModel.UpdateDoctor(id, (double)sender.Value);
 
-                Bindings.Update();
-                myRating.Caption = myRating.Value.ToString();
+                //Bindings.Update();
+                //myRating.Caption = myRating.Value.ToString();
             
             }
             

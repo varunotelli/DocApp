@@ -819,7 +819,8 @@ namespace DocApp.Presentation.Views
                     //    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
                     //    d.Experience <= uexp && d.Rating >= rating))
                     //        viewModel.docsmain.Add(i);
-                    await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex, lexp, uexp, rating);
+                    await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex, 
+                        lexp, uexp, rating);
                 }
                 else if(MainTabs.SelectedIndex == 1)
                 {
