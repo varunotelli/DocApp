@@ -50,13 +50,11 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <StackPanel Orientation="Horizontal" >
-            <Image x:Name="Img" Width="100" Height="100" Stretch="UniformToFill" >
-                <Image.Source>
-                    <BitmapImage UriSource="{x:Bind doctor.Image, Mode=OneWay}"/>
-                </Image.Source>
-
-
-            </Image>
+            <Ellipse Height="70" Width="70" Margin="10,0" x:Name="Img">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="{x:Bind doctor.Image}"/>
+                </Ellipse.Fill>
+            </Ellipse>
             <StackPanel>
                 <StackPanel x:Name="stackPanel" Orientation="Horizontal">
                     <TextBlock x:Name="textBlock" Text="{x:Bind doctor.Name,Converter={StaticResource NameConv}}" Margin="10,5" FontSize="16" FontWeight="ExtraBold"

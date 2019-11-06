@@ -47,13 +47,11 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <StackPanel Orientation="Horizontal" >
-            <Image x:Name="Img" Width="100" Height="100" Stretch="UniformToFill">
-                <Image.Source>
-                    <BitmapImage UriSource="{x:Bind doctor.Image, Mode=OneWay}"/>
-                </Image.Source>
-                
-                
-            </Image>
+            <Ellipse Height="70" Width="70" Margin="10,0" x:Name="Img">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="{x:Bind doctor.Image,Mode=TwoWay}"/>
+                </Ellipse.Fill>
+            </Ellipse>
             <StackPanel>
                 <StackPanel x:Name="NameStack" Orientation="Horizontal">
                     <TextBlock x:Name="DocNameBox" Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,5" FontSize="16" FontWeight="ExtraBold"

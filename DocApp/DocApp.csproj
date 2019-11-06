@@ -261,6 +261,7 @@
     <Compile Include="Presentation\ViewModels\DoctorSearchViewModel.cs" />
     <Compile Include="Presentation\ViewModels\HospitalSearchViewModel.cs" />
     <Compile Include="Presentation\ViewModels\SelectedDoctorViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\SelectedHospViewModel.cs" />
     <Compile Include="Presentation\Views\AppointmentBookingView.xaml.cs">
       <DependentUpon>AppointmentBookingView.xaml</DependentUpon>
     </Compile>
@@ -298,6 +299,7 @@
     <Compile Include="Presentation\Views\HospitalSearchResultView.xaml.cs">
       <DependentUpon>HospitalSearchResultView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Views\INavEvents.cs" />
     <Compile Include="Presentation\Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -330,6 +332,9 @@
     </Compile>
     <Compile Include="Presentation\Views\SelectedDocDetailView.xaml.cs">
       <DependentUpon>SelectedDocDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Views\SelectedHospView.xaml.cs">
+      <DependentUpon>SelectedHospView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Views\Templates\AppointmentTemplate.xaml.cs">
       <DependentUpon>AppointmentTemplate.xaml</DependentUpon>
@@ -493,6 +498,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\SelectedDocDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\SelectedHospView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

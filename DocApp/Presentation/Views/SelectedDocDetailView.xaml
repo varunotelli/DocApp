@@ -76,12 +76,11 @@
         <StackPanel Padding="5" Background="White">
            
             <StackPanel Orientation="Horizontal">
-                <Image x:Name="image" Height="100" Width="100" Margin="10,0,10,10">
-                    <Image.Source>
-                        <BitmapImage UriSource="{x:Bind viewModel.doctor.Image,Mode=OneWay}"/>
-                    </Image.Source>
-                </Image>
-
+                <Ellipse Height="100" Width="100" Margin="10,0" x:Name="Img">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="{x:Bind viewModel.doctor.Image}"/>
+                    </Ellipse.Fill>
+                </Ellipse>
                 <!--<Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
                        VerticalAlignment="Top" Margin="10"/>-->
 
@@ -115,7 +114,7 @@
 
             </StackPanel>
             <!--START SCROLL HERE-->
-            <ScrollViewer Height="520">
+            <ScrollViewer Height="570">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>

@@ -13,6 +13,8 @@ namespace DocApp.Presentation.ViewModels
 {
     public class SelectedDoctorViewModel : DoctorDetailsAbstract
     {
+        public Hospital hospital;
+        
         public SelectedDoctorViewModel()
         {
             deptnames = new ObservableCollection<string>();
@@ -24,6 +26,12 @@ namespace DocApp.Presentation.ViewModels
             hosps = new ObservableCollection<Hospital>();
             hospsmain = new ObservableCollection<Hospital>();
             Doctors = new ObservableCollection<DoctorInHospitalDetails>();
+            
+            hospital = new Hospital();
         }
+
+        
+
+        
     }
 }

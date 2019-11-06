@@ -28,7 +28,7 @@ namespace DocApp.Presentation.Views.Templates
         private void Img_Loaded(object sender, RoutedEventArgs e)
         {
             imagesource = new BitmapImage(new Uri(doctor.Image, UriKind.Absolute));
-            Img.Source = imagesource;
+            //Img.Source = imagesource;
         }
 
         public ImageSource getSource(Models.Doctor d)
@@ -46,7 +46,7 @@ namespace DocApp.Presentation.Views.Templates
         private void StackPanel_Loaded(object sender, RoutedEventArgs e)
         {
             imagesource = new BitmapImage(new Uri(String.Format("ms-appx:///Assets/Doc{0}.jpg", doctor.ID), UriKind.Absolute));
-            Img.Source = imagesource;
+            //Img.Source = imagesource;
         }
     }
 }

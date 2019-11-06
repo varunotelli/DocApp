@@ -22,7 +22,11 @@
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
 
-            <Image Source="{x:Bind doctor.Image}" Width="50" Height="50" Stretch="UniformToFill"/>
+            <Ellipse Height="100" Width="100" Margin="10,0" x:Name="Img">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="{x:Bind doctor.Image}"/>
+                </Ellipse.Fill>
+            </Ellipse>
             <StackPanel>
                 <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,2" FontSize="14" FontWeight="ExtraBold"
                    Foreground="Black" FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>

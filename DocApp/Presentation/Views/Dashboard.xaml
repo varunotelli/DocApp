@@ -236,11 +236,11 @@
                                 <TextBlock Text="&#xE106;" FontSize="20"/>
                             </HyperlinkButton>
                             <StackPanel Orientation="Horizontal">
-                                <Image x:Name="image" Height="100" Width="100" Margin="10,0,10,10">
-                                    <Image.Source>
-                                        <BitmapImage UriSource="{x:Bind viewModel.doctor.Image,Mode=OneWay}"/>
-                                    </Image.Source>
-                                </Image>
+                                <Ellipse x:Name="image" Height="100" Width="100" Margin="10,0" >
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{x:Bind viewModel.doctor.Image,Mode=OneWay}"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
 
                                 <!--<Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
                        VerticalAlignment="Top" Margin="10"/>-->

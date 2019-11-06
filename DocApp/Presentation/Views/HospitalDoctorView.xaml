@@ -152,10 +152,10 @@
                 <SplitView.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition x:Name="FirstCol" Width="*"/>
+                            <ColumnDefinition x:Name="SecondCol" Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <StackPanel HorizontalAlignment="Stretch" Padding="5">
+                        <StackPanel x:Name="FirstStack" HorizontalAlignment="Stretch" Padding="5">
                             <TextBlock x:Name="DocNearYouBlock" Text="Doctors Near You" FontSize="28" FontWeight="Bold" Margin="10,10,10,30"
                            FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova" HorizontalAlignment="Left"/>
 
@@ -193,7 +193,7 @@
                             </ListView>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Padding="5">
+                        <StackPanel x:Name="SecondStack" Grid.Column="1" HorizontalAlignment="Stretch" Padding="5">
                             <TextBlock x:Name="HospNearYouBlock" Text="Hospitals Near You" FontSize="28" FontWeight="Bold" Margin="10,10,10,30"
                            FontFamily="ms-appx:///Assets/montserrat-v14-latin-900.ttf#Montserrat" HorizontalAlignment="Left"/>
 
@@ -231,8 +231,6 @@
                             </ListView>
                         </StackPanel>
 
-
-
                     </Grid>
                 </SplitView.Content>
                 <SplitView.Pane>
@@ -241,7 +239,7 @@
                                              FontFamily="Segoe MDL2 Assets" Click="CloseBtn_Click" Margin="20,0">
                             <TextBlock Text="&#xE106;" FontSize="20"/>
                         </HyperlinkButton>
-                        <Frame x:Name="HospDocFrame" HorizontalAlignment="Stretch"/>
+                        <Frame x:Name="HospDocFrame" HorizontalAlignment="Stretch" Loaded="HospDocFrame_Loaded"/>
                     </StackPanel>
                     
                 </SplitView.Pane>

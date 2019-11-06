@@ -25,12 +25,23 @@ namespace DocApp.Presentation.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
+    public class UpdateDocEventArgs:EventArgs
+    {
+        public Doctor doctor { get; set; }
+        public SelectedDocDetailView page { get; set; }
+    }
+
     public sealed partial class SelectedDocDetailView : Page
     {
         SelectedDoctorViewModel viewModel;
+        
         string app_date, time;
         int id,hosp_id;
         bool en;
+        HospitalDoctorView view;
+        public delegate void UpdateEventHandler(object source, UpdateDocEventArgs args);
+        public event UpdateEventHandler UpdateEvent;
 
         public SelectedDocDetailView()
         {
@@ -39,9 +50,11 @@ namespace DocApp.Presentation.Views
 
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
-            id = (int)e1.Parameter;
+            var temp = e1.Parameter as DocNavEventArgs;
+            id = temp.val;
+            view =(HospitalDoctorView) temp.view;
             viewModel = new SelectedDoctorViewModel();
-
+            this.UpdateEvent += view.onDoctorUpdateSuccess;
             viewModel.DoctorReadSuccess += this.onDoctorReadSuccess;
             viewModel.InsertFail += this.onInsertFail;
             viewModel.InsertSuccess += this.onInsertSuccess;
@@ -115,6 +128,12 @@ namespace DocApp.Presentation.Views
             await bookFail.ShowAsync();
         }
 
+        void onUpdate()
+        {
+            if (UpdateEvent != null)
+                UpdateEvent(this, new UpdateDocEventArgs() { doctor=viewModel.doctor,page=this});
+        }
+
         private void onDoctorReadSuccess(object source, EventArgs args)
         {
             Bindings.Update();
@@ -122,7 +141,8 @@ namespace DocApp.Presentation.Views
 
         public void onDoctorRatingUpdateSucess(object source, EventArgs args)
         {
-            
+
+            onUpdate();
         }
 
         private void HospitalsInDoctorsTemplate_Loaded(object sender, RoutedEventArgs e)
