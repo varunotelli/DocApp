@@ -13,7 +13,7 @@
     RequestedTheme="Light">
     <UserControl.Resources>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="Margin" Value="10,0"/>
             <Setter Property="FontSize" Value="12"/>
             <!--<Setter Property="Foreground" Value="White"/>-->
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
@@ -49,14 +49,14 @@
         <StackPanel Orientation="Horizontal" >
             <Ellipse Height="70" Width="70" Margin="10,0" x:Name="Img">
                 <Ellipse.Fill>
-                    <ImageBrush ImageSource="{x:Bind doctor.Image,Mode=TwoWay}"/>
+                    <ImageBrush ImageSource="{x:Bind doctor.Image,Mode=OneWay}"/>
                 </Ellipse.Fill>
             </Ellipse>
             <StackPanel>
                 <StackPanel x:Name="NameStack" Orientation="Horizontal">
-                    <TextBlock x:Name="DocNameBox" Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,5" FontSize="16" FontWeight="ExtraBold"
+                    <TextBlock x:Name="DocNameBox" Text="{x:Bind sys:String.Format('Dr. {0}',doctor.Name)}" Margin="10,0" FontSize="16" FontWeight="ExtraBold"
                    FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
-                    <RatingControl x:Name="DocRating" Value="{x:Bind doctor.Rating, Mode=OneWay}" HorizontalAlignment="Left" Margin="10,0"
+                    <RatingControl x:Name="DocRating" Value="{x:Bind doctor.Rating, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,-10"
                                        Caption="{x:Bind sys:String.Format('({0})',doctor.Number_of_Rating)}" 
                                        IsReadOnly="True" Width="62" >
                         <!--<RatingControl.Resources>

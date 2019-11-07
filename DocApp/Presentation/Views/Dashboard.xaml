@@ -424,7 +424,7 @@
                                              Click="HyperlinkButton_Click"/>
                                     </Grid>
 
-                                    <ListView Height="600" x:Name="myListView" ItemsSource="{x:Bind viewModel.recent_docs, Mode=OneWay}" 
+                                    <ListView Height="570" x:Name="myListView" ItemsSource="{x:Bind viewModel.recent_docs, Mode=OneWay}" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto" ItemClick="ListView_ItemClick" IsItemClickEnabled="True">
                                         <ListView.ItemContainerTransitions>
                                             <TransitionCollection/>
@@ -452,7 +452,7 @@
                                              Click="HyperlinkButton_Click"/>
                                     </Grid>
 
-                                    <ListView x:Name="BookedListView" Height="600" ItemClick="BookedListView_ItemClick" IsItemClickEnabled="True"
+                                    <ListView x:Name="BookedListView" Height="570" ItemClick="BookedListView_ItemClick" IsItemClickEnabled="True"
                                   ItemsSource="{x:Bind viewModel.most_booked_docs, Mode=OneWay}" 
                                   ScrollViewer.VerticalScrollBarVisibility="Auto">
                                         <ListView.ItemContainerTransitions>

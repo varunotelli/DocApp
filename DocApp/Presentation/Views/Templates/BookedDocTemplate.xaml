@@ -14,7 +14,7 @@
     <UserControl.Resources>
         <conv:NameConverter x:Key="NameConv"/>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="Margin" Value="10,2"/>
             <Setter Property="FontSize" Value="12"/>
             <!--<Setter Property="Foreground" Value="White"/>-->
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
@@ -56,10 +56,10 @@
                 </Ellipse.Fill>
             </Ellipse>
             <StackPanel>
-                <StackPanel x:Name="stackPanel" Orientation="Horizontal">
-                    <TextBlock x:Name="textBlock" Text="{x:Bind doctor.Name,Converter={StaticResource NameConv}}" Margin="10,5" FontSize="16" FontWeight="ExtraBold"
+                <StackPanel x:Name="stackPanel" Orientation="Horizontal" Margin="10,5,10,0">
+                    <TextBlock x:Name="textBlock" Text="{x:Bind doctor.Name,Converter={StaticResource NameConv}}"  FontSize="16" FontWeight="ExtraBold"
                    FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
-                    <RatingControl Value="{x:Bind doctor.Rating, Mode=OneWay}" HorizontalAlignment="Left" Margin="10,0"
+                    <RatingControl Value="{x:Bind doctor.Rating, Mode=OneWay}" HorizontalAlignment="Left" Margin="10,-10"
                                        Caption="{x:Bind sys:String.Format('({0})',doctor.Number_of_Rating)}" 
                                        IsReadOnly="True" >
                         <!--<RatingControl.Resources>
@@ -72,8 +72,8 @@
                 <TextBlock Text="{x:Bind sys:String.Format('{0} years of experience overall', doctor.Experience)}" 
                    Style="{StaticResource TextBlockStyle}"/>
                 <TextBlock Text="{x:Bind doctor.Designation}" Style="{StaticResource TextBlockStyle}" TextWrapping="NoWrap"
-                       TextTrimming="CharacterEllipsis"/>
-                <HyperlinkButton x:Name="hyperlinkButton" Click="Button_Click" Margin="10,5">Book another appointment with this doctor</HyperlinkButton>
+                       TextTrimming="CharacterEllipsis" />
+                <HyperlinkButton x:Name="hyperlinkButton" Click="Button_Click" Margin="10,-10">Book another appointment with this doctor</HyperlinkButton>
 
             </StackPanel>
 

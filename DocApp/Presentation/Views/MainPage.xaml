@@ -20,8 +20,8 @@
             <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyle1}" x:Key="ListBoxItemStyle2">
                 <Setter Property="FontSize" Value="20"/>
                 <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
-                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                <Setter Property="Padding" Value="10"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="Padding" Value="5"/>
                 <Setter Property="BorderBrush" Value="White"/>
                 <Setter Property="BorderThickness" Value="0,0,0,1"/>
             </Style>
@@ -149,15 +149,17 @@
                            RelativePanel.Below="OpenBtn" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <SplitView.Pane>
                         <StackPanel Background="#263440">
-                            <Ellipse Height="150" Width="150" Margin="10" HorizontalAlignment="Center">
-                                <Ellipse.Fill>
-                                    <ImageBrush ImageSource="ms-appx:///Assets/32.jpg"/>
-                                </Ellipse.Fill>
-                            </Ellipse>
-                            <TextBlock FontSize="28" HorizontalAlignment="Center" Foreground="White">Suresh</TextBlock>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Grid>
-                                    <AutoSuggestBox x:Name="MyAutoSuggest" 
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Height="120" Width="120" Margin="10">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="ms-appx:///Assets/32.jpg"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <StackPanel>
+                                    <TextBlock FontSize="28" Margin="10,0" Foreground="White">Suresh</TextBlock>
+                                    <StackPanel Orientation="Vertical" >
+                                        <Grid>
+                                            <AutoSuggestBox x:Name="MyAutoSuggest" 
                                                     PlaceholderText="{x:Bind viewModel.loc, Mode=TwoWay}" 
                                                     TextChanged="MyAutoSuggest_TextChanged" 
                                                     UpdateTextOnSelect="True"
@@ -170,7 +172,7 @@
                                                     SuggestionChosen="MyAutoSuggest_SuggestionChosen" 
                                                     BorderThickness="0,0,1,0" 
                                                     BorderBrush="Black"/>
-                                    <ProgressRing 
+                                            <ProgressRing 
                                         x:Name="LocationProg" 
                                         IsActive="False" 
                                         Foreground="Black" 
@@ -179,15 +181,19 @@
                                         Width="10" Margin="0,0,5,0"
                                         HorizontalAlignment="Right"
                                       />
-                                </Grid>
-                                <Button Background="Transparent" RelativePanel.AlignRightWithPanel="True" 
+                                        </Grid>
+                                        <Button Margin="10" RelativePanel.AlignRightWithPanel="True" 
                                         ToolTipService.ToolTip="Detect Location" 
                             x:Name="LocationBtn"
                             Click="LocationBtn_Click">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE707;" Foreground="White" FontSize="16"/>
-                                </Button>
+                                            <TextBlock  Text="Detect Location" Foreground="White" FontSize="16"/>
+                                        </Button>
 
+                                    </StackPanel>
+                                </StackPanel>
                             </StackPanel>
+                            
+                            
                                 
                                 <!--<StackPanel Orientation="Horizontal"  Margin="0,0,30,-3" HorizontalAlignment="Right">
                                     <HyperlinkButton Name="Dashboardbtn" BorderThickness="0,0,0,1" Padding="0" Click="Dashboardbtn_Click"
@@ -201,15 +207,15 @@
                            FontSize="16"/>
                                     </HyperlinkButton>
                                 </StackPanel>-->
-                            <ListBox HorizontalAlignment="Center" x:Name="MyListBox" Background="#263440" 
+                            <ListBox HorizontalAlignment="Left" x:Name="MyListBox" Background="#263440" 
                                      FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" Margin="10"
                                      SelectionChanged="MyListBox_SelectionChanged" FontSize="16" Foreground="White" 
                                      ItemContainerStyle="{StaticResource ListBoxItemStyle2}">
                                 
-                                <ListBoxItem HorizontalContentAlignment="Center">Dashboard</ListBoxItem>
-                                <ListBoxItem HorizontalContentAlignment="Center">Appointments</ListBoxItem>
-                                <ListBoxItem HorizontalContentAlignment="Center">Doctors</ListBoxItem>
-                                <ListBoxItem HorizontalContentAlignment="Center">Hospitals</ListBoxItem>
+                                <ListBoxItem >Dashboard</ListBoxItem>
+                                <ListBoxItem >Appointments</ListBoxItem>
+                                <ListBoxItem>Doctors</ListBoxItem>
+                                <ListBoxItem >Hospitals</ListBoxItem>
                             </ListBox>
                            
                         </StackPanel>
