@@ -1,4 +1,5 @@
-﻿using DocApp.Presentation.ViewModels;
+﻿using DocApp.Models;
+using DocApp.Presentation.ViewModels;
 using DocApp.Presentation.Views.DialogBoxes;
 using System;
 using System.Collections.Generic;
@@ -295,7 +296,8 @@ namespace DocApp.Presentation.Views
                 KeyWordBox.IsOpen = true;
                 HospDocSuggest.IsFocusEngaged = false;
             }
-            await viewModel.GetKeyWords();
+            //await viewModel.GetKeyWords();
+            await viewModel.GetRecentSearchDoctors(1);
            
         }
 
@@ -308,14 +310,9 @@ namespace DocApp.Presentation.Views
         {
             if((sender as ListBox).SelectedIndex!=-1)
             {
-                myFrame.Navigate(typeof(DoctorSearchResultView), new navargs
-                {
-                    name = viewModel.loc,
-                    mp = this,
-                    index = (sender as ListBox).SelectedIndex,
-                    doc = true
-
-                }) ;
+                myFrame.Navigate(typeof(SelectedDocDetailView),
+                new DocNavEventArgs() { val = ((sender as ListBox).SelectedItem as Doctor).ID, vis=1 }
+            , new SuppressNavigationTransitionInfo());
             }
             KeyWordBox.IsOpen = false;
             MyAutoSuggest.IsFocusEngaged = false;

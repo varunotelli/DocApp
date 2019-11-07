@@ -33,6 +33,7 @@ namespace DocApp.Presentation.Views
     {
         public INavEvents view { get; set; }
         public int val { get; set; }
+        public int vis { get; set; }
     }
     public sealed partial class HospitalDoctorView : Page,INavEvents
     {

@@ -123,7 +123,7 @@ namespace DocApp.Presentation.Views
                 viewModel.recent_docs.Insert(x, viewModel.doctor);
             }
         
-            myListView.SelectedItem = viewModel.doctor;
+            //myListView.SelectedItem = viewModel.doctor;
         }
 
         public async void onAppCheckSuccess(object source, EventArgs args)
@@ -241,7 +241,7 @@ namespace DocApp.Presentation.Views
             mySplitView.IsPaneOpen = true;
             VisitedDocStack.SetValue(Grid.ColumnProperty, 0);
             VisitedDocStack.SetValue(Grid.ColumnSpanProperty, 2);
-            SearchPanel.Visibility = Visibility.Collapsed;
+            //SearchPanel.Visibility = Visibility.Collapsed;
             AppStack.Visibility = Visibility.Collapsed;
             flag = true;
         }
@@ -310,7 +310,7 @@ namespace DocApp.Presentation.Views
             await viewModel.GetDoctor(id);
             mySplitView.IsPaneOpen = false;
             mySplitView.IsPaneOpen = true;
-            SearchPanel.SetValue(Grid.ColumnSpanProperty, 2);
+            //SearchPanel.SetValue(Grid.ColumnSpanProperty, 2);
             VisitedDocStack.Visibility = Visibility.Collapsed;
             AppStack.Visibility = Visibility.Collapsed;
             flag = false;
@@ -455,10 +455,10 @@ namespace DocApp.Presentation.Views
             mySplitView.IsPaneOpen = false;
             VisitedDocStack.SetValue(Grid.ColumnProperty, 1);
             VisitedDocStack.SetValue(Grid.ColumnSpanProperty, 1);
-            SearchPanel.SetValue(Grid.ColumnSpanProperty, 1);
+            //SearchPanel.SetValue(Grid.ColumnSpanProperty, 1);
             //await viewModel.GetMostBookedDoc(1);
             //await viewModel.GetAppointments(1);
-            SearchPanel.Visibility = Visibility.Visible;
+            //SearchPanel.Visibility = Visibility.Visible;
             VisitedDocStack.Visibility = Visibility.Visible;
             AppStack.Visibility = Visibility.Visible;
             
@@ -476,7 +476,7 @@ namespace DocApp.Presentation.Views
             mySplitView.IsPaneOpen = true;
             VisitedDocStack.SetValue(Grid.ColumnProperty, 0);
             VisitedDocStack.SetValue(Grid.ColumnSpanProperty, 2);
-            SearchPanel.Visibility = Visibility.Collapsed;
+            //SearchPanel.Visibility = Visibility.Collapsed;
             AppStack.Visibility = Visibility.Collapsed;
             flag = true;
         }

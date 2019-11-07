@@ -10,9 +10,13 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:sys="using:System"
     xmlns:conv="using:DocApp.Presentation.Views.Converters"
+    xmlns:cont="using:DocApp.Presentation.Views.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
+        <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="Black"/>
+        <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="Gray"/>
+        <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="Gray"/>
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="10,0"/>
             <Setter Property="FontSize" Value="12"/>
@@ -22,7 +26,7 @@
         <conv:TwelveHourConverter x:Key="TwelveHourTime"/>
     </Page.Resources>
 
-    <Grid>
+    <Grid Width="2000">
         <Popup x:Name="Book_Pop" 
                     IsOpen="False" 
                     Opened="Book_Pop_Opened"
@@ -31,8 +35,7 @@
                     VerticalOffset="200"
                     HorizontalOffset="100"
                     Margin="10,10"
-                    
-                    LightDismissOverlayMode="On"
+                   LightDismissOverlayMode="On"
                    Visibility="Collapsed"
                    RequestedTheme="Dark"
                            
@@ -74,7 +77,7 @@
             </StackPanel>
         </Popup>
         <StackPanel Padding="5" Background="White">
-           
+            <cont:BackButtonControl x:Name="Backbtn" Margin="0,0,20,0"/>
             <StackPanel Orientation="Horizontal">
                 <Ellipse Height="100" Width="100" Margin="10,0" x:Name="Img">
                     <Ellipse.Fill>
@@ -130,7 +133,7 @@
                         FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" Height="20" 
                                    TextTrimming="CharacterEllipsis"
                                    HorizontalAlignment="Left" FontSize="15"/>
-                        <HyperlinkButton Content="Show More" x:Name="Showbutton" HorizontalAlignment="Left" Grid.Column="1"
+                        <HyperlinkButton Content="Show More" x:Name="Showbutton" Foreground="Black" HorizontalAlignment="Left" Grid.Column="1"
                                 FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" Margin="0,15,10,10"
                                 
                                 FontSize="12"
@@ -196,7 +199,7 @@
                                                 VerticalAlignment="Top" Grid.Row="2" Margin="5" Click="SubmitBtn_Click"
                                                 Visibility="Collapsed" Style="{StaticResource ButtonStyle1}">Submit</Button>
                                 <ItemsControl x:Name="itemsControl" Grid.Row="3" ItemsSource="{x:Bind viewModel.tests,Mode=OneWay}" 
-                                                              HorizontalAlignment="Stretch">
+                                                              HorizontalAlignment="Left">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate x:DataType="data:TestDetails">
                                             <uc:TestTempate HorizontalAlignment="Stretch" Margin="10"/>

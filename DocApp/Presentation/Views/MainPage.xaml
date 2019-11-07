@@ -5,7 +5,8 @@
     xmlns:local="using:DocApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-   
+    xmlns:data="using:DocApp.Models"
+    xmlns:conv="using:DocApp.Presentation.Views.Converters"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     RequestedTheme="Light"
@@ -25,9 +26,11 @@
                 <Setter Property="BorderBrush" Value="White"/>
                 <Setter Property="BorderThickness" Value="0,0,0,1"/>
             </Style>
-        
-        
-        <Style x:Key="AutoboxStyle1" TargetType="TextBox" >
+
+            <conv:NameConverter x:Key="NameConv"/>
+
+
+            <Style x:Key="AutoboxStyle1" TargetType="TextBox" >
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Height" Value="40"/>
@@ -126,8 +129,10 @@
             </HyperlinkButton>-->
         <Grid HorizontalAlignment="Stretch">
             <RelativePanel>
-                <Button x:Name="OpenBtn" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" RelativePanel.AlignLeftWithPanel="True"
-                                    FontSize="24" Foreground="Black" Margin="0,10" Click="OpenBtn_Click" Background="LightGray"/>
+                <HyperlinkButton x:Name="OpenBtn" FontFamily="Segoe MDL2 Assets"  RelativePanel.AlignLeftWithPanel="True"
+                                    FontSize="24" Foreground="White" Margin="10,10" Click="OpenBtn_Click" Background="Transparent">
+                    <TextBlock Text="&#xE700;"/>
+                </HyperlinkButton>
                 <StackPanel RelativePanel.RightOf="OpenBtn">
                     <AutoSuggestBox x:Name="HospDocSuggest" TextBoxStyle="{StaticResource AutoboxStyle2}"
                                     PlaceholderText="Search for Doctor or Hospital" 
@@ -136,20 +141,38 @@
                                     GotFocus="HospDocSuggest_GotFocus" BorderThickness="0,0,1,0" 
                 QueryIcon="Find" ItemContainerStyle="{StaticResource AutoListStyle}"
                                             LostFocus="HospDocSuggest_LostFocus"/>
-                    <Popup x:Name="KeyWordBox" IsOpen="False" Margin="10,0,10,0" Width="467" HorizontalAlignment="Left">
-                        <ListBox Width="467" 
+                    <Popup x:Name="KeyWordBox" IsOpen="False" Margin="10,0,10,0" Width="467" HorizontalAlignment="Left"
+                           >
+                        <StackPanel Background="LightGray">
+                            <TextBlock FontWeight="Bold" Margin="10">Your Recent Searches</TextBlock>
+                            <ListBox Width="467" 
                                          FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" 
                                          FontSize="14"
                   
-                                         ItemsSource="{x:Bind viewModel.keywords}" 
-                                         SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged"/>
+                                         ItemsSource="{x:Bind viewModel.docs,Mode=OneWay}" 
+                                         SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="data:Doctor">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Height="30" Width="30" Margin="10,0" x:Name="Img">
+                                                <Ellipse.Fill>
+                                                    <ImageBrush ImageSource="{x:Bind Image}"/>
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+                                            <TextBlock Text="{x:Bind Name,Converter={StaticResource NameConv}}" FontSize="12" Margin="10"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                        
                     </Popup>
                 </StackPanel>
                 <SplitView x:Name="MySplitView_Main" IsPaneOpen="False" DisplayMode="Overlay" OpenPaneLength="400" 
                            RelativePanel.Below="OpenBtn" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <SplitView.Pane>
                         <StackPanel Background="#263440">
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="20">
                                 <Ellipse Height="120" Width="120" Margin="10">
                                     <Ellipse.Fill>
                                         <ImageBrush ImageSource="ms-appx:///Assets/32.jpg"/>
@@ -184,8 +207,8 @@
                                         </Grid>
                                         <Button Margin="10" RelativePanel.AlignRightWithPanel="True" 
                                         ToolTipService.ToolTip="Detect Location" 
-                            x:Name="LocationBtn"
-                            Click="LocationBtn_Click">
+                                        x:Name="LocationBtn"
+                                        Click="LocationBtn_Click">
                                             <TextBlock  Text="Detect Location" Foreground="White" FontSize="16"/>
                                         </Button>
 
@@ -208,7 +231,7 @@
                                     </HyperlinkButton>
                                 </StackPanel>-->
                             <ListBox HorizontalAlignment="Left" x:Name="MyListBox" Background="#263440" 
-                                     FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" Margin="10"
+                                     FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" Margin="20"
                                      SelectionChanged="MyListBox_SelectionChanged" FontSize="16" Foreground="White" 
                                      ItemContainerStyle="{StaticResource ListBoxItemStyle2}">
                                 
@@ -235,7 +258,7 @@
                 </SplitView>
 
             </RelativePanel>
-            <StackPanel Margin="50,0">
+            <StackPanel Margin="50,0" VerticalAlignment="Center">
                 <ProgressRing x:Name="progring" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                           Height="100" Width="100" Foreground="White" 
                                           Margin="0,200,0,100"></ProgressRing>

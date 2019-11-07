@@ -23,13 +23,14 @@ namespace DocApp.Presentation.ViewModels
     }
 
     public class AutoSuggestViewModel: IGetLocationPresenterCallback, IGetAddressPresenterCallback, IDepartmentViewCallback,
-        INotifyPropertyChanged, IKeywordViewCallback,ILoginViewCallback
+        INotifyPropertyChanged, IKeywordViewCallback,ILoginViewCallback,IRecentDoctorViewCallback
     {
         public double latitude;
         public double longitude;
         public ObservableCollection<string> localities;
         public ObservableCollection<string> depts;
         public ObservableCollection<string> keywords;
+        public ObservableCollection<Doctor> docs;
         public UseCaseBase getLocalityList;
         public UseCaseBase getDepts;
         public UseCaseBase getKeyWords;
@@ -68,6 +69,7 @@ namespace DocApp.Presentation.ViewModels
         {
             depts = new ObservableCollection<string>();
             keywords = new ObservableCollection<string>();
+            docs = new ObservableCollection<Doctor>();
         }
 
         public void onLocationChanged()
@@ -142,6 +144,22 @@ namespace DocApp.Presentation.ViewModels
             await loginUseCase.Execute();
         }
 
+        public async Task GetRecentSearchDoctors(int id)
+        {
+
+            try
+            {
+                UseCaseBase getRecentDoctors = new GetRecentDoctorsUseCase(id);
+                getRecentDoctors.SetCallBack(this);
+                await getRecentDoctors.Execute();
+            }
+
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Recent doctor view fail " + e.Message);
+
+            }
+        }
 
         public bool DataFromPractoSuccess(RootLocationObject r)
         {
@@ -211,6 +229,19 @@ namespace DocApp.Presentation.ViewModels
         }
 
         public bool LoginViewFail()
+        {
+            return false;
+        }
+
+        public bool SearchDocViewSuccess(List<Doctor> doctors)
+        {
+            docs.Clear();
+            foreach (var x in doctors.Take(4))
+                docs.Add(x);
+            return true;
+        }
+
+        public bool SearchDocViewFail()
         {
             return false;
         }

@@ -54,7 +54,8 @@ namespace DocApp.Presentation.Views
             id = temp.val;
             view =(HospitalDoctorView) temp.view;
             viewModel = new SelectedDoctorViewModel();
-            this.UpdateEvent += view.onDoctorUpdateSuccess;
+            if(view!=null)
+                this.UpdateEvent += view.onDoctorUpdateSuccess;
             viewModel.DoctorReadSuccess += this.onDoctorReadSuccess;
             viewModel.InsertFail += this.onInsertFail;
             viewModel.InsertSuccess += this.onInsertSuccess;
@@ -63,6 +64,8 @@ namespace DocApp.Presentation.Views
             viewModel.TestimonialAddedSuccess += this.onTestAddedSuccess;
             
             viewModel.AppointmentCheckSuccess += this.onAppCheckSuccess;
+            if (temp.vis == 0)
+                Backbtn.Visibility = Visibility.Collapsed;
             await viewModel.GetDoctor(id);
 
         }

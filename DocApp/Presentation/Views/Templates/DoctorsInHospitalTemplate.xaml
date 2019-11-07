@@ -22,7 +22,7 @@
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
 
-            <Ellipse Height="100" Width="100" Margin="10,0" x:Name="Img">
+            <Ellipse Height="70" Width="70" Margin="10,0" x:Name="Img" VerticalAlignment="Top">
                 <Ellipse.Fill>
                     <ImageBrush ImageSource="{x:Bind doctor.Image}"/>
                 </Ellipse.Fill>
