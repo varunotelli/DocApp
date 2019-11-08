@@ -10,9 +10,9 @@
     Background="#263440"
     >
     <Page.Resources>
-        
+
         <ResourceDictionary>
-            
+
             <Style x:Key="GridViewItemStyle1" TargetType="GridViewItem">
                 <Setter Property="FontFamily" Value="ms-appx:///Assets/montserrat-v14-latin-regular.ttf#Montserrat"/>
                 <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
@@ -108,7 +108,7 @@
                 <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
             </Style>
         </ResourceDictionary>
-       
+
     </Page.Resources>
 
     <!--<Page.Background>
@@ -118,31 +118,67 @@
         </LinearGradientBrush>
     </Page.Background>-->
 
-    <Grid Margin="0,150,0,300" HorizontalAlignment="Stretch">
+    <Grid x:Name="grid" Margin="300,150,0,300" HorizontalAlignment="Stretch">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Phone">
+                    <VisualState.Setters>
+                        <Setter Target="grid.(FrameworkElement.Margin)">
+                            <Setter.Value>
+                                <Thickness>10,150,0,300</Thickness>
+                            </Setter.Value>
+                        </Setter>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="400"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Tablet">
+                    <VisualState.Setters>
+                        <Setter Target="grid.(FrameworkElement.Margin)">
+                            <Setter.Value>
+                                <Thickness>100,150,0,300</Thickness>
+                            </Setter.Value>
+                        </Setter>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <!--<TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1A3;" FontSize="80" VerticalAlignment="Center"
                    HorizontalAlignment="Center" Margin="0,0,0,40" Style="{StaticResource TextBlockStyle}"/>
         <TextBlock FontSize="48" FontWeight="ExtraBold" Text="Search DocApp" Style="{StaticResource TextBlockStyle}"/>
         <TextBlock FontSize="20" FontWeight="Bold" Text="Find Doctors and Hospitals based on your preference" Foreground="DimGray"
           TextAlignment="Center" Style="{StaticResource TextBlockStyle}" 
                    HorizontalAlignment="Center" Margin="0,20" TextWrapping="WrapWholeWords"/>-->
-        <GridView HorizontalAlignment="Center" VerticalAlignment="Stretch" IsItemClickEnabled="True" 
+        <ScrollViewer Height="500">
+            <GridView HorizontalAlignment="Center" VerticalAlignment="Stretch" IsItemClickEnabled="True" 
                    SelectionMode="Single" SelectionChanged="GridView_SelectionChanged">
-            <GridViewItem Margin="0,10,20,10">
-                <Grid>
-                    <Image Source="ms-appx:///Assets/doctor.jpg" Height="400" Width="400" 
+                <GridViewItem Margin="0,10,20,10">
+                    <Grid>
+                        <Image Source="ms-appx:///Assets/doctor.jpg" Height="400" Width="400" 
                            Stretch="UniformToFill"/>
-                    <TextBlock HorizontalAlignment="Left" Text="Explore&#x0a;Doctors" VerticalAlignment="Bottom" Margin="30,0,0,30"
+                        <TextBlock HorizontalAlignment="Left" Text="Explore&#x0a;Doctors" VerticalAlignment="Bottom" Margin="30,0,0,30"
                         FontSize="38" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova"/>
-                </Grid>
-            </GridViewItem>
-            <GridViewItem Margin="10,10,10,10">
-                <Grid>
-                    <Image Source="ms-appx:///Assets/hospital.jpg" Width="400" Height="400" Stretch="Fill"/>
-                    <TextBlock HorizontalAlignment="Left" Text="Explore&#x0a;Hospitals" VerticalAlignment="Bottom" Margin="30,0,0,30"
+                    </Grid>
+                </GridViewItem>
+                <GridViewItem Margin="0,10,10,10">
+                    <Grid>
+                        <Image Source="ms-appx:///Assets/hospital.jpg" Width="400" Height="400" Stretch="Fill"/>
+                        <TextBlock HorizontalAlignment="Left" Text="Explore&#x0a;Hospitals" VerticalAlignment="Bottom" Margin="30,0,0,30"
                         FontSize="38" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova"/>
-                </Grid>
-            </GridViewItem>
-        </GridView>
+                    </Grid>
+                </GridViewItem>
+            </GridView>
+        </ScrollViewer>
+        
         <!--<TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1A3;" FontSize="80" VerticalAlignment="Center"
                    HorizontalAlignment="Center" Margin="0,0,0,40" Style="{StaticResource TextBlockStyle}"/>
         <TextBlock FontSize="48" FontWeight="ExtraBold" Text="Search DocApp" Style="{StaticResource TextBlockStyle}"/>

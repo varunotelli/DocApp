@@ -14,7 +14,9 @@
     mc:Ignorable="d"
     RequestedTheme="Light"
     Background="White"
-    >
+    
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:ex="using:Microsoft.Toolkit.Uwp.UI.Extensions">
     <!--<Page.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#2A2A2A" Offset="0.007"/>
@@ -40,7 +42,7 @@
                 <Setter Property="Foreground" Value="Black"/>
                 <Setter Property="Background"   Value="White"/>
             </Style>
-
+            
 
         </ResourceDictionary>
     </Page.Resources>
@@ -223,7 +225,7 @@
 
         <controls:TabView x:Name="MainTabs" Grid.Row="1" Background="White" SelectionChanged="MainTabs_SelectionChanged"
                           Loaded="MainTabs_Loaded">
-            <controls:TabViewItem Header="Doctors">
+            <controls:TabViewItem Header="Doctors" Foreground="White">
                 <SplitView x:Name="mySplitView" DisplayMode="Inline" 
                             PanePlacement="Right" OpenPaneLength="800" PaneOpened="MySplitView_PaneOpened"
                             >
@@ -474,7 +476,7 @@
 
             <!--HOSPITAL TAB STARTS HERE-->
 
-            <controls:TabViewItem Header="Hospitals">
+            <controls:TabViewItem  Header="Hospitals" Foreground="White">
                 <SplitView x:Name="myHospSplitView" DisplayMode="Inline" 
                             PanePlacement="Right" OpenPaneLength="800" PaneOpened="MyHospSplitView_PaneOpened"
                             >

@@ -63,13 +63,16 @@ namespace DocApp.Presentation.Views
             viewModel.AppointmentCheckSuccess += this.onAppCheckSuccess;
             viewModel.AppRead += this.onAppReadSuccess;
             viewModel.AppointmentUpdated += this.onAppUpdateSuccess;
-            
-            await viewModel.GetRecentSearchDoctors(1);
+            viewModel.NoRecord += this.onNoAppointment;
+            viewModel.NoDoctor += this.onNoDoctors;
+
+            //await viewModel.GetRecentSearchDoctors(1);
             await viewModel.GetMostBookedDoc(1);
             await viewModel.GetAppointments(1);
-
+            if (mainPage.ct > 1)
+                ActivityText.Visibility = Visibility.Collapsed;
         }
-        
+
         public void onPointerEntered()
         {
             if (PointerEntered != null)
@@ -80,6 +83,11 @@ namespace DocApp.Presentation.Views
         {
             if (PointerExited != null)
                 PointerExited(this, EventArgs.Empty);
+        }
+
+        public void onNoDoctors(object source, EventArgs args)
+        {
+            VisitedDocStack.Visibility = Visibility.Collapsed;
         }
 
 
@@ -151,6 +159,11 @@ namespace DocApp.Presentation.Views
             Res_Pop.IsOpen = true;
             Res_Pop.Visibility = Visibility.Visible;
            
+        }
+
+        public void onNoAppointment(object source, EventArgs args)
+        {
+            AppStack.Visibility = Visibility.Collapsed;
         }
 
         private async void TimeSlotBox_DropDownOpened(object sender, object e)

@@ -65,7 +65,7 @@ namespace DocApp.Presentation.Views
         
         AutoSuggestViewModel viewModel;
         bool locflag = false;
-        int ct = -1;
+        public int ct = -1;
         public string address = "";
         public delegate void AutoSuggestChangedEventHandler(object source, navargs2 e);
         public event AutoSuggestChangedEventHandler AutoSuggestChanged;

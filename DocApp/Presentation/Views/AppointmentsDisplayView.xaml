@@ -181,7 +181,7 @@
         </StackPanel>
 
 
-        <Grid Margin="50,0,0,500" Grid.Row="1" Width="1460">
+        <Grid Margin="50,0,0,500" Grid.Row="1" Width="1560">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -267,7 +267,7 @@
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="data:AppointmentDetails">
-                        <uc:AppointmentTemplate HorizontalAlignment="Stretch" Width="1460"
+                        <uc:AppointmentTemplate HorizontalAlignment="Stretch" Width="1560"
                                                 Loaded="AppointmentTemplate_Loaded"/>
 
                     </DataTemplate>

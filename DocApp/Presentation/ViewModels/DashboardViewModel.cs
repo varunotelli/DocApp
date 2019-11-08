@@ -27,6 +27,9 @@ namespace DocApp.Presentation.ViewModels
         public delegate void AppointmentEventHandler(object source, EventArgs args);
         public event AppointmentEventHandler AppointmentUpdated;
         public event AppointmentReadEventHandler AppRead;
+        public delegate void NoRecordEventHandler(object source, EventArgs args);
+        public event NoRecordEventHandler NoRecord;
+        public event NoRecordEventHandler NoDoctor;
         bool flag;
         DateTimeOffset d;
         public DateTimeOffset date
@@ -59,6 +62,19 @@ namespace DocApp.Presentation.ViewModels
             if (AppRead != null)
                 AppRead(this, EventArgs.Empty);
 
+        }
+
+
+        public void onNoRecord()
+        {
+            if (NoRecord != null)
+                NoRecord(this, EventArgs.Empty);
+        }
+
+        public void onNoDoctor()
+        {
+            if (NoDoctor != null)
+                NoDoctor(this, EventArgs.Empty);
         }
 
         public void onAppointmentUpdated()
@@ -166,6 +182,8 @@ namespace DocApp.Presentation.ViewModels
             most_booked_docs.Clear();
             foreach (var x in d.Take(4))
                 most_booked_docs.Add(x);
+            if (d.Count() == 0)
+                onNoDoctor();
             return true;
         }
 
@@ -187,6 +205,8 @@ namespace DocApp.Presentation.ViewModels
             appointments.Clear();
             foreach (var x in apps)
                 appointments.Add(x);
+            if (apps.Count() == 0)
+                onNoRecord();
             return true;
         }
 

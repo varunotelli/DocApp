@@ -377,6 +377,11 @@
                     </SplitView.Pane>
                     <SplitView.Content>
                         <Grid>
+                            <TextBlock x:Name="ActivityText" Foreground="LightGray" VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center" 
+                                       FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova"
+                                       Margin="-20,200" FontSize="72"
+                                       >No Activity Yet!</TextBlock>
                             
                             <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
                                 <StackPanel Margin="10"  Grid.Row="0" VerticalAlignment="Top"
