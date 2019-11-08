@@ -379,12 +379,12 @@
                         <Grid>
                             
                             <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
-                                <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Grid.Row="0" VerticalAlignment="Top"
-                    Padding="5" Grid.ColumnSpan="2" x:Name="AppStack" Height="100">
+                                <StackPanel Margin="10"  Grid.Row="0" VerticalAlignment="Top"
+                                    Padding="5"  x:Name="AppStack" Height="Auto">
                                     <TextBlock Text="Today's Appointments" FontSize="20" HorizontalAlignment="Center"
                            FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
                                     <ListView  ItemsSource="{x:Bind viewModel.appointments, Mode=OneWay}" 
-                      GotFocus="ListView_GotFocus">
+                      GotFocus="ListView_GotFocus" BorderBrush="DimGray" BorderThickness="1">
                                         <ListView.ItemContainerStyle>
                                             <Style TargetType="ListViewItem">
                                                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -432,8 +432,8 @@
                                     </ListView>
                                 </StackPanel>-->
 
-                                <StackPanel Margin="10" BorderBrush="DimGray" BorderThickness="1" Padding="5" x:Name="VisitedDocStack"
-                        HorizontalAlignment="Stretch" Grid.Column="1" Width="600">
+                                <StackPanel Margin="10" Height="Auto" Padding="5" x:Name="VisitedDocStack"
+                        HorizontalAlignment="Stretch" Grid.Column="1" Width="600" VerticalAlignment="Top">
                                     <Grid HorizontalAlignment="Stretch">
                                         <TextBlock Text="Your Most Visited Doctors" FontSize="20" HorizontalAlignment="Left"
                            FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
@@ -442,7 +442,7 @@
                                              Click="HyperlinkButton_Click"/>
                                     </Grid>
 
-                                    <ListView x:Name="BookedListView" Height="570" ItemClick="BookedListView_ItemClick" IsItemClickEnabled="True"
+                                    <ListView x:Name="BookedListView" BorderBrush="DimGray" BorderThickness="1" ItemClick="BookedListView_ItemClick" IsItemClickEnabled="True"
                                   ItemsSource="{x:Bind viewModel.most_booked_docs, Mode=OneWay}" 
                                   ScrollViewer.VerticalScrollBarVisibility="Auto">
                                         <ListView.ItemContainerTransitions>

@@ -26,7 +26,7 @@
         <conv:TwelveHourConverter x:Key="TwelveHourTime"/>
     </Page.Resources>
 
-    <Grid Width="2000">
+    <Grid Width="1200">
         <Popup x:Name="Book_Pop" 
                     IsOpen="False" 
                     Opened="Book_Pop_Opened"

@@ -164,7 +164,7 @@ namespace DocApp.Presentation.ViewModels
         public bool MostBookedDocViewSuccess(List<Doctor> d)
         {
             most_booked_docs.Clear();
-            foreach (var x in d)
+            foreach (var x in d.Take(4))
                 most_booked_docs.Add(x);
             return true;
         }
