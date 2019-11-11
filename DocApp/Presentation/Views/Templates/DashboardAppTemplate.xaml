@@ -15,10 +15,7 @@
         <conv:NameConverter x:Key="NameConv"/>
         <conv:TwelveHourConverter x:Key="TimeConv"/>
         <conv:DateFormatConverter x:Key="DateConv"/>
-        <Style TargetType="Button" x:Key="RoundButtonStyle">
-            <Setter Property="CornerRadius" Value="500"/>
-            <Setter Property="Margin" Value="10,5"/>
-        </Style>
+        
     </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch" Padding="0"

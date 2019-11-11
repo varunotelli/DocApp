@@ -138,6 +138,7 @@
     <Compile Include="Data\TestDAO.cs" />
     <Compile Include="Data\TestDetailsDAO.cs" />
     <Compile Include="Domain\Callbacks\IAddressCallBack.cs" />
+    <Compile Include="Domain\Callbacks\IAppByDocCallback.cs" />
     <Compile Include="Domain\Callbacks\IAppCallback.cs" />
     <Compile Include="Domain\Callbacks\IAppointmentCallback.cs" />
     <Compile Include="Domain\Callbacks\IBookAppointmentCallback.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Domain\UseCase\CancelAppointmentUseCase.cs" />
     <Compile Include="Domain\UseCase\CheckAppointmentUseCase.cs" />
     <Compile Include="Domain\UseCase\GetAddressUseCase.cs" />
+    <Compile Include="Domain\UseCase\GetAppByDocUseCase.cs" />
     <Compile Include="Domain\UseCase\GetAppointmentByIDUseCase.cs" />
     <Compile Include="Domain\UseCase\GetAppointmentsUseCase.cs" />
     <Compile Include="Domain\UseCase\GetAppUseCase.cs" />
@@ -228,6 +230,7 @@
     <Compile Include="Models\TestDetails.cs" />
     <Compile Include="Models\Testimonial.cs" />
     <Compile Include="Presentation\Callbacks\IAppBookingViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\IAppByDocViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IAppByIDViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IAppDisplayViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IAppViewCallback.cs" />
@@ -341,6 +344,9 @@
     </Compile>
     <Compile Include="Presentation\Views\Controls\ComboBoxControl.xaml.cs">
       <DependentUpon>ComboBoxControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Views\Templates\AppTabTemplate.xaml.cs">
+      <DependentUpon>AppTabTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Views\Templates\BookedDocTemplate.xaml.cs">
       <DependentUpon>BookedDocTemplate.xaml</DependentUpon>
@@ -512,6 +518,10 @@
     <Page Include="Presentation\Views\Controls\ComboBoxControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Presentation\Views\Templates\AppTabTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\Templates\BookedDocTemplate.xaml">
       <SubType>Designer</SubType>

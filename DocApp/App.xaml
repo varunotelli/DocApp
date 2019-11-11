@@ -284,6 +284,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="Button" x:Key="RoundButtonStyle">
+            <Setter Property="CornerRadius" Value="500"/>
+            <Setter Property="Margin" Value="10,5"/>
+        </Style>
 
     </Application.Resources>
     

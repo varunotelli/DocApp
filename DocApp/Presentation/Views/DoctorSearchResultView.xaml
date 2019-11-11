@@ -235,9 +235,9 @@
                     <Button.Flyout>
                         <Flyout Placement="Bottom">
                             <StackPanel VerticalAlignment="Stretch" Margin="0,0,0,0">
-                                <HyperlinkButton Name="AllClear" Content="All Clear" Click="AllClear_Click" Margin="0,0,0,0"
-                                                 HorizontalAlignment="Right"/>
-                                <TextBlock  Text="DEPARTMENTS" Margin="10,10,0,10" Foreground="Black"
+                                <HyperlinkButton Name="AllClear" Content="All Clear" Click="AllClear_Click" Margin="5,0,0,0"
+                                                 HorizontalAlignment="Left"/>
+                                <TextBlock  Text="DEPARTMENTS" Margin="5,10,0,10" Foreground="Black"
                                                     FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
                                 <ListBox x:Name="DeptListbox" ItemsSource="{x:Bind viewModel.deptnames}" 
                                                          VerticalAlignment="Stretch" Margin="0,0,0,10"

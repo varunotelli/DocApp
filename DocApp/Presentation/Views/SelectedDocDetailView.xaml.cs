@@ -236,6 +236,8 @@ namespace DocApp.Presentation.Views
         {
             if (Tabs.SelectedIndex == 1)
                 await viewModel.GetTests(id);
+            else if (Tabs.SelectedIndex == 2)
+                await viewModel.GetAppointmentByDoc(1, id);
         }
 
         private void PostBtn_Click(object sender, RoutedEventArgs e)
@@ -283,6 +285,8 @@ namespace DocApp.Presentation.Views
 
 
         }
+
+        
 
         private void TimeSlotText_Loaded(object sender, RoutedEventArgs e)
         {

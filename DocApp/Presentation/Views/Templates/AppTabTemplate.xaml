@@ -1,0 +1,47 @@
+﻿<UserControl
+    x:Class="DocApp.Presentation.Views.Templates.AppTabTemplate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DocApp.Presentation.Views.Templates"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="using:DocApp.Presentation.Views.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <conv:TwelveHourConverter x:Key="TwelveHourTime"/>
+        <conv:DateFormatConverter x:Key="DateFormatConv"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="10">
+                <TextBlock FontWeight="Bold" Text="{x:Bind appointment.hosp_name}"/>
+                <TextBlock Text="{x:Bind appointment.location}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="10">
+                <TextBlock Text="{x:Bind appointment.app_date,Converter={StaticResource DateFormatConv}}"/>
+                <TextBlock Text="{x:Bind appointment.Timeslot,Converter={StaticResource TwelveHourTime}}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" >
+                <Button Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Right"
+                                                    ToolTipService.ToolTip="Cancel Appointment" x:Name="CancelBtn"
+                                                    Click="CancelBtn_Click">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE10A;"/>
+                </Button>
+                <Button Style="{StaticResource RoundButtonStyle}" HorizontalAlignment="Right"
+                                                    ToolTipService.ToolTip="Reschedule Appointment"
+                                                    x:Name="ResBtn" Click="ResBtn_Click">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE70F;"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</UserControl>

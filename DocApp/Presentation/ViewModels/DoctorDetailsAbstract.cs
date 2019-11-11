@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace DocApp.Presentation.ViewModels
 {
     public abstract class DoctorDetailsAbstract : INotifyPropertyChanged, IDoctorDetailViewCallBack, IDoctorRatingUpdateViewCallback,
-        IHospitalDoctorViewCallBack, IRosterViewCallback,
+        IHospitalDoctorViewCallBack, IRosterViewCallback, IAppByDocViewCallback,
         IAppBookingViewCallback, IAppByIDViewCallback, ITestDetailsViewCallback, ITestViewCallback, ILastTestViewCallback,
         
         ICheckAppointmentViewCallback
@@ -21,6 +21,7 @@ namespace DocApp.Presentation.ViewModels
         public ObservableCollection<string> deptnames;
         public ObservableCollection<HospitalInDoctorDetails> hospitals;
         public ObservableCollection<DoctorInHospitalDetails> Doctors;
+        public ObservableCollection<AppointmentDetails> details;
         public ObservableCollection<Roster> timeslots;
         public ObservableCollection<Doctor> docsmain;
         public ObservableCollection<Doctor> docs;
@@ -256,6 +257,15 @@ namespace DocApp.Presentation.ViewModels
                 //System.Diagnostics.Debug.WriteLine("Add testimonials view EXCEPTION=" + e.Message);
             }
         }
+
+        public async Task GetAppointmentByDoc(int p_id, int doc_id)
+        {
+            UseCaseBase getAppByDoc = new GetAppByDocUseCase(p_id, doc_id);
+            getAppByDoc.SetCallBack(this);
+            await getAppByDoc.Execute();
+
+        }
+
         public bool DataReadSuccess(Doctor d)
         {
             this.doctor = d;
@@ -385,6 +395,18 @@ namespace DocApp.Presentation.ViewModels
         {
             return false;
         }
-   
+
+        public bool AppByDocViewSuccess(List<AppointmentDetails> appdetails)
+        {
+            details.Clear();
+            foreach (var x in appdetails)
+                details.Add(x);
+            return true;
+        }
+
+        public bool AppByDocViewFail()
+        {
+            return false;
+        }
     }
 }

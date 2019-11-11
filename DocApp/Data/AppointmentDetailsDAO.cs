@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DocApp.Data
 {
-    public class AppointmentDetailsDAO:IAppointmentDetails 
+    public class AppointmentDetailsDAO : IAppointmentDetails
     {
         public async Task GetAppointment(int p_id, IAppointmentListCallback callback)
         {
@@ -39,7 +39,7 @@ namespace DocApp.Data
 
                                }
                     ).OrderBy(x => x.app_date).ThenBy(x => x.Timeslot);
-                foreach (var x in details.Where(a=>DateTime.Parse(a.app_date)==
+                foreach (var x in details.Where(a => DateTime.Parse(a.app_date) ==
                 DateTime.Parse(DateTime.Now.Date.ToString("yyyy-MM-dd")) && DateTime.Parse(a.Timeslot).CompareTo(
                     DateTime.Parse(DateTime.Now.TimeOfDay.ToString())) > 0
 
@@ -55,13 +55,71 @@ namespace DocApp.Data
 
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("Appointment details select exception="+e.Message);
+                System.Diagnostics.Debug.WriteLine("Appointment details select exception=" + e.Message);
             }
 
         }
-        public async Task GetAppointmentByID(string app_date,string time, IAppointmentCallback callback)
+
+        public async Task GetAppointmentByDoc(int p_id, int doc_id, IAppByDocCallback callback)
+        {
+            List<AppointmentDetails> results = new List<AppointmentDetails>();
+            try
+            {
+                if (DBHandler.db == null)
+                    DBHandler.DBConnection();
+                var apps = await DBHandler.db.Table<Appointment>().ToListAsync();
+                var docs = await DBHandler.db.Table<Doctor>().ToListAsync();
+                var hosp = await DBHandler.db.Table<Hospital>().ToListAsync();
+                var details = (from a in apps
+                               join d in docs
+                               on a.DOC_ID equals d.ID
+                               join h in hosp
+                               on a.HOS_ID equals h.ID
+                               where apps.Any(g => g.PATIENT_ID.Equals(doc_id) && g.DOC_ID.Equals(p_id))
+                               select new AppointmentDetails
+                               {
+                                   app_date = a.APP_DATE,
+                                   doc_name = d.Name,
+                                   hosp_name = h.Name,
+                                   id = a.ID,
+                                   location = h.Location,
+                                   Timeslot = a.start_time,
+                                   img = d.Image
+
+                               }
+                    ).OrderBy(x => x.app_date).ThenBy(x => x.Timeslot);
+                foreach (var x in details.Where(a => DateTime.Parse(a.app_date) >=
+                DateTime.Parse(DateTime.Now.Date.ToString("yyyy-MM-dd"))
+
+                ))
+                {
+                    //if (DateTime.Parse(x.app_date) == DateTime.Parse(DateTime.Now.Date.ToString("yyyy-MM-dd")))
+                    //{
+                    //    if (DateTime.Parse(x.Timeslot).CompareTo(DateTime.Parse(DateTime.Now.TimeOfDay.ToString())) < 0)
+                    //        continue;
+
+                    //}
+                    //x.app_date = DateTime.ParseExact(x.app_date, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
+                    if(x)
+                    results.Add(x);
+                }
+                if (results != null)
+                    callback.AppByDocSuccess(results);
+                else
+                    callback.AppByDocFail();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Appointment details select exception=" + e.Message);
+            }
+        }
+
+
+        public async Task GetAppointmentByID(string app_date, string time, IAppointmentCallback callback)
         {
             List<AppointmentDetails> results = new List<AppointmentDetails>();
             try
@@ -107,7 +165,8 @@ namespace DocApp.Data
 
         }
 
-        public async Task GetUpcomingApps(int p_id,IUpcomingAppCallback callback)
+
+        public async Task GetUpcomingApps(int p_id, IUpcomingAppCallback callback)
         {
             List<AppointmentDetails> results = new List<AppointmentDetails>();
             try
@@ -131,12 +190,12 @@ namespace DocApp.Data
                                    id = a.ID,
                                    location = h.Location,
                                    Timeslot = a.start_time,
-                                   img=d.Image
+                                   img = d.Image
 
                                }
                     ).OrderBy(x => x.app_date).ThenBy(x => x.Timeslot);
                 foreach (var x in details.Where(a => DateTime.Parse(a.app_date) >=
-                DateTime.Parse(DateTime.Now.Date.ToString("yyyy-MM-dd")) 
+                DateTime.Parse(DateTime.Now.Date.ToString("yyyy-MM-dd"))
 
                 ))
                 {
@@ -144,7 +203,7 @@ namespace DocApp.Data
                     {
                         if (DateTime.Parse(x.Timeslot).CompareTo(DateTime.Parse(DateTime.Now.TimeOfDay.ToString())) < 0)
                             continue;
-                        
+
                     }
                     //x.app_date = DateTime.ParseExact(x.app_date, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
                     results.Add(x);
@@ -163,3 +222,4 @@ namespace DocApp.Data
         }
     }
 }
+

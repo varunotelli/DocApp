@@ -31,6 +31,9 @@ using Windows.UI.Xaml.Navigation;
  *@todo Fix rebook functionality 
  *@todo Add rebook for dashboard
  *@todo SplitView for Hospitals
+ * @todo add back button for all pages
+ * @todo make new page for hospital
+ * @todo fix appointments with doctor tab
  */
 
 namespace DocApp.Presentation.Views
@@ -378,7 +381,7 @@ namespace DocApp.Presentation.Views
                 {
                     name = viewModel.loc,
                     mp = this,
-                    index = 0,
+                    index = 1,
                     doc = true
 
                 });
@@ -387,7 +390,7 @@ namespace DocApp.Presentation.Views
                 {
                     name = viewModel.loc,
                     mp = this,
-                    index = 0,
+                    index = 1,
                     doc = false
 
                 });

@@ -26,7 +26,7 @@ namespace DocApp.Presentation.ViewModels
             hosps = new ObservableCollection<Hospital>();
             hospsmain = new ObservableCollection<Hospital>();
             Doctors = new ObservableCollection<DoctorInHospitalDetails>();
-            
+            details = new ObservableCollection<AppointmentDetails>();
             hospital = new Hospital();
         }
 

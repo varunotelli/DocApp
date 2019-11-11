@@ -24,6 +24,7 @@
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
         </Style>
         <conv:TwelveHourConverter x:Key="TwelveHourTime"/>
+        <conv:DateFormatConverter x:Key="DateFormatConv"/>
     </Page.Resources>
 
     <Grid Width="1200">
@@ -208,6 +209,25 @@
                                 </ItemsControl>
                             </Grid>
 
+                        </controls:TabViewItem>
+                        <controls:TabViewItem Header="Appointments" Icon="Calendar" x:Name="AppTab">
+                            <StackPanel>
+                                <TextBlock FontSize="28" FontWeight="Bold">Your Appointments</TextBlock>
+                                <ListView ItemsSource="{x:Bind viewModel.details,Mode=TwoWay}" HorizontalAlignment="Stretch">
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel Orientation="Vertical"/>
+                                        </ItemsPanelTemplate>
+
+                                    </ListView.ItemsPanel>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="data:AppointmentDetails">
+                                            <uc:AppTabTemplate HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
+                            </StackPanel>
                         </controls:TabViewItem>
 
                     </controls:TabView>
