@@ -339,8 +339,7 @@ namespace DocApp.Presentation.Views
         {
             
             dialog.YesClicked += this.onYesClicked;
-            if(!dialog.flag)
-                await dialog.ShowAsync();
+            await dialog.ShowAsync();
            
             
         }
@@ -392,6 +391,26 @@ namespace DocApp.Presentation.Views
                     doc = false
 
                 });
+        }
+
+        private void LocationCheck_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var temp = sender as CheckBox;
+            bool val = temp.IsChecked.HasValue ? temp.IsChecked.Value : false;
+            if(val)
+            {
+                locstack.Visibility = Visibility.Collapsed;
+                locstack2.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                locstack2.Visibility = Visibility.Collapsed;
+                locstack.Visibility = Visibility.Visible;
+                viewModel.loc = "Chennai";
+                onLocationButtonClicked("Chennai");
+            }
+
+
         }
     }
 }

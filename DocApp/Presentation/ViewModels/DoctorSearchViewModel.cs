@@ -140,7 +140,7 @@ namespace DocApp.Presentation.ViewModels
 
         public async Task GetDoctorsByDept(string location, int dept, int lexp=-1, int uexp=200,  int rating=-1)
         {
-            UseCaseBase getDocs = new GetDoctorByDeptLocationUseCase(location, dept+1,lexp, uexp, rating);
+            UseCaseBase getDocs = new GetDoctorByDeptLocationUseCase(location, dept,lexp, uexp, rating);
             getDocs.SetCallBack<IDoctorDeptLocationViewCallback>(this);
             await getDocs.Execute();
         }
@@ -154,7 +154,7 @@ namespace DocApp.Presentation.ViewModels
 
         public async Task GetHospitalByDept(string location, int dept)
         {
-            UseCaseBase getHosp = new GetHospitalByDeptUseCase(location.ToUpper(), dept + 1);
+            UseCaseBase getHosp = new GetHospitalByDeptUseCase(location.ToUpper(), dept);
             getHosp.SetCallBack<IHospitalByDeptViewCallback>(this);
             await getHosp.Execute();
         }
@@ -197,7 +197,7 @@ namespace DocApp.Presentation.ViewModels
 
         public bool DepartmentDataReadSuccess(List<Department> d)
         {
-            
+            deptnames.Add("ALL");
             foreach (var x in d)
                 deptnames.Add(x.name);
             return true;
@@ -224,9 +224,10 @@ namespace DocApp.Presentation.ViewModels
             //docs = new ObservableCollection<Doctor>();
             
             docs.Clear();
+            
             foreach (var x in doctors)
                 docs.Add(x);
-            
+            onDoctorsSuccess();
             return true;
         }
 

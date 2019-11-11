@@ -362,9 +362,16 @@ namespace DocApp.Presentation.Views
             if (myListView.SelectedIndex==-1)
                 mySplitView.IsPaneOpen = false;
             if (MainTabs.SelectedIndex == 0)
-                await viewModel.GetDoctorsByDept(address, select,lexp,uexp,rating);
+            {
+                await viewModel.GetDoctorsByDept(address, select, lexp, uexp, rating);
+               
+            }
+                
             else if (MainTabs.SelectedIndex == 1)
+            {
                 await viewModel.GetHospitalByDept(address, select);
+                
+            }
             
             //Bindings.Update();
         }
@@ -554,7 +561,8 @@ namespace DocApp.Presentation.Views
             if (MainTabs.SelectedIndex == 0)
             {
                 ExpStack.Visibility = Visibility.Visible;
-                await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex,lexp,uexp,rating);
+                await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex, lexp, uexp, rating);
+                
                 //await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
             }
             else if (MainTabs.SelectedIndex == 1)
@@ -641,6 +649,7 @@ namespace DocApp.Presentation.Views
             RatingListBox.SelectedIndex = -1;
             rating = -1;
             await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex, lexp, uexp, rating);
+            
             //viewModel.docsmain.Clear();
             //if (docorderby == 0)
             //    foreach (var i in viewModel.docs.Where(d => d.Experience >= lexp &&
@@ -701,6 +710,13 @@ namespace DocApp.Presentation.Views
         private  void MainTabs_Loaded(object sender, RoutedEventArgs e)
         {
            // await viewModel.GetDoctorsByDept("Chennai".ToUpper(), 0);
+        }
+
+        private void AllClear_Click(object sender, RoutedEventArgs e)
+        {
+            DeptListbox.SelectedIndex = 0;
+            RatingClearBtn_Click(null, null);
+            ExpClearBtn_Click(null, null);
         }
 
         private async void TenyearExp_Checked(object sender, RoutedEventArgs e)

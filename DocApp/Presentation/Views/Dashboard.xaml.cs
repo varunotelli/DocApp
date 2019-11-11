@@ -672,6 +672,7 @@ namespace DocApp.Presentation.Views
                 
             };
             bookSuccess.ButtonClicked += this.onOKButtonClicked;
+            AppStack.Visibility = Visibility.Visible;
             await bookSuccess.ShowAsync();
         }
 

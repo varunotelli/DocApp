@@ -116,11 +116,16 @@ namespace DocApp.Data
 
                 //var db = await dbHandler.DBConnection();
                 DBHandler.DBConnection();
-                results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL WHERE ID IN(" +
-                    "SELECT HOSP_ID FROM ROSTER GROUP BY DOC_ID HAVING DOC_ID IN(" +
-                    "SELECT ID FROM DOCTOR WHERE DEPT_ID={0})" +
-                    "AND COUNT(*)>0) AND LOCATION='{1}'", dept_id,location)
-                    );
+                if(dept_id>0)
+                    results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL WHERE ID IN(" +
+                        "SELECT HOSP_ID FROM ROSTER GROUP BY DOC_ID HAVING DOC_ID IN(" +
+                        "SELECT ID FROM DOCTOR WHERE DEPT_ID={0})" +
+                        "AND COUNT(*)>0) AND LOCATION='{1}'", dept_id,location)
+                        );
+                else
+                    results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL WHERE ID IN(" +
+                        "SELECT HOSP_ID FROM ROSTER GROUP BY DOC_ID HAVING COUNT(*)>0) AND LOCATION='{1}'", dept_id, location)
+                        );
                 System.Diagnostics.Debug.WriteLine("results=" + results.Count());
                 if (results != null)
                 {

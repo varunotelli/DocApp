@@ -31,16 +31,16 @@
 
 
             <Style x:Key="AutoboxStyle1" TargetType="TextBox" >
-            <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Height" Value="40"/>
-            <!--<Setter Property="CornerRadius" Value="30,0,0,30"/>-->
-            <Setter Property="Padding" Value="20,10,20,10"/>
-            <Setter Property="PlaceholderForeground" Value="Black"/>
-            <!--<Setter Property="FontWeight" Value=""/>-->
-            <!--<Setter Property="Margin" Value="20,0,20,0"/>-->
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
-            <!--<Setter Property="Foreground" Value="Black"/>-->
+                <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Height" Value="40"/>
+                <!--<Setter Property="CornerRadius" Value="30,0,0,30"/>-->
+                <Setter Property="Padding" Value="20,10,20,10"/>
+                <Setter Property="PlaceholderForeground" Value="Black"/>
+                <!--<Setter Property="FontWeight" Value=""/>-->
+                <!--<Setter Property="Margin" Value="20,0,20,0"/>-->
+                <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                <!--<Setter Property="Foreground" Value="Black"/>-->
 
 
 
@@ -63,17 +63,18 @@
             </Style>
             <Style x:Key="AutoListStyle" TargetType="ListViewItem">
                 <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+
+
+
+            </Style>
             
 
-        </Style>
-           
         </ResourceDictionary>
 
     </Page.Resources>
-    
+
     <!--<Page.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FF080808" Offset="0.688"/>
@@ -81,8 +82,8 @@
         </LinearGradientBrush>
     </Page.Background>-->
 
-    
-        <StackPanel x:Name="MainStack" Margin="0,10,0,0">
+
+    <StackPanel x:Name="MainStack" Margin="0,10,0,0">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="Phone">
@@ -110,7 +111,7 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="800"/>
                     </VisualState.StateTriggers>
-                    
+
                 </VisualState>
                 <VisualState x:Name="Desktop">
                     <VisualState.StateTriggers>
@@ -124,7 +125,7 @@
         <!--<HyperlinkButton x:Name="BackButton" RelativePanel.AlignLeftWithPanel="True" Margin="10,10" Click="BackButton_Click">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE016;" FontSize="24"/>
             </HyperlinkButton>-->
-            <!--<HyperlinkButton x:Name="ForwardButton" RelativePanel.RightOf="BackButton" Margin="5,10" Click="ForwardButton_Click">
+        <!--<HyperlinkButton x:Name="ForwardButton" RelativePanel.RightOf="BackButton" Margin="5,10" Click="ForwardButton_Click">
                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE017;" FontSize="24"/>
             </HyperlinkButton>-->
         <Grid HorizontalAlignment="Stretch">
@@ -165,7 +166,7 @@
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </StackPanel>
-                        
+
                     </Popup>
                 </StackPanel>
                 <SplitView x:Name="MySplitView_Main" IsPaneOpen="False" DisplayMode="Overlay" OpenPaneLength="400" 
@@ -180,7 +181,12 @@
                                 </Ellipse>
                                 <StackPanel>
                                     <TextBlock FontSize="28" Margin="10,0" Foreground="White">Suresh</TextBlock>
-                                    <StackPanel Orientation="Vertical" >
+                                    <StackPanel x:Name="locstack" Orientation="Horizontal" >
+                                        <TextBlock Margin="10,0" Foreground="White">Using Location:</TextBlock>
+                                        <TextBlock Text="{x:Bind viewModel.loc, Mode=TwoWay}" Margin="0,0" Foreground="White"/>
+                                        
+                                    </StackPanel>
+                                    <StackPanel x:Name="locstack2" Orientation="Vertical" Visibility="Collapsed" >
                                         <Grid>
                                             <AutoSuggestBox x:Name="MyAutoSuggest" 
                                                     PlaceholderText="{x:Bind viewModel.loc, Mode=TwoWay}" 
@@ -213,12 +219,14 @@
                                         </Button>
 
                                     </StackPanel>
+                                    <CheckBox  x:Name="LocationCheck" Margin="10,0" Foreground="White"
+                                                  Content="Change default location" Tapped="LocationCheck_Tapped" RequestedTheme="Dark"/>
                                 </StackPanel>
                             </StackPanel>
-                            
-                            
-                                
-                                <!--<StackPanel Orientation="Horizontal"  Margin="0,0,30,-3" HorizontalAlignment="Right">
+
+
+
+                            <!--<StackPanel Orientation="Horizontal"  Margin="0,0,30,-3" HorizontalAlignment="Right">
                                     <HyperlinkButton Name="Dashboardbtn" BorderThickness="0,0,0,1" Padding="0" Click="Dashboardbtn_Click"
                                  Margin="0,0,10,0">
                                         <TextBlock Text="Dashboard" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" 
@@ -234,26 +242,29 @@
                                      FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" Margin="20"
                                      SelectionChanged="MyListBox_SelectionChanged" FontSize="16" Foreground="White" 
                                      ItemContainerStyle="{StaticResource ListBoxItemStyle2}">
-                                
+
                                 <ListBoxItem >Dashboard</ListBoxItem>
                                 <ListBoxItem >Appointments</ListBoxItem>
                                 <ListBoxItem>Doctors</ListBoxItem>
                                 <ListBoxItem >Hospitals</ListBoxItem>
                             </ListBox>
-                           
+
                         </StackPanel>
-                        
+
                     </SplitView.Pane>
                     <SplitView.Content>
+
                         <Grid HorizontalAlignment="Stretch">
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                 <Frame x:Name="myFrame" VerticalAlignment="Stretch"
-                                       HorizontalAlignment="Stretch" Margin="-20,10">
+                                       HorizontalAlignment="Center" Margin="-0,10">
 
                                 </Frame>
                             </StackPanel>
                         </Grid>
-                        
+
+
+
                     </SplitView.Content>
                 </SplitView>
 
@@ -270,10 +281,6 @@
                    Foreground="White"  FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" Margin="0,20">
             CONNECTING</TextBlock>
             </StackPanel>
-           
         </Grid>
-         
     </StackPanel>
-    
-
 </Page>

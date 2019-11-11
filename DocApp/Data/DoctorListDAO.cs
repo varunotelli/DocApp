@@ -208,12 +208,20 @@ namespace DocApp.Data
             List<Doctor> results = new List<Doctor>();
             try
             {
-                results = await DBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR " +
-                "WHERE ID IN (" +
-                "SELECT DOC_ID FROM ROSTER WHERE HOSP_ID IN(" +
-                "SELECT ID FROM HOSPITAL WHERE LOCATION='{0}')" +
-                ")" +
-                "AND DEPT_ID ={1} AND EXPERIENCE >= {2} AND EXPERIENCE <= {3} AND RATING >= {4}", location, dept,lexp,uexp,rating));
+                if(dept>0)
+                    results = await DBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR " +
+                    "WHERE ID IN (" +
+                    "SELECT DOC_ID FROM ROSTER WHERE HOSP_ID IN(" +
+                    "SELECT ID FROM HOSPITAL WHERE LOCATION='{0}')" +
+                    ")" +
+                    "AND DEPT_ID ={1} AND EXPERIENCE >= {2} AND EXPERIENCE <= {3} AND RATING >= {4}", location, dept,lexp,uexp,rating));
+                else
+                    results = await DBHandler.db.QueryAsync<Doctor>(String.Format("SELECT * FROM DOCTOR " +
+                    "WHERE ID IN (" +
+                    "SELECT DOC_ID FROM ROSTER WHERE HOSP_ID IN(" +
+                    "SELECT ID FROM HOSPITAL WHERE LOCATION='{0}')" +
+                    ")" +
+                    " AND EXPERIENCE >= {2} AND EXPERIENCE <= {3} AND RATING >= {4}", location, dept, lexp, uexp, rating));
                 System.Diagnostics.Debug.WriteLine("Results val=" + results.Count);
             }
             catch(Exception e)

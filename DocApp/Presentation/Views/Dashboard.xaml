@@ -390,6 +390,7 @@
                            FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
                                     <ListView  ItemsSource="{x:Bind viewModel.appointments, Mode=OneWay}" 
                       GotFocus="ListView_GotFocus" BorderBrush="DimGray" BorderThickness="1">
+                                        
                                         <ListView.ItemContainerStyle>
                                             <Style TargetType="ListViewItem">
                                                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -453,6 +454,12 @@
                                         <ListView.ItemContainerTransitions>
                                             <TransitionCollection/>
                                         </ListView.ItemContainerTransitions>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel Orientation="Vertical"/>
+                                            </ItemsPanelTemplate>
+
+                                        </ListView.ItemsPanel>
                                         <ListView.ItemTemplate>
                                             <DataTemplate x:DataType="data:Doctor">
                                                 <!--<StackPanel Orientation="Horizontal" Margin="10">
