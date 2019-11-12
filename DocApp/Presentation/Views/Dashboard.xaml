@@ -385,7 +385,7 @@
                                        >No Activity Yet!</TextBlock>
                             
                             <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
-                                <StackPanel Margin="10"  Grid.Row="0" VerticalAlignment="Top"
+                                <StackPanel Margin="10"  Grid.Row="0" VerticalAlignment="Top" 
                                     Padding="5"  x:Name="AppStack" Height="Auto">
                                     <TextBlock Text="Today's Appointments" FontSize="20" HorizontalAlignment="Center"
                            FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>

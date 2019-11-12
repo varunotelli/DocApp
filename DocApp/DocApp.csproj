@@ -293,6 +293,9 @@
     <Compile Include="Presentation\Views\DialogBoxes\LocationRequestDialog.xaml.cs">
       <DependentUpon>LocationRequestDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Views\DoctorSearchFrame.xaml.cs">
+      <DependentUpon>DoctorSearchFrame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\DoctorSearchResultView.xaml.cs">
       <DependentUpon>DoctorSearchResultView.xaml</DependentUpon>
     </Compile>
@@ -302,7 +305,8 @@
     <Compile Include="Presentation\Views\HospitalSearchResultView.xaml.cs">
       <DependentUpon>HospitalSearchResultView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Views\INavEvents.cs" />
+    <Compile Include="Presentation\Views\ViewInterfaces\IFrames.cs" />
+    <Compile Include="Presentation\Views\ViewInterfaces\INavEvents.cs" />
     <Compile Include="Presentation\Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -472,6 +476,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\DialogBoxes\LocationRequestDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\DoctorSearchFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

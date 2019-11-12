@@ -176,21 +176,7 @@
                 <VisualState x:Name="Phone">
                     <VisualState.Setters>
                         <Setter Target="OrderCombo.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
-                        <Setter Target="Book_Pop.HorizontalOffset" Value="-50"/>
-                        <Setter Target="SidePanel.Width" Value="150"/>
-                        <Setter Target="TenyearExp.FontSize" Value="12"/>
-                        <Setter Target="FiveYearExp.FontSize" Value="12"/>
-                        <Setter Target="OneYearExp.FontSize" Value="12"/>
-                        <Setter Target="image.(FrameworkElement.Width)" Value="50"/>
-                        <Setter Target="image.(FrameworkElement.Height)" Value="50"/>
-                        <Setter Target="textBlock.(TextBlock.FontSize)" Value="16"/>
-                        <Setter Target="image1.(FrameworkElement.Width)" Value="50"/>
-                        <Setter Target="image1.(FrameworkElement.Height)" Value="50"/>
-                        <Setter Target="textBlock1.(TextBlock.FontSize)" Value="16"/>
-                        <Setter Target="itemsControl.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
-                        <Setter Target="PostBtn.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
-                        <Setter Target="mySplitView.OpenPaneLength" Value="300"/>
-                        <Setter Target="myHospSplitView.OpenPaneLength" Value="300"/>
+                        
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="400"/>
@@ -202,9 +188,9 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="OrderCombo.(FrameworkElement.HorizontalAlignment)" Value="Left"/>
-                        <Setter Target="Book_Pop.HorizontalOffset" Value="50"/>
+                        <!--<Setter Target="Book_Pop.HorizontalOffset" Value="50"/>
                         <Setter Target="mySplitView.OpenPaneLength" Value="400"/>
-                        <Setter Target="myHospSplitView.OpenPaneLength" Value="400"/>
+                        <Setter Target="myHospSplitView.OpenPaneLength" Value="400"/>-->
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Desktop">
@@ -218,12 +204,13 @@
             
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid  Background="#263440" Padding="15" Margin="0,0,0,0">
+        <Grid Background="#263440" Padding="15" Margin="0,0,0,0">
             <Grid.RowDefinitions>
-                
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="#263440" Margin="0,-10,0,0" VerticalAlignment="Top">
-                <Button FontFamily="Segoe MDL2 Assets"   BorderThickness="0.5"
+                <Button FontFamily="Segoe MDL2 Assets" Margin="10"   BorderThickness="0.5"
                                         BorderBrush="White" Foreground="White"
                                         Background="Transparent" ToolTipService.ToolTip="Filter">
                     <Button.Content>
@@ -290,181 +277,19 @@
                     </Button.Flyout>
                 </Button>
                 <!--<cont:ComboBoxControl  x:Name="OrderCombo"/>-->
+                <cont:ComboBoxControl  x:Name="OrderCombo" Margin="10"/>
             </StackPanel>
+            <Frame x:Name="myFrame" HorizontalAlignment="Stretch" Grid.Row="1"/>
 
         </Grid>
-        <Popup x:Name="Book_Pop" 
-                    IsOpen="False" 
-                    Opened="Book_Pop_Opened"
-                    Closed="Book_Pop_Closed"
-                    IsLightDismissEnabled="True"
-                    VerticalOffset="300"
-                    HorizontalOffset="700"
-                    Margin="10,10"
-                    HorizontalAlignment="Right"
-                    LightDismissOverlayMode="On"
-                   Visibility="Collapsed"
-                   RequestedTheme="Dark"
-                           
-                           >
-            <StackPanel Background="#3b5163" Height="200" Width="300" VerticalAlignment="Center" BorderThickness="1"
-                                            BorderBrush="White" CornerRadius="10">
-
-                <CalendarDatePicker x:Name="Appointment_Date" PlaceholderText="Choose your Appointment Date" 
-                FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14" Margin="10,10" HorizontalAlignment="Center"
-                                BorderThickness="0.5" DateChanged="Appointment_Date_DateChanged" RequestedTheme="Light">
-                    <CalendarDatePicker.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="Appointment Date" FontSize="18" Margin="5,0"/>
-                        </DataTemplate>
-                    </CalendarDatePicker.HeaderTemplate>
-                </CalendarDatePicker>
-                <ComboBox x:Name="TimeSlotBox" ItemsSource="{x:Bind viewModel.timeslots,Mode=OneWay}" Margin="10,10"
-                                  FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14"
-                                  DropDownOpened="TimeSlotBox_DropDownOpened" BorderThickness="0.5" HorizontalAlignment="Center"
-                                  SelectionChanged="TimeSlotBox_SelectionChanged" PlaceholderText="Time Slot" RequestedTheme="Light">
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="ComboBoxItem">
-                            <Setter Property="IsEnabled" Value="{Binding en,Mode=TwoWay}"/>
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="data:Roster" x:Name="TimeSlotComboItem">
-                            <TextBlock x:Name="TimeSlotText" Loaded="TimeSlotText_Loaded">
-                                <Run Text="{x:Bind start_time,Converter={StaticResource TwelveHourTime}}"/>
-                                <Run x:Name="TextSlotRun" Text="{x:Bind sys:String.Format('({0} vacancies)',val)}"/>
-                            </TextBlock>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <Button Style="{StaticResource ButtonStyle1}" x:Name="BookButton"  Content="BOOK" Margin="10,10" 
-                           FontStretch="ExtraExpanded" Click="BookButton_Click"   
-                        FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
-                            FontSize="12" HorizontalAlignment="Center" RequestedTheme="Dark"/>
-            </StackPanel>
-        </Popup>
+       
 
 
 
 
-        <controls:TabView x:Name="MainTabs" Grid.Row="1" Background="White" SelectionChanged="MainTabs_SelectionChanged"
-                          Loaded="MainTabs_Loaded">
-            <controls:TabViewItem Header="Doctors" Foreground="White">
-                <SplitView x:Name="mySplitView" DisplayMode="Inline" 
-                            PanePlacement="Right" OpenPaneLength="800" PaneOpened="MySplitView_PaneOpened"
-                            >
-                    <SplitView.Content>
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top"  >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <!--<Button FontFamily="Segoe MDL2 Assets" FontSize="18" Content="&#xE71C;" BorderThickness="0.5"
-                                        BorderBrush="Black"
-                                        Background="Transparent">
-                                    <Button.Flyout>
-                                        <Flyout Placement="Bottom">
-                                            <StackPanel VerticalAlignment="Stretch" Margin="0,0,0,0">
-                                                <TextBlock  Text="DEPARTMENTS" Margin="10,10,0,10" Foreground="Black"
-                                                    FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
-                                                <ListBox x:Name="DeptListbox" ItemsSource="{x:Bind viewModel.deptnames}" 
-                                                         VerticalAlignment="Stretch" Margin="0,0,0,10"
-                                                         ItemContainerStyle="{StaticResource ListBoxItemStyle2}" 
-                                                         SelectionChanged="ListBox_SelectionChanged" >
-
-                                                </ListBox>
-                                                <TextBlock Text="Avg. Customer Review" FontWeight="Bold" Foreground="Black" Margin="10,0"/>
-                                                <HyperlinkButton x:Name="RatingClearBtn" Click="RatingClearBtn_Click" Margin="10,0">
-                                                    <TextBlock Text="Clear"/>
-                                                </HyperlinkButton>
-                                                <ListBox x:Name="RatingListBox"   Margin="5" SelectionMode="Single"
-                                                    SelectionChanged="RatingListBox_SelectionChanged" ItemContainerStyle="{StaticResource ListBoxItemStyle2}">
-                                                    
-                                                    <ListBoxItem>
-                                                        <RatingControl Value="4.0" IsReadOnly="True" Caption="&amp; Above"/>
-
-                                                    </ListBoxItem>
-                                                    <ListBoxItem>
-                                                        <RatingControl Value="3.0" IsReadOnly="True" Caption="&amp; Above"/>
-
-                                                    </ListBoxItem>
-                                                    <ListBoxItem>
-                                                        <RatingControl Value="2.0" IsReadOnly="True" Caption="&amp; Above"/>
-
-                                                    </ListBoxItem>
-                                                    <ListBoxItem>
-                                                        <RatingControl Value="1.0" IsReadOnly="True" Caption="&amp; Above"/>
-                                                    </ListBoxItem>
-                                                </ListBox>
-                                                <StackPanel x:Name="ExpStack">
-                                                    <TextBlock Text="Experience" FontWeight="Bold" Foreground="Black" Margin="10,0"/>
-                                                    <HyperlinkButton x:Name="ExpClearBtn" Click="ExpClearBtn_Click" Margin="10,0">
-                                                        <TextBlock>Clear</TextBlock>
-                                                    </HyperlinkButton>
-                                                    <StackPanel Margin="10,0" >
-                                                        <RadioButton x:Name="TenyearExp" Content="> 10 year exp" GroupName="ExpGroup" 
-                                                            Checked="TenyearExp_Checked"/>
-                                                        <RadioButton x:Name="FiveYearExp" Content="5-10 year exp" GroupName="ExpGroup" 
-                                                            Checked="TenyearExp_Checked"/>
-                                                        <RadioButton x:Name="OneYearExp" Content="&lt; 5 year exp" GroupName="ExpGroup" 
-                                                             Checked="TenyearExp_Checked"/>
-
-                                                    </StackPanel>
-                                                </StackPanel>
-
-
-                                            </StackPanel>
-                                        </Flyout>
-                                    </Button.Flyout>
-                                </Button>-->
-                                <cont:ComboBoxControl  x:Name="OrderCombo"/>
-                            </StackPanel>
-                            
-                            <ListView Grid.Row="1" x:Name="myListView"  HorizontalAlignment="Stretch" 
-                                      ItemsSource="{x:Bind viewModel.docsmain, Mode=TwoWay}" IsItemClickEnabled="True"
-                                      ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="ListView_ItemClick" 
-                                      SelectionChanged="MyListView_SelectionChanged" Height="650" 
-                                      >
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel Orientation="Vertical"/>
-                                    </ItemsPanelTemplate>
-
-                                </ListView.ItemsPanel>
-                                <ListView.ItemContainerTransitions>
-                                    <TransitionCollection/>
-                                </ListView.ItemContainerTransitions>
-                                <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="data:Doctor">
-                                        <uc:DoctorProfileLargeTemplate HorizontalAlignment="Stretch"/>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-
-                            </ListView>
-
-
-                        </Grid>
-                    </SplitView.Content>
-                    <SplitView.Pane>
-                        <StackPanel Padding="5" Background="White">
-                            <HyperlinkButton x:Name="CloseBtn" VerticalAlignment="Top"
-                                             FontFamily="Segoe MDL2 Assets" Click="CloseBtn_Click" Margin="20,0">
-                                <TextBlock Text="&#xE106;" FontSize="20"/>
-                            </HyperlinkButton>
-                            <Frame x:Name="MyFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-
-
-
-                        </StackPanel>
-                    </SplitView.Pane>
-                </SplitView>
-            </controls:TabViewItem>
-
-            <!--HOSPITAL TAB STARTS HERE-->
-
-            <controls:TabViewItem  Header="Hospitals" Foreground="White">
-                <SplitView x:Name="myHospSplitView" DisplayMode="Inline" 
+      
+        
+        <!--<SplitView x:Name="myHospSplitView" DisplayMode="Inline" 
                             PanePlacement="Right" OpenPaneLength="800" PaneOpened="MyHospSplitView_PaneOpened"
                             >
                     <SplitView.Content>
@@ -474,7 +299,7 @@
                             <ListView x:Name="myHospListView"  HorizontalAlignment="Stretch" 
                                       ItemsSource="{x:Bind viewModel.hospsmain, Mode=TwoWay}" IsItemClickEnabled="True"
                       ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="MyHospListView_ItemClick" 
-                                      SelectionChanged="MyListView_SelectionChanged" Height="700">
+                                       Height="700">
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <VirtualizingStackPanel Orientation="Vertical"/>
@@ -507,8 +332,8 @@
                                     </Image.Source>
                                 </Image>
 
-                                <!--<Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
-                       VerticalAlignment="Top" Margin="10"/>-->
+                                --><!--<Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
+                       VerticalAlignment="Top" Margin="10"/>--><!--
 
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
@@ -518,10 +343,10 @@
                                                        Margin="5"
                                     Caption="{x:Bind sys:String.Format('({0})',viewModel.hospital.Number_Of_Rating),Mode=OneWay}" 
                                     IsReadOnly="True" HorizontalAlignment="Left">
-                                            <!--<RatingControl.Resources>
+                                            --><!--<RatingControl.Resources>
                                             <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
 
-                                        </RatingControl.Resources>-->
+                                        </RatingControl.Resources>--><!--
                                         </RatingControl>
                                     </StackPanel>
 
@@ -532,15 +357,15 @@
 
                                     <RatingControl x:Name="myHospRating" ValueChanged="MyHospRating_ValueChanged"  Margin="10,5"
                             Caption="Your Rating" HorizontalAlignment="Left">
-                                        <!--<RatingControl.Resources>
+                                        --><!--<RatingControl.Resources>
                                         <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
 
-                                    </RatingControl.Resources>-->
+                                    </RatingControl.Resources>--><!--
                                     </RatingControl>
                                 </StackPanel>
 
                             </StackPanel>
-                            <!--START SCROLL HERE-->
+                            --><!--START SCROLL HERE--><!--
                             <ScrollViewer Height="510" HorizontalAlignment="Stretch" Background="#e6e6e6">
                                 <Grid HorizontalAlignment="Stretch">
                                     <Grid.RowDefinitions>
@@ -559,7 +384,7 @@
                         Text="{x:Bind sys:String.Format('Doctors working in {0}',viewModel.hospital.Name),Mode=OneWay}"/>
                                             <ListView x:Name="DocList" ItemsSource="{x:Bind viewModel.Doctors,Mode=TwoWay}" 
                                   IsItemClickEnabled="True"  Grid.Row="1" ScrollViewer.VerticalScrollMode="Disabled"
-                                          ItemClick="DocList_ItemClick" HorizontalAlignment="Stretch">
+                                           HorizontalAlignment="Stretch">
                                                 <ListView.ItemContainerStyle>
                                                     <Style TargetType="ListViewItem">
                                                         <Setter Property="Margin" Value="10,10"/>
@@ -584,15 +409,15 @@
                                 </Grid>
                             </ScrollViewer>
 
-                            <!--END SCROLL HERE-->
+                            --><!--END SCROLL HERE--><!--
 
 
 
                         </StackPanel>
                     </SplitView.Pane>
-                </SplitView>
-            </controls:TabViewItem>
-        </controls:TabView>
+                </SplitView>-->
+            <!--</controls:TabViewItem>-->
+        <!--</controls:TabView>-->
 
     </Grid>
 
