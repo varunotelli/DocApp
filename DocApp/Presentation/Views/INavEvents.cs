@@ -8,5 +8,6 @@ namespace DocApp.Presentation.Views
 {
     public interface INavEvents
     {
+        void onDoctorUpdateSuccess(object sender, UpdateDocEventArgs args);
     }
 }

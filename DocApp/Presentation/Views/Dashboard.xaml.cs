@@ -25,7 +25,7 @@ namespace DocApp.Presentation.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Dashboard : Page
+    public sealed partial class Dashboard : Page,INavEvents
     {
         DashboardViewModel viewModel;
         MainPage mainPage;
@@ -683,7 +683,9 @@ namespace DocApp.Presentation.Views
             Bindings.Update();
         }
 
-
-
+        public void onDoctorUpdateSuccess(object sender, UpdateDocEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

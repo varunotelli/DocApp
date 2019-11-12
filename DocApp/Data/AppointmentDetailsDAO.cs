@@ -62,22 +62,22 @@ namespace DocApp.Data
 
         }
 
-        public async Task GetAppointmentByDoc(int p_id, int doc_id, IAppByDocCallback callback)
+        public async Task GetAppointmentByDoc(int doc_id, int p_id, IAppByDocCallback callback)
         {
             List<AppointmentDetails> results = new List<AppointmentDetails>();
             try
             {
                 if (DBHandler.db == null)
                     DBHandler.DBConnection();
-                var apps = await DBHandler.db.Table<Appointment>().ToListAsync();
-                var docs = await DBHandler.db.Table<Doctor>().ToListAsync();
+                var apps = await DBHandler.db.Table<Appointment>().Where(d => d.DOC_ID == doc_id).ToListAsync();
+                var docs = await DBHandler.db.Table<Doctor>().Where(d=> d.ID == doc_id).ToListAsync();
                 var hosp = await DBHandler.db.Table<Hospital>().ToListAsync();
                 var details = (from a in apps
                                join d in docs
                                on a.DOC_ID equals d.ID
                                join h in hosp
                                on a.HOS_ID equals h.ID
-                               where apps.Any(g => g.PATIENT_ID.Equals(doc_id) && g.DOC_ID.Equals(p_id))
+                               where apps.Any(g => g.PATIENT_ID.Equals(p_id) )
                                select new AppointmentDetails
                                {
                                    app_date = a.APP_DATE,
@@ -95,14 +95,13 @@ namespace DocApp.Data
 
                 ))
                 {
-                    //if (DateTime.Parse(x.app_date) == DateTime.Parse(DateTime.Now.Date.ToString("yyyy-MM-dd")))
-                    //{
-                    //    if (DateTime.Parse(x.Timeslot).CompareTo(DateTime.Parse(DateTime.Now.TimeOfDay.ToString())) < 0)
-                    //        continue;
+                    if (DateTime.Parse(x.app_date) == DateTime.Parse(DateTime.Now.Date.ToString("yyyy-MM-dd")))
+                    {
+                        if (DateTime.Parse(x.Timeslot).CompareTo(DateTime.Parse(DateTime.Now.TimeOfDay.ToString())) < 0)
+                            continue;
 
-                    //}
+                    }
                     //x.app_date = DateTime.ParseExact(x.app_date, "yyyy-MM-dd", null).ToString("dd/MM/yyyy");
-                    if(x)
                     results.Add(x);
                 }
                 if (results != null)

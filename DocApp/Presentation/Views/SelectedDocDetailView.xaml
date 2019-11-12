@@ -25,6 +25,8 @@
         </Style>
         <conv:TwelveHourConverter x:Key="TwelveHourTime"/>
         <conv:DateFormatConverter x:Key="DateFormatConv"/>
+        
+        
     </Page.Resources>
 
     <Grid Width="1200">
@@ -63,7 +65,7 @@
                         </Style>
                     </ComboBox.ItemContainerStyle>
                     <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="data:Roster" x:Name="TimeSlotComboItem">
+                        <DataTemplate x:DataType="data:Roster" >
                             <TextBlock x:Name="TimeSlotText" Loaded="TimeSlotText_Loaded">
                                 <Run Text="{x:Bind start_time,Converter={StaticResource TwelveHourTime}}"/>
                                 <Run x:Name="TextSlotRun" Text="{x:Bind sys:String.Format('({0} vacancies)',val)}"/>
@@ -77,6 +79,56 @@
                             FontSize="12" HorizontalAlignment="Center" RequestedTheme="Dark"/>
             </StackPanel>
         </Popup>
+        <Popup x:Name="Res_Pop" 
+                    IsOpen="False" 
+                    Opened="Res_Pop_Opened"
+                    Closed="Res_Pop_Closed"
+                    IsLightDismissEnabled="True"
+                    VerticalOffset="300"
+                    HorizontalOffset="250"
+                    Margin="10,10"
+                    LightDismissOverlayMode="On"
+                   Visibility="Collapsed"
+                   RequestedTheme="Dark"
+                           
+                           >
+            <StackPanel Background="#3b5163" Height="300" Width="300" VerticalAlignment="Center" BorderThickness="1"
+                                            BorderBrush="White" >
+                <TextBlock HorizontalAlignment="Center">Book Appointment</TextBlock>
+                <CalendarDatePicker x:Name="App_Date" PlaceholderText="Choose your Appointment Date" 
+                FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14" Margin="10,10" HorizontalAlignment="Center"
+                                BorderThickness="0.5" DateChanged="App_Date_DateChanged" RequestedTheme="Light">
+                    <CalendarDatePicker.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Appointment Date" FontSize="18" Margin="5,0"/>
+                        </DataTemplate>
+                    </CalendarDatePicker.HeaderTemplate>
+                </CalendarDatePicker>
+                <ComboBox x:Name="Res_TimeSlotBox" ItemsSource="{x:Bind viewModel.timeslots,Mode=OneWay}" Margin="10,10"
+                                  FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14"
+                                  DropDownOpened="Res_TimeSlotBox_DropDownOpened" BorderThickness="0.5" HorizontalAlignment="Center"
+                                  SelectionChanged="Res_TimeSlotBox_SelectionChanged" PlaceholderText="Time Slot" RequestedTheme="Light">
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem">
+                            <Setter Property="IsEnabled" Value="{Binding en,Mode=TwoWay}"/>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="data:Roster" x:Name="TimeSlotComboItem">
+                            <TextBlock x:Name="TimeSlotText" Loaded="TimeSlotText_Loaded">
+                                <Run Text="{x:Bind start_time,Converter={StaticResource TwelveHourTime}}"/>
+                                <Run x:Name="TextSlotRun" Text="{x:Bind sys:String.Format('({0} vacancies)',val)}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button Style="{StaticResource ButtonStyle1}" x:Name="ResButton"  Content="RESCHEDULE" Margin="10,10" 
+                           FontStretch="ExtraExpanded" Click="ResButton_Click"   
+                        FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
+                            FontSize="12" HorizontalAlignment="Center" RequestedTheme="Dark"/>
+            </StackPanel>
+        </Popup>
+
         <StackPanel Padding="5" Background="White">
             <cont:BackButtonControl x:Name="Backbtn" Margin="0,0,20,0"/>
             <StackPanel Orientation="Horizontal">
@@ -222,7 +274,8 @@
                                     </ListView.ItemsPanel>
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="data:AppointmentDetails">
-                                            <uc:AppTabTemplate HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                            <uc:AppTabTemplate HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                                               Loaded="AppTabTemplate_Loaded" />
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>

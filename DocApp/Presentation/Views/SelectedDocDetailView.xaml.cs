@@ -37,7 +37,8 @@ namespace DocApp.Presentation.Views
         SelectedDoctorViewModel viewModel;
         
         string app_date, time;
-        int id,hosp_id;
+        int id,hosp_id,app_id;
+        AppointmentDetails app_temp;
         bool en;
         HospitalDoctorView view;
         public delegate void UpdateEventHandler(object source, UpdateDocEventArgs args);
@@ -62,7 +63,8 @@ namespace DocApp.Presentation.Views
             viewModel.AppointmentRead += this.onAppointmentRead;
             viewModel.DoctorRatingUpdateSuccess += this.onDoctorRatingUpdateSucess;
             viewModel.TestimonialAddedSuccess += this.onTestAddedSuccess;
-            
+            viewModel.AppRead += this.onAppReadSuccess;
+            viewModel.AppointmentUpdated+=this.onAppUpdateSuccess;
             viewModel.AppointmentCheckSuccess += this.onAppCheckSuccess;
             if (temp.vis == 0)
                 Backbtn.Visibility = Visibility.Collapsed;
@@ -80,7 +82,24 @@ namespace DocApp.Presentation.Views
             HospList.SelectedItem = ((FrameworkElement)source).DataContext;
         }
 
-        private async void onAppCheckSuccess(object source, EventArgs e)
+
+        public async void onAppUpdateSuccess(object souce, EventArgs args)
+        {
+            AppointmentBookSuccess bookSuccess = new AppointmentBookSuccess()
+            {
+                Title = "Appointment Rescheduled",
+                Content = String.Format("Appointment booked with Dr. {0} in {1},{2} is rescheduled on {3} at {4}",
+                app_temp.doc_name, app_temp.hosp_name, app_temp.location, app_date, time),
+
+            };
+            //bookSuccess.ButtonClicked += this.onOKButtonClicked;
+            //await viewModel.GetAppointments(1);
+
+            app_date = viewModel.app_vals.APP_DATE;
+            await bookSuccess.ShowAsync();
+        }
+
+        public async void onAppCheckSuccess(object source, EventArgs args)
         {
             if (viewModel.ct > 0)
             {
@@ -88,14 +107,26 @@ namespace DocApp.Presentation.Views
                 {
                     Title = "Appointment Booking Failed",
                     Content = String.Format("You already have an appointment on {0} at {1}", app_date, time),
-                   
+
 
                 };
+                Res_Pop.IsOpen = false;
+                Res_Pop.Visibility = Visibility.Collapsed;
                 await bookFail.ShowAsync();
                 TimeSlotBox.SelectedIndex = -1;
             }
+
         }
 
+        public void onAppReadSuccess(object source, EventArgs args)
+        {
+            App_Date.Date = viewModel.date;
+            Res_Pop.IsOpen = true;
+            Res_Pop.Visibility = Visibility.Visible;
+
+        }
+
+        
         private async void onTestAddedSuccess(object source, EventArgs e)
         {
             await viewModel.GetLastTest(id);
@@ -110,9 +141,79 @@ namespace DocApp.Presentation.Views
                viewModel.app.hosp_name, viewModel.app.location, viewModel.app.app_date, viewModel.app.Timeslot),
 
             };
+            Tabs.SelectedIndex = 2;
             
             await bookSuccess.ShowAsync();
         }
+
+        private void Res_Pop_Opened(object sender, object e)
+        {
+            Res_TimeSlotBox.SelectedIndex = -1;
+        }
+
+        private void Res_Pop_Closed(object sender, object e)
+        {
+
+        }
+
+        private async void Res_TimeSlotBox_DropDownOpened(object sender, object e)
+        {
+            await viewModel.GetTimeSlots(viewModel.app_vals.DOC_ID, viewModel.app_vals.HOS_ID, app_date);
+            Bindings.Update();
+        }
+
+        private async void Res_TimeSlotBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox box = sender as ComboBox;
+            if (box.SelectedIndex != -1)
+            {
+                var val = box.SelectedItem as Roster;
+                time = val.start_time.ToString();
+                if (val.val == 0)
+                {
+
+                    AppointmentBookSuccess bookFail = new AppointmentBookSuccess()
+                    {
+                        Title = "Appointment Booking Failed",
+                        Content = String.Format("No vacancies on {0} at {1}", app_date, time),
+                        CloseButtonText = "OK"
+
+                    };
+                    await bookFail.ShowAsync();
+                    box.SelectedIndex = -1;
+
+                }
+                else
+                {
+                    await viewModel.CheckApp(1, app_date, time);
+                }
+            }
+        }
+
+        private async void ResButton_Click(object sender, RoutedEventArgs e)
+        {
+            await viewModel.UpdateApp(viewModel.app_vals.ID, app_date, time);
+            Res_Pop.IsOpen = false;
+            Res_Pop.Visibility = Visibility.Collapsed;
+        }
+
+        private void App_Date_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
+        {
+            try
+            {
+                if (sender.Date != null)
+                {
+                    var date = sender.Date;
+                    DateTime t = date.Value.DateTime;
+                    app_date = String.Format("{0:yyyy-MM-dd}", t);
+                    System.Diagnostics.Debug.WriteLine("date=" + app_date);
+
+                }
+            }
+            catch (Exception e)
+            { }
+        }
+
 
         private async void onInsertSuccess(object source, EventArgs e)
         {
@@ -147,7 +248,29 @@ namespace DocApp.Presentation.Views
 
             onUpdate();
         }
+        async void onCancelButtonClicked(object source, ButtonClickArgs args)
+        {
+            app_id = args.id_val;
+            app_temp = ((FrameworkElement)source).DataContext as AppointmentDetails;
+            CancelDialog dialog = new CancelDialog();
+            dialog.ButtonClicked += this.onYesButtonClicked;
+            await dialog.ShowAsync();
 
+        }
+        public async void onYesButtonClicked(object source, EventArgs args)
+        {
+            viewModel.details.Remove(app_temp);
+            await viewModel.CancelApp(app_id);
+        }
+
+        async void onResBtnClicked(object source, ButtonClickArgs args)
+        {
+            id = args.id_val;
+            app_temp = ((FrameworkElement)source).DataContext as AppointmentDetails;
+            await viewModel.GetApp(id);
+
+            //temp = ((FrameworkElement)source).DataContext as AppointmentDetails;
+        }
         private void HospitalsInDoctorsTemplate_Loaded(object sender, RoutedEventArgs e)
         {
             HospitalsInDoctorsTemplate temp = (HospitalsInDoctorsTemplate)sender;
@@ -286,7 +409,13 @@ namespace DocApp.Presentation.Views
 
         }
 
-        
+        private void AppTabTemplate_Loaded(object sender, RoutedEventArgs e)
+        {
+            var temp = sender as AppTabTemplate;
+            
+            temp.CancelButtonClicked += this.onCancelButtonClicked;
+            temp.RescheduleButtonClicked += this.onResBtnClicked;
+        }
 
         private void TimeSlotText_Loaded(object sender, RoutedEventArgs e)
         {
