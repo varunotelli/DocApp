@@ -235,15 +235,15 @@
                                              FontFamily="Segoe MDL2 Assets" Click="CloseBtn_Click" Margin="20,0">
                                 <TextBlock Text="&#xE106;" FontSize="20"/>
                             </HyperlinkButton>
-                            <StackPanel Orientation="Horizontal">
+                            <!--<StackPanel Orientation="Horizontal">
                                 <Ellipse x:Name="image" Height="100" Width="100" Margin="10,0" >
                                     <Ellipse.Fill>
                                         <ImageBrush ImageSource="{x:Bind viewModel.doctor.Image,Mode=OneWay}"/>
                                     </Ellipse.Fill>
                                 </Ellipse>
 
-                                <!--<Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
-                       VerticalAlignment="Top" Margin="10"/>-->
+                                --><!--<Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
+                       VerticalAlignment="Top" Margin="10"/>--><!--
 
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
@@ -252,9 +252,9 @@
                                         <RatingControl x:Name="Rating" Value="{x:Bind viewModel.doctor.Rating,Mode=TwoWay}"  Margin="5"
                                     Caption="{x:Bind sys:String.Format('({0})',viewModel.doctor.Number_of_Rating),Mode=OneWay}" 
                                     IsReadOnly="True" HorizontalAlignment="Left">
-                                            <!--<RatingControl.Resources>
+                                            --><!--<RatingControl.Resources>
                                             <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
-                                        </RatingControl.Resources>-->
+                                        </RatingControl.Resources>--><!--
                                         </RatingControl>
                                     </StackPanel>
 
@@ -265,14 +265,14 @@
 
                                     <RatingControl x:Name="myRating" ValueChanged="MyRating_ValueChanged"  Margin="10,5"
                             Caption="Your Rating" HorizontalAlignment="Left">
-                                        <!--<RatingControl.Resources>
+                                        --><!--<RatingControl.Resources>
                                         <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
-                                    </RatingControl.Resources>-->
+                                    </RatingControl.Resources>--><!--
                                     </RatingControl>
                                 </StackPanel>
 
                             </StackPanel>
-                            <!--START SCROLL HERE-->
+                            --><!--START SCROLL HERE--><!--
                             <ScrollViewer Height="520">
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -369,7 +369,8 @@
                                 </Grid>
                             </ScrollViewer>
 
-                            <!--END SCROLL HERE-->
+                            --><!--END SCROLL HERE-->
+                            <Frame x:Name="myFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
 
 
@@ -441,7 +442,7 @@
                                 <StackPanel Margin="10" Height="Auto" Padding="5" x:Name="VisitedDocStack"
                         HorizontalAlignment="Stretch" Grid.Column="1" Width="600" VerticalAlignment="Top">
                                     <Grid HorizontalAlignment="Stretch">
-                                        <TextBlock Text="Your Most Visited Doctors" FontSize="20" HorizontalAlignment="Left"
+                                        <TextBlock Text="Most booked doctors by you" FontSize="20" HorizontalAlignment="Left"
                            FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
                                         <HyperlinkButton Content="View All" FontSize="12" HorizontalAlignment="Right" Foreground="Black"
                                              FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"

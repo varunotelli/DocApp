@@ -242,7 +242,7 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Button x:Name="PostBtn" HorizontalAlignment="Right" Margin="5,10" Style="{StaticResource ButtonStyle1}"
+                                <Button x:Name="PostBtn" HorizontalAlignment="Left" Margin="5,10" Style="{StaticResource ButtonStyle1}"
                                             Click="PostBtn_Click">New Post</Button>
                                 <TextBox Grid.Row="1" x:Name="MessageBox" HorizontalAlignment="Stretch" MaxHeight="300"
                                                  ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True"
@@ -264,7 +264,7 @@
                         </controls:TabViewItem>
                         <controls:TabViewItem Header="Appointments" Icon="Calendar" x:Name="AppTab">
                             <StackPanel>
-                                <TextBlock FontSize="28" FontWeight="Bold">Your Appointments</TextBlock>
+                                <TextBlock FontSize="28" FontWeight="Bold" Margin="10">Your Appointments</TextBlock>
                                 <ListView ItemsSource="{x:Bind viewModel.details,Mode=TwoWay}" HorizontalAlignment="Stretch">
                                     <ListView.ItemsPanel>
                                         <ItemsPanelTemplate>

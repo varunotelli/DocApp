@@ -100,7 +100,7 @@ namespace DocApp.Presentation.ViewModels
             appointments.Clear();
             foreach (var x in templist)
                 appointments.Add(x);
-            onAppointmentUpdated();
+            //onAppointmentUpdated();
             return true;
         }
 

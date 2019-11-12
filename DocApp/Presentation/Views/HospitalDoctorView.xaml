@@ -124,6 +124,7 @@
 
 
     <StackPanel Margin="0,0,0,400">
+        
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="Phone">
@@ -147,7 +148,9 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        <cont:BackButtonControl/>
         <Grid>
+            
             <SplitView x:Name="DetailSplitView" DisplayMode="Inline" OpenPaneLength="800" PanePlacement="Right">
                 <SplitView.Content>
                     <Grid>
@@ -155,6 +158,7 @@
                             <ColumnDefinition x:Name="FirstCol" Width="*"/>
                             <ColumnDefinition x:Name="SecondCol" Width="*"/>
                         </Grid.ColumnDefinitions>
+                        
                         <StackPanel x:Name="FirstStack" HorizontalAlignment="Stretch" Padding="5">
                             <TextBlock x:Name="DocNearYouBlock" Text="Doctors Near You" FontSize="28" FontWeight="Bold" Margin="10,10,10,30"
                            FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova" HorizontalAlignment="Left"/>

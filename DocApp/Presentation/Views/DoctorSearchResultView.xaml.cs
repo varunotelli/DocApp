@@ -43,7 +43,7 @@ namespace DocApp.Presentation.Views
 
      }
 
-    public sealed partial class DoctorSearchResultView : Page
+    public sealed partial class DoctorSearchResultView : Page,INavEvents
     {
         ObservableCollection<Doctor> doctemp = new ObservableCollection<Doctor>();
         public DoctorSearchViewModel viewModel;
@@ -74,7 +74,7 @@ namespace DocApp.Presentation.Views
             //MyScroll.ChangeView(null, 100, 1);
             Book_Pop.Visibility = Visibility.Visible;
             Book_Pop.IsOpen = true;
-            HospList.SelectedItem = ((FrameworkElement)source).DataContext;
+            //HospList.SelectedItem = ((FrameworkElement)source).DataContext;
         }
 
         public void onHospButtonClicked(object source, ButtonClickArgs args)
@@ -343,7 +343,7 @@ namespace DocApp.Presentation.Views
                 await viewModel.UpdateDoctor(id, (double)sender.Value);
                
                 myListView.SelectedIndex = index;
-                myRating.Caption = myRating.Value.ToString();
+                //myRating.Caption = myRating.Value.ToString();
 
             }
 
@@ -385,6 +385,9 @@ namespace DocApp.Presentation.Views
             await viewModel.GetDoctor(id);
             mySplitView.IsPaneOpen = false;
             mySplitView.IsPaneOpen = true;
+            MyFrame.Navigate(typeof(SelectedDocDetailView),
+                new DocNavEventArgs() { val = (e.ClickedItem as Doctor).ID, view = this }
+            , new SuppressNavigationTransitionInfo());
 
         }
 
@@ -476,23 +479,23 @@ namespace DocApp.Presentation.Views
 
         private async void Tabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Tabs.SelectedIndex == 1)
-                await viewModel.GetTests(id);
+            //if (Tabs.SelectedIndex == 1)
+            //    await viewModel.GetTests(id);
         }
 
         private void PostBtn_Click(object sender, RoutedEventArgs e)
         {
             
-            MessageBox.Visibility = Visibility.Visible;
-            SubmitBtn.Visibility = Visibility.Visible;
+            //MessageBox.Visibility = Visibility.Visible;
+            //SubmitBtn.Visibility = Visibility.Visible;
             
             
         }
 
         private async void SubmitBtn_Click(object sender, RoutedEventArgs e)
         {
-            await viewModel.AddTest(1, id, MessageBox.Text, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-            MessageBox.Text = "";
+            //await viewModel.AddTest(1, id, MessageBox.Text, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            //MessageBox.Text = "";
         }
 
         public async void onInsertFail(object source, EventArgs args)
@@ -510,21 +513,21 @@ namespace DocApp.Presentation.Views
         private async void MySplitView_PaneOpened(SplitView sender, object args)
         {
             //Showbutton.Visibility = Visibility.Collapsed;
-            myRating.Value = Double.NaN;
-            myRating.Caption = "Your Rating";
-            MessageBox.Visibility = Visibility.Collapsed;
-            SubmitBtn.Visibility = Visibility.Collapsed;
+            //myRating.Value = Double.NaN;
+            //myRating.Caption = "Your Rating";
+            //MessageBox.Visibility = Visibility.Collapsed;
+            //SubmitBtn.Visibility = Visibility.Collapsed;
             if (viewModel.doctor != null)
             {
                 System.Diagnostics.Debug.WriteLine("Count=" + viewModel.doctor.Description.Count(c => c.Equals('\n')));
                 if (viewModel.doctor.Description.Count(c => c.Equals('\n')) >= 1)
                 {
-                    DescBox.Height = 20;
-                    DescBox.Width = 550;
-                    Showbutton.Visibility = Visibility.Visible;
+                    //DescBox.Height = 20;
+                    //DescBox.Width = 550;
+                    //Showbutton.Visibility = Visibility.Visible;
                 }
-                else
-                    Showbutton.Visibility = Visibility.Collapsed;
+                //else
+                //    Showbutton.Visibility = Visibility.Collapsed;
             }
             await viewModel.GetTests(id);
 
@@ -545,9 +548,9 @@ namespace DocApp.Presentation.Views
             if(!show)
             {
                 temp.Visibility = Visibility.Collapsed;
-                DescBox.TextWrapping = TextWrapping.WrapWholeWords;
-                DescBox.Height = Double.NaN;
-                DescBox.Width = 750;
+                //DescBox.TextWrapping = TextWrapping.WrapWholeWords;
+                //DescBox.Height = Double.NaN;
+                //DescBox.Width = 750;
                 
             }
            
@@ -868,6 +871,21 @@ namespace DocApp.Presentation.Views
         {
             await viewModel.GetLastTest(id);
             //TestScroll.ChangeView(0, 0, 1);
+        }
+
+        public void onDoctorUpdateSuccess(object sender, UpdateDocEventArgs args)
+        {
+            var item = viewModel.docsmain.FirstOrDefault(i => i.ID == args.doctor.ID);
+            var index = viewModel.docsmain.IndexOf(item);
+            if (item != null)
+                item = args.doctor;
+            viewModel.docsmain[index] = item;
+            item = viewModel.docs.FirstOrDefault(i => i.ID == args.doctor.ID);
+            index = viewModel.docs.IndexOf(item);
+            if (item != null)
+                item = args.doctor;
+            viewModel.docs[index] = item;
+            Bindings.Update();
         }
     }
 }

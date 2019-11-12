@@ -119,13 +119,15 @@ namespace DocApp.Presentation.Views
             if (args.ct>1)
             {
                 ct = args.ct;
-                myFrame.Navigate(typeof(Dashboard), new navargs { name = viewModel.loc, location = true, mp = this });
+                myFrame.Navigate(typeof(Dashboard), new navargs { name = viewModel.loc, location = true, mp = this },
+                    new SuppressNavigationTransitionInfo());
 
             }
             else
             {
                 //Dashboardbtn.Visibility = Visibility.Collapsed;
-                myFrame.Navigate(typeof(MainPageBuffer), new navargs { name = viewModel.loc, location = true, mp = this });
+                myFrame.Navigate(typeof(MainPageBuffer), new navargs { name = viewModel.loc, location = true, mp = this }, 
+                    new SuppressNavigationTransitionInfo());
                    
             }
         }
@@ -375,7 +377,7 @@ namespace DocApp.Presentation.Views
                     mp = this
                 });
             else if(val==1)
-                myFrame.Navigate(typeof(AppointmentsDisplayView));
+                myFrame.Navigate(typeof(AppointmentsDisplayView), new SuppressNavigationTransitionInfo());
             else if(val==2)
                 myFrame.Navigate(typeof(DoctorSearchResultView), new navargs
                 {
@@ -384,7 +386,7 @@ namespace DocApp.Presentation.Views
                     index = 1,
                     doc = true
 
-                });
+                }, new SuppressNavigationTransitionInfo());
             else if(val==3)
                 myFrame.Navigate(typeof(DoctorSearchResultView), new navargs
                 {
@@ -393,7 +395,7 @@ namespace DocApp.Presentation.Views
                     index = 1,
                     doc = false
 
-                });
+                }, new SuppressNavigationTransitionInfo());
         }
 
         private void LocationCheck_Tapped(object sender, TappedRoutedEventArgs e)

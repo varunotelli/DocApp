@@ -34,6 +34,7 @@ namespace DocApp.Presentation.Views
         public INavEvents view { get; set; }
         public int val { get; set; }
         public int vis { get; set; }
+        public int type { get; set; }
     }
     public sealed partial class HospitalDoctorView : Page,INavEvents
     {
@@ -100,7 +101,7 @@ namespace DocApp.Presentation.Views
             FirstStack.SetValue(Grid.ColumnSpanProperty, 2);
             await viewModel.AddDocSearchResult(new Doc_Search() { doc_id = (e.ClickedItem as Doctor).ID, user_id = 1 });
             HospDocFrame.Navigate(typeof(SelectedDocDetailView), 
-                new DocNavEventArgs() {val= (e.ClickedItem as Doctor).ID, view=this }
+                new DocNavEventArgs() {val= (e.ClickedItem as Doctor).ID, view=this}
             , new SuppressNavigationTransitionInfo());
         }
 

@@ -40,7 +40,7 @@ namespace DocApp.Presentation.Views
         int id,hosp_id,app_id;
         AppointmentDetails app_temp;
         bool en;
-        HospitalDoctorView view;
+        INavEvents view;
         public delegate void UpdateEventHandler(object source, UpdateDocEventArgs args);
         public event UpdateEventHandler UpdateEvent;
 
@@ -53,7 +53,7 @@ namespace DocApp.Presentation.Views
         {
             var temp = e1.Parameter as DocNavEventArgs;
             id = temp.val;
-            view =(HospitalDoctorView) temp.view;
+            view = temp.view;
             viewModel = new SelectedDoctorViewModel();
             if(view!=null)
                 this.UpdateEvent += view.onDoctorUpdateSuccess;
