@@ -2,6 +2,7 @@
 using DocApp.Presentation.ViewModels;
 using DocApp.Presentation.Views.DialogBoxes;
 using DocApp.Presentation.Views.Templates;
+using DocApp.Presentation.Views.ViewInterfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,7 +37,7 @@ namespace DocApp.Presentation.Views
     public sealed partial class SelectedHospView : Page
     {
         SelectedHospViewModel viewModel;
-        HospitalDoctorView view;
+        IHospEvents view;
         int id,hosp_id;
         string app_date, time;
         bool en;
@@ -49,9 +50,9 @@ namespace DocApp.Presentation.Views
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
-            var temp = e1.Parameter as DocNavEventArgs;
+            var temp = e1.Parameter as HospNavEventArgs;
             hosp_id = temp.val;
-            view = (HospitalDoctorView)temp.view;
+            view = temp.view;
             viewModel = new SelectedHospViewModel();
             this.UpdateEvent += view.onHospitalUpdateSuccess;
            

@@ -14,16 +14,17 @@ namespace DocApp.Domain.UseCase
     public class GetHospitalByDeptUseCase : UseCaseBase, IHospitalListCallback
     {
         List<Hospital> hosps;
-        int dept_id;
+        int dept_id,rating=-1;
         string location;
         
         IHospitalByDeptViewCallback viewCallback;
 
-        public GetHospitalByDeptUseCase(string loc,int d)
+        public GetHospitalByDeptUseCase(string loc,int d,int r)
         {
             hosps = new List<Hospital>();
             this.dept_id = d;
             this.location = loc;
+            this.rating = r;
             
         }
 

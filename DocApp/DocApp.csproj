@@ -302,10 +302,15 @@
     <Compile Include="Presentation\Views\HospitalDoctorView.xaml.cs">
       <DependentUpon>HospitalDoctorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Views\HospitalSearchFrame.xaml.cs">
+      <DependentUpon>HospitalSearchFrame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\HospitalSearchResultView.xaml.cs">
       <DependentUpon>HospitalSearchResultView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Views\ViewInterfaces\IFilter.cs" />
     <Compile Include="Presentation\Views\ViewInterfaces\IFrames.cs" />
+    <Compile Include="Presentation\Views\ViewInterfaces\IHospEvents.cs" />
     <Compile Include="Presentation\Views\ViewInterfaces\INavEvents.cs" />
     <Compile Include="Presentation\Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -488,6 +493,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\HospitalDoctorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\HospitalSearchFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

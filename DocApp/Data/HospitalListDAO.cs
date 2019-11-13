@@ -105,7 +105,7 @@ namespace DocApp.Data
 
         }
 
-        public async Task GetHospitalByDept(string location,int dept_id, IHospitalListCallback hospitalCallback)
+        public async Task GetHospitalByDept(string location,int dept_id, IHospitalListCallback hospitalCallback, int rating=-1)
         {
             if (DBHandler.db == null)
                 DBHandler.DBConnection();
@@ -120,11 +120,12 @@ namespace DocApp.Data
                     results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL WHERE ID IN(" +
                         "SELECT HOSP_ID FROM ROSTER GROUP BY DOC_ID HAVING DOC_ID IN(" +
                         "SELECT ID FROM DOCTOR WHERE DEPT_ID={0})" +
-                        "AND COUNT(*)>0) AND LOCATION='{1}'", dept_id,location)
+                        "AND COUNT(*)>0) AND LOCATION='{1}' AND RATING >={2}", dept_id,location,rating)
                         );
                 else
                     results = await DBHandler.db.QueryAsync<Hospital>(String.Format("SELECT * FROM HOSPITAL WHERE ID IN(" +
-                        "SELECT HOSP_ID FROM ROSTER GROUP BY DOC_ID HAVING COUNT(*)>0) AND LOCATION='{1}'", dept_id, location)
+                        "SELECT HOSP_ID FROM ROSTER GROUP BY DOC_ID HAVING COUNT(*)>0) AND LOCATION='{1}' AND " +
+                        "RATING >={2}", dept_id, location,rating)
                         );
                 System.Diagnostics.Debug.WriteLine("results=" + results.Count());
                 if (results != null)

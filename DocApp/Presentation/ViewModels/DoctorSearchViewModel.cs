@@ -152,9 +152,9 @@ namespace DocApp.Presentation.ViewModels
             await getHosp.Execute();
         }
 
-        public async Task GetHospitalByDept(string location, int dept)
+        public async Task GetHospitalByDept(string location, int dept,int rating=-1)
         {
-            UseCaseBase getHosp = new GetHospitalByDeptUseCase(location.ToUpper(), dept);
+            UseCaseBase getHosp = new GetHospitalByDeptUseCase(location.ToUpper(), dept,rating);
             getHosp.SetCallBack<IHospitalByDeptViewCallback>(this);
             await getHosp.Execute();
         }
@@ -248,13 +248,13 @@ namespace DocApp.Presentation.ViewModels
         public bool HospitalLocationReadSuccess(List<Hospital> h)
         {
             hosps.Clear();
-            hospsmain.Clear();
+            
             foreach (var x in h)
             {
                 hosps.Add(x);
-                hospsmain.Add(x);
+                
             }
-            
+            onHospsSuccess();
             return true;
         }
 
@@ -266,12 +266,13 @@ namespace DocApp.Presentation.ViewModels
         public bool ReadViewSuccess(List<Hospital> h)
         {
             hosps.Clear();
-            hospsmain.Clear();
+            //hospsmain.Clear();
             foreach (var x in h)
             {
                 hosps.Add(x);
-                hospsmain.Add(x);
+                //hospsmain.Add(x);
             }
+            onHospsSuccess();
             return true;
         }
         public bool DataReadSuccess(Hospital h)

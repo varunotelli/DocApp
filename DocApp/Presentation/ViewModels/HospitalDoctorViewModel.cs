@@ -71,9 +71,9 @@ namespace DocApp.Presentation.ViewModels
             getDocs.SetCallBack<IDoctorDeptLocationViewCallback>(this);
             await getDocs.Execute();
         }
-        public async Task GetHospitalByDept(string location, int dept)
+        public async Task GetHospitalByDept(string location, int dept,int rating=-1)
         {
-            getHosps = new GetHospitalByDeptUseCase(location.ToUpper(), dept);
+            getHosps = new GetHospitalByDeptUseCase(location.ToUpper(), dept,rating);
             getHosps.SetCallBack<IHospitalByDeptViewCallback>(this);
             await getHosps.Execute();
         }

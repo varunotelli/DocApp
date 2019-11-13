@@ -1,6 +1,7 @@
 ﻿using DocApp.Models;
 using DocApp.Presentation.ViewModels;
 using DocApp.Presentation.Views.Templates;
+using DocApp.Presentation.Views.ViewInterfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,7 +37,7 @@ namespace DocApp.Presentation.Views
         public int vis { get; set; }
         public int type { get; set; }
     }
-    public sealed partial class HospitalDoctorView : Page,INavEvents
+    public sealed partial class HospitalDoctorView : Page,INavEvents,IHospEvents
     {
         string address;
         int dept;

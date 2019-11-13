@@ -33,6 +33,7 @@ namespace DocApp.Presentation.ViewModels
         public ReadSuccessEventHandler DoctorRatingUpdateSuccess;
         public ReadSuccessEventHandler HospitalRatingUpdateSuccess;
         public ReadSuccessEventHandler DoctorsSuccess;
+        public ReadSuccessEventHandler HospsSuccess;
         public delegate void InsertSuccessEventHandler(object source, EventArgs e);
         public event InsertSuccessEventHandler InsertSuccess;
         public event InsertFailEventHandler TestimonialAddedSuccess;
@@ -89,6 +90,12 @@ namespace DocApp.Presentation.ViewModels
         {
             if (DoctorsSuccess != null)
                 DoctorsSuccess(this, EventArgs.Empty);
+        }
+
+        public void onHospsSuccess()
+        {
+            if (HospsSuccess != null)
+                HospsSuccess(this, EventArgs.Empty);
         }
 
         public void onDoctorReadSuccess()

@@ -99,6 +99,7 @@ namespace DocApp.Presentation.Views
 
         public void onAutoSuggestChanged(string add)
         {
+            viewModel.loc = add;
             if (AutoSuggestChanged != null)
                 AutoSuggestChanged(this, new navargs2 { location = add, mp = this });
         }

@@ -55,9 +55,10 @@ namespace DocApp.Presentation.Views
         public int lower { get; set; }
         public int upper { get; set; }
         public int rat { get; set; }
+        public string deptname { get; set; }
     }
 
-    public sealed partial class DoctorSearchResultView : Page
+    public sealed partial class DoctorSearchResultView : Page,INavEvents
     {
         public delegate void OrderEventHandler(object source, OrderEventArgs args);
         public event OrderEventHandler OrderComboChanged;
@@ -94,10 +95,10 @@ namespace DocApp.Presentation.Views
                 OrderComboChanged(this, new OrderEventArgs() { index = x });
         }
 
-        public void onDeptListChanged(int l, int u, int r)
+        public void onDeptListChanged(int l, int u, int r,string s="CARDIOLOGY")
         {
             if (DeptListChanged != null)
-                DeptListChanged(this, new FilterEventArgs() {lower=l,upper=u,rat=r,deptindex=DeptListbox.SelectedIndex });
+                DeptListChanged(this, new FilterEventArgs() {lower=l,upper=u,rat=r,deptindex=DeptListbox.SelectedIndex,deptname=s });
         }
 
 
@@ -162,10 +163,18 @@ namespace DocApp.Presentation.Views
             mainPage = args.mp;
             DeptListbox.SelectedIndex = args.index;
             if (args.doc)
-                myFrame.Navigate(typeof(DoctorSearchFrame), new DocSendEventArgs() { view=this, add=address, mp=mainPage}, 
+            {
+                myFrame.Navigate(typeof(DoctorSearchFrame), new DocSendEventArgs() { view = this, add = address, mp = mainPage },
                     new SuppressNavigationTransitionInfo());
-            else;
-                //MainTabs.SelectedIndex = 1;
+                ExpStack.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                myFrame.Navigate(typeof(HospitalSearchFrame), new DocSendEventArgs() { view = this, add = address, mp = mainPage },
+                    new SuppressNavigationTransitionInfo());
+                ExpStack.Visibility = Visibility.Collapsed;
+            }
+            //MainTabs.SelectedIndex = 1;
             mainPage.AutoSuggestChanged += this.onAutoSuggestChanged;
             mainPage.LocationButtonClicked += this.onLocationButtonClicked;
             //viewModel.DoctorsSuccess+=this.onDoctorsSuccess;
@@ -185,9 +194,12 @@ namespace DocApp.Presentation.Views
         }
 
 
-        public async void onLocationButtonClicked(object source, navargs2 n)
+        public void onLocationButtonClicked(object source, navargs2 n)
         {
-            
+            address = n.location;
+            ExpClearBtn_Click(null, null);
+            RatingClearBtn_Click(null, null);
+            DeptListbox.SelectedIndex = 1;
 
         }
 
@@ -246,17 +258,10 @@ namespace DocApp.Presentation.Views
         {
             //this.mySplitView.IsPaneOpen = false;
             address = n.location;
-            
-            if (DeptListbox.SelectedItem != null)
-            {
-                //if (MainTabs.SelectedIndex == 0)
-                {
-                    await viewModel.GetDoctorsByDept(address, DeptListbox.SelectedIndex);
-                    //this.mySplitView.IsPaneOpen = false;
-                }
-                
-            }
-            
+            ExpClearBtn_Click(null, null);
+            RatingClearBtn_Click(null, null);
+            DeptListbox.SelectedIndex = 1;
+
         }
         private async void MyRating_ValueChanged(RatingControl sender, object args)
         {
@@ -279,8 +284,8 @@ namespace DocApp.Presentation.Views
             
             var listbox = sender as ListBox;
             var select = listbox.SelectedIndex;
-
-            onDeptListChanged(lexp, uexp, rating);
+            string s = listbox.SelectedItem as string;
+            onDeptListChanged(lexp, uexp, rating,s);
                 
             
         }
@@ -591,6 +596,9 @@ namespace DocApp.Presentation.Views
             //TestScroll.ChangeView(0, 0, 1);
         }
 
-        
+        public void onDoctorUpdateSuccess(object sender, UpdateDocEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
