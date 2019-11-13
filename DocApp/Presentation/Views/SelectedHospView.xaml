@@ -115,7 +115,7 @@
 
             </StackPanel>
             <!--START SCROLL HERE-->
-            <ScrollViewer Height="570" HorizontalAlignment="Stretch" Background="#e6e6e6">
+            <ScrollViewer Height="540" HorizontalAlignment="Stretch" Background="#e6e6e6">
                 <Grid HorizontalAlignment="Stretch">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>

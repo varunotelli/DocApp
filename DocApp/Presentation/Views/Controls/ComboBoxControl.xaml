@@ -11,7 +11,7 @@
     RequestedTheme="Light">
 
     <Grid>
-        <ComboBox PlaceholderText="Order By" BorderThickness="0,0,0,0" AllowDrop="True" x:Name="myCombo"
+        <ComboBox PlaceholderText="Order By" BorderThickness="0,0,0,0" AllowDrop="True" x:Name="myCombo" Background="LightGray"
                   FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" SelectionChanged="ComboBox_SelectionChanged"
                   >
             <ComboBoxItem>Name</ComboBoxItem>

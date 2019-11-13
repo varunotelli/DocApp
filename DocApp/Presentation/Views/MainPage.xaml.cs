@@ -34,6 +34,15 @@ using Windows.UI.Xaml.Navigation;
  * @todo add back button for all pages
  * @todo make new page for hospital
  * @todo fix appointments with doctor tab
+ * 
+ * @todo change adaptive triggers for appointment
+ * @body Horizontal Scroll instead of hiding cols
+ * 
+ * @todo Call Callbacks twice for search
+ * @todo Change customizations like native for book buttons and listboxes
+ * @todo Change column width of search bar
+ * 
+ * @todo Manage places without data with message
  */
 
 namespace DocApp.Presentation.Views

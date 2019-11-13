@@ -368,13 +368,14 @@ namespace DocApp.Presentation.Views
 
             MessageBox.Visibility = Visibility.Visible;
             SubmitBtn.Visibility = Visibility.Visible;
-
+            SubmitBtn.IsEnabled = false;
 
         }
 
         private async void SubmitBtn_Click(object sender, RoutedEventArgs e)
         {
-            await viewModel.AddTest(1, id, MessageBox.Text, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            if(!MessageBox.Text.Equals(""))
+                await viewModel.AddTest(1, id, MessageBox.Text, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             MessageBox.Text = "";
         }
 
@@ -407,6 +408,13 @@ namespace DocApp.Presentation.Views
             }
 
 
+        }
+
+        private void MessageBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!MessageBox.Text.Equals(""))
+                SubmitBtn.IsEnabled = true;
+            else SubmitBtn.IsEnabled = false;
         }
 
         private void AppTabTemplate_Loaded(object sender, RoutedEventArgs e)

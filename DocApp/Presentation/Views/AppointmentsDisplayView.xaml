@@ -175,7 +175,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="10,10,10,50">
-            <cont:BackButtonControl Margin="0,0,20,0"/>
+            <!--<cont:BackButtonControl Margin="0,0,20,0"/>-->
             <TextBlock Text="Your Appointments" FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"
                    FontSize="40" />
         </StackPanel>
@@ -217,7 +217,7 @@
                            
                            >
                 <StackPanel Background="#3b5163" Height="200" Width="300" VerticalAlignment="Center" BorderThickness="1"
-                                            BorderBrush="White" CornerRadius="10">
+                                            BorderBrush="White" >
 
                     <CalendarDatePicker x:Name="Appointment_Date" PlaceholderText="Choose your Appointment Date" 
                 FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14" Margin="10,10" HorizontalAlignment="Center"

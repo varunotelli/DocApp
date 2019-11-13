@@ -247,7 +247,8 @@
                                 <TextBox Grid.Row="1" x:Name="MessageBox" HorizontalAlignment="Stretch" MaxHeight="300"
                                                  ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True"
                                                  PlaceholderText="Type your message here" Margin="5" Visibility="Collapsed"
-                                                 FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf# Proxima Nova"/>
+                                                 FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf# Proxima Nova"
+                                         TextChanged="MessageBox_TextChanged"/>
                                 <Button x:Name="SubmitBtn" 
                                                 VerticalAlignment="Top" Grid.Row="2" Margin="5" Click="SubmitBtn_Click"
                                                 Visibility="Collapsed" Style="{StaticResource ButtonStyle1}">Submit</Button>

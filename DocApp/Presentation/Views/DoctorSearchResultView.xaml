@@ -204,82 +204,86 @@
             
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid Background="#263440" Padding="15" Margin="0,0,0,0">
+        <Grid Background="White" Padding="15" Margin="0,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="#263440" Margin="0,-10,0,0" VerticalAlignment="Top">
-                <Button FontFamily="Segoe MDL2 Assets" Margin="10"   BorderThickness="0.5"
-                                        BorderBrush="White" Foreground="White"
-                                        Background="Transparent" ToolTipService.ToolTip="Filter">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="&#xE71C;" FontSize="18"/>
-                            <TextBlock Text="&#xEDDC;" FontSize="7" VerticalAlignment="Bottom"/>
-                        </StackPanel>
-                    </Button.Content>
-                    <Button.Flyout>
-                        <Flyout Placement="Bottom">
-                            <StackPanel VerticalAlignment="Stretch" Margin="0,0,0,0">
-                                <HyperlinkButton Name="AllClear" Content="All Clear" Click="AllClear_Click" Margin="5,0,0,0"
+            
+            <Popup HorizontalAlignment="Right" Margin="0,0,170,0"  IsOpen="True">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White" Margin="0,-15,0,0" VerticalAlignment="Top">
+                    <Button FontFamily="Segoe MDL2 Assets" Margin="10"   BorderThickness="0.5"
+                                        BorderBrush="White" Foreground="Black"
+                                        Background="LightGray" ToolTipService.ToolTip="Filter">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE71C;" FontSize="18"/>
+                                <TextBlock Text="&#xEDDC;" FontSize="7" VerticalAlignment="Bottom"/>
+                            </StackPanel>
+                        </Button.Content>
+                        <Button.Flyout>
+                            <Flyout Placement="Bottom">
+                                <StackPanel VerticalAlignment="Stretch" Margin="0,0,0,0">
+                                    <HyperlinkButton Name="AllClear" Content="All Clear" Click="AllClear_Click" Margin="5,0,0,0"
                                                  HorizontalAlignment="Left"/>
-                                <TextBlock  Text="DEPARTMENTS" Margin="5,10,0,10" Foreground="Black"
+                                    <TextBlock  Text="DEPARTMENTS" Margin="5,10,0,10" Foreground="Black"
                                                     FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"/>
-                                <ListBox x:Name="DeptListbox" ItemsSource="{x:Bind viewModel.deptnames}" 
+                                    <ListBox x:Name="DeptListbox" ItemsSource="{x:Bind viewModel.deptnames}" 
                                                          VerticalAlignment="Stretch" Margin="0,0,0,10"
                                                          ItemContainerStyle="{StaticResource ListBoxItemStyle2}" 
                                                          SelectionChanged="ListBox_SelectionChanged" >
 
-                                </ListBox>
-                                <TextBlock Text="Avg. Customer Review" FontWeight="Bold" Foreground="Black" Margin="10,0"/>
-                                <HyperlinkButton x:Name="RatingClearBtn" Click="RatingClearBtn_Click" Margin="10,0">
-                                    <TextBlock Text="Clear"/>
-                                </HyperlinkButton>
-                                <ListBox x:Name="RatingListBox"   Margin="5" SelectionMode="Single"
+                                    </ListBox>
+                                    <TextBlock Text="Avg. Customer Review" FontWeight="Bold" Foreground="Black" Margin="10,0"/>
+                                    <HyperlinkButton x:Name="RatingClearBtn" Click="RatingClearBtn_Click" Margin="10,0">
+                                        <TextBlock Text="Clear"/>
+                                    </HyperlinkButton>
+                                    <ListBox x:Name="RatingListBox"   Margin="5" SelectionMode="Single"
                                                     SelectionChanged="RatingListBox_SelectionChanged" ItemContainerStyle="{StaticResource ListBoxItemStyle3}">
 
-                                    <ListBoxItem>
-                                        <RatingControl Value="4.0" IsReadOnly="True" Caption="&amp; Above"/>
+                                        <ListBoxItem>
+                                            <RatingControl Value="4.0" IsReadOnly="True" Caption="&amp; Above"/>
 
-                                    </ListBoxItem>
-                                    <ListBoxItem>
-                                        <RatingControl Value="3.0" IsReadOnly="True" Caption="&amp; Above"/>
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <RatingControl Value="3.0" IsReadOnly="True" Caption="&amp; Above"/>
 
-                                    </ListBoxItem>
-                                    <ListBoxItem>
-                                        <RatingControl Value="2.0" IsReadOnly="True" Caption="&amp; Above"/>
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <RatingControl Value="2.0" IsReadOnly="True" Caption="&amp; Above"/>
 
-                                    </ListBoxItem>
-                                    <ListBoxItem>
-                                        <RatingControl Value="1.0" IsReadOnly="True" Caption="&amp; Above"/>
-                                    </ListBoxItem>
-                                </ListBox>
-                                <StackPanel x:Name="ExpStack">
-                                    <TextBlock Text="Experience" FontWeight="Bold" Foreground="Black" Margin="10,0"/>
-                                    <HyperlinkButton x:Name="ExpClearBtn" Click="ExpClearBtn_Click" Margin="10,0">
-                                        <TextBlock>Clear</TextBlock>
-                                    </HyperlinkButton>
-                                    <StackPanel Margin="10,0" >
-                                        <RadioButton x:Name="TenyearExp" Content="> 10 year exp" GroupName="ExpGroup" 
+                                        </ListBoxItem>
+                                        <ListBoxItem>
+                                            <RatingControl Value="1.0" IsReadOnly="True" Caption="&amp; Above"/>
+                                        </ListBoxItem>
+                                    </ListBox>
+                                    <StackPanel x:Name="ExpStack">
+                                        <TextBlock Text="Experience" FontWeight="Bold" Foreground="Black" Margin="10,0"/>
+                                        <HyperlinkButton x:Name="ExpClearBtn" Click="ExpClearBtn_Click" Margin="10,0">
+                                            <TextBlock>Clear</TextBlock>
+                                        </HyperlinkButton>
+                                        <StackPanel Margin="10,0" >
+                                            <RadioButton x:Name="TenyearExp" Content="> 10 year exp" GroupName="ExpGroup" 
                                                             Checked="TenyearExp_Checked"/>
-                                        <RadioButton x:Name="FiveYearExp" Content="5-10 year exp" GroupName="ExpGroup" 
+                                            <RadioButton x:Name="FiveYearExp" Content="5-10 year exp" GroupName="ExpGroup" 
                                                             Checked="TenyearExp_Checked"/>
-                                        <RadioButton x:Name="OneYearExp" Content="&lt; 5 year exp" GroupName="ExpGroup" 
+                                            <RadioButton x:Name="OneYearExp" Content="&lt; 5 year exp" GroupName="ExpGroup" 
                                                              Checked="TenyearExp_Checked"/>
 
+                                        </StackPanel>
                                     </StackPanel>
+
+
                                 </StackPanel>
-
-
-                            </StackPanel>
-                        </Flyout>
-                    </Button.Flyout>
-                </Button>
-                <!--<cont:ComboBoxControl  x:Name="OrderCombo"/>-->
-                <cont:ComboBoxControl  x:Name="OrderCombo" Margin="10"/>
-            </StackPanel>
-            <Frame x:Name="myFrame" HorizontalAlignment="Stretch" Grid.Row="1"/>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                    <!--<cont:ComboBoxControl  x:Name="OrderCombo"/>-->
+                    <cont:ComboBoxControl  x:Name="OrderCombo" Margin="10"/>
+                </StackPanel>
+            </Popup>
+            
+            <Frame x:Name="myFrame" HorizontalAlignment="Left" Grid.Row="0"/>
 
         </Grid>
        
@@ -289,136 +293,7 @@
 
       
         
-        <!--<SplitView x:Name="myHospSplitView" DisplayMode="Inline" 
-                            PanePlacement="Right" OpenPaneLength="800" PaneOpened="MyHospSplitView_PaneOpened"
-                            >
-                    <SplitView.Content>
-                        
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                            
-                            <ListView x:Name="myHospListView"  HorizontalAlignment="Stretch" 
-                                      ItemsSource="{x:Bind viewModel.hospsmain, Mode=TwoWay}" IsItemClickEnabled="True"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="MyHospListView_ItemClick" 
-                                       Height="700">
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel Orientation="Vertical"/>
-                                    </ItemsPanelTemplate>
-
-                                </ListView.ItemsPanel>
-                                <ListView.ItemContainerTransitions>
-                                    <TransitionCollection/>
-                                </ListView.ItemContainerTransitions>
-                                <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="data:Hospital">
-                                        <uc:HospitalProfileLargeTemplate/>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-
-                            </ListView>
-
-
-                        </Grid>
-                    </SplitView.Content>
-                    <SplitView.Pane>
-                        <StackPanel Padding="5" Background="White">
-                            <HyperlinkButton x:Name="HospCloseBtn" FontFamily="Segoe MDL2 Assets" Click="HospCloseBtn_Click" Margin="20,0">
-                                <TextBlock Text="&#xE106;" FontSize="20"/>
-                            </HyperlinkButton>
-                            <StackPanel Orientation="Horizontal">
-                                <Image x:Name="image1" Height="100" Width="100" Margin="10,0,10,10">
-                                    <Image.Source>
-                                        <BitmapImage UriSource="{x:Bind viewModel.hospital.Image,Mode=OneWay}"/>
-                                    </Image.Source>
-                                </Image>
-
-                                --><!--<Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
-                       VerticalAlignment="Top" Margin="10"/>--><!--
-
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock x:Name="textBlock1" Text="{x:Bind viewModel.hospital.Name,Mode=OneWay}" HorizontalAlignment="Left"
-                                FontSize="22" FontWeight="Bold" Margin="10,10" FontFamily="ms-appx:///Assets/ProximaNova-Extrabld.ttf#Proxima Nova"/>
-                                        <RatingControl x:Name="HRating" Value="{x:Bind viewModel.hospital.Rating,Mode=TwoWay}"  
-                                                       Margin="5"
-                                    Caption="{x:Bind sys:String.Format('({0})',viewModel.hospital.Number_Of_Rating),Mode=OneWay}" 
-                                    IsReadOnly="True" HorizontalAlignment="Left">
-                                            --><!--<RatingControl.Resources>
-                                            <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
-
-                                        </RatingControl.Resources>--><!--
-                                        </RatingControl>
-                                    </StackPanel>
-
-                                    <TextBlock Text="{x:Bind viewModel.hospital.Location,Mode=OneWay}" 
-                                               Style="{StaticResource TextBlockStyle}"
-                        HorizontalAlignment="Left"/>
-
-
-                                    <RatingControl x:Name="myHospRating" ValueChanged="MyHospRating_ValueChanged"  Margin="10,5"
-                            Caption="Your Rating" HorizontalAlignment="Left">
-                                        --><!--<RatingControl.Resources>
-                                        <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="Gold" />
-
-                                    </RatingControl.Resources>--><!--
-                                    </RatingControl>
-                                </StackPanel>
-
-                            </StackPanel>
-                            --><!--START SCROLL HERE--><!--
-                            <ScrollViewer Height="510" HorizontalAlignment="Stretch" Background="#e6e6e6">
-                                <Grid HorizontalAlignment="Stretch">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock FontSize="24" FontWeight="Bold" Margin="10,10" 
-                        FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
-                        Text="{x:Bind sys:String.Format('Doctors working in {0}',viewModel.hospital.Name),Mode=OneWay}"/>
-                                            <ListView x:Name="DocList" ItemsSource="{x:Bind viewModel.Doctors,Mode=TwoWay}" 
-                                  IsItemClickEnabled="True"  Grid.Row="1" ScrollViewer.VerticalScrollMode="Disabled"
-                                           HorizontalAlignment="Stretch">
-                                                <ListView.ItemContainerStyle>
-                                                    <Style TargetType="ListViewItem">
-                                                        <Setter Property="Margin" Value="10,10"/>
-
-                                                        <Setter Property="Height" Value="Auto"/>
-                                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                                                    </Style>
-                                                </ListView.ItemContainerStyle>
-                                                <ListView.ItemContainerTransitions>
-                                                    <TransitionCollection/>
-                                                </ListView.ItemContainerTransitions>
-                                                <ListView.ItemTemplate>
-                                                    <DataTemplate x:DataType="data:DoctorInHospitalDetails" x:Name="Hosptemp">
-                                                        <uc:DoctorsInHospitalTemplate Loaded="DoctorsInHospitalTemplate_Loaded" 
-                                                                                      HorizontalAlignment="Stretch"/>
-                                                    </DataTemplate>
-                                                </ListView.ItemTemplate>
-                                            </ListView>
-
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </ScrollViewer>
-
-                            --><!--END SCROLL HERE--><!--
-
-
-
-                        </StackPanel>
-                    </SplitView.Pane>
-                </SplitView>-->
-            <!--</controls:TabViewItem>-->
-        <!--</controls:TabView>-->
-
+        
     </Grid>
 
 </Page>
