@@ -285,8 +285,10 @@
             </Setter>
         </Style>
         <Style TargetType="Button" x:Key="RoundButtonStyle">
-            <Setter Property="CornerRadius" Value="500"/>
+            <!--<Setter Property="CornerRadius" Value="500"/>-->
             <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="16"/>
         </Style>
 
     </Application.Resources>

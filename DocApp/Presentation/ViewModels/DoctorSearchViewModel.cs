@@ -55,6 +55,10 @@ namespace DocApp.Presentation.ViewModels
 
         //    }
         //}
+        public delegate void DeptReadEventHandler(object source, EventArgs args);
+        public DeptReadEventHandler DeptRead;
+
+
         private Hospital h;
         public Hospital hospital
         {
@@ -82,6 +86,12 @@ namespace DocApp.Presentation.ViewModels
             hospsmain = new ObservableCollection<Hospital>();
             Doctors = new ObservableCollection<DoctorInHospitalDetails>();
             
+        }
+
+        public void onDeptRead()
+        {
+            if (DeptRead != null)
+                DeptRead(this, EventArgs.Empty);
         }
 
         public void onHospitalRatingUpdateSuccess()
@@ -200,6 +210,7 @@ namespace DocApp.Presentation.ViewModels
             deptnames.Add("ALL");
             foreach (var x in d)
                 deptnames.Add(x.name);
+            onDeptRead();
             return true;
         }
 

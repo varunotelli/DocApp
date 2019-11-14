@@ -26,6 +26,12 @@ namespace DocApp.Presentation.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
+    public class SeeAllClickedEventArgs:EventArgs
+    {
+        public navargs navs { get; set; }
+    }
+
     public sealed partial class Dashboard : Page,INavEvents
     {
         DashboardViewModel viewModel;
@@ -39,6 +45,8 @@ namespace DocApp.Presentation.Views
         public delegate void PointerEventHandler(object source, EventArgs args);
         public event PointerEventHandler PointerEntered;
         public event PointerEventHandler PointerExited;
+        public delegate void SeeAllClickedEventHandler(object source, SeeAllClickedEventArgs args);
+        public event SeeAllClickedEventHandler SeeAllClicked;
         SelectedDocDetailView view;
         public Dashboard()
         {
@@ -54,6 +62,7 @@ namespace DocApp.Presentation.Views
             var args = e1.Parameter as navargs;
             address = args.name;
             mainPage = args.mp;
+            this.SeeAllClicked += mainPage.onSeeAllClicked;
             viewModel.DoctorReadSuccess += this.onDoctorReadSuccess;
             viewModel.InsertFail += this.onInsertFail;
             viewModel.InsertSuccess += this.onInsertSuccess;
@@ -72,6 +81,12 @@ namespace DocApp.Presentation.Views
             await viewModel.GetAppointments(1);
             if (mainPage.ct > 1)
                 ActivityText.Visibility = Visibility.Collapsed;
+        }
+
+        public void onSeeAllClicked(navargs args)
+        {
+            if (SeeAllClicked != null)
+                SeeAllClicked(this, new SeeAllClickedEventArgs() { navs=args});
         }
 
         public void onPointerEntered()
@@ -164,7 +179,7 @@ namespace DocApp.Presentation.Views
 
         public void onNoAppointment(object source, EventArgs args)
         {
-            AppStack.Visibility = Visibility.Collapsed;
+            //AppStack.Visibility = Visibility.Collapsed;
         }
 
         private async void TimeSlotBox_DropDownOpened(object sender, object e)
@@ -256,7 +271,7 @@ namespace DocApp.Presentation.Views
             VisitedDocStack.SetValue(Grid.ColumnProperty, 0);
             VisitedDocStack.SetValue(Grid.ColumnSpanProperty, 2);
             //SearchPanel.Visibility = Visibility.Collapsed;
-            AppStack.Visibility = Visibility.Collapsed;
+            //AppStack.Visibility = Visibility.Collapsed;
             flag = true;
         }
 
@@ -273,13 +288,19 @@ namespace DocApp.Presentation.Views
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
 
-            Frame parentFrame = Window.Current.Content as Frame;
+            //Frame parentFrame = Window.Current.Content as Frame;
 
-            MainPage mp1 = parentFrame.Content as MainPage;
-            StackPanel grid = mp1.Content as StackPanel;
+            //MainPage mp1 = parentFrame.Content as MainPage;
+            //StackPanel stack = mp1.Content as StackPanel;
 
-            Frame my_frame = grid.FindName("myFrame") as Frame;
-            my_frame.Navigate(typeof(DoctorSearchResultView), new navargs() { mp = mainPage, name = address, doc=true });
+            //NavigationView nav = stack.FindName("NavView") as NavigationView;
+            //Grid grid = nav.FindName("myGrid") as Grid;
+
+
+            //Frame my_frame = nav.FindName("myFrame") as Frame;
+
+            //my_frame.Navigate(typeof(DoctorSearchResultView), new navargs() { mp = mainPage, name = address, doc=true });
+            onSeeAllClicked(new navargs() { mp = mainPage, name = address, doc = true });
         }
         
         private async void Tabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -326,7 +347,7 @@ namespace DocApp.Presentation.Views
             mySplitView.IsPaneOpen = true;
             //SearchPanel.SetValue(Grid.ColumnSpanProperty, 2);
             VisitedDocStack.Visibility = Visibility.Collapsed;
-            AppStack.Visibility = Visibility.Collapsed;
+            //AppStack.Visibility = Visibility.Collapsed;
             flag = false;
             openflag = false;
             
@@ -475,7 +496,7 @@ namespace DocApp.Presentation.Views
             //SearchPanel.Visibility = Visibility.Visible;
             VisitedDocStack.Visibility = Visibility.Visible;
             AppStack.Visibility = Visibility.Visible;
-            
+
             Bindings.Update();
         }
 
@@ -491,7 +512,7 @@ namespace DocApp.Presentation.Views
             VisitedDocStack.SetValue(Grid.ColumnProperty, 0);
             VisitedDocStack.SetValue(Grid.ColumnSpanProperty, 2);
             //SearchPanel.Visibility = Visibility.Collapsed;
-            AppStack.Visibility = Visibility.Collapsed;
+            //AppStack.Visibility = Visibility.Collapsed;
             myFrame.Navigate(typeof(SelectedDocDetailView),
                 new DocNavEventArgs() { val = (e.ClickedItem as Doctor).ID, view = this }
             , new SuppressNavigationTransitionInfo());

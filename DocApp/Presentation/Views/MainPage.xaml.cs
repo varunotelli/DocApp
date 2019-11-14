@@ -96,7 +96,10 @@ namespace DocApp.Presentation.Views
             progring.IsActive = true;
             MyAutoSuggest.IsEnabled = false;
             HospDocSuggest.IsEnabled = false;
-            OpenBtn.IsEnabled = false;
+            NavView.IsEnabled = false;
+            NavView.IsPaneOpen = false;
+            NavView.SelectedItem = NavView.MenuItems[0];
+            //OpenBtn.IsEnabled = false;
             //MyListBox.SelectedIndex = 0;
             //Dashboardbtn.IsEnabled = false;
             //AppBtn.IsEnabled = false;
@@ -104,6 +107,15 @@ namespace DocApp.Presentation.Views
             
             //myFrame.Navigate(typeof(MainPageLoadingScreenView));
         
+        }
+
+        public void onSeeAllClicked(object source, SeeAllClickedEventArgs args)
+        {
+            HospDocSuggest.IsFocusEngaged = false;
+            myFrame.Navigate(typeof(DoctorSearchResultView), args.navs);
+            if(args.navs.doc)
+                NavView.SelectedItem = NavView.MenuItems[2];
+            else NavView.SelectedItem = NavView.MenuItems[3];
         }
 
         public void onAutoSuggestChanged(string add)
@@ -122,7 +134,8 @@ namespace DocApp.Presentation.Views
             LoadText.Visibility = Visibility.Collapsed;
             MyAutoSuggest.IsEnabled = true;
             HospDocSuggest.IsEnabled = true;
-            OpenBtn.IsEnabled = true;
+            NavView.IsEnabled = true;
+            //OpenBtn.IsEnabled = true;
             //AppBtn.IsEnabled = true;
             //Dashboardbtn.IsEnabled = true;
             StatusText.Visibility = Visibility.Collapsed;
@@ -153,7 +166,7 @@ namespace DocApp.Presentation.Views
             address = e.address;
             LocationProg.IsActive = false;
             onLocationButtonClicked(address);
-            OpenBtn.IsEnabled = true;
+            //OpenBtn.IsEnabled = true;
             //locflag = true;
             
             //StatusText.Text = "READY";
@@ -246,6 +259,9 @@ namespace DocApp.Presentation.Views
 
                         mp = this
                     }, new SuppressNavigationTransitionInfo());
+                NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
+                NavView.IsBackEnabled = true;
+
             }
             else
             {
@@ -258,6 +274,8 @@ namespace DocApp.Presentation.Views
 
                         mp = this
                     });
+                    NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+                    NavView.IsBackEnabled = false;
                 }
                 else
                 myFrame.Navigate(typeof(MainPageBuffer), new navargs
@@ -371,7 +389,7 @@ namespace DocApp.Presentation.Views
 
         private void OpenBtn_Click(object sender, RoutedEventArgs e)
         {
-            MySplitView_Main.IsPaneOpen = !MySplitView_Main.IsPaneOpen;
+            //MySplitView_Main.IsPaneOpen = !MySplitView_Main.IsPaneOpen;
         }
 
         private void MyListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -414,18 +432,112 @@ namespace DocApp.Presentation.Views
             bool val = temp.IsChecked.HasValue ? temp.IsChecked.Value : false;
             if(val)
             {
-                locstack.Visibility = Visibility.Collapsed;
+                //locstack.Visibility = Visibility.Collapsed;
                 locstack2.Visibility = Visibility.Visible;
             }
             else
             {
                 locstack2.Visibility = Visibility.Collapsed;
-                locstack.Visibility = Visibility.Visible;
+                //locstack.Visibility = Visibility.Visible;
                 viewModel.loc = "Chennai";
                 onLocationButtonClicked("Chennai");
             }
 
 
+        }
+
+        private void NavView_Loaded(object sender, RoutedEventArgs e)
+        {
+            locmainstack.Visibility = Visibility.Collapsed;
+        }
+
+        private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+            NavView.IsBackEnabled = false;
+            string block = args.InvokedItemContainer.Tag as string;
+            if(block!=null)
+            {
+                switch(block)
+                {
+                    case "Dash":
+                        sender.Header = "Dashboard";
+                        myFrame.Navigate(typeof(Dashboard), new navargs
+                        {
+
+                            name = viewModel.loc.ToUpper(),
+                            mp = this
+                        });
+                        break;
+                    case "App":
+                        sender.Header = "Appointments";
+                        myFrame.Navigate(typeof(AppointmentsDisplayView), new SuppressNavigationTransitionInfo());
+                        break;
+                    case "Doc":
+                        sender.Header = "Doctors";
+                        myFrame.Navigate(typeof(DoctorSearchResultView), new navargs
+                        {
+                            name = viewModel.loc,
+                            mp = this,
+                            index = 1,
+                            doc = true
+
+                        }, new SuppressNavigationTransitionInfo());
+                        break;
+
+                    case "Hosp":
+                        sender.Header = "Hospitals";
+                        myFrame.Navigate(typeof(DoctorSearchResultView), new navargs
+                        {
+                            name = viewModel.loc,
+                            mp = this,
+                            index = 1,
+                            doc = false
+
+                        }, new SuppressNavigationTransitionInfo());
+                        break;
+
+
+
+                }
+            }
+        }
+
+        private void NavView_PaneClosed(NavigationView sender, object args)
+        {
+            locmainstack.Visibility = Visibility.Collapsed;
+            //locmainstack.Opacity = 0;
+
+            
+        }
+
+        private void NavView_PaneOpened(NavigationView sender, object args)
+        {
+            locmainstack.Visibility = Visibility.Visible;
+            //locmainstack.Opacity = 1;
+        }
+
+        private void NavView_PaneClosing(NavigationView sender, NavigationViewPaneClosingEventArgs args)
+        {
+            locmainstack.Visibility = Visibility.Collapsed;
+            //locmainstack.Opacity = 0;
+        }
+
+        private void NavView_PaneOpening(NavigationView sender, object args)
+        {
+            locmainstack.Visibility = Visibility.Visible;
+            //locmainstack.Opacity = 1;
+        }
+
+        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+
+        }
+
+        private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            if (myFrame.CanGoBack)
+                myFrame.GoBack();
         }
     }
 }

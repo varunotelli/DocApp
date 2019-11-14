@@ -4,6 +4,7 @@ using DocApp.Presentation.Views.Controls;
 using DocApp.Presentation.Views.ViewInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -88,15 +89,27 @@ namespace DocApp.Presentation.Views
             mainPage = args.mp;
             mainPage.AutoSuggestChanged += this.onAutoSuggestChanged;
             mainPage.LocationButtonClicked += this.onLocationButtonClicked;
-            view.OrderComboChanged += this.onComboChanged;
-            view.DeptListChanged += this.onDeptListChanged;
-            view.ExpChanged += this.onExpListChanged;
-            view.ExpCleared += this.onExpCleared;
-            view.RatingChanged += this.onRatingChanged;
-            view.RatingCleared += this.onRatingCleared;
+            OrderCombo.ComboSelectionChanged += this.onComboChanged;
+            //view.OrderComboChanged += this.onComboChanged;
+            FilterButton.DeptListChanged += this.onDeptListChanged;
+            FilterButton.ExpChanged += this.onExpListChanged;
+            FilterButton.ExpCleared += this.onExpCleared;
+            FilterButton.RatingChanged += this.onRatingChanged;
+            FilterButton.RatingCleared += this.onRatingCleared;
+            viewModel.DeptRead += this.onDeptRead;
             viewModel.DoctorsSuccess += this.onDoctorsSuccess;
+            await viewModel.GetDepartments();
+            
+        }
+
+        public async void onDeptRead(object source, EventArgs args)
+        {
+            //FilterButton.deptnames = new ObservableCollection<string>();
+            foreach (var x in viewModel.deptnames)
+                FilterButton.deptnames.Add(x);
             await viewModel.GetDoctorsByDept(address, 1, lexp, uexp, rating);
         }
+
         private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var temp = sender as ListView;
@@ -165,23 +178,33 @@ namespace DocApp.Presentation.Views
             await viewModel.GetDoctorsByDept(address, args.deptindex, args.lower, args.upper, args.rat);
         }
 
-        public void onComboChanged(object source, OrderEventArgs args)
+        private void FilterButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            //FilterButton.deptnames = new ObservableCollection<string>();
+            //foreach (var x in viewModel.deptnames)
+            //    FilterButton.deptnames.Add(x);
+            dept = "CARDIOLOGY";
+            
+        }
+
+        
+        public void onComboChanged(object source, ComboBoxSelectEventArgs args)
         {
             var temp = new List<Doctor>(viewModel.docsmain);
             viewModel.docsmain.Clear();
-            docorderby = args.index;
-            if (args.index == 0)
+            docorderby = args.val;
+            if (args.val == 0)
             {
                 foreach (var i in temp.OrderBy(d => d.Name))
                     viewModel.docsmain.Add(i);
             }
 
-            else if (args.index == 1)
+            else if (args.val == 1)
             {
                 foreach (var i in temp.OrderByDescending(d => d.Rating))
                     viewModel.docsmain.Add(i);
             }
-            else if (args.index == 2)
+            else if (args.val == 2)
             {
                 foreach (var i in temp.OrderByDescending(d => d.Number_of_Rating))
                     viewModel.docsmain.Add(i);

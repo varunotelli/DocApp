@@ -16,10 +16,7 @@
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova"/>
         </Style>
-        <Style TargetType="Button" x:Key="RoundButtonStyle">
-            <Setter Property="CornerRadius" Value="500"/>
-            <Setter Property="Margin" Value="10,0"/>
-        </Style>
+        
     </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch">
@@ -27,11 +24,11 @@
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="Phone">
                     <VisualState.Setters>
-                        <Setter Target="textBlock.(UIElement.Visibility)" Value="Collapsed"/>
+                        <!--<Setter Target="textBlock.(UIElement.Visibility)" Value="Collapsed"/>
                         <Setter Target="textBlock1.(UIElement.Visibility)" Value="Collapsed"/>
                         <Setter Target="textBlock3.(Grid.Column)" Value="1"/>
-                        <!--<Setter Target="textBlock2.(Grid.Column)" Value="2"/>-->
-                        <Setter Target="stackPanel.(Grid.Column)" Value="2"/>
+                        --><!--<Setter Target="textBlock2.(Grid.Column)" Value="2"/>--><!--
+                        <Setter Target="stackPanel.(Grid.Column)" Value="2"/>-->
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="400"/>
@@ -39,10 +36,10 @@
                 </VisualState>
                 <VisualState x:Name="Tablet">
                     <VisualState.Setters>
-                        <Setter Target="textBlock.(UIElement.Visibility)" Value="Collapsed"/>
+                        <!--<Setter Target="textBlock.(UIElement.Visibility)" Value="Collapsed"/>
                         <Setter Target="textBlock3.(Grid.Column)" Value="2"/>
                         <Setter Target="textBlock2.(Grid.Column)" Value="3"/>
-                        <Setter Target="stackPanel.(Grid.Column)" Value="4"/>
+                        <Setter Target="stackPanel.(Grid.Column)" Value="4"/>-->
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="800"/>
@@ -55,7 +52,7 @@
                 </VisualState>
                 <VisualState x:Name="Tiny">
                     <VisualState.Setters>
-                        <Setter Target="textBlock3.(UIElement.Visibility)" Value="Collapsed"/>
+                        <!--<Setter Target="textBlock3.(UIElement.Visibility)" Value="Collapsed"/>-->
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0"/>
@@ -72,14 +69,14 @@
             <ColumnDefinition x:Name="SixthCol"  Width="*"/>
 
         </Grid.ColumnDefinitions>
-        <TextBlock Text="{x:Bind sys:String.Format('Dr. {0}',app.doc_name)}" Grid.Column="0" 
+        <TextBlock VerticalAlignment="Center" Text="{x:Bind sys:String.Format('Dr. {0}',app.doc_name)}" Grid.Column="0" 
                    HorizontalAlignment="Center"/>
-        <TextBlock x:Name="textBlock1" Text="{x:Bind app.hosp_name}" Grid.Column="1" HorizontalAlignment="Center"/>
-        <TextBlock x:Name="textBlock" Text="{x:Bind app.location}" Grid.Column="2" HorizontalAlignment="Center"/>
-        <TextBlock x:Name="textBlock3" Text="{x:Bind app.app_date,Converter={StaticResource DateConv}}" 
+        <TextBlock VerticalAlignment="Center" x:Name="textBlock1" Text="{x:Bind app.hosp_name}" Grid.Column="1" HorizontalAlignment="Center"/>
+        <TextBlock VerticalAlignment="Center" x:Name="textBlock" Text="{x:Bind app.location}" Grid.Column="2" HorizontalAlignment="Center"/>
+        <TextBlock VerticalAlignment="Center" x:Name="textBlock3" Text="{x:Bind app.app_date,Converter={StaticResource DateConv}}" 
                    HorizontalAlignment="Center"
                    Grid.Column="3"/>
-        <TextBlock x:Name="textBlock2" Text="{x:Bind app.Timeslot, Converter={StaticResource TimeConv}}" 
+        <TextBlock VerticalAlignment="Center" x:Name="textBlock2" Text="{x:Bind app.Timeslot, Converter={StaticResource TimeConv}}" 
                    HorizontalAlignment="Center"
                    Grid.Column="4"/>
         <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.Column="5" HorizontalAlignment="Center">

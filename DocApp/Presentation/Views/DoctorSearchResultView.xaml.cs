@@ -186,7 +186,7 @@ namespace DocApp.Presentation.Views
             //viewModel.HospitalRatingUpdateSuccess += this.onHospitalUpdateSuccess;
             //viewModel.AppointmentCheckSuccess += this.onAppCheckSuccess;
             OrderCombo.ComboSelectionChanged += this.onComboChanged;
-            await viewModel.GetDepartments();
+            //await viewModel.GetDepartments();
             //await viewModel.GetDoctorsByDept("Chennai", 0);
 
             //Bindings.Update();

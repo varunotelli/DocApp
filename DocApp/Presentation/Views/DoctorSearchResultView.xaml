@@ -13,7 +13,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     RequestedTheme="Light"
-    Background="White"
+    Background="#e9e9e9"
     
     xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:ex="using:Microsoft.Toolkit.Uwp.UI.Extensions">
@@ -210,7 +210,7 @@
                 
             </Grid.RowDefinitions>
             
-            <Popup HorizontalAlignment="Right" Margin="0,0,170,0"  IsOpen="True">
+            <Popup HorizontalAlignment="Right" Margin="0,0,170,0"  IsOpen="False">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White" Margin="0,-15,0,0" VerticalAlignment="Top">
                     <Button FontFamily="Segoe MDL2 Assets" Margin="10"   BorderThickness="0.5"
                                         BorderBrush="White" Foreground="Black"

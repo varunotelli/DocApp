@@ -44,11 +44,12 @@ namespace DocApp
         {
             Frame rootFrame = Window.Current.Content as Frame;
             ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            formattableTitleBar.BackgroundColor = Color.FromArgb(255, 43, 87, 151);
+            formattableTitleBar.ButtonBackgroundColor = Color.FromArgb(255, 43, 87, 151); ;
             formattableTitleBar.ButtonForegroundColor = Colors.White;
             formattableTitleBar.ButtonHoverBackgroundColor = Colors.DimGray;
             CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
+            coreTitleBar.ExtendViewIntoTitleBar = false;
             
             
 

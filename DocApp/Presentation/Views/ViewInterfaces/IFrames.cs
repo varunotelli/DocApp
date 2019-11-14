@@ -9,7 +9,7 @@ namespace DocApp.Presentation.Views.ViewInterfaces
 {
     public interface IFrames
     {
-        void onComboChanged(object source, OrderEventArgs args);
+        void onComboChanged(object source, ComboBoxSelectEventArgs args);
         void onDoctorsSuccess(object source, EventArgs args);
     }
 }

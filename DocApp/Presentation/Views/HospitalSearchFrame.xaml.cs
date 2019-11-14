@@ -1,5 +1,6 @@
 ﻿using DocApp.Models;
 using DocApp.Presentation.ViewModels;
+using DocApp.Presentation.Views.Controls;
 using DocApp.Presentation.Views.ViewInterfaces;
 using System;
 using System.Collections.Generic;
@@ -228,6 +229,9 @@ namespace DocApp.Presentation.Views
             await viewModel.GetHospitalByDept(address, deptindex);
         }
 
-        
+        public void onComboChanged(object source, ComboBoxSelectEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -10,13 +10,25 @@
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     RequestedTheme="Light"
-    Background="#263440"
+    Background="#e9e9e9"
     >
     <Page.Resources>
         <ResourceDictionary>
+            <AcrylicBrush x:Key="NavigationViewDefaultPaneBackground"
+                  BackgroundSource="HostBackdrop"
+                  TintColor="Gray"
+                  TintOpacity="0.7"
+                  FallbackColor="Black"/>
+            <AcrylicBrush x:Key="NavigationViewExpandedPaneBackground"
+                  BackgroundSource="HostBackdrop"
+                  TintColor="Gray"
+                  TintOpacity="1"
+                  FallbackColor="Black"/>
             <SolidColorBrush x:Key="HyperlinkButtonForeground" Color="White"/>
             <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="White"/>
             <SolidColorBrush x:Key="HyperlinkButtonBorderBrushPointerOver" Color="White"/>
+            
+            
 
             <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemStyle1}" x:Key="ListBoxItemStyle2">
                 <Setter Property="FontSize" Value="20"/>
@@ -70,6 +82,52 @@
 
             </Style>
             
+            
+            
+            <Style x:Key="NavigationViewItemStyle1" TargetType="NavigationViewItem">
+                <Setter Property="Foreground" Value="{ThemeResource NavigationViewItemForeground}"/>
+                <Setter Property="Background" Value="{ThemeResource NavigationViewItemBackground}"/>
+                <Setter Property="BorderBrush" Value="{ThemeResource NavigationViewItemBorderBrush}"/>
+                <Setter Property="BorderThickness" Value="{StaticResource NavigationViewItemBorderThickness}"/>
+                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="UseSystemFocusVisuals" Value="True"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="NavigationViewItem">
+                            <NavigationViewItemPresenter x:Name="NavigationViewItemPresenter" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentTransitions="{TemplateBinding ContentTransitions}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Icon="{TemplateBinding Icon}" IsTabStop="False" Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}" UseSystemFocusVisuals="{TemplateBinding UseSystemFocusVisuals}" VerticalAlignment="{TemplateBinding VerticalAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="ItemOnNavigationViewListPositionStates">
+                                        <VisualState x:Name="OnLeftNavigation">
+                                            <VisualState.Setters>
+                                                <Setter Target="NavigationViewItemPresenter.Style" Value="{StaticResource NavigationViewItemPresenterStyleWhenOnLeftPane}"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="OnTopNavigationPrimary">
+                                            <VisualState.Setters>
+                                                <Setter Target="NavigationViewItemPresenter.Style" Value="{StaticResource NavigationViewItemPresenterStyleWhenOnTopPane}"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="OnTopNavigationPrimaryReveal">
+                                            <VisualState.Setters>
+                                                <Setter Target="NavigationViewItemPresenter.Style" Value="{StaticResource NavigationViewItemPresenterStyleWhenOnTopPaneWithRevealFocus}"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="OnTopNavigationOverflow">
+                                            <VisualState.Setters>
+                                                <Setter Target="NavigationViewItemPresenter.Style" Value="{StaticResource NavigationViewItemPresenterStyleWhenOnTopPaneOverflow}"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </NavigationViewItemPresenter>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
 
         </ResourceDictionary>
 
@@ -83,7 +141,7 @@
     </Page.Background>-->
 
 
-    <StackPanel x:Name="MainStack" Margin="0,10,0,0">
+    <Grid x:Name="MainStack" Margin="0,10,0,0">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="Phone">
@@ -97,6 +155,8 @@
                         <Setter Target="progring.(FrameworkElement.Height)" Value="50"/>
                         <Setter Target="LoadText.(TextBlock.FontSize)" Value="12"/>
                         <Setter Target="MySplitView_Main.OpenPaneLength" Value="300"/>
+                        <Setter Target="NavView.PaneDisplayMode" Value="LeftCompact"/>
+                        <Setter Target="NavView.OpenPaneLength" Value="30"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Tablet">
@@ -107,6 +167,7 @@
                         <Setter Target="progring.(FrameworkElement.Height)" Value="50"/>
                         <Setter Target="LoadText.(TextBlock.FontSize)" Value="16"/>
                         <Setter Target="MySplitView_Main.OpenPaneLength" Value="500"/>
+                        <Setter Target="NavView.PaneDisplayMode" Value="LeftCompact"/>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="800"/>
@@ -122,27 +183,19 @@
         </VisualStateManager.VisualStateGroups>
 
 
-        <!--<HyperlinkButton x:Name="BackButton" RelativePanel.AlignLeftWithPanel="True" Margin="10,10" Click="BackButton_Click">
-                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE016;" FontSize="24"/>
-            </HyperlinkButton>-->
-        <!--<HyperlinkButton x:Name="ForwardButton" RelativePanel.RightOf="BackButton" Margin="5,10" Click="ForwardButton_Click">
-                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE017;" FontSize="24"/>
-            </HyperlinkButton>-->
-        <Grid HorizontalAlignment="Stretch">
-            <RelativePanel>
-                <HyperlinkButton x:Name="OpenBtn" FontFamily="Segoe MDL2 Assets"  RelativePanel.AlignLeftWithPanel="True"
-                                    FontSize="24" Foreground="White" Margin="10,10" Click="OpenBtn_Click" Background="Transparent">
-                    <TextBlock Text="&#xE700;"/>
-                </HyperlinkButton>
-                <StackPanel RelativePanel.RightOf="OpenBtn">
+      
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                
+                <StackPanel HorizontalAlignment="Right">
                     <AutoSuggestBox x:Name="HospDocSuggest" TextBoxStyle="{StaticResource AutoboxStyle2}"
                                     PlaceholderText="Search for Doctor or Hospital" 
                                             TextChanged="HospDocSuggest_TextChanged" Width="467"
-                                    Height="40"  FontSize="16" HorizontalAlignment="Left" Margin="10,10,0,0"
-                                    GotFocus="HospDocSuggest_GotFocus" BorderThickness="0,0,1,0" 
+                                     FontSize="16"  Margin="10,-3,10,0"
+                                    GotFocus="HospDocSuggest_GotFocus" 
                 QueryIcon="Find" ItemContainerStyle="{StaticResource AutoListStyle}"
                                             LostFocus="HospDocSuggest_LostFocus"/>
-                    <Popup x:Name="KeyWordBox" IsOpen="False" Margin="10,0,10,0" Width="467" HorizontalAlignment="Left"
+                    <Popup x:Name="KeyWordBox" IsOpen="False" Margin="10,0,0,0" Width="467" HorizontalAlignment="Left"
                            >
                         <StackPanel Background="LightGray">
                             <TextBlock FontWeight="Bold" Margin="10">Your Recent Searches</TextBlock>
@@ -169,27 +222,38 @@
 
                     </Popup>
                 </StackPanel>
-                <SplitView x:Name="MySplitView_Main" IsPaneOpen="False" DisplayMode="Overlay" OpenPaneLength="400" 
-                           RelativePanel.Below="OpenBtn" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <SplitView.Pane>
-                        <StackPanel Background="#263440">
-                            <StackPanel Orientation="Horizontal" Margin="20">
-                                <Ellipse Height="120" Width="120" Margin="10">
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="ms-appx:///Assets/32.jpg"/>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <StackPanel>
-                                    <TextBlock FontSize="28" Margin="10,0" Foreground="White">Suresh</TextBlock>
-                                    <StackPanel x:Name="locstack" Orientation="Horizontal" >
-                                        <TextBlock Margin="10,0" Foreground="White">Using Location:</TextBlock>
-                                        <TextBlock Text="{x:Bind viewModel.loc, Mode=TwoWay}" Margin="0,0" Foreground="White"/>
-                                        
-                                    </StackPanel>
-                                    <StackPanel x:Name="locstack2" Orientation="Vertical" Visibility="Collapsed" >
-                                        <Grid>
-                                            <AutoSuggestBox x:Name="MyAutoSuggest" 
-                                                    PlaceholderText="{x:Bind viewModel.loc, Mode=TwoWay}" 
+                
+                <NavigationView x:Name="NavView" Loaded="NavView_Loaded" 
+                                ItemInvoked="NavView_ItemInvoked" IsTabStop="False"
+                                Header="Dashboard" VerticalAlignment="Stretch" IsBackButtonVisible="Collapsed"  PaneOpening="NavView_PaneOpening"
+                                PaneClosing="NavView_PaneClosing"
+                                PaneOpened="NavView_PaneOpened"
+                                PaneClosed="NavView_PaneClosed"
+                                IsPaneOpen="False" 
+                                Margin="0,-12,0,0"
+                                PaneDisplayMode="LeftCompact"
+                                SelectionChanged="NavView_SelectionChanged"
+                                BackRequested="NavView_BackRequested"
+                                
+                                >
+                    
+                    
+                    <!--<NavigationView.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontWeight="Bold" FontSize="28" Text="{Binding}"/>
+                        </DataTemplate>
+                    </NavigationView.HeaderTemplate>-->
+                    <NavigationView.PaneCustomContent>
+                        <StackPanel x:Name="locmainstack">
+                            <StackPanel x:Name="locstack" Orientation="Horizontal" Margin="0,10">
+                                <TextBlock Margin="10,0">Using Location:</TextBlock>
+                                <TextBlock Text="{x:Bind viewModel.loc, Mode=TwoWay}" Margin="0,0" />
+
+                            </StackPanel>
+                            <StackPanel x:Name="locstack2" Orientation="Horizontal"  Visibility="Collapsed">
+                                <Grid HorizontalAlignment="Left">
+                                    <AutoSuggestBox x:Name="MyAutoSuggest" 
+                                                    PlaceholderText="Search for a location" 
                                                     TextChanged="MyAutoSuggest_TextChanged" 
                                                     UpdateTextOnSelect="True"
                                                     ItemContainerStyle="{StaticResource AutoListStyle}"  
@@ -197,11 +261,11 @@
                                                     Foreground="Black"
                                                     FontSize="16" 
                                                     GotFocus="MyAutoSuggest_GotFocus" 
-                                                    Margin="10,5,0,5" 
+                                                    Margin="10,5,0,10" 
                                                     SuggestionChosen="MyAutoSuggest_SuggestionChosen" 
                                                     BorderThickness="0,0,1,0" 
                                                     BorderBrush="Black"/>
-                                            <ProgressRing 
+                                    <ProgressRing 
                                         x:Name="LocationProg" 
                                         IsActive="False" 
                                         Foreground="Black" 
@@ -210,77 +274,66 @@
                                         Width="10" Margin="0,0,5,0"
                                         HorizontalAlignment="Right"
                                       />
-                                        </Grid>
-                                        <Button Margin="10" RelativePanel.AlignRightWithPanel="True" 
+                                </Grid>
+                                <Button Margin="10,-5,0,0" Background="Gray"
                                         ToolTipService.ToolTip="Detect Location" 
                                         x:Name="LocationBtn"
                                         Click="LocationBtn_Click">
-                                            <TextBlock  Text="Detect Location" Foreground="White" FontSize="16"/>
-                                        </Button>
+                                    <!--<TextBlock  Text="Detect Location" Foreground="White" />-->
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE707;"/>
+                                </Button>
 
-                                    </StackPanel>
-                                    <CheckBox  x:Name="LocationCheck" Margin="10,0" Foreground="White"
-                                                  Content="Change default location" Tapped="LocationCheck_Tapped" RequestedTheme="Dark"/>
-                                </StackPanel>
                             </StackPanel>
-
-
-
-                            <!--<StackPanel Orientation="Horizontal"  Margin="0,0,30,-3" HorizontalAlignment="Right">
-                                    <HyperlinkButton Name="Dashboardbtn" BorderThickness="0,0,0,1" Padding="0" Click="Dashboardbtn_Click"
-                                 Margin="0,0,10,0">
-                                        <TextBlock Text="Dashboard" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" 
-                           FontSize="16"/>
-                                    </HyperlinkButton>
-                                    <HyperlinkButton Name="AppBtn" BorderThickness="0,0,0,1" Padding="0" Click="AppBtn_Click"
-                            >
-                                        <TextBlock Text="Your Appointments" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" 
-                           FontSize="16"/>
-                                    </HyperlinkButton>
-                                </StackPanel>-->
-                            <ListBox HorizontalAlignment="Left" x:Name="MyListBox" Background="#263440" 
-                                     FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" Margin="20"
-                                     SelectionChanged="MyListBox_SelectionChanged" FontSize="16" Foreground="White" 
-                                     ItemContainerStyle="{StaticResource ListBoxItemStyle2}">
-
-                                <ListBoxItem >Dashboard</ListBoxItem>
-                                <ListBoxItem >Appointments</ListBoxItem>
-                                <ListBoxItem>Doctors</ListBoxItem>
-                                <ListBoxItem >Hospitals</ListBoxItem>
-                            </ListBox>
-
+                            <CheckBox  x:Name="LocationCheck" Margin="10,0" Foreground="White"
+                                                  Content="Change default location" Tapped="LocationCheck_Tapped" />
+                            <NavigationViewItemSeparator HorizontalAlignment="Stretch"/>
                         </StackPanel>
+                        
+                    </NavigationView.PaneCustomContent>
+                    
 
-                    </SplitView.Pane>
-                    <SplitView.Content>
-
-                        <Grid HorizontalAlignment="Stretch">
-                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Frame x:Name="myFrame" VerticalAlignment="Stretch"
-                                       HorizontalAlignment="Center" Margin="-0,10">
-
-                                </Frame>
+                    <NavigationView.MenuItems>
+                        <NavigationViewItem FontSize="15"  Icon="Home" Content="Dashboard" Tag="Dash"/>
+                        <NavigationViewItem FontSize="15" Icon="Calendar" Content="Appointments" Tag="App"/>
+                        <NavigationViewItem FontSize="15" Icon="Contact" Content="Doctors" Tag="Doc"/>
+                        <NavigationViewItem FontSize="15" Icon="Flag" Content="Hospitals" Tag="Hosp"/>
+                        
+                    </NavigationView.MenuItems>
+                    <NavigationView.PaneFooter>
+                        <NavigationViewItem>
+                            <StackPanel Margin="-5,0,0,0" HorizontalAlignment="Left" Orientation="Horizontal">
+                                <PersonPicture Height="25" Width="25"
+                                           ProfilePicture="ms-appx:///Assets/32.jpg"/>
+                                <TextBlock Margin="15,5,0,0" FontSize="15">Suresh</TextBlock>
                             </StackPanel>
-                        </Grid>
+                        </NavigationViewItem>
+                        <!--<NavigationViewItem Icon="Calendar" Content="Appointments"/>-->
+                    </NavigationView.PaneFooter>
+                    <Grid VerticalAlignment="Stretch" x:Name="myGrid">
+                        <Frame x:Name="myFrame" VerticalAlignment="Stretch" Visibility="Visible"
+                                       HorizontalAlignment="Stretch" Margin="0,5,0,0" Height="725">
 
-
-
-                    </SplitView.Content>
-                </SplitView>
-
-            </RelativePanel>
-            <StackPanel Margin="50,0" VerticalAlignment="Center">
-                <ProgressRing x:Name="progring" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                          Height="100" Width="100" Foreground="White" 
-                                          Margin="0,200,0,100"></ProgressRing>
-                <TextBlock x:Name="LoadText" HorizontalAlignment="Center" FontSize="20"
-                   Foreground="White" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova">
+                        </Frame>
+                        <StackPanel Margin="50,0" VerticalAlignment="Center">
+                            <ProgressRing x:Name="progring" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                          Height="100" Width="100" Foreground="#2b5797" 
+                                          Margin="0,0,0,100"></ProgressRing>
+                            <TextBlock x:Name="LoadText" HorizontalAlignment="Center" FontSize="20"
+                   Foreground="Black" FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova">
                     <Run Text="LOADING HEALTH AND WELLNESS JUST FOR YOU"/>
-                </TextBlock>
-                <TextBlock x:Name="StatusText" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
-                   Foreground="White"  FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" Margin="0,20">
+                            </TextBlock>
+                            <TextBlock x:Name="StatusText" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
+                   Foreground="Black"  FontFamily="ms-appx:///Assets/ProximaNova-SemiBold.ttf#Proxima Nova" Margin="0,20">
             CONNECTING</TextBlock>
-            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    
+
+                </NavigationView>
+                
+                
+            </Grid>
+           
         </Grid>
-    </StackPanel>
+    </Grid>
 </Page>

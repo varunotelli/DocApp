@@ -24,7 +24,7 @@ namespace DocApp.Data
                 results = await DBHandler.db.QueryAsync<Department>(
                     "SELECT * FROM DEPARTMENT ");
                 System.Diagnostics.Debug.WriteLine("results=" + results.Count());
-                if (results != null && results.Count>0)
+                if (results != null)
                 {
                     callback.DepartmentDataReadSuccess(results);
                     //await DBHandler.db.CloseAsync();

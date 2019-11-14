@@ -21,8 +21,8 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova" FontSize="28" Margin="10,-5,10,10">
-                        <Run Text="{x:Bind sys:String.Format('Hospitals ({0}) in',dept),Mode=OneWay}"/>
+                    <TextBlock FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" FontSize="24" Margin="10,-5,10,10">
+                        <Run Text="{x:Bind sys:String.Format('Showing {0} in',dept),Mode=OneWay}"/>
                         <Run Text="{x:Bind address,Mode=OneWay}"/>
                     </TextBlock>
 

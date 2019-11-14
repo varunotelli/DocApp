@@ -129,7 +129,7 @@
             </StackPanel>
         </Popup>
 
-        <StackPanel Padding="5" Background="White">
+        <StackPanel Padding="5" Background="#e9e9e9">
             <cont:BackButtonControl x:Name="Backbtn" Margin="0,0,20,0"/>
             <StackPanel Orientation="Horizontal">
                 <Ellipse Height="100" Width="100" Margin="10,0" x:Name="Img">
