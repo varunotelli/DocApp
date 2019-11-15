@@ -66,8 +66,8 @@ namespace DocApp.Presentation.Views
             viewModel.AppRead += this.onAppReadSuccess;
             viewModel.AppointmentUpdated+=this.onAppUpdateSuccess;
             viewModel.AppointmentCheckSuccess += this.onAppCheckSuccess;
-            if (temp.vis == 0)
-                Backbtn.Visibility = Visibility.Collapsed;
+            //if (temp.vis == 0)
+            //    Backbtn.Visibility = Visibility.Collapsed;
             await viewModel.GetDoctor(id);
 
         }

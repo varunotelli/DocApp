@@ -7,12 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:DocApp.Presentation.Views.Templates"
     xmlns:sys="using:System"
+    xmlns:controls="using:DocApp.Presentation.Views.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
         <SplitView x:Name="mySplitView" DisplayMode="Inline" 
-                            PanePlacement="Right" OpenPaneLength="800" 
+                            PanePlacement="Right" OpenPaneLength="600" PaneClosed="MySplitView_PaneClosed"
                             >
             <SplitView.Content>
 
@@ -21,10 +22,15 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" FontSize="24" Margin="10,-5,10,10">
+                    <TextBlock FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" FontSize="24" 
+                               Margin="10,-5,10,10" HorizontalAlignment="Left">
                         <Run Text="{x:Bind sys:String.Format('Showing {0} in',dept),Mode=OneWay}"/>
                         <Run Text="{x:Bind address,Mode=OneWay}"/>
                     </TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                        <controls:FilterControl x:Name="FilterButton" Loaded="FilterButton_Loaded" Margin="10"/>
+                        <controls:ComboBoxControl x:Name="OrderCombo" Margin="11"/>
+                    </StackPanel>
 
                     <ListView x:Name="myHospListView"  HorizontalAlignment="Stretch" Grid.Row="1"
                                       ItemsSource="{x:Bind viewModel.hospsmain, Mode=TwoWay}" IsItemClickEnabled="True"

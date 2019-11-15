@@ -36,6 +36,7 @@ namespace DocApp.Presentation.Views
         public int val { get; set; }
         public int vis { get; set; }
         public int type { get; set; }
+        public MainPage mainPage { get; set; }
     }
     public sealed partial class HospitalDoctorView : Page,INavEvents,IHospEvents
     {
@@ -92,17 +93,17 @@ namespace DocApp.Presentation.Views
 
         private async void DoctorGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame parentFrame = Window.Current.Content as Frame;
+            //Frame parentFrame = Window.Current.Content as Frame;
 
-            MainPage mp = parentFrame.Content as MainPage;
-            StackPanel grid = mp.Content as StackPanel;
-            Frame my_frame = grid.FindName("myFrame") as Frame;
+            //MainPage mp = parentFrame.Content as MainPage;
+            //StackPanel grid = mp.Content as StackPanel;
+            //Frame my_frame = grid.FindName("myFrame") as Frame;
             DetailSplitView.IsPaneOpen = true;
             SecondStack.Visibility = Visibility.Collapsed;
             FirstStack.SetValue(Grid.ColumnSpanProperty, 2);
             await viewModel.AddDocSearchResult(new Doc_Search() { doc_id = (e.ClickedItem as Doctor).ID, user_id = 1 });
             HospDocFrame.Navigate(typeof(SelectedDocDetailView), 
-                new DocNavEventArgs() {val= (e.ClickedItem as Doctor).ID, view=this}
+                new DocNavEventArgs() {val= (e.ClickedItem as Doctor).ID, view=this, mainPage=mp}
             , new SuppressNavigationTransitionInfo());
         }
 

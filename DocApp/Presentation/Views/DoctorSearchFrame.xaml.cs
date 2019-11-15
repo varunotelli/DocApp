@@ -76,7 +76,8 @@ namespace DocApp.Presentation.Views
         public DoctorSearchFrame()
         {
             this.InitializeComponent();
-            
+            mySplitView.Focus(FocusState.Programmatic);
+
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e1)
@@ -98,6 +99,7 @@ namespace DocApp.Presentation.Views
             FilterButton.RatingCleared += this.onRatingCleared;
             viewModel.DeptRead += this.onDeptRead;
             viewModel.DoctorsSuccess += this.onDoctorsSuccess;
+            mySplitView.Focus(FocusState.Programmatic);
             await viewModel.GetDepartments();
             
         }
@@ -112,6 +114,7 @@ namespace DocApp.Presentation.Views
 
         private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            ShowingText.Opacity = 0;
             var temp = sender as ListView;
             index = myListView.SelectedIndex;
             var doc = e.ClickedItem as Doctor;
@@ -148,6 +151,7 @@ namespace DocApp.Presentation.Views
         private void MyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             index = myListView.SelectedIndex;
+            ShowingText.Opacity = 0;
 
         }
 
@@ -187,7 +191,28 @@ namespace DocApp.Presentation.Views
             
         }
 
-        
+        private void MySplitView_PaneOpened(SplitView sender, object args)
+        {
+            ShowingText.Opacity = 0;
+        }
+
+        private void MySplitView_PaneClosing(SplitView sender, SplitViewPaneClosingEventArgs args)
+        {
+            ShowingText.Opacity = 1;
+            mySplitView.Focus(FocusState.Programmatic);
+        }
+
+        private void MySplitView_PaneClosed(SplitView sender, object args)
+        {
+            ShowingText.Opacity = 1;
+        }
+
+        private void MySplitView_PaneOpening(SplitView sender, object args)
+        {
+            ShowingText.Opacity = 0;
+
+        }
+
         public void onComboChanged(object source, ComboBoxSelectEventArgs args)
         {
             var temp = new List<Doctor>(viewModel.docsmain);

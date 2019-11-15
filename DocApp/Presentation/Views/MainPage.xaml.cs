@@ -93,6 +93,7 @@ namespace DocApp.Presentation.Views
             viewModel = new AutoSuggestViewModel();
             viewModel.LocationChanged += this.onLocationChanged;
             viewModel.LoginEventSuccess += this.onLoginSuccess;
+            viewModel.AddressFailed += this.onAddressFailed;
             progring.IsActive = true;
             MyAutoSuggest.IsEnabled = false;
             HospDocSuggest.IsEnabled = false;
@@ -103,7 +104,7 @@ namespace DocApp.Presentation.Views
             //MyListBox.SelectedIndex = 0;
             //Dashboardbtn.IsEnabled = false;
             //AppBtn.IsEnabled = false;
-            //MyAutoSuggest.Focus(FocusState.Programmatic);
+            HospDocSuggest.Focus(FocusState.Programmatic);
             
             //myFrame.Navigate(typeof(MainPageLoadingScreenView));
         
@@ -184,6 +185,19 @@ namespace DocApp.Presentation.Views
             //    myFrame.Navigate(typeof(MainPageBuffer), new navargs {name=address,location=true,mp=this });
         }
 
+
+        public void onAddressFailed(object source,EventArgs args)
+        {
+            LocationProg.IsActive = false;
+            InternetFailDialog dialog = new InternetFailDialog()
+            {
+                Title = "Connection Failed",
+                Content = "Unable to connect to the internet. Please try again.",
+                CloseButtonText = "OK"
+            };
+            dialog.ShowAsync();
+            //await dialog.ShowAsync();
+        }
         
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -343,6 +357,8 @@ namespace DocApp.Presentation.Views
         {
             if((sender as ListBox).SelectedIndex!=-1)
             {
+                NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
+                NavView.IsBackEnabled = true;
                 myFrame.Navigate(typeof(SelectedDocDetailView),
                 new DocNavEventArgs() { val = ((sender as ListBox).SelectedItem as Doctor).ID, vis=1 }
             , new SuppressNavigationTransitionInfo());
@@ -448,7 +464,7 @@ namespace DocApp.Presentation.Views
 
         private void NavView_Loaded(object sender, RoutedEventArgs e)
         {
-            locmainstack.Visibility = Visibility.Collapsed;
+            locmainstack.Visibility = Visibility.Visible;
         }
 
         private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -536,6 +552,8 @@ namespace DocApp.Presentation.Views
 
         private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
+            NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+            NavView.IsBackEnabled = false;
             if (myFrame.CanGoBack)
                 myFrame.GoBack();
         }

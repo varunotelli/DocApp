@@ -40,6 +40,8 @@ namespace DocApp.Presentation.ViewModels
         public event LocationChangedEventHandler LocationChanged;
         public delegate void LoginSuccessEventHandler(object source, LoginSuccessEventArgs args);
         public event LoginSuccessEventHandler LoginEventSuccess;
+        public delegate void AddressFailEventHandler(object source, EventArgs args);
+        public event AddressFailEventHandler AddressFailed;
         public int count;
         public string loc
         {
@@ -70,6 +72,12 @@ namespace DocApp.Presentation.ViewModels
             depts = new ObservableCollection<string>();
             keywords = new ObservableCollection<string>();
             docs = new ObservableCollection<Doctor>();
+        }
+
+        public void onAddressFailed()
+        {
+            if (AddressFailed != null)
+                AddressFailed(this, EventArgs.Empty);
         }
 
         public void onLocationChanged()
@@ -190,6 +198,7 @@ namespace DocApp.Presentation.ViewModels
         public bool DataReadFail()
         {
             System.Diagnostics.Debug.WriteLine("API Viewmodel fail");
+            onAddressFailed();
             return false;
         }
 

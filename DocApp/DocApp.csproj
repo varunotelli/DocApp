@@ -290,6 +290,9 @@
     <Compile Include="Presentation\Views\DialogBoxes\CancelDialog.xaml.cs">
       <DependentUpon>CancelDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Views\DialogBoxes\InternetFailDialog.xaml.cs">
+      <DependentUpon>InternetFailDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\DialogBoxes\LastBookDialog.xaml.cs">
       <DependentUpon>LastBookDialog.xaml</DependentUpon>
     </Compile>
@@ -480,6 +483,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Views\DialogBoxes\CancelDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\DialogBoxes\InternetFailDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

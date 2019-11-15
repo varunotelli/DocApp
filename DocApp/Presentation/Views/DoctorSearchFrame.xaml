@@ -14,8 +14,9 @@
 
     <Grid>
         
-        <SplitView x:Name="mySplitView" DisplayMode="Inline" 
-                            PanePlacement="Right" OpenPaneLength="800" 
+        <SplitView x:Name="mySplitView" DisplayMode="Inline" PaneOpening="MySplitView_PaneOpening"
+                            PanePlacement="Right" OpenPaneLength="800" PaneOpened="MySplitView_PaneOpened" 
+                   PaneClosing="MySplitView_PaneClosing" PaneClosed="MySplitView_PaneClosed"
                             >
             <SplitView.Content>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top"  >
@@ -23,14 +24,14 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" FontSize="24" HorizontalAlignment="Left"
+                    <TextBlock x:Name="ShowingText" FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova" FontSize="24" HorizontalAlignment="Left"
                                Margin="10,-5,10,10">
                         <Run Text="{x:Bind sys:String.Format('Showing {0} in',dept),Mode=OneWay}" />
                         <Run Text="{x:Bind address,Mode=OneWay}"/>
                     </TextBlock>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                        <controls:FilterControl x:Name="FilterButton" Loaded="FilterButton_Loaded"/>
-                        <controls:ComboBoxControl x:Name="OrderCombo"/>
+                        <controls:FilterControl x:Name="FilterButton" Loaded="FilterButton_Loaded" Margin="10"/>
+                        <controls:ComboBoxControl x:Name="OrderCombo" Margin="11"/>
                     </StackPanel>
                     
 
@@ -62,7 +63,7 @@
             </SplitView.Content>
             <SplitView.Pane>
                 <StackPanel Padding="5" Background="White">
-                    <HyperlinkButton x:Name="CloseBtn" VerticalAlignment="Top"
+                    <HyperlinkButton x:Name="CloseBtn" VerticalAlignment="Top" HorizontalAlignment="Right"
                                              FontFamily="Segoe MDL2 Assets" Click="CloseBtn_Click" Margin="20,0">
                         <TextBlock Text="&#xE106;" FontSize="20"/>
                     </HyperlinkButton>

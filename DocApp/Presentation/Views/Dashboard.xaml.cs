@@ -75,7 +75,7 @@ namespace DocApp.Presentation.Views
             viewModel.AppointmentUpdated += this.onAppUpdateSuccess;
             viewModel.NoRecord += this.onNoAppointment;
             viewModel.NoDoctor += this.onNoDoctors;
-
+            NoApp.Visibility = Visibility.Collapsed;
             //await viewModel.GetRecentSearchDoctors(1);
             await viewModel.GetMostBookedDoc(1);
             await viewModel.GetAppointments(1);
@@ -180,6 +180,7 @@ namespace DocApp.Presentation.Views
         public void onNoAppointment(object source, EventArgs args)
         {
             //AppStack.Visibility = Visibility.Collapsed;
+            NoApp.Visibility = Visibility.Visible;
         }
 
         private async void TimeSlotBox_DropDownOpened(object sender, object e)
@@ -300,6 +301,7 @@ namespace DocApp.Presentation.Views
             //Frame my_frame = nav.FindName("myFrame") as Frame;
 
             //my_frame.Navigate(typeof(DoctorSearchResultView), new navargs() { mp = mainPage, name = address, doc=true });
+            mySplitView.Focus(FocusState.Programmatic);
             onSeeAllClicked(new navargs() { mp = mainPage, name = address, doc = true });
         }
         
@@ -486,7 +488,7 @@ namespace DocApp.Presentation.Views
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            mySplitView.Focus(FocusState.Programmatic);
             mySplitView.IsPaneOpen = false;
             VisitedDocStack.SetValue(Grid.ColumnProperty, 1);
             VisitedDocStack.SetValue(Grid.ColumnSpanProperty, 1);

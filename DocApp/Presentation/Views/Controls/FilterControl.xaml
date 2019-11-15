@@ -138,7 +138,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <Button FontFamily="Segoe MDL2 Assets" Margin="10"   BorderThickness="0.5"
+        <Button FontFamily="Segoe MDL2 Assets"  BorderThickness="0.5" Height="33"
                                         BorderBrush="White" Foreground="Black"
                                         Background="LightGray" ToolTipService.ToolTip="Filter">
             <Button.Content>

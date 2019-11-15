@@ -141,7 +141,7 @@
                         </ComboBox>
 
 
-                        <CalendarDatePicker x:Name="Appointment_Date" PlaceholderText="Choose your Appointment Date" 
+                        <CalendarDatePicker x:Name="Appointment_Date" PlaceholderText="Appointment Date" Width="200"
                 FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14" Margin="10,10" HorizontalAlignment="Center"
                                 BorderThickness="0.5" DateChanged="Appointment_Date_DateChanged" RequestedTheme="Light">
                             <CalendarDatePicker.HeaderTemplate>
@@ -151,8 +151,8 @@
                             </CalendarDatePicker.HeaderTemplate>
                         </CalendarDatePicker>
                         <ComboBox x:Name="TimeSlotBox" ItemsSource="{x:Bind viewModel.timeslots,Mode=OneWay}" Margin="10,10"
-                                  FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14"
-                                  DropDownOpened="TimeSlotBox_DropDownOpened" BorderThickness="0.5" HorizontalAlignment="Center"
+                                  FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14" Width="200"
+                                  DropDownOpened="TimeSlotBox_DropDownOpened" BorderThickness="0.5" HorizontalAlignment="Stretch"
                                   SelectionChanged="TimeSlotBox_SelectionChanged" PlaceholderText="Time Slot" RequestedTheme="Light">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem">
@@ -225,7 +225,7 @@
                     </StackPanel>
                 </Popup>
 
-                <SplitView x:Name="mySplitView" DisplayMode="Overlay" PanePlacement="Right" OpenPaneLength="800" 
+                <SplitView x:Name="mySplitView" DisplayMode="Inline" PanePlacement="Right" OpenPaneLength="800" 
                    PaneOpened="MySplitView_PaneOpened">
                     <SplitView.Pane>
 
@@ -264,6 +264,7 @@
                                     Padding="5"  x:Name="AppStack" Height="Auto">
                                     <TextBlock Text="Today's Appointments" FontSize="20" HorizontalAlignment="Center"
                            FontFamily="ms-appx:///Assets/ProximaNova-ExtraBld.ttf#Proxima Nova"/>
+                                    <TextBlock x:Name="NoApp" FontSize="24" Visibility="Collapsed">You have no appointments today</TextBlock>
                                     <ListView  ItemsSource="{x:Bind viewModel.appointments, Mode=OneWay}" 
                       GotFocus="ListView_GotFocus" BorderBrush="DimGray" BorderThickness="1">
                                         

@@ -98,11 +98,10 @@ namespace DocApp.Presentation.Views
             mainPage.AutoSuggestChanged += this.onAutoSuggestChanged;
             mainPage.LocationButtonClicked += this.onLocationButtonClicked;
             view.OrderComboChanged += this.onComboChanged;
-            view.DeptListChanged += this.onDeptListChanged;
-            view.ExpChanged += this.onExpListChanged;
-            view.ExpCleared += this.onExpCleared;
-            view.RatingChanged += this.onRatingChanged;
-            view.RatingCleared += this.onRatingCleared;
+            FilterButton.DeptListChanged += this.onDeptListChanged;
+
+            FilterButton.RatingChanged += this.onRatingChanged;
+            FilterButton.RatingCleared += this.onRatingCleared;
             viewModel.HospsSuccess += this.onHospsSuccess;
             
             await viewModel.GetHospitalByDept(address, 1, rating);
@@ -221,6 +220,16 @@ namespace DocApp.Presentation.Views
         {
             address = n.location;
             await viewModel.GetHospitalByDept(address, deptindex);
+        }
+
+        private void FilterButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            dept = "CARDIOLOGY";
+        }
+
+        private void MySplitView_PaneClosed(SplitView sender, object args)
+        {
+            mySplitView.Focus(FocusState.Programmatic);
         }
 
         public async void onAutoSuggestChanged(object sender, navargs2 n)

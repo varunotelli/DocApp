@@ -221,7 +221,7 @@
                     <StackPanel Background="#3b5163" Height="200" Width="300" VerticalAlignment="Center" BorderThickness="1"
                                             BorderBrush="White" >
 
-                        <CalendarDatePicker x:Name="Appointment_Date" PlaceholderText="Choose your Appointment Date" 
+                        <CalendarDatePicker x:Name="Appointment_Date" PlaceholderText="Appointment Date" Width="200"
                 FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14" Margin="10,10" HorizontalAlignment="Center"
                                 BorderThickness="0.5" DateChanged="Appointment_Date_DateChanged" RequestedTheme="Light"
                                         >
@@ -233,7 +233,8 @@
                         </CalendarDatePicker>
                         <ComboBox x:Name="TimeSlotBox" ItemsSource="{x:Bind viewModel.timeslots,Mode=OneWay}" Margin="10,10"
                                   FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"  FontSize="14"
-                                  DropDownOpened="TimeSlotBox_DropDownOpened" BorderThickness="0.5" HorizontalAlignment="Center"
+                                  Width="200"
+                                  DropDownOpened="TimeSlotBox_DropDownOpened" BorderThickness="0.5" HorizontalAlignment="Stretch"
                                   SelectionChanged="TimeSlotBox_SelectionChanged" PlaceholderText="Time Slot" RequestedTheme="Light">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem">
