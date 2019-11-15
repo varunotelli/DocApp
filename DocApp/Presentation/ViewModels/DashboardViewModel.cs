@@ -30,6 +30,7 @@ namespace DocApp.Presentation.ViewModels
         public delegate void NoRecordEventHandler(object source, EventArgs args);
         public event NoRecordEventHandler NoRecord;
         public event NoRecordEventHandler NoDoctor;
+        public event AppointmentEventHandler TodayAppCompleted;
         bool flag;
         DateTimeOffset d;
         public DateTimeOffset date
@@ -55,6 +56,12 @@ namespace DocApp.Presentation.ViewModels
             hospsmain = new ObservableCollection<Hospital>();
             Doctors = new ObservableCollection<DoctorInHospitalDetails>();
             hospsinbox = new ObservableCollection<HospitalInDoctorDetails>();
+        }
+
+        public void onTodayAppCompleted()
+        {
+            if (TodayAppCompleted != null)
+                TodayAppCompleted(this, EventArgs.Empty);
         }
 
         public void onAppRead()
@@ -207,6 +214,7 @@ namespace DocApp.Presentation.ViewModels
                 appointments.Add(x);
             if (apps.Count() == 0)
                 onNoRecord();
+            onTodayAppCompleted();
             return true;
         }
 

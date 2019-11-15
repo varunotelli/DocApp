@@ -16,7 +16,7 @@
             <Setter Property="Margin" Value="10,0"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>
+            <!--<Setter Property="FontFamily" Value="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>-->
         </Style>
         <conv:TwelveHourConverter x:Key="TwelveHourTime"/>
     </Page.Resources>
@@ -129,7 +129,7 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <TextBlock FontSize="24" FontWeight="Bold" Margin="10,10" 
-                        FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
+                        
                         Text="{x:Bind sys:String.Format('Doctors working in {0}',viewModel.hospital.Name),Mode=OneWay}"/>
                             <ListView x:Name="DocList" ItemsSource="{x:Bind viewModel.Doctors,Mode=TwoWay}" 
                                   IsItemClickEnabled="True"  Grid.Row="1" ScrollViewer.VerticalScrollMode="Disabled"

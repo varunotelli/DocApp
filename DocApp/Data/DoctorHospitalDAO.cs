@@ -35,22 +35,21 @@ namespace DocApp.Data
                                    Name = d.Name,
                                    Designation = d.Designation,
                                    Experience = d.Experience,
-                                   Start_Time = r.start_time.Split(':')[0] + ":" + r.start_time.Split(':')[1],
-                                   End_Time = r.end_time.Split(':')[0] + ":" + r.end_time.Split(':')[1],
+                                   Start_Time = r.start_time,
+                                   End_Time = r.end_time,
                                    fees = r.fee,
                                    Rating = d.Rating,
                                    Number_of_Rating = d.Number_of_Rating,
                                    max_patients = r.max_patients,
-                                   Image=d.Image
+                                   Image = d.Image
 
 
                                }
-                    ).Distinct();
+                    );
 
-                foreach (var x in details)
-                    results.Add(x);
+                results = details.ToList();
                 //System.Diagnostics.Debug.WriteLine("QUERY COUNT=" + results[0].fees);
-                if (results != null && results.Count() > 0)
+                if (results != null)
                 {
                     results = results.GroupBy(d => d.doc_id).Select(g => g.FirstOrDefault()).ToList();
                     doctorHospitalCallBack.ReadSuccess(results);

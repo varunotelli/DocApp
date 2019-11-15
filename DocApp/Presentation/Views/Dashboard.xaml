@@ -121,7 +121,7 @@
                    RequestedTheme="Dark"
                            
                            >
-                    <StackPanel  Background="#3b5163" Height="300" Width="300" VerticalAlignment="Center" BorderThickness="1"
+                    <StackPanel  Background="DarkGray" Height="300" Width="300" VerticalAlignment="Center" BorderThickness="1"
                                             BorderBrush="White" >
                         <TextBlock HorizontalAlignment="Center">Book Appointment</TextBlock>
                         <ComboBox x:Name="LocationBox" Margin="10" HorizontalAlignment="Center" 
@@ -188,7 +188,7 @@
                    RequestedTheme="Dark"
                            
                            >
-                    <StackPanel Background="#3b5163" Height="300" Width="300" VerticalAlignment="Center" BorderThickness="1"
+                    <StackPanel Background="DarkGray" Height="300" Width="300" VerticalAlignment="Center" BorderThickness="1"
                                             BorderBrush="White" >
                         <TextBlock HorizontalAlignment="Center">Book Appointment</TextBlock>
                         <CalendarDatePicker x:Name="App_Date" PlaceholderText="Choose your Appointment Date" 

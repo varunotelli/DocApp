@@ -22,19 +22,22 @@ namespace DocApp.Presentation.ViewModels
 
     class HospitalDoctorViewModel: IHospitalLocationPresenterCallBack, IDoctorViewCallBack, IHospitalViewCallback
         , IDoctorLocationPresenterCallBack, IHospitalByDeptViewCallback, IDoctorDeptLocationViewCallback,
-        IDoc_SearchInsertViewCallback
+        IDoc_SearchInsertViewCallback,ISearchViewCallback
     {
         //public double latitude;
         //public double longitude;
-        
+        public delegate void SearchCompletedEventHandler(object source, EventArgs args);
+        public event SearchCompletedEventHandler SearchCompleted;
 
 
         public ObservableCollection<Doctor> doctors;// = new ObservableCollection<Doctor>();
         public ObservableCollection<Hospital> hospitals;// = new ObservableCollection<Hospital>();
 
-        
+        public SearchData searchData;
         public UseCaseBase getHosps;
         public UseCaseBase getDocs;
+        public bool docflag = true;
+        public bool hospflag=true;
         int temp=-1;
         
         public HospitalDoctorViewModel()
@@ -42,6 +45,19 @@ namespace DocApp.Presentation.ViewModels
             doctors = new ObservableCollection<Doctor>();
             hospitals = new ObservableCollection<Hospital>();
      
+        }
+
+        public void onSearchCompleted()
+        {
+            if (SearchCompleted != null)
+                SearchCompleted(this, EventArgs.Empty);
+        }
+
+        public async Task GetSearchResults(string name, string location)
+        {
+            UseCaseBase search = new SearchUseCase(name, location);
+            search.SetCallBack(this);
+            await search.Execute();
         }
 
 
@@ -185,6 +201,31 @@ namespace DocApp.Presentation.ViewModels
         public bool Doc_SearchInsertViewFail()
         {
             System.Diagnostics.Debug.WriteLine("doc search viewmodel fail");
+            return false;
+        }
+
+        public bool SearchReadSuccess(SearchData data)
+        {
+            //searchData = data;
+            docflag = data.docflag;
+            hospflag = data.hospflag;
+            //doctors.Clear();
+            //hospitals.Clear();
+            if(docflag)
+                foreach (var x in data.doctors)
+                    doctors.Add(x);
+            if(hospflag)
+                foreach (var x in data.hospitals)
+                    hospitals.Add(x);
+            onSearchCompleted();
+            return true;
+        }
+
+        public bool SearchReadFail()
+        {
+            docflag = false;
+            hospflag = false;
+            onSearchCompleted();
             return false;
         }
     }

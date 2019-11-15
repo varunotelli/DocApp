@@ -48,7 +48,7 @@ namespace DocApp.Presentation.Views
         {
             this.InitializeComponent();
         }
-        protected override async void OnNavigatedTo(NavigationEventArgs e1)
+        protected override void OnNavigatedTo(NavigationEventArgs e1)
         {
             var temp = e1.Parameter as HospNavEventArgs;
             hosp_id = temp.val;
@@ -62,7 +62,7 @@ namespace DocApp.Presentation.Views
             viewModel.HospitalRatingUpdateSuccess += this.onHospitalRatingUpdateSucess;
 
             viewModel.AppointmentCheckSuccess += this.onAppCheckSuccess;
-            await viewModel.GetHospital(hosp_id);
+            viewModel.GetHospital(hosp_id);
 
         }
 

@@ -103,8 +103,9 @@ namespace DocApp.Presentation.Views
             FilterButton.RatingChanged += this.onRatingChanged;
             FilterButton.RatingCleared += this.onRatingCleared;
             viewModel.HospsSuccess += this.onHospsSuccess;
-            
-            await viewModel.GetHospitalByDept(address, 1, rating);
+            viewModel.DeptRead += this.onDeptRead;
+
+            await viewModel.GetDepartments();
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
@@ -113,6 +114,14 @@ namespace DocApp.Presentation.Views
             mySplitView.IsPaneOpen = false;
         }
 
+        public async void onDeptRead(object source, EventArgs args)
+        {
+            //FilterButton.deptnames = new ObservableCollection<string>();
+            foreach (var x in viewModel.deptnames)
+                FilterButton.deptnames.Add(x);
+                await viewModel.GetHospitalByDept(address, 1, rating);
+            
+        }
         public void onHospitalUpdateSuccess(object sender, UpdateHospEventArgs args)
         {
             //view = args.page;
@@ -225,6 +234,7 @@ namespace DocApp.Presentation.Views
         private void FilterButton_Loaded(object sender, RoutedEventArgs e)
         {
             dept = "CARDIOLOGY";
+            FilterButton.panel.Visibility = Visibility.Collapsed;
         }
 
         private void MySplitView_PaneClosed(SplitView sender, object args)

@@ -46,8 +46,7 @@ namespace DocApp.Data
                                }
                     ).Distinct();
 
-                foreach (var x in details)
-                    results.Add(x);
+                results = details.ToList();
 
 
                 if (results != null)

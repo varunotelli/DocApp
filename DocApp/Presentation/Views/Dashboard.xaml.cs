@@ -75,7 +75,8 @@ namespace DocApp.Presentation.Views
             viewModel.AppointmentUpdated += this.onAppUpdateSuccess;
             viewModel.NoRecord += this.onNoAppointment;
             viewModel.NoDoctor += this.onNoDoctors;
-            NoApp.Visibility = Visibility.Collapsed;
+            viewModel.TodayAppCompleted += this.onTodayAppSuccess;
+            //NoApp.Visibility = Visibility.Collapsed;
             //await viewModel.GetRecentSearchDoctors(1);
             await viewModel.GetMostBookedDoc(1);
             await viewModel.GetAppointments(1);
@@ -261,6 +262,10 @@ namespace DocApp.Presentation.Views
         public async void onYesButtonClicked(object source, EventArgs args)
         {
             viewModel.appointments.Remove(app_temp);
+            if (viewModel.appointments.Count == 0)
+                NoApp.Visibility = Visibility.Visible;
+            else
+                NoApp.Visibility = Visibility.Collapsed;
             await viewModel.CancelApp(app_id);
         }
 
@@ -673,6 +678,15 @@ namespace DocApp.Presentation.Views
             }
         }
 
+        public void onTodayAppSuccess(object souce, EventArgs args)
+        {
+            if(viewModel.appointments.Count>0)
+                NoApp.Visibility = Visibility.Collapsed;
+            else
+                NoApp.Visibility = Visibility.Visible;
+
+        }
+
         private async void ResButton_Click(object sender, RoutedEventArgs e)
         {
             await viewModel.UpdateApp(viewModel.app_vals.ID, app_date, time);
@@ -699,7 +713,8 @@ namespace DocApp.Presentation.Views
                 
             };
             bookSuccess.ButtonClicked += this.onOKButtonClicked;
-            AppStack.Visibility = Visibility.Visible;
+            //AppStack.Visibility = Visibility.Visible;
+            await viewModel.GetAppointments(1);
             await bookSuccess.ShowAsync();
         }
 

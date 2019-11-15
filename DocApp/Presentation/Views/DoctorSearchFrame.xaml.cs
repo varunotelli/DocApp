@@ -120,7 +120,7 @@ namespace DocApp.Presentation.Views
             var doc = e.ClickedItem as Doctor;
             id = doc.ID;
             await viewModel.GetDoctor(id);
-            mySplitView.IsPaneOpen = false;
+            //mySplitView.IsPaneOpen = false;
             mySplitView.IsPaneOpen = true;
             MyFrame.Navigate(typeof(SelectedDocDetailView),
                 new DocNavEventArgs() { val = (e.ClickedItem as Doctor).ID, view = this }

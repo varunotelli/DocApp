@@ -215,6 +215,7 @@
     <Compile Include="Domain\UseCase\GetTestDetailsUseCase.cs" />
     <Compile Include="Domain\UseCase\GetUpcomingAppsUseCase.cs" />
     <Compile Include="Domain\UseCase\LoginUseCase.cs" />
+    <Compile Include="Domain\UseCase\SearchUseCase.cs" />
     <Compile Include="Domain\UseCase\UpdateAppUseCase.cs" />
     <Compile Include="Domain\UseCase\UpdateDoctorRatingUseCase.cs" />
     <Compile Include="Domain\UseCase\UpdateHospitalRatingUseCase.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\RootLocationObject.cs" />
+    <Compile Include="Models\SearchData.cs" />
     <Compile Include="Models\TestDetails.cs" />
     <Compile Include="Models\Testimonial.cs" />
     <Compile Include="Presentation\Callbacks\IAppBookingViewCallback.cs" />
@@ -252,6 +254,7 @@
     <Compile Include="Presentation\Callbacks\IMostBookedDocViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IRecentDoctorViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IRosterViewCallback.cs" />
+    <Compile Include="Presentation\Callbacks\ISearchViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ITestDetailsViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\ITestViewCallback.cs" />
     <Compile Include="Presentation\Callbacks\IUpcomingAppViewCallback.cs" />

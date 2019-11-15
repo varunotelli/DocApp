@@ -4,6 +4,7 @@ using DocApp.Presentation.Views.Templates;
 using DocApp.Presentation.Views.ViewInterfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -38,14 +39,39 @@ namespace DocApp.Presentation.Views
         public int type { get; set; }
         public MainPage mainPage { get; set; }
     }
-    public sealed partial class HospitalDoctorView : Page,INavEvents,IHospEvents
+    public sealed partial class HospitalDoctorView : Page,INavEvents,IHospEvents,INotifyPropertyChanged
     {
         string address;
         int dept;
         MainPage mp;
-        string name;
+        string n;
+        public string name
+        {
+            get
+            {
+                return this.n;
+            }
+            set
+            {
+                this.n = value;
+                RaisePropertyChanged("name");
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+
+
+            }
+        }
         SelectedDocDetailView view;
         HospitalDoctorViewModel viewModel = new HospitalDoctorViewModel();
+
+        
+
         public HospitalDoctorView()
         {
             this.InitializeComponent();
@@ -57,6 +83,7 @@ namespace DocApp.Presentation.Views
             navargs1 args = e1.Parameter as navargs1;
             name = args.name;
             address = args.location;
+            viewModel.SearchCompleted += this.onSearchCompleted;
             if(args.dept_id==-1)
             {
                 await viewModel.GetDoctorByLocation(args.location);
@@ -64,14 +91,43 @@ namespace DocApp.Presentation.Views
             }
             else
             {
-               
-                await viewModel.GetDoctorsByName(args.name,args.location);
-                await viewModel.GetHospitalByName(args.name,args.location);
+
+                //await viewModel.GetDoctorsByName(args.name,args.location);
+                //await viewModel.GetHospitalByName(args.name,args.location);
+                await viewModel.GetSearchResults(args.name, args.location);
             }
             mp = args.mp;
+
+            //if (!viewModel.docflag && viewModel.hospflag)
+            //    FirstStack.Visibility = Visibility.Collapsed;
+            //else FirstStack.Visibility = Visibility.Visible;
+            //if (!viewModel.hospflag)
+            //    SecondStack.Visibility = Visibility.Collapsed;
+            //else SecondStack.Visibility = Visibility.Visible;
+           
             mp.AutoSuggestChanged += this.onAutoSuggestChanged;
             return;
 
+        }
+
+
+        public void onSearchCompleted(object source, EventArgs args)
+        {
+            if (!viewModel.docflag && !viewModel.hospflag)
+            {
+                FirstStack.Visibility = Visibility.Collapsed;
+                SecondStack.Visibility = Visibility.Collapsed;
+                ErrorText.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                if (viewModel.docflag)
+                    FirstStack.Visibility = Visibility.Visible;
+                if (viewModel.hospflag)
+                    SecondStack.Visibility = Visibility.Visible;
+                ErrorText.Visibility = Visibility.Collapsed;
+                //SecondStack.Visibility = Visibility.Visible;
+            }
         }
 
         public async void onAutoSuggestChanged(object sender, navargs2 n)

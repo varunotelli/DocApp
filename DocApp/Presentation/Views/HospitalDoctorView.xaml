@@ -8,6 +8,7 @@
     xmlns:uc="using:DocApp.Presentation.Views.Templates"
     xmlns:cont="using:DocApp.Presentation.Views.Controls"
     xmlns:data="using:DocApp.Models"
+    xmlns:sys="using:System"
     mc:Ignorable="d"
     RequestedTheme="Light"
     Background="White"
@@ -158,8 +159,9 @@
                             <ColumnDefinition x:Name="FirstCol" Width="*"/>
                             <ColumnDefinition x:Name="SecondCol" Width="*"/>
                         </Grid.ColumnDefinitions>
-                        
-                        <StackPanel x:Name="FirstStack" HorizontalAlignment="Stretch" Padding="5">
+                        <TextBlock x:Name="ErrorText" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Text="{x:Bind sys:String.Format('No results for {0}',name),Mode=OneWay}" Visibility="Collapsed"/>
+                        <StackPanel x:Name="FirstStack" HorizontalAlignment="Stretch" Padding="5" Visibility="Visible">
                             <TextBlock x:Name="DocNearYouBlock" Text="Doctors Near You" FontSize="28" FontWeight="Bold" Margin="10,10,10,30"
                            FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova" HorizontalAlignment="Left"/>
 
@@ -177,7 +179,7 @@
                             <!--<ComboBox PlaceholderText="Order By" HorizontalAlignment="Right" BorderThickness="0" Margin="0,0,10,0"
                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>-->
                             <!--<cont:ComboBoxControl HorizontalAlignment="Right" Margin="0,0,10,0"/>-->
-                            <ListView x:Name="DoctorGrid" ItemsSource="{x:Bind viewModel.doctors}" HorizontalAlignment="Stretch"
+                            <ListView x:Name="DoctorGrid" ItemsSource="{x:Bind viewModel.doctors,Mode=TwoWay}" HorizontalAlignment="Stretch"
                           Margin="0,10,0,5"  Padding="5,5,5,5" IsItemClickEnabled="True" ItemClick="DoctorGrid_ItemClick">
                                 <ListView.ItemContainerTransitions>
                                     <TransitionCollection></TransitionCollection>
@@ -214,7 +216,7 @@
                             <!--<ComboBox PlaceholderText="Order By" HorizontalAlignment="Right" BorderThickness="0" Margin="0,0,10,0"
                           FontFamily="ms-appx:///Assets/ProximaNova-Regular.ttf#Proxima Nova"/>-->
                             <!--<cont:ComboBoxControl HorizontalAlignment="Right" Margin="0,0,10,0"/>-->
-                            <ListView x:Name="HospitalGrid" ItemsSource="{x:Bind viewModel.hospitals}" IsItemClickEnabled="True"
+                            <ListView x:Name="HospitalGrid" ItemsSource="{x:Bind viewModel.hospitals,Mode=OneWay}" IsItemClickEnabled="True"
                           ItemClick="HospitalGrid_ItemClick" HorizontalAlignment="Stretch"
                           Margin="0,10" Padding="5,0,0,0">
                                 <ListView.ItemContainerTransitions>

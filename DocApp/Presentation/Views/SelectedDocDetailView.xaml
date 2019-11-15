@@ -43,7 +43,7 @@
                    RequestedTheme="Dark"
                            
                            >
-            <StackPanel Background="#3b5163" Height="200" Width="300" VerticalAlignment="Center" BorderThickness="1"
+            <StackPanel Background="LightGray" Height="200" Width="300" VerticalAlignment="Center" BorderThickness="1"
                                             BorderBrush="White" CornerRadius="10">
 
                 <CalendarDatePicker x:Name="Appointment_Date" PlaceholderText="Appointment Date" Width="200"
@@ -132,11 +132,11 @@
         <StackPanel Padding="5" Background="#e9e9e9">
             <!--<cont:BackButtonControl x:Name="Backbtn" Margin="0,0,20,0"/>-->
             <StackPanel Orientation="Horizontal">
-                <Ellipse Height="100" Width="100" Margin="10,0" x:Name="Img">
+                <!--<Ellipse Height="100" Width="100" Margin="10,0" x:Name="Img">
                     <Ellipse.Fill>
                         <ImageBrush ImageSource="{x:Bind viewModel.doctor.Image}"/>
                     </Ellipse.Fill>
-                </Ellipse>
+                </Ellipse>-->
                 <!--<Image Height="200" Width="200" Source="ms-appx:///Assets/400_placeholder.png" Stretch="UniformToFill" 
                        VerticalAlignment="Top" Margin="10"/>-->
 

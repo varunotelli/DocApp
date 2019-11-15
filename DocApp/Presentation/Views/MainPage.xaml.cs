@@ -78,6 +78,7 @@ namespace DocApp.Presentation.Views
         AutoSuggestViewModel viewModel;
         bool locflag = false;
         public int ct = -1;
+        string val = "Dash";
         public string address = "";
         public delegate void AutoSuggestChangedEventHandler(object source, navargs2 e);
         public event AutoSuggestChangedEventHandler AutoSuggestChanged;
@@ -104,7 +105,7 @@ namespace DocApp.Presentation.Views
             //MyListBox.SelectedIndex = 0;
             //Dashboardbtn.IsEnabled = false;
             //AppBtn.IsEnabled = false;
-            HospDocSuggest.Focus(FocusState.Programmatic);
+            NavView.Focus(FocusState.Programmatic);
             
             //myFrame.Navigate(typeof(MainPageLoadingScreenView));
         
@@ -472,9 +473,10 @@ namespace DocApp.Presentation.Views
             NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
             NavView.IsBackEnabled = false;
             string block = args.InvokedItemContainer.Tag as string;
-            if(block!=null)
+            if (block != null)
             {
-                switch(block)
+                if(!block.Equals(val))
+                switch (block)
                 {
                     case "Dash":
                         sender.Header = "Dashboard";
@@ -547,7 +549,7 @@ namespace DocApp.Presentation.Views
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-
+            val = args.SelectedItemContainer.Tag as string;
         }
 
         private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)

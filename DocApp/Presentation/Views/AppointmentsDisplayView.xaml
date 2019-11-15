@@ -218,7 +218,7 @@
                    RequestedTheme="Dark"
                            
                            >
-                    <StackPanel Background="#3b5163" Height="200" Width="300" VerticalAlignment="Center" BorderThickness="1"
+                    <StackPanel Background="DarkGray" Height="200" Width="300" VerticalAlignment="Center" BorderThickness="1"
                                             BorderBrush="White" >
 
                         <CalendarDatePicker x:Name="Appointment_Date" PlaceholderText="Appointment Date" Width="200"

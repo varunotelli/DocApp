@@ -27,10 +27,12 @@ namespace DocApp.Presentation.Views.Controls
         public event FilterEventHandler ExpChanged;
         public event FilterEventHandler RatingCleared;
         public event FilterEventHandler ExpCleared;
+        public StackPanel panel;
         int lexp = -1, uexp = 200, rating = -1;
         public FilterControl()
         {
             this.InitializeComponent();
+            panel = ExpStack;
             this.deptnames = new ObservableCollection<string>();
             this.DataContextChanged += (s, e) => Bindings.Update();
 
@@ -109,7 +111,7 @@ namespace DocApp.Presentation.Views.Controls
 
             if (rb != null)
             {
-                //mySplitView.IsPaneOpen = false;
+                //mySplitView.IsPaneOpen = false
 
                 string exp = rb.Content.ToString();
                 
