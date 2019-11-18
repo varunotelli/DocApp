@@ -33,6 +33,7 @@ namespace DocApp.Presentation.Views
         DoctorSearchResultView view;
         int index, id,docorderby;
         public int deptindex = 1;
+        int stackval = 0;
         int lexp = -1, uexp = 200, rating = -1;
         //string address;
         string d;
@@ -76,6 +77,7 @@ namespace DocApp.Presentation.Views
         public DoctorSearchFrame()
         {
             this.InitializeComponent();
+            //BackBtn.myFrame = this.Frame;
             mySplitView.Focus(FocusState.Programmatic);
 
         }
@@ -100,8 +102,15 @@ namespace DocApp.Presentation.Views
             viewModel.DeptRead += this.onDeptRead;
             viewModel.DoctorsSuccess += this.onDoctorsSuccess;
             mySplitView.Focus(FocusState.Programmatic);
+            //myListView.SelectedIndex = 0;
             await viewModel.GetDepartments();
             
+        }
+
+        public void onListClicked(object source, EventArgs args)
+        {
+            
+            BackButton.Visibility = Visibility.Visible;
         }
 
         public async void onDeptRead(object source, EventArgs args)
@@ -112,19 +121,10 @@ namespace DocApp.Presentation.Views
             await viewModel.GetDoctorsByDept(address, 1, lexp, uexp, rating);
         }
 
-        private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            ShowingText.Opacity = 0;
-            var temp = sender as ListView;
-            index = myListView.SelectedIndex;
-            var doc = e.ClickedItem as Doctor;
-            id = doc.ID;
-            await viewModel.GetDoctor(id);
-            //mySplitView.IsPaneOpen = false;
             mySplitView.IsPaneOpen = true;
-            MyFrame.Navigate(typeof(SelectedDocDetailView),
-                new DocNavEventArgs() { val = (e.ClickedItem as Doctor).ID, view = this }
-            , new SuppressNavigationTransitionInfo());
+            MyFrame.BackStack.Clear();
 
         }
 
@@ -144,14 +144,32 @@ namespace DocApp.Presentation.Views
         }
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            MyFrame.BackStack.Clear();
             mySplitView.IsPaneOpen = false;
         }
 
         private void MyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
             index = myListView.SelectedIndex;
             ShowingText.Opacity = 0;
+            ShowingText.Opacity = 0;
+            var temp = sender as ListView;
+            index = myListView.SelectedIndex;
+            if(myListView.SelectedItem!=null)
+            {
+                var doc = myListView.SelectedItem as Doctor;
+                id = doc.ID;
+                //await viewModel.GetDoctor(id);
+                //mySplitView.IsPaneOpen = false;
+                if(!mySplitView.IsPaneOpen)
+                    mySplitView.IsPaneOpen = true;
+                MyFrame.Navigate(typeof(SelectedDocDetailView),
+                    new DocNavEventArgs() { val = (doc).ID, view = this }
+                , new SuppressNavigationTransitionInfo());
+                MyFrame.BackStack.Clear();
+            }
+            
 
         }
 
@@ -194,6 +212,11 @@ namespace DocApp.Presentation.Views
         private void MySplitView_PaneOpened(SplitView sender, object args)
         {
             ShowingText.Opacity = 0;
+            //if (MyFrame.BackStackDepth <= 1)
+            //    BackButton.Visibility = Visibility.Collapsed;
+            //else BackButton.Visibility = Visibility.Visible;
+            //MyFrame.BackStack.Clear();
+            BackButton.Visibility = Visibility.Collapsed;
         }
 
         private void MySplitView_PaneClosing(SplitView sender, SplitViewPaneClosingEventArgs args)
@@ -205,12 +228,31 @@ namespace DocApp.Presentation.Views
         private void MySplitView_PaneClosed(SplitView sender, object args)
         {
             ShowingText.Opacity = 1;
+            BackButton.Visibility = Visibility.Visible;
+            MyFrame.BackStack.Clear();
         }
 
         private void MySplitView_PaneOpening(SplitView sender, object args)
         {
             ShowingText.Opacity = 0;
 
+        }
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MyFrame.BackStackDepth == 1)
+                BackButton.Visibility = Visibility.Collapsed;
+                if (MyFrame.CanGoBack)
+                    MyFrame.GoBack();
+                
+           
+        }
+
+        
+
+        private void BackButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            //BackButton.Visibility = Visibility.Collapsed;
         }
 
         public void onComboChanged(object source, ComboBoxSelectEventArgs args)

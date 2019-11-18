@@ -37,6 +37,7 @@ namespace DocApp.Presentation.Views
         public int val { get; set; }
         public int vis { get; set; }
         public int type { get; set; }
+        
         public MainPage mainPage { get; set; }
     }
     public sealed partial class HospitalDoctorView : Page,INavEvents,IHospEvents,INotifyPropertyChanged
@@ -161,6 +162,7 @@ namespace DocApp.Presentation.Views
             HospDocFrame.Navigate(typeof(SelectedDocDetailView), 
                 new DocNavEventArgs() {val= (e.ClickedItem as Doctor).ID, view=this, mainPage=mp}
             , new SuppressNavigationTransitionInfo());
+            HospDocFrame.BackStack.Clear();
         }
 
         private void HospitalGrid_ItemClick(object sender, ItemClickEventArgs e)
@@ -170,8 +172,9 @@ namespace DocApp.Presentation.Views
             SecondStack.SetValue(Grid.ColumnSpanProperty, 2);
             DetailSplitView.IsPaneOpen = true;
             HospDocFrame.Navigate(typeof(SelectedHospView),
-                new DocNavEventArgs() { val = (e.ClickedItem as Hospital).ID, view = this }
+                new HospNavEventArgs() { val = (e.ClickedItem as Hospital).ID, view = this }
             , new SuppressNavigationTransitionInfo());
+            HospDocFrame.BackStack.Clear();
         }
 
         private void DocSeeAll_Click(object sender, RoutedEventArgs e)
@@ -245,6 +248,29 @@ namespace DocApp.Presentation.Views
                 item = args.hospital;
             viewModel.hospitals[index] = item;
             Bindings.Update();
+        }
+
+        public void onListClicked(object source, EventArgs args)
+        {
+            BackButton.Visibility = Visibility.Visible;
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (HospDocFrame.BackStackDepth <= 1)
+                BackButton.Visibility = Visibility.Collapsed;
+            if (HospDocFrame.CanGoBack)
+                HospDocFrame.GoBack();
+        }
+
+        private void DoctorGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void HospitalGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -231,10 +231,15 @@
 
                         <StackPanel Padding="5" Background="#e9e9e9">
 
-                            <HyperlinkButton x:Name="CloseBtn" VerticalAlignment="Top" HorizontalAlignment="Right"
+                            <Grid>
+                                <HyperlinkButton x:Name="BackButton" Margin="10,0" Click="BackButton_Click" Loaded="BackButton_Loaded">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE0C4;" FontSize="24" Foreground="Black"/>
+                                </HyperlinkButton>
+                                <HyperlinkButton x:Name="CloseBtn" VerticalAlignment="Top" HorizontalAlignment="Right"
                                              FontFamily="Segoe MDL2 Assets" Click="CloseBtn_Click" Margin="20,0">
-                                <TextBlock Text="&#xE106;" FontSize="20"/>
-                            </HyperlinkButton>
+                                    <TextBlock Text="&#xE106;" FontSize="20"/>
+                                </HyperlinkButton>
+                            </Grid>
                             <Frame x:Name="myFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
 

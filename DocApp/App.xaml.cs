@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocApp.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,10 +30,15 @@ namespace DocApp
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
+        /// 
+        public static HashSet<Doctor> DoctorCache;
+        public static HashSet<int> DoctorIDCache;
         public App()
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            DoctorIDCache = new HashSet<int>();
+            DoctorCache = new HashSet<Doctor>();
         }
 
         /// <summary>

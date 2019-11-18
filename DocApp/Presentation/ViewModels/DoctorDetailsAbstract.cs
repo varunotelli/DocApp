@@ -17,10 +17,25 @@ namespace DocApp.Presentation.ViewModels
         
         ICheckAppointmentViewCallback
     {
+        private ObservableCollection<DoctorInHospitalDetails> Docs = new ObservableCollection<DoctorInHospitalDetails>();
         public AppointmentDetails app;
         public ObservableCollection<string> deptnames;
         public ObservableCollection<HospitalInDoctorDetails> hospitals;
-        public ObservableCollection<DoctorInHospitalDetails> Doctors;
+        public ObservableCollection<DoctorInHospitalDetails> Doctors
+        {
+            get
+            {
+                return Docs;
+            }
+            set
+            {
+                if (this.Docs != value)
+                {
+                    Docs = value;
+                    RaisePropertyChanged("Doctors");
+                }
+            }
+        }
         public ObservableCollection<AppointmentDetails> details;
         public ObservableCollection<Roster> timeslots;
         public ObservableCollection<Doctor> docsmain;
@@ -57,6 +72,7 @@ namespace DocApp.Presentation.ViewModels
             }
         }
         
+
         
         private bool e;
         public bool enabled
@@ -69,6 +85,7 @@ namespace DocApp.Presentation.ViewModels
             }
         }
 
+        
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string name)
         {
@@ -151,23 +168,35 @@ namespace DocApp.Presentation.ViewModels
         public async Task GetDoctor(int id)
         {
 
-            UseCaseBase getDoc = new GetDoctorUseCase(id);
+            
+
+                UseCaseBase getDoc = new GetDoctorUseCase(id);
+
+
+                getDoc.SetCallBack<IDoctorDetailViewCallBack>(this);
+
+                try
+                {
+
+                    await getDoc.Execute();
+                    //await getHosp.Execute();
+
+
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine("EXCEPTION=" + e.Message);
+                }
+           
+            
+
+        }
+
+        public async Task GetHospitalByDoctor(int id)
+        {
             UseCaseBase getHosp = new GetHospitalByDoctorUseCase(id);
-
-            getDoc.SetCallBack<IDoctorDetailViewCallBack>(this);
             getHosp.SetCallBack<IHospitalDoctorViewCallBack>(this);
-            try
-            {
-
-                await getDoc.Execute();
-                await getHosp.Execute();
-
-
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine("EXCEPTION=" + e.Message);
-            }
+            await getHosp.Execute();
         }
 
         public async Task GetTimeSlots(int doc_id, int hosp_id, string app_date)
@@ -275,7 +304,16 @@ namespace DocApp.Presentation.ViewModels
 
         public bool DataReadSuccess(Doctor d)
         {
-            this.doctor = d;
+            if(!App.DoctorCache.Any(i=>i.ID==d.ID && i.Rating==d.Rating))
+            {
+                this.doctor = d;
+                App.DoctorIDCache.Add(d.ID);
+                App.DoctorCache.Add(d);
+            }
+            else
+            {
+                this.doctor = App.DoctorCache.First(i => i.ID == d.ID);
+            }
             //onDoctorReadSuccess();
             return true;
         }

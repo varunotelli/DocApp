@@ -600,5 +600,10 @@ namespace DocApp.Presentation.Views
         {
             throw new NotImplementedException();
         }
+
+        public void onListClicked(object source, EventArgs args)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

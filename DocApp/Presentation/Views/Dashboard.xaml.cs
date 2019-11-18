@@ -703,6 +703,20 @@ namespace DocApp.Presentation.Views
             await viewModel.GetAppointment(app_date, time);
 
         }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (myFrame.BackStackDepth <= 1)
+                BackButton.Visibility = Visibility.Collapsed;
+            if (myFrame.CanGoBack)
+                myFrame.GoBack();
+        }
+
+        private void BackButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            BackButton.Visibility = Visibility.Collapsed;
+        }
+
         public async void onAppointmentRead(object source, EventArgs args)
         {
             AppointmentBookSuccess bookSuccess = new AppointmentBookSuccess()
@@ -734,6 +748,11 @@ namespace DocApp.Presentation.Views
                 item = args.doctor;
             viewModel.most_booked_docs[index] = item;
             Bindings.Update();
+        }
+
+        public void onListClicked(object source, EventArgs args)
+        {
+            BackButton.Visibility = Visibility.Visible;
         }
     }
 }

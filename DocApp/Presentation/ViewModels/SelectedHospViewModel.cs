@@ -29,6 +29,7 @@ namespace DocApp.Presentation.ViewModels
             }
         }
 
+        
        
 
         public SelectedHospViewModel()
@@ -72,9 +73,10 @@ namespace DocApp.Presentation.ViewModels
 
         public bool DataReadSuccess(List<DoctorInHospitalDetails> d)
         {
-            Doctors.Clear();
-            foreach (var x in d)
-                Doctors.Add(x);
+            //Doctors.Clear();
+            //foreach (var x in d)
+            //    Doctors.Add(x);
+            Doctors = new ObservableCollection<DoctorInHospitalDetails>(d);
             return true;
         }
 

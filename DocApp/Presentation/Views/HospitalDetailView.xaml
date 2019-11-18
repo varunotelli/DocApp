@@ -72,22 +72,22 @@
                            FontFamily="ms-appx:///Assets/ProximaNova-Bold.ttf#Proxima Nova"
                            Text="{x:Bind sys:String.Format('Doctors in {0}',viewModel.hospital.Name),Mode=OneWay}"/>
 
-                    <GridView x:Name="HospList" ItemsSource="{x:Bind viewModel.Doctors, Mode=TwoWay}" IsItemClickEnabled="True"
+                    <ListView x:Name="HospList" ItemsSource="{x:Bind viewModel.Doctors, Mode=TwoWay}" IsItemClickEnabled="True"
                                     HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Enabled" 
                           ScrollViewer.VerticalScrollBarVisibility="Visible"  ItemClick="HospList_ItemClick" Height="500">
-                        <GridView.ItemContainerStyle>
+                        <ListView.ItemContainerStyle>
                             <Style TargetType="GridViewItem">
                                 <Setter Property="Margin" Value="10,10"/>
                                 <Setter Property="Padding" Value="10"/>
                                 <Setter Property="Height" Value="Auto"/>
                             </Style>
-                        </GridView.ItemContainerStyle>
-                        <GridView.ItemTemplate>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
                             <DataTemplate x:DataType="data:DoctorInHospitalDetails">
                                 <uc:DoctorsInHospitalTemplate/>
                             </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </StackPanel>
 
             </Grid>

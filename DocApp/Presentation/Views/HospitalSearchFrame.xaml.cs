@@ -29,11 +29,12 @@ namespace DocApp.Presentation.Views
     /// 
     public class HospNavEventArgs : EventArgs
     {
+        public INavEvents MainView { get; set; }
         public IHospEvents view { get; set; }
         public int val { get; set; }
         
     }
-    public sealed partial class HospitalSearchFrame : Page,IHospEvents,IFilter,INotifyPropertyChanged
+    public sealed partial class HospitalSearchFrame : Page,IHospEvents,IFilter,INotifyPropertyChanged,INavEvents
     {
         public DoctorSearchViewModel viewModel;
         public DoctorSearchResultView view;
@@ -169,16 +170,7 @@ namespace DocApp.Presentation.Views
         
         private async void MyHospListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var temp = sender as ListView;
-            index = myHospListView.SelectedIndex;
-            var doc = e.ClickedItem as Hospital;
-            id = doc.ID;
-            await viewModel.GetHospital(id);
-            mySplitView.IsPaneOpen = false;
-            mySplitView.IsPaneOpen = true;
-            myFrame.Navigate(typeof(SelectedHospView),
-                new HospNavEventArgs() { val = (e.ClickedItem as Hospital).ID, view = this }
-            , new SuppressNavigationTransitionInfo());
+            
         }
 
         public void onComboChanged(object source, OrderEventArgs args)
@@ -242,6 +234,38 @@ namespace DocApp.Presentation.Views
             mySplitView.Focus(FocusState.Programmatic);
         }
 
+        private void MyHospListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var temp = sender as ListView;
+            index = myHospListView.SelectedIndex;
+            if(myHospListView.SelectedItem!=null)
+            {
+                var hosp = myHospListView.SelectedItem as Hospital;
+                id = hosp.ID;
+                //await viewModel.GetHospital(id);
+                //mySplitView.IsPaneOpen = false;
+                if (!mySplitView.IsPaneOpen)
+                    mySplitView.IsPaneOpen = true;
+                myFrame.Navigate(typeof(SelectedHospView),
+                    new HospNavEventArgs() { val = hosp.ID, view = this }
+                , new SuppressNavigationTransitionInfo());
+            }
+        }
+
+       
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (myFrame.BackStackDepth <= 1)
+                BackButton.Visibility = Visibility.Collapsed;
+            if (myFrame.CanGoBack)
+                myFrame.GoBack();
+        }
+
+        private void BackButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            BackButton.Visibility = Visibility.Collapsed;
+        }
+
         public async void onAutoSuggestChanged(object sender, navargs2 n)
         {
             address = n.location;
@@ -251,6 +275,16 @@ namespace DocApp.Presentation.Views
         public void onComboChanged(object source, ComboBoxSelectEventArgs args)
         {
             throw new NotImplementedException();
+        }
+
+        public void onDoctorUpdateSuccess(object sender, UpdateDocEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void onListClicked(object source, EventArgs args)
+        {
+            BackButton.Visibility = Visibility.Visible;
         }
     }
 }

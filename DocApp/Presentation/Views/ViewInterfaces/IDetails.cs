@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace DocApp.Presentation.Views.ViewInterfaces
 {
-    public interface IHospEvents
+    
+
+    public interface IDetails
     {
-        void onHospitalUpdateSuccess(object sender, UpdateHospEventArgs args);
-        void onListClicked(object sender, EventArgs args);
+        void onDetailClicked();
     }
 }

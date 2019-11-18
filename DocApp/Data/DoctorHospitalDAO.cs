@@ -24,11 +24,11 @@ namespace DocApp.Data
                     DBHandler.DBConnection();
                 var docs = await DBHandler.db.Table<Doctor>().ToListAsync();
                 var roster = await DBHandler.db.Table<Roster>().ToListAsync();
-                var hosp = await DBHandler.db.Table<Hospital>().ToListAsync();
+                //var hosp = await DBHandler.db.Table<Hospital>().ToListAsync();
                 var details = (from d in docs
                                join r in roster
                                on d.ID equals r.doc_id
-                               where hosp.Any(h => h.ID.Equals(hospid) && h.ID == r.hosp_id)
+                               where r.hosp_id == hospid
                                select new DoctorInHospitalDetails
                                {
                                    doc_id = d.ID,
@@ -51,7 +51,7 @@ namespace DocApp.Data
                 //System.Diagnostics.Debug.WriteLine("QUERY COUNT=" + results[0].fees);
                 if (results != null)
                 {
-                    results = results.GroupBy(d => d.doc_id).Select(g => g.FirstOrDefault()).ToList();
+                    results = results.GroupBy(d => d.doc_id).Select(d => d.FirstOrDefault()).ToList();
                     doctorHospitalCallBack.ReadSuccess(results);
                     await DBHandler.db.CloseAsync();
                 }

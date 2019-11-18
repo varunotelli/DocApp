@@ -19,6 +19,7 @@ namespace DocApp.Presentation.Views.Controls
 {
     public sealed partial class BackButtonControl : UserControl
     {
+        public Frame myFrame { get; set; }
         public BackButtonControl()
         {
             this.InitializeComponent();
@@ -27,14 +28,10 @@ namespace DocApp.Presentation.Views.Controls
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
 
-            Frame parentFrame = Window.Current.Content as Frame;
-
-            MainPage mp1 = parentFrame.Content as MainPage;
-            StackPanel grid = mp1.Content as StackPanel;
-
-            Frame my_frame = grid.FindName("myFrame") as Frame;
-            if (my_frame.CanGoBack)
-                my_frame.GoBack();
+            
+            if (myFrame!=null && myFrame.CanGoBack)
+                myFrame.GoBack();
+            
         }
     }
 }

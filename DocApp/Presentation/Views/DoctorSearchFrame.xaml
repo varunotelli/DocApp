@@ -39,7 +39,7 @@
                     <ListView Grid.Row="1" x:Name="myListView"  HorizontalAlignment="Stretch" 
                                       ItemsSource="{x:Bind viewModel.docsmain, Mode=TwoWay}" IsItemClickEnabled="True"
                                       ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="ListView_ItemClick" 
-                                      SelectionChanged="MyListView_SelectionChanged" Height="600" 
+                                      SelectionChanged="MyListView_SelectionChanged" Height="600" SingleSelectionFollowsFocus="True"
                                       >
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -63,10 +63,16 @@
             </SplitView.Content>
             <SplitView.Pane>
                 <StackPanel Padding="5" Background="White">
-                    <HyperlinkButton x:Name="CloseBtn" VerticalAlignment="Top" HorizontalAlignment="Right"
+                    <Grid>
+                        <HyperlinkButton x:Name="BackButton" Margin="10,0" Click="HyperlinkButton_Click" Loaded="BackButton_Loaded">
+                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE0C4;" FontSize="24" Foreground="Black"/>
+                        </HyperlinkButton>
+                        <HyperlinkButton x:Name="CloseBtn" VerticalAlignment="Top" HorizontalAlignment="Right"
                                              FontFamily="Segoe MDL2 Assets" Click="CloseBtn_Click" Margin="20,0">
-                        <TextBlock Text="&#xE106;" FontSize="20"/>
-                    </HyperlinkButton>
+                            <TextBlock Text="&#xE106;" FontSize="20"/>
+                        </HyperlinkButton>
+                    </Grid>
+                    
                     <Frame x:Name="MyFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
 

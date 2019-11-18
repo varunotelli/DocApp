@@ -22,20 +22,20 @@ namespace DocApp.Data
                 //var db = await dbHandler.DBConnection();
                 if (DBHandler.db == null)
                     DBHandler.DBConnection();
-                var docs = await DBHandler.db.Table<Doctor>().ToListAsync();
+                //var docs = await DBHandler.db.Table<Doctor>().ToListAsync();
                 var roster = await DBHandler.db.Table<Roster>().ToListAsync();
                 var hosp = await DBHandler.db.Table<Hospital>().ToListAsync();
                 var details = (from h in hosp
                                join r in roster
                                on h.ID equals r.hosp_id
-                               where docs.Any(d => d.ID.Equals(id) && d.ID == r.doc_id)
+                               where r.doc_id==id
                                select new HospitalInDoctorDetails
                                {
                                    Hosp_ID=h.ID,
                                    Name = h.Name,
                                    Location=h.Location,
-                                   Start_Time = r.start_time.Split(':')[0] + ":" + r.start_time.Split(':')[1],
-                                   End_Time = r.end_time.Split(':')[0] + ":" + r.end_time.Split(':')[1],
+                                   Start_Time = r.start_time,
+                                   End_Time = r.end_time,
                                    Fees = r.fee,
                                    Rating = h.Rating,
                                    Number_of_Rating = h.Number_Of_Rating,

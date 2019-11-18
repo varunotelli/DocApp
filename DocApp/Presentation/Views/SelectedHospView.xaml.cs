@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -33,28 +34,46 @@ namespace DocApp.Presentation.Views
     {
         public Hospital hospital { get; set; }
         public SelectedHospView page { get; set; }
+
+        
     }
     public sealed partial class SelectedHospView : Page
     {
         SelectedHospViewModel viewModel;
         IHospEvents view;
+        INavEvents mv;
         int id,hosp_id;
         string app_date, time;
         bool en;
         public delegate void UpdateEventHandler(object source, UpdateHospEventArgs args);
         public event UpdateEventHandler UpdateEvent;
 
+        public delegate void ListClickedEventHandler(object source, EventArgs args);
+        public event ListClickedEventHandler ListClicked;
+
         public SelectedHospView()
         {
             this.InitializeComponent();
         }
-        protected override void OnNavigatedTo(NavigationEventArgs e1)
+
+        public void onListClicked()
+        {
+            if (ListClicked != null)
+                ListClicked(this, EventArgs.Empty);
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e1)
         {
             var temp = e1.Parameter as HospNavEventArgs;
             hosp_id = temp.val;
             view = temp.view;
+            if (view != null)
+            {
+                this.ListClicked += view.onListClicked;
+                this.UpdateEvent += view.onHospitalUpdateSuccess;
+            }
             viewModel = new SelectedHospViewModel();
-            this.UpdateEvent += view.onHospitalUpdateSuccess;
+            
            
             viewModel.InsertFail += this.onInsertFail;
             viewModel.InsertSuccess += this.onInsertSuccess;
@@ -62,7 +81,8 @@ namespace DocApp.Presentation.Views
             viewModel.HospitalRatingUpdateSuccess += this.onHospitalRatingUpdateSucess;
 
             viewModel.AppointmentCheckSuccess += this.onAppCheckSuccess;
-            viewModel.GetHospital(hosp_id);
+            await viewModel.GetHospital(hosp_id);
+            
 
         }
 
@@ -134,6 +154,11 @@ namespace DocApp.Presentation.Views
 
         private void DocList_ItemClick(object sender, ItemClickEventArgs e)
         {
+            onListClicked();
+            Frame.Navigate(typeof(SelectedDocDetailView),
+                    new DocNavEventArgs() { val = (e.ClickedItem as DoctorInHospitalDetails).doc_id }
+                , new SuppressNavigationTransitionInfo());
+
 
         }
 
@@ -248,6 +273,12 @@ namespace DocApp.Presentation.Views
 
             }
         }
+
+        public void onDoctorUpdateSuccess(object sender, UpdateDocEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
+
         
     }
 }

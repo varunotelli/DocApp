@@ -2,6 +2,7 @@
 using DocApp.Presentation.ViewModels;
 using DocApp.Presentation.Views.DialogBoxes;
 using DocApp.Presentation.Views.Templates;
+using DocApp.Presentation.Views.ViewInterfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +17,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -30,6 +32,14 @@ namespace DocApp.Presentation.Views
     {
         public Doctor doctor { get; set; }
         public SelectedDocDetailView page { get; set; }
+
+       
+    }
+
+    public class DetailClickedEventArgs : EventArgs
+    {
+        public bool flag { get; set; }
+        public int id { get; set; }
     }
 
     public sealed partial class SelectedDocDetailView : Page
@@ -44,6 +54,9 @@ namespace DocApp.Presentation.Views
         public delegate void UpdateEventHandler(object source, UpdateDocEventArgs args);
         public event UpdateEventHandler UpdateEvent;
 
+        public delegate void ListClickedEventHandler(object source, EventArgs args);
+        public event ListClickedEventHandler ListClicked;
+
         public SelectedDocDetailView()
         {
             this.InitializeComponent();
@@ -56,7 +69,10 @@ namespace DocApp.Presentation.Views
             view = temp.view;
             viewModel = new SelectedDoctorViewModel();
             if(view!=null)
+            {
                 this.UpdateEvent += view.onDoctorUpdateSuccess;
+                this.ListClicked += view.onListClicked;
+            }
             viewModel.DoctorReadSuccess += this.onDoctorReadSuccess;
             viewModel.InsertFail += this.onInsertFail;
             viewModel.InsertSuccess += this.onInsertSuccess;
@@ -71,6 +87,14 @@ namespace DocApp.Presentation.Views
             await viewModel.GetDoctor(id);
 
         }
+
+
+        public void onListClicked()
+        {
+            if (ListClicked != null)
+                ListClicked(this, EventArgs.Empty);
+        }
+
         public void onButtonClicked(object source, ButtonClickArgs args)
         {
             //System.Diagnostics.Debug.WriteLine(args.model.Name);
@@ -357,7 +381,9 @@ namespace DocApp.Presentation.Views
 
         private async void Tabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Tabs.SelectedIndex == 1)
+            if (Tabs.SelectedIndex == 0)
+                await viewModel.GetHospitalByDoctor(id);
+            else if (Tabs.SelectedIndex == 1)
                 await viewModel.GetTests(id);
             else if (Tabs.SelectedIndex == 2)
                 await viewModel.GetAppointmentByDoc(1, id);
@@ -382,15 +408,11 @@ namespace DocApp.Presentation.Views
 
         private void HospList_ItemClick(object sender, ItemClickEventArgs e)
         {
-
-            Frame parentFrame = Window.Current.Content as Frame;
-
-            MainPage mp1 = parentFrame.Content as MainPage;
-            StackPanel grid = mp1.Content as StackPanel;
-
-            Frame my_frame = grid.FindName("myFrame") as Frame;
-            //my_frame.Navigate(typeof(HospitalDetailView), (e.ClickedItem as HospitalInDoctorDetails).Hosp_ID, 
-            //    new SuppressNavigationTransitionInfo());
+             
+            int x = (e.ClickedItem as HospitalInDoctorDetails).Hosp_ID;
+            onListClicked();
+            Frame.Navigate(typeof(SelectedHospView), new HospNavEventArgs() { val = x }
+                , new SuppressNavigationTransitionInfo());
         }
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
@@ -457,5 +479,7 @@ namespace DocApp.Presentation.Views
             }
 
         }
+
+       
     }
 }

@@ -42,7 +42,7 @@ namespace DocApp.Domain.UseCase
             }
 
 
-            if (hospitals != null && hospitals.Count > 0)
+            if (hospitals != null)
                 useCaseCallback.DataReadSuccess(hospitals);
             else useCaseCallback.DataReadFail();
         }

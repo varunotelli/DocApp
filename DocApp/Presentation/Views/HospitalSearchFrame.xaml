@@ -34,7 +34,7 @@
 
                     <ListView x:Name="myHospListView"  HorizontalAlignment="Stretch" Grid.Row="1"
                                       ItemsSource="{x:Bind viewModel.hospsmain, Mode=TwoWay}" IsItemClickEnabled="True"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="MyHospListView_ItemClick" 
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" ItemClick="MyHospListView_ItemClick" SelectionChanged="MyHospListView_SelectionChanged" 
                                        Height="700">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -57,11 +57,16 @@
                 </Grid>
             </SplitView.Content>
             <SplitView.Pane>
-                <StackPanel>
-                    <HyperlinkButton x:Name="CloseBtn" VerticalAlignment="Top"
+                <StackPanel Background="#e9e9e9">
+                    <Grid>
+                        <HyperlinkButton x:Name="BackButton" Margin="10,0" Click="BackButton_Click" Loaded="BackButton_Loaded">
+                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE0C4;" FontSize="24" Foreground="Black"/>
+                        </HyperlinkButton>
+                        <HyperlinkButton x:Name="CloseBtn" VerticalAlignment="Top" HorizontalAlignment="Right"
                                              FontFamily="Segoe MDL2 Assets" Click="CloseBtn_Click" Margin="20,0">
-                        <TextBlock Text="&#xE106;" FontSize="20"/>
-                    </HyperlinkButton>
+                            <TextBlock Text="&#xE106;" FontSize="20"/>
+                        </HyperlinkButton>
+                    </Grid>
                     <Frame x:Name="myFrame" HorizontalAlignment="Stretch"/>
                 </StackPanel>
 
