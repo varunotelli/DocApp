@@ -219,6 +219,48 @@ namespace DocApp.Data
                 System.Diagnostics.Debug.WriteLine("Appointment details select exception=" + e.Message);
             }
         }
+
+        public async Task ReminderForApps(int p_id, string app_date, string time, IReminderCallback callback)
+        {
+            AppointmentDetails result = new AppointmentDetails();
+            try
+            {
+                if (DBHandler.db == null)
+                    DBHandler.DBConnection();
+                var apps = await DBHandler.db.Table<Appointment>().ToListAsync();
+                var docs = await DBHandler.db.Table<Doctor>().ToListAsync();
+                var hosp = await DBHandler.db.Table<Hospital>().ToListAsync();
+
+                var details = (from a in apps
+                               join d in docs
+                               on a.DOC_ID equals d.ID
+                               join h in hosp
+                               on a.HOS_ID equals h.ID
+                               where a.APP_DATE.Equals(app_date) && DateTime.Parse(a.start_time).Subtract(DateTime.Parse(time)).Minutes==30 //DateTime.Parse(time)
+                               select new AppointmentDetails
+                               {
+                                   app_date = a.APP_DATE,
+                                   doc_name = d.Name,
+                                   hosp_name = h.Name,
+                                   id = a.ID,
+                                   location = h.Location,
+                                   Timeslot = a.start_time
+
+                               }
+                    );
+                result = details.FirstOrDefault();
+                if (result != null)
+                    callback.ReminderReadSuccess(result);
+                else
+                    callback.ReminderReadFail();
+
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Appointment details select exception=" + e.Message);
+            }
+        }
     }
 }
 

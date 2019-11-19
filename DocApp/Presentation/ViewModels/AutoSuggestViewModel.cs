@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
+using Windows.UI.Notifications;
 
 namespace DocApp.Presentation.ViewModels
 {
@@ -23,7 +24,7 @@ namespace DocApp.Presentation.ViewModels
     }
 
     public class AutoSuggestViewModel: IGetLocationPresenterCallback, IGetAddressPresenterCallback, IDepartmentViewCallback,
-        INotifyPropertyChanged, IKeywordViewCallback,ILoginViewCallback,IRecentDoctorViewCallback
+        INotifyPropertyChanged, IKeywordViewCallback,ILoginViewCallback,IRecentDoctorViewCallback,IReminderViewCallback
     {
         public double latitude;
         public double longitude;
@@ -101,7 +102,13 @@ namespace DocApp.Presentation.ViewModels
         }
 
         
-
+        public async Task Remind()
+        {
+            UseCaseBase remindUserCase = 
+                new ReminderUseCase(1, DateTime.Now.ToString("yyyy-MM-dd"),DateTime.Now.ToString("HH:mm"));
+            remindUserCase.SetCallBack(this);
+            await remindUserCase.Execute();
+        }
        
         public async Task GetCurrentAddress()
         {
@@ -168,6 +175,32 @@ namespace DocApp.Presentation.ViewModels
 
             }
         }
+
+
+        void NotifGenerator(AppointmentDetails details)
+        {
+            var xmlToastTemplate =String.Format( "<toast launch=\"app-defined-string\">" +
+                         "<visual>" +
+                           "<binding template =\"ToastGeneric\">" +
+                             "<text>Reminder</text>" +
+                             "<text>" +
+                               "You have an appointment with {0} at {1},{2} in 30 minutes" +
+                             "</text>" +
+                           "</binding>" +
+                         "</visual>" +
+                       "</toast>",details.doc_name,details.hosp_name,details.location);
+
+            // load the template as XML document
+            var xmlDocument = new Windows.Data.Xml.Dom.XmlDocument();
+            xmlDocument.LoadXml(xmlToastTemplate);
+
+
+            // create the toast notification and show to user
+            var toastNotification = new ToastNotification(xmlDocument);
+            var notification = ToastNotificationManager.CreateToastNotifier();
+            notification.Show(toastNotification);
+        }
+
 
         public bool DataFromPractoSuccess(RootLocationObject r)
         {
@@ -251,6 +284,17 @@ namespace DocApp.Presentation.ViewModels
         }
 
         public bool SearchDocViewFail()
+        {
+            return false;
+        }
+
+        public bool ReminderViewSuccess(AppointmentDetails detail)
+        {
+            NotifGenerator(detail);
+            return true;
+        }
+
+        public bool ReminderViewFail()
         {
             return false;
         }

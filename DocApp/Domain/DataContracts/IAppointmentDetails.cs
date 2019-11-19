@@ -13,5 +13,6 @@ namespace DocApp.Domain.DataContracts
         Task GetAppointmentByID(string app_date, string time, IAppointmentCallback callback);
         Task GetUpcomingApps(int p_id, IUpcomingAppCallback callback);
         Task GetAppointmentByDoc(int p_id, int doc_id,IAppByDocCallback callback);
+        Task ReminderForApps(int p_id, string app_date, string time, IReminderCallback callback);
     }
 }

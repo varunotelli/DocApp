@@ -111,6 +111,16 @@ namespace DocApp.Presentation.Views
         
         }
 
+        protected override async void OnNavigatedTo(NavigationEventArgs e1)
+        {
+
+
+            await viewModel.Remind();
+
+           
+
+        }
+
         public void onSeeAllClicked(object source, SeeAllClickedEventArgs args)
         {
             HospDocSuggest.IsFocusEngaged = false;

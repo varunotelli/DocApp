@@ -179,12 +179,7 @@ namespace DocApp.Presentation.Views
 
         private void DocSeeAll_Click(object sender, RoutedEventArgs e)
         {
-            Frame parentFrame = Window.Current.Content as Frame;
-
-            MainPage mp = parentFrame.Content as MainPage;
-            StackPanel grid = mp.Content as StackPanel;
-            Frame myFrame = grid.FindName("myFrame") as Frame;
-            myFrame.Navigate(typeof(DoctorSearchResultView), new navargs
+            Frame.Navigate(typeof(DoctorSearchResultView), new navargs
             {
                 name = address,
                 mp = this.mp,
@@ -197,12 +192,7 @@ namespace DocApp.Presentation.Views
         
         private void HospSeeAll_Click(object sender, RoutedEventArgs e)
         {
-            Frame parentFrame = Window.Current.Content as Frame;
-
-            MainPage mp = parentFrame.Content as MainPage;
-            StackPanel grid = mp.Content as StackPanel;
-            Frame myFrame = grid.FindName("myFrame") as Frame;
-            myFrame.Navigate(typeof(DoctorSearchResultView), new navargs
+            Frame.Navigate(typeof(DoctorSearchResultView), new navargs
             {
                 name = address,
                 mp = this.mp,
